@@ -54,9 +54,9 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     Toast.makeText(this@MainActivity, Gson().toJson(sensorData), Toast.LENGTH_SHORT).show()
-                    getData()
                 }
             })
+            getData()
         }, 5000)
     }
 
