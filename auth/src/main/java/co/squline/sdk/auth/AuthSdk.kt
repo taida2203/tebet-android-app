@@ -79,7 +79,9 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
     }
 
     fun getBaseUrl(): String? {
-        return authBaseUrl
+//        return authBaseUrl
+//        return "http://private-2087f-taidao.apiary-mock.com"
+        return "http://192.168.4.1"
     }
 
     fun requestOTP(phone: String, callback: AuthCallback<OTP>) {
