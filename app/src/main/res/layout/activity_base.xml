@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/activity_komentar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <RelativeLayout
+            android:id="@+id/placeHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/base_toolbar"/>
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/base_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetEnd="0dp"
+            android:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
+
+                <ImageButton
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onBackChat"
+                        android:padding="@dimen/_6sdp"
+                        app:srcCompat="@drawable/ic_back"/>
+
+                <com.tebet.mojual.common.Rtc.view.SquTextView
+                        android:id="@+id/tv_base_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/iv_back"
+                        android:lines="1"
+                        android:textColor="@color/white"
+                        app:font_style="bold"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/rlHomeCakapCornerMenuContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="gone">
+
+                <ImageView
+                        android:id="@+id/iv_cakap_history"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/_25sdp"
+                        android:padding="@dimen/_1sdp"
+                        android:layout_toLeftOf="@id/iv_cakap_filter"
+                />
+
+                <ImageView
+                        android:id="@+id/iv_cakap_filter"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/_1sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/rlTalkMenuContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="gone">
+
+                <ImageView
+                        android:id="@+id/iv_cakap_chat_history"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:padding="@dimen/_1sdp"
+                />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/rlHomeNotificationContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="gone">
+
+                <ImageView
+                        android:id="@+id/iv_notification"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/_3sdp"
+                        app:srcCompat="@drawable/ic_notifications"/>
+
+                <com.tebet.mojual.common.Rtc.view.SquTextView
+                        android:id="@+id/tvHomeNotificationCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:background="@drawable/notification_badage"
+                        android:padding="@dimen/_2sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_8ssp"
+                        app:font_style="bold"
+                        android:visibility="gone"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
+            android:id="@+id/full_screen_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+</RelativeLayout>

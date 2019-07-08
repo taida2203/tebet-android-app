@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Flores</string>
+    <string name="login">Login</string>
+
+    <string name="general_message_error">We are unable to connect right now, please try again later.</string>
+
+</resources>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_4sdp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/dialogColorBaseWhite"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp">
+
+                <FrameLayout
+                    android:id="@+id/placeHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/dialogTopClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:src="@drawable/ic_quit" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/dialogColorSelector" />
+
+            <LinearLayout
+                android:id="@+id/btn_single_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="50dp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingRight="50dp"
+                android:paddingBottom="@dimen/_20sdp">
+
+                <RelativeLayout
+                    android:id="@+id/btn_single"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/rounded_btn_green">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <FrameLayout
+                            android:id="@+id/flImageIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <com.tebet.mojual.common.rtc.view.SquTextView
+                            android:id="@+id/tv_single"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:layout_gravity="center"
+                            android:text="Close"
+                            android:textColor="@color/dialogColorBaseWhite"
+                            app:font_style="bold" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:id="@+id/placeHolderBottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_multiple_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
+                android:paddingBottom="25dp"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:id="@+id/btn_multiple_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn_red">
+                    <FrameLayout
+                        android:id="@+id/flImageIconLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="-10dp"
+                        android:layout_toLeftOf="@+id/tv_multiple_left"/>
+
+                    <com.tebet.mojual.common.rtc.view.SquTextView
+                        android:id="@+id/tv_multiple_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/general_button_cancel"
+                        android:textColor="@color/dialogColorBaseWhite"
+                        android:textSize="@dimen/_10ssp"
+                        app:font_style="bold" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
+
+                <RelativeLayout
+                    android:id="@+id/btn_multiple_right"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn_grey">
+                    <FrameLayout
+                        android:id="@+id/flImageIconRight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/tv_multiple_right"/>
+                    <com.tebet.mojual.common.rtc.view.SquTextView
+                        android:id="@+id/tv_multiple_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/general_button_cancel"
+                        android:textColor="@color/dialogColorBaseWhite"
+                        android:textSize="@dimen/_10ssp"
+                        app:font_style="bold" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <com.tebet.mojual.common.rtc.view.SquTextView
+                android:id="@+id/tv_Hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="hint"
+                android:textAlignment="center"
+                android:textColor="@color/greytext"
+                android:textSize="10dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
