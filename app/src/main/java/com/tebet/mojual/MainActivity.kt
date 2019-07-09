@@ -1,36 +1,43 @@
 package com.tebet.mojual
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import co.squline.sdk.auth.AuthSdk
+import co.squline.sdk.auth.core.AuthAccountKitMethod
+import co.squline.sdk.auth.core.LoginConfiguration
+import co.squline.sdk.auth.core.models.ApiCallBack
+import co.squline.sdk.auth.core.models.LoginException
+import co.squline.sdk.auth.core.models.Token
 import co.squline.sdk.auth.network.ServiceHelper
-import com.google.gson.Gson
 import com.tebet.mojual.data.models.SensorData
 import com.tebet.mojual.network.ApiService
+import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Response
-import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        AuthSdk.init(this, "", "", "", "")
-//        AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(), object : ApiCallBack<Token>() {
-//            override fun onSuccess(responeCode: Int, response: Token?) {
-//            }
-//
-//            override fun onFailed(exeption: LoginException) {
-//            }
-//        })
+        // "http://private-2087f-taidao.apiary-mock.com"
+        // "http://192.168.4.1"
+        AuthSdk.init(this, "http://192.168.4.1", "", "", "")
 
 
+        btnLogin.setOnClickListener {
+            AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(), object : ApiCallBack<Token>() {
+                override fun onSuccess(responeCode: Int, response: Token?) {
+                }
+
+                override fun onFailed(exeption: LoginException) {
+                }
+            })
+        }
         getData()
 
     }
@@ -53,7 +60,10 @@ class MainActivity : AppCompatActivity() {
                             info.select("td")[0].html().toLowerCase().contains("gravity") -> sensorData.gravity = info.select("td")[1].html()
                         }
                     }
-                    Toast.makeText(this@MainActivity, Gson().toJson(sensorData), Toast.LENGTH_SHORT).show()
+                    tvTilt.text = sensorData.tilt
+                    tvTemp.text = sensorData.temperature
+                    tvBattery.text = sensorData.battery
+                    tvGravity.text = sensorData.gravity
                 }
             })
             getData()
