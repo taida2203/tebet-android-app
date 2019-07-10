@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="duskyellow">#FF9800</color>
+    <color name="lightgrey">#f2f2fd</color>
+    <color name="greytext">#cacad8</color>
+    <color name="navyblue">#006bad</color>
+    <color name="turquoise">#00adc6</color>
+    <color name="white">#ffffff</color>
+
+    <color name="dialogColorOK">#10cee6</color>
+    <color name="dialogColorCancel">#304155</color>
+    <color name="dialogColorSelector">#a1a1a1</color>
+    <color name="dialogColorBaseWhite">#FFFFFF</color>
+    <color name="blue_change_course">#006bad</color>
+
+    <!--dialog view/participant confirm-->
+    <color name="participant_confirm_tit_color">#0a71b0</color>
+    <color name="corner_history_filter_divider">#ddddea</color>
+    <color name="green_border_avatar">#73cd1f</color>
+    <color name="down_linear_grey">#cbccce</color>
+    <color name="dividerLighterGray">#e5e5e5</color>
+
+</resources>

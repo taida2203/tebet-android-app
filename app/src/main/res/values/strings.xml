@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MoJualApp</string>
+    <string name="notification_title_older">Older</string>
+    <string name="activity_noti_title">Notifications</string>
+    <!--Month year Picker-->
+    <string name="month_year_picker_date">Date</string>
+    <string name="month_year_picker_month">Month</string>
+    <string name="month_year_picker_year">Year</string>
+    <string name="month_year_picker_select_btn">SELECT</string>
+    <string name="loading">Loading</string>
+</resources>

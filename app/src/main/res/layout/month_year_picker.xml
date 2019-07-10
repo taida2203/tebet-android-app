@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/back_spinner"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:minWidth="1100dp"
+                android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/back_spinner"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="10dp">
+
+                <co.common.view.SquTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="16dp"
+                        android:textColor="@color/greycolor"
+                        android:text="@string/month_year_picker_date"/>
+                <NumberPicker
+                        android:id="@+id/picker_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                    android:layout_width="1.5dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/greycolor"/>
+
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                <co.common.view.SquTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/greycolor"
+                        android:textSize="16dp"
+                        android:text="@string/month_year_picker_month"/>
+                <NumberPicker
+                        android:id="@+id/picker_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                    android:layout_width="1.5dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/greycolor"/>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                <co.common.view.SquTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="16dp"
+                        android:textColor="@color/greycolor"
+                        android:text="@string/month_year_picker_year"/>
+                <NumberPicker
+                        android:id="@+id/picker_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+            <co.common.view.SquButton
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/custom_buttongrey"
+                    android:layout_marginRight="2dp"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:id="@+id/btncancel"
+                    android:text="@string/general_button_cancel"
+                    android:textAllCaps="true"/>
+
+            <co.common.view.SquButton
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/custom_button"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="1"
+                    android:id="@+id/btnselect"
+                    android:text="@string/month_year_picker_select_btn"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
