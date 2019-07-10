@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "517402143202",
+    "firebase_url": "https://mojual-app.firebaseio.com",
+    "project_id": "mojual-app",
+    "storage_bucket": "mojual-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517402143202:android:ed8432aeb3208d4f",
+        "android_client_info": {
+          "package_name": "com.tebet.mojual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "517402143202-g586729bdeapr01676sovn01g968njd5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "517402143202-g586729bdeapr01676sovn01g968njd5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
