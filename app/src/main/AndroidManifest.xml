@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
           package="com.tebet.mojual">
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -12,35 +12,37 @@
             android:theme="@style/AppTheme">
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
-                android:value="@string/facebook_app_id" />
+                android:value="@string/facebook_app_id"/>
         <meta-data
                 android:name="com.facebook.accountkit.ClientToken"
-                android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
+                android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN"/>
         <meta-data
                 android:name="com.facebook.accountkit.ApplicationName"
-                android:value="@string/app_name" />
+                android:value="@string/app_name"/>
         <meta-data
                 android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
-                android:value="false" />
+                android:value="false"/>
         <meta-data
                 android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
-                android:value="false" />
+                android:value="false"/>
         <meta-data
                 android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"
                 android:value="false"/>
+
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
+
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-        </activity>
+
+        <activity android:name=".MainActivity"/>
 
         <activity
                 android:name="com.facebook.accountkit.ui.AccountKitActivity"/>
-
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
                 android:resource="@drawable/ic_notifications"/>
@@ -50,12 +52,6 @@
         <service android:name=".notification.MyFireBaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-
-        <service android:name=".feature.notification.MyFireBaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
