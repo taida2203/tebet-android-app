@@ -1,4 +1,4 @@
-package com.squline.student.common.view
+package com.tebet.mojual.common.view
 
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager

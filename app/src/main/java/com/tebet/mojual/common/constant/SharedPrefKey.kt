@@ -1,4 +1,4 @@
-package com.squline.student.common.constant
+package com.tebet.mojual.common.constant
 
 /**
  * Created by Mochamad Noor Syamsu on 8/1/18.

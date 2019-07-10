@@ -1,6 +1,6 @@
 package com.tebet.mojual.common.network
 
-import co.squline.sdk.auth.AuthSdk
+import co.sdk.auth.AuthSdk
 import com.tebet.mojual.common.util.Utility
 import okhttp3.Interceptor
 import okhttp3.Response

@@ -1,7 +1,5 @@
 package com.tebet.mojual.network
 
-import co.squline.sdk.auth.core.models.AuthJson
-import co.squline.sdk.auth.core.models.Token
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET

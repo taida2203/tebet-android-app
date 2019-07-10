@@ -44,7 +44,7 @@
                         android:padding="@dimen/_6sdp"
                         app:srcCompat="@drawable/ic_back"/>
 
-                <com.tebet.mojual.common.Rtc.view.SquTextView
+                <TextView
                         android:id="@+id/tv_base_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
                         android:layout_marginRight="@dimen/_3sdp"
                         app:srcCompat="@drawable/ic_notifications"/>
 
-                <com.tebet.mojual.common.Rtc.view.SquTextView
+                <TextView
                         android:id="@+id/tvHomeNotificationCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -1,22 +1,6 @@
 package com.tebet.mojual.view;
 
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import com.tebet.mojual.R;
-import com.tebet.mojual.common.rtc.util.LanguageUtil;
-import timber.log.Timber;
-
-import java.util.List;
 
 public class LockActivity extends AppCompatActivity {
 //    public static final int CHECK_PIN = 0;

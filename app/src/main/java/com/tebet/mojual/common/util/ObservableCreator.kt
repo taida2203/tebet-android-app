@@ -1,4 +1,4 @@
-package com.squline.student.common.util
+package com.tebet.mojual.common.util
 
 import io.reactivex.Observable
 import java.util.concurrent.Callable

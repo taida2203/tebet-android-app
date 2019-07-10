@@ -6,14 +6,14 @@
               android:orientation="vertical"
               android:background="@drawable/custom_buttonwhite">
 
-    <com.squline.common.rtc.view.SquTextView
+    <co.common.view.SquTextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/greycolor"
             android:layout_marginTop="5dp"
             android:id="@+id/nama_country" />
 
-    <com.squline.common.rtc.view.SquTextView
+    <co.common.view.SquTextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"

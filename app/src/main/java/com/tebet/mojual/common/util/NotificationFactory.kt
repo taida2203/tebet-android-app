@@ -1,7 +1,7 @@
-package com.squline.student.common.util
+package com.tebet.mojual.common.util
 
+import co.common.event.NotificationEvent
 import com.tebet.mojual.R
-import com.tebet.mojual.common.rtc.event.NotificationEvent
 
 /**
  * Created by heo on 3/6/18.
@@ -47,15 +47,15 @@ object NotificationFactory {
 
     fun pageFrom(eventCode: String?): PAGE {
         return when (eventCode) {
-            TRIAL_CLASS_BOOKING_REMINDER, TRIAL_CLASS_EXPIRED_REMINDER, PAYMENT_SUCCESS -> PAGE.BOOKING
-            INVOICE_EXPIRED_1_DAY, INVOICE_EXPIRED_30_DAYS -> PAGE.BUY
-            WELCOME -> PAGE.HOME
-            CLASS_STARTING -> PAGE.RTC
-            PACKAGE_PAYMENT_REMINDER, INVOICE_EXPIRED_TODAY -> PAGE.MY_INVOICE
-            PACKAGE_ACTIVATING -> PAGE.MY_PACKAGE
-            PROFILE -> PAGE.PROFILE
-            TRIAL_CLASS_AFTER_BOOKING, TRIAL_CLASS_1_DAY_BEFORE, CLASS_TODAY -> PAGE.UPCOMING_CLASS
-            else -> PAGE.UNKNOWN
+            TRIAL_CLASS_BOOKING_REMINDER, TRIAL_CLASS_EXPIRED_REMINDER, PAYMENT_SUCCESS -> NotificationFactory.PAGE.BOOKING
+            INVOICE_EXPIRED_1_DAY, INVOICE_EXPIRED_30_DAYS -> NotificationFactory.PAGE.BUY
+            WELCOME -> NotificationFactory.PAGE.HOME
+            CLASS_STARTING -> NotificationFactory.PAGE.RTC
+            PACKAGE_PAYMENT_REMINDER, INVOICE_EXPIRED_TODAY -> NotificationFactory.PAGE.MY_INVOICE
+            PACKAGE_ACTIVATING -> NotificationFactory.PAGE.MY_PACKAGE
+            PROFILE -> NotificationFactory.PAGE.PROFILE
+            TRIAL_CLASS_AFTER_BOOKING, TRIAL_CLASS_1_DAY_BEFORE, CLASS_TODAY -> NotificationFactory.PAGE.UPCOMING_CLASS
+            else -> NotificationFactory.PAGE.UNKNOWN
         }
     }
 

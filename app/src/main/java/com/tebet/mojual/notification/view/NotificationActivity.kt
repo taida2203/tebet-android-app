@@ -12,7 +12,7 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter.items
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import com.mikepenz.fastadapter.listeners.OnClickListener
 import com.mikepenz.fastadapter_extensions.scroll.EndlessRecyclerOnScrollListener
-import com.squline.student.common.base.BaseActivity
+import com.tebet.mojual.common.base.BaseActivity
 import com.tebet.mojual.R
 import com.tebet.mojual.data.remote.NotificationNewResponse
 import com.tebet.mojual.data.remote.NotificationRequest
@@ -22,7 +22,6 @@ import com.tebet.mojual.notification.NotificationViewItem
 import com.tebet.mojual.notification.NotificationViewLoading
 import com.tebet.mojual.notification.NotificationViewTitle
 import kotlinx.android.synthetic.main.activity_notification.*
-import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
 

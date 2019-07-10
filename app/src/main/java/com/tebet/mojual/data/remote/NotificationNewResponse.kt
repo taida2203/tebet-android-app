@@ -2,11 +2,11 @@ package com.tebet.mojual.data.remote
 
 import android.os.Bundle
 import android.text.format.DateUtils
+import co.common.event.NotificationEvent
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.tebet.mojual.common.rtc.event.NotificationEvent
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*

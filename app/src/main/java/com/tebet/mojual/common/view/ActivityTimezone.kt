@@ -11,11 +11,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.squline.student.common.base.BaseActivity
+import com.tebet.mojual.common.base.BaseActivity
 import com.tebet.mojual.R
 import com.tebet.mojual.common.models.GMTResponse
-import com.tebet.mojual.common.rtc.view.AbstractRecycleViewAdapter
-import retrofit2.Call
+import co.common.view.AbstractRecycleViewAdapter
 import java.util.*
 
 class ActivityTimezone : BaseActivity() {
@@ -39,7 +38,7 @@ class ActivityTimezone : BaseActivity() {
 
 
         adapter = MyAdapter(this, countries)
-        adapter?.setOnActionClick(object : AbstractRecycleViewAdapter.OnRecycleViewClick<GMTResponse> {
+        adapter?.setOnActionClick(object : co.common.view.AbstractRecycleViewAdapter.OnRecycleViewClick<GMTResponse> {
             override fun onRemoveClick(removeObject: GMTResponse) {}
 
             override fun onShowDetailClick(country: GMTResponse) {
@@ -91,8 +90,8 @@ class ActivityTimezone : BaseActivity() {
     }
 
     internal inner class MyAdapter(context: Activity, dataSet: List<GMTResponse>) :
-        AbstractRecycleViewAdapter<GMTResponse>(context, dataSet), Filterable {
-        internal inner class MyViewHolder(view: View) : AbstractRecycleViewAdapter<GMTResponse>.BaseViewHolder(view) {
+        co.common.view.AbstractRecycleViewAdapter<GMTResponse>(context, dataSet), Filterable {
+        internal inner class MyViewHolder(view: View) : co.common.view.AbstractRecycleViewAdapter<GMTResponse>.BaseViewHolder(view) {
             var name: TextView = view.findViewById(R.id.nama_country)
             var utc: TextView = view.findViewById(R.id.utc)
         }
@@ -102,7 +101,7 @@ class ActivityTimezone : BaseActivity() {
             return R.layout.timezone_layout
         }
 
-        override fun getViewHolder(v: View, viewType: Int): AbstractRecycleViewAdapter<GMTResponse>.BaseViewHolder {
+        override fun getViewHolder(v: View, viewType: Int): co.common.view.AbstractRecycleViewAdapter<GMTResponse>.BaseViewHolder {
             return MyViewHolder(v)
         }
 

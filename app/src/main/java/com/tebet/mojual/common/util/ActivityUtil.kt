@@ -1,4 +1,4 @@
-package com.squline.student.common.util
+package com.tebet.mojual.common.util
 
 import android.content.Context
 import android.view.View

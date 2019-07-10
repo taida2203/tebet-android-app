@@ -1,4 +1,4 @@
-package com.squline.student.common.view
+package com.tebet.mojual.common.view
 
 import android.content.Context
 import android.util.AttributeSet

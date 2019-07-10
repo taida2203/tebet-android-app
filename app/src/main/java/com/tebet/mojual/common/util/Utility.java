@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
 
+import co.common.util.LanguageUtil;
 import com.tebet.mojual.R;
-import com.tebet.mojual.common.rtc.util.LanguageUtil;
 import timber.log.Timber;
 
 import java.util.Locale;

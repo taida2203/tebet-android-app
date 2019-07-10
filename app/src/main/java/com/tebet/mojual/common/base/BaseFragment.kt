@@ -6,8 +6,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.squline.student.common.base.BaseActivity
-import com.tebet.mojual.common.rtc.view.BaseView
+import co.common.view.BaseView
 import java.lang.ref.WeakReference
 
 open class BaseFragment : Fragment(), BaseView {

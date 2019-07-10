@@ -1,4 +1,4 @@
-package com.squline.student.common.base
+package com.tebet.mojual.common.base
 
 import android.app.ActivityManager
 import android.content.Context
@@ -15,11 +15,9 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import co.common.network.ApiException
+import co.common.view.BaseView
 import com.tebet.mojual.R
-import com.tebet.mojual.common.rtc.network.ApiException
-import com.tebet.mojual.common.rtc.util.LanguageUtil
-import com.tebet.mojual.common.rtc.view.BaseView
-import com.tebet.mojual.common.view.Loading
 import com.tebet.mojual.notification.view.NotificationActivity
 import kotlinx.android.synthetic.main.activity_base.*
 import java.lang.ref.WeakReference
@@ -31,14 +29,14 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     lateinit var tvBaseTitle: TextView
         private set
 
-    protected lateinit var load: Loading
+//    protected lateinit var load: Loading
     private var notifExtra: MutableMap<String, String>? = null
     private var isActive: Boolean = false
     protected abstract val contentLayoutId: Int
     protected lateinit var mView: WeakReference<BaseView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        LanguageUtil.instance.updateLanguage(this)
+//        LanguageUtil.instance.updateLanguage(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
 
@@ -46,7 +44,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         ivBack = findViewById(R.id.iv_back)
         tvBaseTitle = findViewById(R.id.tv_base_title)
 
-        load = Loading(this)
+//        load = Loading(this)
 //        iv_back.setOnClickListener { onBackPressed() }
         setSupportActionBar(baseToolbar)
 
@@ -116,12 +114,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     }
 
     fun showpDialog(isShowProgressDialog: Boolean) {
-        if (load.isShowing && isShowProgressDialog) return
-        if (isShowProgressDialog) {
-            load.showpDialog()
-        } else {
-            load.hidepDialog()
-        }
+//        if (load.isShowing && isShowProgressDialog) return
+//        if (isShowProgressDialog) {
+//            load.showpDialog()
+//        } else {
+//            load.hidepDialog()
+//        }
     }
 
     override fun setTitle(titleId: Int) {
@@ -406,10 +404,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     }
 
     override fun onBackPressed() {
-        if (load.isShowing) {
-            load.hidepDialog()
-            return
-        }
+//        if (load.isShowing) {
+//            load.hidepDialog()
+//            return
+//        }
         super.onBackPressed()
     }
 

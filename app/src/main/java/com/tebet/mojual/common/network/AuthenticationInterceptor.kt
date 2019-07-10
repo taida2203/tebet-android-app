@@ -2,9 +2,9 @@ package com.tebet.mojual.common.network
 
 import android.text.TextUtils
 import android.util.Base64
-import co.squline.sdk.auth.AuthSdk
-import co.squline.sdk.auth.core.models.Token
-import com.tebet.mojual.common.rtc.util.PreferenceUtils
+import co.sdk.auth.AuthSdk
+import co.sdk.auth.core.models.Token
+import co.common.util.PreferenceUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -23,7 +23,7 @@ class AuthenticationInterceptor : Interceptor {
         } else {
             language = "in"
         }
-        val currentToken = PreferenceUtils.getObject(AuthSdk.AUTH_LOGIN_TOKEN, Token::class.java)
+        val currentToken = co.common.util.PreferenceUtils.getObject(AuthSdk.AUTH_LOGIN_TOKEN, Token::class.java)
         val chainRequest = chain.request().newBuilder()
         chainRequest.addHeader("Accept-Language", language)
         chainRequest.addHeader("Content-Type", "application/json;charset=UTF-8")

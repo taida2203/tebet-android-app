@@ -9,21 +9,21 @@
         android:layout_height="72dp"
         android:orientation="horizontal">
 
-        <com.tebet.mojual.common.rtc.view.SquTextView
+        <com.view.SquTextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Resolution\n(Height * Width)"
             android:gravity="center"/>
 
-        <com.tebet.mojual.common.rtc.view.SquTextView
+        <com.view.SquTextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Frame Rate\n(fps)"
             android:gravity="center"/>
 
-        <com.tebet.mojual.common.rtc.view.SquTextView
+        <com.view.SquTextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -4,14 +4,14 @@ import android.content.Context;
 import android.provider.Settings;
 import android.util.Log;
 import androidx.multidex.MultiDexApplication;
-import co.squline.sdk.auth.AuthSdk;
+import co.common.util.LanguageUtil;
+import co.sdk.auth.AuthSdk;
 import com.facebook.FacebookSdk;
 import com.tebet.mojual.R;
 import com.tebet.mojual.common.constant.ConfigEnv;
 import com.tebet.mojual.common.constant.ConfigVolley;
 import com.tebet.mojual.common.models.GMTResponse;
-import com.tebet.mojual.common.rtc.util.LanguageUtil;
-import com.tebet.mojual.common.rtc.util.PreferenceUtils;
+import co.common.util.PreferenceUtils;
 import com.tebet.mojual.common.util.Utility;
 import timber.log.Timber;
 

@@ -3,7 +3,7 @@ package com.tebet.mojual.notification
 import android.app.ActivityManager
 import android.content.Context
 import android.text.TextUtils
-import co.squline.sdk.auth.AuthSdk
+import co.sdk.auth.AuthSdk
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.tebet.mojual.data.models.CustomerDevice
