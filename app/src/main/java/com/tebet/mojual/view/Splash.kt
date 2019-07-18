@@ -1,4 +1,4 @@
-package com.tebet.mojual
+package com.tebet.mojual.view
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -8,11 +8,12 @@ import android.os.Handler
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import com.tebet.mojual.R
 import com.tebet.mojual.common.base.BaseActivity
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
-class SplashScreen : BaseActivity() {
+class Splash : BaseActivity() {
     private val TAG = javaClass.simpleName
 
     private var referralCode = ""
@@ -39,7 +40,7 @@ class SplashScreen : BaseActivity() {
 
         supportActionBar!!.hide()
         Handler().postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, Login::class.java))
             finish()
 //            if (applicationContext.checkConnectivity()) {
 //                versionCheck()
@@ -51,7 +52,7 @@ class SplashScreen : BaseActivity() {
 //                    override fun onFail(call: Call<*>?, e: ApiException) {}
 //                })
 //            } else {
-//                val builder = AlertDialog.Builder(this@SplashScreen)
+//                val builder = AlertDialog.Builder(this@Splash)
 //                builder.setMessage(getString(R.string.general_message_error))
 //                // add a button
 //                builder.setPositiveButton(getString(R.string.general_button_ok)) { dialog, which -> finish() }
@@ -110,26 +111,26 @@ class SplashScreen : BaseActivity() {
 //    }
 //
 //    private fun showForceUpdate() {
-//        val forceUpdateIntent = Intent(this@SplashScreen, ForceUpdate::class.java)
+//        val forceUpdateIntent = Intent(this@Splash, ForceUpdate::class.java)
 //        startActivity(forceUpdateIntent)
-//        this@SplashScreen.finish()
+//        this@Splash.finish()
 //    }
 //
 //    private fun startLoginFlow() {
 //        val skipIntro = PreferenceUtils.getBoolean(ActivityIntroSlider.SKIP_INTRO, false)
 //        if (!skipIntro) {
-//            val mainIntent = Intent(this@SplashScreen, ActivityIntroSliderV2::class.java)
+//            val mainIntent = Intent(this@Splash, ActivityIntroSliderV2::class.java)
 //            mainIntent.putExtra(ActivityLogin.EXTRA_REFERRAL, referralCode)
 //            startActivity(mainIntent)
-//            this@SplashScreen.finish()
+//            this@Splash.finish()
 //        } else {
 //            if (AuthSdk.instance.currentToken == null || TextUtils.isEmpty(AuthSdk.instance.currentToken!!.appToken)) {
-//                val mainIntent = Intent(this@SplashScreen, ActivityLogin::class.java)
+//                val mainIntent = Intent(this@Splash, ActivityLogin::class.java)
 //                mainIntent.putExtra(ActivityLogin.EXTRA_REFERRAL, referralCode)
 //                startActivity(mainIntent)
-//                this@SplashScreen.finish()
+//                this@Splash.finish()
 //            } else {
-//                TokenAuth(this@SplashScreen).mobileAuth(mView, AuthSdk.instance.currentToken!!.appToken)
+//                TokenAuth(this@Splash).mobileAuth(mView, AuthSdk.instance.currentToken!!.appToken)
 //            }
 //        }
 //    }

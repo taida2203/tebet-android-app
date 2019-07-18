@@ -29,7 +29,7 @@
                 android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"
                 android:value="false"/>
 
-        <activity android:name=".SplashScreen">
+        <activity android:name=".view.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -39,7 +39,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".view.HomeActivity"/>
+        <activity android:name=".view.Login"/>
+        <activity android:name=".view.SignUpInfo"/>
 
         <activity
                 android:name="com.facebook.accountkit.ui.AccountKitActivity"/>
@@ -55,11 +57,6 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".notification.MyReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>
