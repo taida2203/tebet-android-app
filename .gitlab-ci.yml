@@ -30,7 +30,7 @@ assembleDebug:
     paths:
     - app/build/outputs/
 
-deploy:  
+deploy:
   stage: deploy
   script:
     - apt update
@@ -40,4 +40,4 @@ deploy:
     - ssh-keyscan -H dev.api.mo-jual.com >> ~/.ssh/known_hosts
     - chmod 600 tebet-devops
     - ssh -i tebet-devops docker@dev.api.mo-jual.com "rm -rf cd /var/www/tebet/android/dev/*"
-    - scp -i tebet-devops /builds/investidea.tech/tebet/tebet-android/app/build/outputs/apk/dev/debug/app-dev-debug.apk docker@dev.api.mo-jual.com:/var/www/tebet/android/dev
+    - scp -i tebet-devops app/build/outputs/apk/dev/debug/app-dev-debug.apk docker@dev.api.mo-jual.com:/var/www/tebet/android/dev
