@@ -30,8 +30,7 @@ assembleDebug:
     paths:
     - app/build/outputs/
 
-deploy:
-  image: alpine:latest
+deploy:  
   stage: deploy
   script:
     - apt update
