@@ -8,11 +8,13 @@
     <string name="month_year_picker_year">Year</string>
     <string name="month_year_picker_select_btn">SELECT</string>
     <string name="loading">Loading</string>
-    <string name="login_screen_btn_login">Login</string>
+    <string name="login_screen_btn_login">Sign In with Phone Number</string>
     <string name="login_screen_btn_register">Register</string>
     <string name="sign_up_screen_input_password">Input your password</string>
     <string name="sign_up_screen_password">Password</string>
     <string name="sign_up_screen_re_password">Retype Password</string>
     <string name="general_btn_next">Next</string>
     <string name="general_btn_back">Back</string>
+    <string name="login_password_screen_phone">Phone</string>
+    <string name="login_screen_btn_forgot_password">Forgot password</string>
 </resources>

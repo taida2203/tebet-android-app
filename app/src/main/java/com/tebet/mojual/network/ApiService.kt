@@ -1,8 +1,16 @@
 package com.tebet.mojual.network
 
+import co.sdk.auth.core.LoginConfiguration
+import co.sdk.auth.core.models.AuthJson
+import co.sdk.auth.core.models.Token
+import com.tebet.mojual.data.models.UpdateProfileRequest
+import com.tebet.mojual.data.models.UserProfile
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiService {
     /*
@@ -14,5 +22,14 @@ interface ApiService {
 
     @GET("iSpindel")
     fun getData(): Call<ResponseBody> // http://192.168.4.1/iSpindel?
+
+    @POST("profile/register")
+    fun register(@Body endChatSessionRequest: LoginConfiguration): Call<ResponseBody>
+
+    @GET("profile/profile")
+    fun getProfile(): Call<AuthJson<UserProfile>>
+
+    @PUT("profile/profile")
+    fun updateProfile(@Body updateProfileRequest: UpdateProfileRequest): Call<ResponseBody>
 }
 

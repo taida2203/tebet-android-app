@@ -3,14 +3,14 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white" android:orientation="vertical">
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="Your selfie photo, please capture front of your face."/>
+    <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                              android:text="Your selfie photo, please capture front of your face."/>
     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:hint="Full Name"/>
-    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:hint="Date of Birth"/>
-    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:hint="KTP Number"/>
+    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
+                                              android:hint="Full Name"/>
+    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
+                                              android:hint="Date of Birth"/>
+    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
+                                              android:hint="KTP Number"/>
     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 </LinearLayout>

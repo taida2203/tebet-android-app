@@ -79,6 +79,7 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-analytics:16.0.8'
     implementation "com.google.android.gms:play-services-auth:$playServicesVersion"
+    implementation "com.google.android.gms:play-services-location:$playServicesVersion"
     implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
     implementation 'com.google.firebase:firebase-messaging:19.0.1'
     implementation 'com.google.firebase:firebase-dynamic-links:17.0.0'
@@ -114,6 +115,7 @@ dependencies {
 
     implementation project(':common')
     implementation project(':auth')
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 }
 

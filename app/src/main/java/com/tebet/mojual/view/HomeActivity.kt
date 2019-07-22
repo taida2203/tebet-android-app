@@ -1,8 +1,11 @@
 package com.tebet.mojual.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import co.sdk.auth.AuthSdk
+import co.sdk.auth.core.models.ApiCallBack
+import co.sdk.auth.core.models.LoginException
 import co.sdk.auth.network.ServiceHelper
 import com.tebet.mojual.R
 import com.tebet.mojual.common.base.BaseActivity
@@ -19,8 +22,18 @@ class HomeActivity : BaseActivity() {
         get() = R.layout.activity_home
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
-        AuthSdk.init(this, "http://192.168.4.1", "", "", "")
-        getData()
+//        getData()
+        btnLogout.setOnClickListener {
+            AuthSdk.instance.logout(false, object : ApiCallBack<Any>() {
+                override fun onSuccess(responeCode: Int, response: Any?) {
+                    finish()
+                    startActivity(Intent(this@HomeActivity, Login::class.java))
+                }
+
+                override fun onFailed(exeption: LoginException) {
+                }
+            })
+        }
     }
 
     private fun getData() {

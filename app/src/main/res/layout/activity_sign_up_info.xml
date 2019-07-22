@@ -3,40 +3,55 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white" android:orientation="vertical">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                  android:layout_weight="1"
-                  android:gravity="center"
-                  android:id="@+id/tvTitleStep1"
-                  android:text="Demographic"/>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text=">"/>
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                  android:layout_weight="1"
-                  android:gravity="center"
-                  android:id="@+id/tvTitleStep2"
-                  android:text="Contact"/>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text=">"/>
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                  android:layout_weight="1"
-                  android:id="@+id/tvTitleStep3"
-                  android:gravity="center"
-                  android:text="Payment"/>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/_20sdp"
+                  android:layout_marginRight="@dimen/_20sdp">
+        <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp" android:layout_height="wrap_content"
+                                                  android:layout_weight="1"
+                                                  android:gravity="center"
+                                                  android:fontFamily="bold"
+                                                  android:id="@+id/tvTitleStep1"
+                                                  android:text="Demographic"/>
+        <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content"
+                                                  android:layout_height="wrap_content"
+                                                  android:fontFamily="bold"
+                                                  android:text=">"/>
+        <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp" android:layout_height="wrap_content"
+                                                  android:layout_weight="1"
+                                                  android:gravity="center"
+                                                  android:fontFamily="bold"
+                                                  android:id="@+id/tvTitleStep2"
+                                                  android:text="Contact"/>
+        <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content"
+                                                  android:fontFamily="bold"
+                                                  android:layout_height="wrap_content"
+                                                  android:text=">"/>
+        <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp" android:layout_height="wrap_content"
+                                                  android:layout_weight="1"
+                                                  android:id="@+id/tvTitleStep3"
+                                                  android:fontFamily="bold"
+                                                  android:gravity="center"
+                                                  android:text="Payment"/>
     </LinearLayout>
     <FrameLayout android:layout_width="match_parent" android:layout_height="0dp"
                  android:id="@+id/placeHolderChild"
+                 android:layout_marginLeft="@dimen/_20sdp"
+                 android:layout_marginRight="@dimen/_20sdp"
+                 android:layout_marginTop="@dimen/_5sdp"
+                 android:layout_marginBottom="@dimen/_5sdp"
                  android:layout_weight="1"/>
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:orientation="horizontal">
-        <Button android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                android:text="@string/general_btn_back"
-                android:layout_alignParentBottom="true"
-                android:id="@+id/btnBack"/>
-        <Button android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                android:text="@string/general_btn_next"
-                android:layout_alignParentBottom="true"
-                android:id="@+id/btnNext"/>
+        <com.tebet.mojual.common.view.AppButton android:layout_width="0dp" android:layout_weight="1"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/general_btn_back"
+                                                android:layout_alignParentBottom="true"
+                                                android:id="@+id/btnBack"/>
+        <com.tebet.mojual.common.view.AppButton android:layout_width="0dp" android:layout_weight="1"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/general_btn_next"
+                                                android:layout_alignParentBottom="true"
+                                                android:id="@+id/btnNext"/>
     </LinearLayout>
 </LinearLayout>

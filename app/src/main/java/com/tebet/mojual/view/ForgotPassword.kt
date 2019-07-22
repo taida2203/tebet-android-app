@@ -12,7 +12,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 
-class SignUpPassword : BaseActivity() {
+class ForgotPassword : BaseActivity() {
     override val contentLayoutId: Int
         get() = R.layout.activity_sign_up_password
 
@@ -20,15 +20,16 @@ class SignUpPassword : BaseActivity() {
         btnNext.setOnClickListener {
             val updateProfileRequest = UpdateProfileRequest()
             updateProfileRequest.password = "123456"
-            ServiceHelper.createService(ApiService::class.java).updateProfile(updateProfileRequest).enqueue(object : retrofit2.Callback<ResponseBody> {
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                }
+            ServiceHelper.createService(ApiService::class.java).updateProfile(updateProfileRequest)
+                .enqueue(object : retrofit2.Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    }
 
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    this@SignUpPassword.finish()
-                    startActivity(Intent(this@SignUpPassword, SignUpInfo::class.java))
-                }
-            })
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        this@ForgotPassword.finish()
+                        startActivity(Intent(this@ForgotPassword, HomeActivity::class.java))
+                    }
+                })
         }
     }
 }

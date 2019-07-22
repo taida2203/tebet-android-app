@@ -38,7 +38,7 @@ object ConfigEnv {
             "dev" -> {
                 environment = ConfigEnv.Environment.DEV
 
-                apiRoot = "https://dev.api.cakap.com"
+                apiRoot = "https://dev.api.mo-jual.com"
                 isAnalyticEnabled = true
                 agoraAppId = "xxx"
                 consumerKey = "android_student_cakap"
@@ -47,7 +47,7 @@ object ConfigEnv {
             "staging" -> {
                 environment = ConfigEnv.Environment.STAGING
 
-                apiRoot = "https://staging.api.cakap.com"
+                apiRoot = "https://dev.api.mo-jual.com"
                 isAnalyticEnabled = true
                 agoraAppId = "yyy"
                 consumerKey = "android_student_cakap"
@@ -56,7 +56,7 @@ object ConfigEnv {
             "hotfix" -> {
                 environment = ConfigEnv.Environment.HOTFIX
 
-                apiRoot = "https://hotfix.api.cakap.com"
+                apiRoot = "https://dev.api.mo-jual.com"
                 isAnalyticEnabled = true
                 agoraAppId = "yyy"
                 consumerKey = "android_student_cakap"
@@ -65,7 +65,7 @@ object ConfigEnv {
             "production" -> {
                 environment = ConfigEnv.Environment.PRODUCTION
 
-                apiRoot = "https://api.cakap.com"
+                apiRoot = "https://dev.api.mo-jual.com"
                 isAnalyticEnabled = true
                 agoraAppId = "zzz"
                 consumerKey = "android_student_cakap"

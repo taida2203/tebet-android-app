@@ -23,7 +23,7 @@ abstract class AuthCallback<T> : Callback<AuthJson<T>> {
             } catch (Exception e) {
                 e.printStackTrace();
             }*/
-        } else if (response.code() == 401 || response.code() == 403) {
+        } else if (response.code() == 403) {
             /*try {
                 response.raw().body().close();
             } catch (Exception e) {

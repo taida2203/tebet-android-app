@@ -8,8 +8,19 @@ import android.os.Handler
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
+import co.sdk.auth.AuthSdk
+import co.sdk.auth.core.models.AuthJson
+import co.sdk.auth.core.models.Token
+import co.sdk.auth.network.ServiceHelper
 import com.tebet.mojual.R
 import com.tebet.mojual.common.base.BaseActivity
+import com.tebet.mojual.common.util.checkConnectivity
+import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.network.ApiService
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Response
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -40,26 +51,39 @@ class Splash : BaseActivity() {
 
         supportActionBar!!.hide()
         Handler().postDelayed({
-            startActivity(Intent(this, Login::class.java))
-            finish()
-//            if (applicationContext.checkConnectivity()) {
-//                versionCheck()
-//                ApiService.createServiceNew(ProfileService::class.java).getTimeZone().enqueue(object : ApiCallbackV2<List<GMTResponse>>(mView) {
-//                    override fun onSuccess(response: List<GMTResponse>?) {
-//                        AppController.gmtList = response
-//                    }
-//
-//                    override fun onFail(call: Call<*>?, e: ApiException) {}
-//                })
-//            } else {
-//                val builder = AlertDialog.Builder(this@Splash)
-//                builder.setMessage(getString(R.string.general_message_error))
-//                // add a button
-//                builder.setPositiveButton(getString(R.string.general_button_ok)) { dialog, which -> finish() }
-//                // create and show the alert dialog
-//                val dialog = builder.create()
-//                dialog.show()
-//            }
+            if (applicationContext.checkConnectivity()) {
+                if (AuthSdk.instance.currentToken?.appToken != null) {
+                    ServiceHelper.createService(ApiService::class.java).getProfile()
+                        .enqueue(object : retrofit2.Callback<AuthJson<UserProfile>> {
+                            override fun onResponse(call: Call<AuthJson<UserProfile>>, response: Response<AuthJson<UserProfile>>) {
+                                if (response.body()?.data?.status.equals("INIT")) {
+                                    finish()
+                                    startActivity(Intent(this@Splash, SignUpPassword::class.java))
+                                } else {
+                                    finish()
+                                    startActivity(Intent(this@Splash, HomeActivity::class.java))
+                                }
+                            }
+
+                            override fun onFailure(call: Call<AuthJson<UserProfile>>, t: Throwable) {
+                                finish()
+                                startActivity(Intent(this@Splash, Login::class.java))
+                            }
+                        })
+                } else {
+                    finish()
+                    startActivity(Intent(this@Splash, Login::class.java))
+                }
+
+            } else {
+                val builder = AlertDialog.Builder(this@Splash)
+                builder.setMessage(getString(R.string.general_message_error))
+                // add a button
+                builder.setPositiveButton(getString(R.string.general_button_ok)) { dialog, which -> finish() }
+                // create and show the alert dialog
+                val dialog = builder.create()
+                dialog.show()
+            }
         }, duration.toLong())
 
 //        FirebaseDynamicLinks.getInstance()
@@ -91,49 +115,6 @@ class Splash : BaseActivity() {
 //                }
 //                .addOnFailureListener(this) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
     }
-
-//    private fun versionCheck() {
-//        ApiService.createServiceNew(UpdateService::class.java).getUpdateV2(BuildConfig.VERSION_NAME, "ANDROID", "STUDENT").enqueue(object : ApiCallbackV2<Boolean>(mView) {
-//            override fun onSuccess(response: Boolean?) {
-//                super.onSuccess(response)
-//                if (response != null && !response) {
-//                    showForceUpdate()
-//                    return
-//                }
-//                startLoginFlow()
-//            }
-//
-//            override fun onFail(call: Call<*>?, e: ApiException) {
-//                super.onFail(call, e)
-//                showError(e)
-//            }
-//        })
-//    }
-//
-//    private fun showForceUpdate() {
-//        val forceUpdateIntent = Intent(this@Splash, ForceUpdate::class.java)
-//        startActivity(forceUpdateIntent)
-//        this@Splash.finish()
-//    }
-//
-//    private fun startLoginFlow() {
-//        val skipIntro = PreferenceUtils.getBoolean(ActivityIntroSlider.SKIP_INTRO, false)
-//        if (!skipIntro) {
-//            val mainIntent = Intent(this@Splash, ActivityIntroSliderV2::class.java)
-//            mainIntent.putExtra(ActivityLogin.EXTRA_REFERRAL, referralCode)
-//            startActivity(mainIntent)
-//            this@Splash.finish()
-//        } else {
-//            if (AuthSdk.instance.currentToken == null || TextUtils.isEmpty(AuthSdk.instance.currentToken!!.appToken)) {
-//                val mainIntent = Intent(this@Splash, ActivityLogin::class.java)
-//                mainIntent.putExtra(ActivityLogin.EXTRA_REFERRAL, referralCode)
-//                startActivity(mainIntent)
-//                this@Splash.finish()
-//            } else {
-//                TokenAuth(this@Splash).mobileAuth(mView, AuthSdk.instance.currentToken!!.appToken)
-//            }
-//        }
-//    }
 
     companion object {
         private val duration = 3000

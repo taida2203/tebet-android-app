@@ -7,7 +7,6 @@ import android.text.TextUtils
 import android.util.Log
 
 import com.facebook.FacebookSdk
-import co.common.util.PreferenceUtils
 
 import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.AuthClientCredentialMethod
@@ -102,30 +101,37 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         }
         authMethod!!.brandedLogin(context, config, object : ApiCallBack<LoginConfiguration>() {
             override fun onSuccess(code: Int, response: LoginConfiguration?) {
+                saveObject(AUTH_BRAND_LOGIN_TOKEN, response)
                 if (response != null) {
                     val input = LoginInput()
-                    if (authMethod is AuthFacebookMethod) {
-                        input.grant_type = "facebook_token"
-                        input.token = response.token
-                        input.token = config.token
-                    } else if (authMethod is AuthOTPMethod) {
-                        input.grant_type = "otp"
-                        input.otp = response.otp
-                    } else if (authMethod is AuthPasswordMethod) {
-                        input.grant_type = "password"
-                        input.password = response.password
-                        input.email = response.email
-                    } else if (authMethod is AuthGoogleMethod) {
-                        input.grant_type = "google_token"
-                        input.token = response.token
-                    } else if (authMethod is AuthAccountKitMethod) {
-                        input.grant_type = "accountkit_token"
-                        input.token = response.token
-                    } else if (authMethod is AuthClientCredentialMethod) {
-                        input.grant_type = "client_credentials"
+                    when (authMethod) {
+                        is AuthFacebookMethod -> {
+                            input.grantType = "facebook_token"
+                            input.token = response.token
+                            input.token = config.token
+                        }
+                        is AuthOTPMethod -> {
+                            input.grantType = "otp"
+                            input.otp = response.otp
+                        }
+                        is AuthPasswordMethod -> {
+                            input.grantType = "password"
+                            input.password = response.password
+                            input.username = response.username
+                        }
+                        is AuthGoogleMethod -> {
+                            input.grantType = "google_token"
+                            input.token = response.token
+                        }
+                        is AuthAccountKitMethod -> {
+                            input.grantType = "account_kit"
+                            input.token = response.token
+                            input.phone = response.phone
+                        }
+                        is AuthClientCredentialMethod -> input.grantType = "client_credentials"
                     }
 
-                    if (!TextUtils.isEmpty(input.grant_type)) {
+                    if (!TextUtils.isEmpty(input.grantType)) {
                         ServiceHelper.createService(ApiService::class.java).login(input).enqueue(object : AuthCallback<Token>() {
 
                             override fun onSuccess(code: Int, response: Token?) {
@@ -164,6 +170,10 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
             authMethod = getObject<AuthFacebookMethod>(AUTH_LOGIN_METHOD, AuthFacebookMethod::class.java) as AuthFacebookMethod
         }
         return authMethod
+    }
+
+    fun getBrandLoginToken(): LoginConfiguration? {
+        return getObject<LoginConfiguration>(AUTH_BRAND_LOGIN_TOKEN, LoginConfiguration::class.java) as LoginConfiguration
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -222,6 +232,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
 
         val AUTH_LOGIN_TOKEN = "AUTH_LOGIN_TOKEN"
         val AUTH_LOGIN_METHOD = "AUTH_LOGIN_METHOD"
+        val AUTH_BRAND_LOGIN_TOKEN = "AUTH_BRAND_LOGIN_TOKEN"
 
         val instance: AuthSdk
             get() {

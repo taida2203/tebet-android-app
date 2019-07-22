@@ -45,7 +45,7 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String?) {
         super.onNewToken(token)
-        registerCustomerDeviceCode(token)
+//        registerCustomerDeviceCode(token)
     }
 
     private fun isAppOnForeground(context: Context): Boolean {

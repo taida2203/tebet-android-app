@@ -20,6 +20,7 @@ class SignUpInfo : BaseActivity() {
         get() = R.layout.activity_sign_up_info
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        title = "Sign Up"
         refreshScreenStep()
         btnNext.setOnClickListener {
             when (screenStep) {
