@@ -49,8 +49,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         tvBaseTitle = findViewById(R.id.tv_base_title)
         tvBaseTitle.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
         tvBaseTitle.typeface = Typeface.DEFAULT_BOLD
-        tvBaseTitle.textSize = 16f
-//        load = Loading(this)
         iv_back.setOnClickListener { onBackPressed() }
         setSupportActionBar(baseToolbar)
 
