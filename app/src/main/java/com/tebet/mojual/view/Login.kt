@@ -39,7 +39,7 @@ class Login : BaseActivity() {
         }
         btnRegistration.setOnClickListener {
             showLoading(true)
-            AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(), object : ApiCallBack<Token>() {
+            AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(logoutWhileExpired = false), object : ApiCallBack<Token>() {
                 override fun onSuccess(responeCode: Int, response: Token?) {
                     showLoading(true)
                     ServiceHelper.createService(ApiService::class.java).getProfile()
@@ -65,7 +65,8 @@ class Login : BaseActivity() {
                 }
 
                 override fun onFailed(exeption: LoginException) {
-                    val config = LoginConfiguration()
+                    if(exeption.errorCode == 502) return
+                    val config = LoginConfiguration(false)
                     config.token = AuthSdk.instance.getBrandLoginToken()?.token
                     config.phone = AuthSdk.instance.getBrandLoginToken()?.phone
 
@@ -80,7 +81,7 @@ class Login : BaseActivity() {
                                 AuthSdk.instance.login(
                                     this@Login,
                                     AuthAccountKitMethod(),
-                                    LoginConfiguration(),
+                                    LoginConfiguration(false),
                                     object : ApiCallBack<Token>() {
                                         override fun onSuccess(responeCode: Int, response: Token?) {
                                             showLoading(false)

@@ -3,7 +3,6 @@ package com.tebet.mojual.view
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.AuthPasswordMethod
@@ -23,7 +22,7 @@ class LoginWithPassword : BaseActivity() {
         title = "Login with phone number"
 //        navLayout.visibility = View.VISIBLE
         btnNext.setOnClickListener {
-            val configuration = LoginConfiguration()
+            val configuration = LoginConfiguration(false)
             configuration.username = etPhone.text.toString()
             configuration.password = etPassword.text.toString()
             showLoading(true)
@@ -44,7 +43,7 @@ class LoginWithPassword : BaseActivity() {
         }
         btnForgotPassword.setOnClickListener {
             showLoading(true)
-            AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(), object : ApiCallBack<Token>() {
+            AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(false), object : ApiCallBack<Token>() {
                 override fun onSuccess(responeCode: Int, response: Token?) {
                     showLoading(false)
                     finish()
@@ -57,6 +56,12 @@ class LoginWithPassword : BaseActivity() {
                 }
             })
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        showLoading(false)
+        data?.let { AuthSdk.instance.onActivityResult(requestCode, resultCode, it) }
     }
 
 }

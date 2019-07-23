@@ -1,6 +1,6 @@
 package co.sdk.auth.core
 
-class LoginConfiguration {
+class LoginConfiguration(var logoutWhileExpired: Boolean = true) {
 
     var token: String? = null
     var otp: String? = null

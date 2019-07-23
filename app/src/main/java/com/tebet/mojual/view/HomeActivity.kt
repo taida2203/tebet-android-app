@@ -22,6 +22,7 @@ class HomeActivity : BaseActivity() {
         get() = R.layout.activity_home
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        title = "Home"
 //        getData()
         btnLogout.setOnClickListener {
             AuthSdk.instance.logout(false, object : ApiCallBack<Any>() {
