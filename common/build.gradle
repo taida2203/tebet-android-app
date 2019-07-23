@@ -6,11 +6,11 @@ apply plugin: 'kotlin-kapt'
 android {
 //    compileSdkVersion project.compileSdkVersion
 //    buildToolsVersion project.buildToolsVersion
-    compileSdkVersion 28
+    compileSdkVersion Versions.androidCompileSdk
 //    buildToolsVersion project.buildToolsVersion
     defaultConfig {
-        minSdkVersion project.properties.minSdkVersion
-        targetSdkVersion project.properties.targetSdkVersion
+        minSdkVersion Versions.androidMinSdk
+        targetSdkVersion Versions.androidTargetSdk
         versionCode 1
         versionName "1.0"
 
@@ -40,17 +40,18 @@ dependencies {
 
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation AppDependencies.retrofit
     implementation 'pub.devrel:easypermissions:1.2.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
 
     //logging
-    implementation 'com.jakewharton.timber:timber:4.7.0'
+    implementation AppDependencies.timber
 
     //rxjava
-    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
-    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation AppDependencies.rxAndroid
+    implementation AppDependencies.rxJava
+    implementation AppDependencies.rxKotlin
 
     //misc
 //    implementation 'com.jakewharton:butterknife:10.1.0'

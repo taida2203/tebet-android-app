@@ -12,7 +12,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <meta-data
+    <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
                 android:value="@string/facebook_app_id"/>
         <meta-data
@@ -40,8 +40,6 @@
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name="com.facebook.accountkit.ui.AccountKitActivity"/>
 
         <activity android:name=".view.HomeActivity"/>
         <activity android:name=".view.Login"/>

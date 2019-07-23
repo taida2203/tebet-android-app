@@ -4,13 +4,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion project.compileSdkVersion
+    compileSdkVersion Versions.androidCompileSdk
 //    compileSdkVersion 28
-    buildToolsVersion project.buildToolsVersion
+//    buildToolsVersion project.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion project.minSdkVersion
-        targetSdkVersion project.properties.targetSdkVersion
+        minSdkVersion Versions.androidMinSdk
+        targetSdkVersion Versions.androidTargetSdk
         versionCode 1
         versionName "1.0"
     }
@@ -32,13 +32,14 @@ android {
 dependencies {
     implementation "com.facebook.android:facebook-android-sdk:$facebookVersion"
     implementation "com.facebook.android:account-kit-sdk:$facebookVersion"
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion") { transitive = true }
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion") { transitive = true }
-    implementation("com.squareup.retrofit2:adapter-rxjava:$retrofitVersion") { transitive = true }
+    implementation AppDependencies.retrofit
+    implementation AppDependencies.retrofitAdapter
+    implementation AppDependencies.retrofitConverter
+    implementation("com.squareup.retrofit2:adapter-rxjava:2.5.0") { transitive = true }
 //    implementation "com.google.android.gms:play-services-auth:$playServicesVersion"
     implementation "com.ashokvarma.android:gander:$ganderVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$squareLoggerVersion"
-    implementation 'com.jakewharton.timber:timber:4.7.0'
+    implementation AppDependencies.timber
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'pub.devrel:easypermissions:1.2.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
