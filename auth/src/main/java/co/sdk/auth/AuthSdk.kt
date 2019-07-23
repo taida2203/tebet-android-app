@@ -136,9 +136,9 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
 
                             override fun onSuccess(code: Int, response: Token?) {
                                 saveObject(AUTH_LOGIN_TOKEN, response)
-                                if (authMethod != null && authMethod is AuthAccountKitMethod) {
-                                    authMethod.logout(context, true, null)
-                                }
+//                                if (authMethod != null && authMethod is AuthAccountKitMethod) {
+//                                    authMethod.logout(context, true, null)
+//                                }
                                 response?.let { callback?.onSuccess(code, it) }
                             }
 

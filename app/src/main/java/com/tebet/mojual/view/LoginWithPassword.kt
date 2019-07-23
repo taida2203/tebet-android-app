@@ -3,6 +3,7 @@ package com.tebet.mojual.view
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.AuthPasswordMethod
@@ -19,30 +20,40 @@ class LoginWithPassword : BaseActivity() {
         get() = R.layout.activity_login_password
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        title = "Login with phone number"
+//        navLayout.visibility = View.VISIBLE
         btnNext.setOnClickListener {
             val configuration = LoginConfiguration()
             configuration.username = etPhone.text.toString()
             configuration.password = etPassword.text.toString()
+            showLoading(true)
             AuthSdk.instance.login(this@LoginWithPassword, AuthPasswordMethod(), configuration, object :
-                ApiCallBack<Token>(){
+                ApiCallBack<Token>() {
                 override fun onSuccess(responeCode: Int, response: Token?) {
+                    showLoading(false)
                     setResult(Activity.RESULT_OK)
                     this@LoginWithPassword.finish()
                     startActivity(Intent(this@LoginWithPassword, HomeActivity::class.java))
                 }
 
                 override fun onFailed(exeption: LoginException) {
+                    showLoading(false)
+                    handleError(exeption)
                 }
             })
         }
         btnForgotPassword.setOnClickListener {
+            showLoading(true)
             AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(), object : ApiCallBack<Token>() {
                 override fun onSuccess(responeCode: Int, response: Token?) {
+                    showLoading(false)
                     finish()
                     startActivity(Intent(this@LoginWithPassword, ForgotPassword::class.java))
                 }
 
                 override fun onFailed(exeption: LoginException) {
+                    showLoading(false)
+                    handleError(exeption)
                 }
             })
         }

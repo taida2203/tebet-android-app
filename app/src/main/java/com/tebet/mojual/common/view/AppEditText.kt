@@ -3,8 +3,9 @@ package com.tebet.mojual.common.view
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
-import co.common.util.SquTypefaceHandler
-import com.tebet.mojual.common.R
+import androidx.core.content.ContextCompat
+import androidx.core.view.setPadding
+import com.tebet.mojual.R
 
 open class AppEditText : AppCompatEditText {
     constructor(context: Context) : super(context) {
@@ -21,6 +22,10 @@ open class AppEditText : AppCompatEditText {
     }
 
     private fun setFont(attributeSet: AttributeSet?) {
+        this.background = ContextCompat.getDrawable(context, R.drawable.border_edit_text)
+        this.setPadding(20, 20, 20, 20)
+        this.setTextColor(ContextCompat.getColor(context, R.color.grey))
+        this.setHintTextColor(ContextCompat.getColor(context, R.color.grey))
 //        val typeArray = context.theme.obtainStyledAttributes(
 //            attributeSet,
 //            R.styleable.SquTextFont,
@@ -38,4 +43,6 @@ open class AppEditText : AppCompatEditText {
 //
 //        if (!isInEditMode) typeface = SquTypefaceHandler.getTypeface(typefaceType)
     }
+
+
 }

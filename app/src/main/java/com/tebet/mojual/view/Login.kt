@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.LoginConfiguration
@@ -32,10 +33,12 @@ class Login : BaseActivity() {
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         title = "Login with phone number"
         baseToolbar.visibility = View.GONE
+        btnLogin.background = ContextCompat.getDrawable(this, R.drawable.rounded_btn_grey)
         btnLogin.setOnClickListener {
             startActivityForResult(Intent(this@Login, LoginWithPassword::class.java), LOGIN_PASSWORD)
         }
         btnRegistration.setOnClickListener {
+            showLoading(true)
             AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(), object : ApiCallBack<Token>() {
                 override fun onSuccess(responeCode: Int, response: Token?) {
                     ServiceHelper.createService(ApiService::class.java).getProfile()
@@ -44,6 +47,7 @@ class Login : BaseActivity() {
                                 call: Call<AuthJson<UserProfile>>,
                                 response: Response<AuthJson<UserProfile>>
                             ) {
+                                showLoading(false)
                                 if (response.body()?.data?.status.equals("INIT")) {
                                     startActivity(Intent(this@Login, SignUpPassword::class.java))
                                 } else {
@@ -53,6 +57,8 @@ class Login : BaseActivity() {
                             }
 
                             override fun onFailure(call: Call<AuthJson<UserProfile>>, t: Throwable) {
+                                showLoading(false)
+                                handleError(t)
                             }
                         })
                 }
@@ -65,6 +71,8 @@ class Login : BaseActivity() {
                     ServiceHelper.createService(ApiService::class.java).register(config)
                         .enqueue(object : retrofit2.Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                showLoading(false)
+                                handleError(t)
                             }
 
                             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -74,10 +82,13 @@ class Login : BaseActivity() {
                                     LoginConfiguration(),
                                     object : ApiCallBack<Token>() {
                                         override fun onSuccess(responeCode: Int, response: Token?) {
+                                            showLoading(false)
                                             startActivity(Intent(this@Login, SignUpPassword::class.java))
                                         }
 
                                         override fun onFailed(exeption: LoginException) {
+                                            showLoading(false)
+                                            handleError(exeption)
                                         }
                                     })
                             }

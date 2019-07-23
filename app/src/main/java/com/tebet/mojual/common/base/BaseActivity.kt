@@ -3,17 +3,17 @@ package com.tebet.mojual.common.base
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageButton
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import co.common.network.ApiException
 import co.common.view.BaseView
@@ -21,6 +21,8 @@ import com.tebet.mojual.R
 import com.tebet.mojual.notification.view.NotificationActivity
 import kotlinx.android.synthetic.main.activity_base.*
 import java.lang.ref.WeakReference
+import co.sdk.auth.core.models.LoginException
+
 
 abstract class BaseActivity : AppCompatActivity(), BaseView {
     lateinit var baseToolbar: Toolbar
@@ -28,8 +30,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         private set
     lateinit var tvBaseTitle: TextView
         private set
-
-//    protected lateinit var load: Loading
+    protected lateinit var navLayout : RelativeLayout
+    //    protected lateinit var load: Loading
     private var notifExtra: MutableMap<String, String>? = null
     private var isActive: Boolean = false
     protected abstract val contentLayoutId: Int
@@ -42,8 +44,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
         baseToolbar = findViewById(R.id.base_toolbar)
         ivBack = findViewById(R.id.iv_back)
+        navLayout = findViewById(R.id.rlHomeCakapCornerMenuContainer)
+        rlHomeCakapCornerMenuContainer
         tvBaseTitle = findViewById(R.id.tv_base_title)
-
+        tvBaseTitle.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
+        tvBaseTitle.typeface = Typeface.DEFAULT_BOLD
+        tvBaseTitle.textSize = 16f
 //        load = Loading(this)
         iv_back.setOnClickListener { onBackPressed() }
         setSupportActionBar(baseToolbar)
@@ -55,7 +61,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
             startActivity(Intent(this, NotificationActivity::class.java))
         }
         iv_cakap_history.setOnClickListener {
-//            startActivity(Intent(this, CornerHistoryActivity::class.java))
+            //            startActivity(Intent(this, CornerHistoryActivity::class.java))
         }
         layoutInflater.inflate(contentLayoutId, placeHolder)
 
@@ -120,6 +126,22 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 //        } else {
 //            load.hidepDialog()
 //        }
+    }
+
+    fun showLoading(isShow: Boolean) {
+        progressBar.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+    fun handleError(exeption: LoginException?) {
+        if (exeption != null) {
+            Toast.makeText(this, exeption.errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun handleError(exception: Throwable) {
+        if (exception != null) {
+            Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun setTitle(titleId: Int) {
@@ -205,7 +227,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
             val manager = supportFragmentManager
             val transaction = manager.beginTransaction()
             transaction.replace(placeHolder, fragment, tag)
-                    .commitAllowingStateLoss()
+                .commitAllowingStateLoss()
         }
     }
 

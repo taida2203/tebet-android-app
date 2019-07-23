@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import co.common.util.SquTypefaceHandler
 import com.tebet.mojual.common.R
 
@@ -22,6 +23,7 @@ class AppTextView : AppCompatTextView {
     }
 
     private fun setFont(attributeSet: AttributeSet?) {
+        setTextColor(ContextCompat.getColor(context, R.color.dialogColorCancel))
 //        val typeArray = context.theme.obtainStyledAttributes(
 //            attributeSet,
 //            R.styleable.SquTextFont,

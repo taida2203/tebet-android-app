@@ -7,11 +7,14 @@
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:layout_alignParentBottom="true" android:orientation="vertical">
-        <com.tebet.mojual.common.view.AppButtonRounded android:layout_width="match_parent" android:layout_height="wrap_content"
-                                                android:text="@string/login_screen_btn_login"
-                                                android:id="@+id/btnLogin"/>
-        <com.tebet.mojual.common.view.AppButtonRounded android:layout_width="match_parent" android:layout_height="wrap_content"
-                                                android:text="@string/login_screen_btn_register"
-                                                android:id="@+id/btnRegistration"/>
+        <com.tebet.mojual.common.view.AppButtonRounded android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content"
+                                                       android:text="@string/login_screen_btn_login"
+                                                       android:id="@+id/btnLogin"
+                                                       android:layout_marginBottom="@dimen/_10sdp"/>
+        <com.tebet.mojual.common.view.AppButtonRounded android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content"
+                                                       android:text="@string/login_screen_btn_register"
+                                                       android:id="@+id/btnRegistration"/>
     </LinearLayout>
 </RelativeLayout>

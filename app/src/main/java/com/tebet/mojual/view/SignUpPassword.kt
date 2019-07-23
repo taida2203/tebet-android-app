@@ -18,13 +18,17 @@ class SignUpPassword : BaseActivity() {
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         btnNext.setOnClickListener {
+            showLoading(true)
             val updateProfileRequest = UpdateProfileRequest()
-            updateProfileRequest.password = "123456"
+            updateProfileRequest.password = tvPassword.text.toString().trim()
             ServiceHelper.createService(ApiService::class.java).updateProfile(updateProfileRequest).enqueue(object : retrofit2.Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    showLoading(false)
+                    handleError(t)
                 }
 
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    showLoading(false)
                     this@SignUpPassword.finish()
                     startActivity(Intent(this@SignUpPassword, SignUpInfo::class.java))
                 }

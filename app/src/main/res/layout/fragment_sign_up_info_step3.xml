@@ -4,11 +4,15 @@
               android:layout_height="match_parent"
               android:background="@color/white" android:orientation="vertical">
     <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Bank Name"/>
+                                              android:hint="Bank Name"
+                                              android:layout_marginBottom="@dimen/_10sdp"/>
     <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Bank account number"/>
+                                              android:hint="Bank account number"
+                                              android:layout_marginBottom="@dimen/_10sdp"/>
     <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Bank account name"/>
+                                              android:hint="Bank account name"
+                                              android:layout_marginBottom="@dimen/_10sdp"/>
     <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Bank region"/>
+                                              android:hint="Bank region"
+                                              android:layout_marginBottom="@dimen/_10sdp"/>
 </LinearLayout>

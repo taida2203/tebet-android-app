@@ -19,5 +19,6 @@
     <color name="green_border_avatar">#73cd1f</color>
     <color name="down_linear_grey">#cbccce</color>
     <color name="dividerLighterGray">#e5e5e5</color>
+    <color name="dark_green">#49802D</color>
 
 </resources>
