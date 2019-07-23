@@ -41,6 +41,7 @@ class Login : BaseActivity() {
             showLoading(true)
             AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(), object : ApiCallBack<Token>() {
                 override fun onSuccess(responeCode: Int, response: Token?) {
+                    showLoading(true)
                     ServiceHelper.createService(ApiService::class.java).getProfile()
                         .enqueue(object : retrofit2.Callback<AuthJson<UserProfile>> {
                             override fun onResponse(
@@ -100,6 +101,7 @@ class Login : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        showLoading(false)
         data?.let { AuthSdk.instance.onActivityResult(requestCode, resultCode, it) }
         when (resultCode) {
             LOGIN_PASSWORD -> if (requestCode == Activity.RESULT_OK) finish()

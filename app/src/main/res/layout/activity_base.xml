@@ -22,6 +22,7 @@
             android:contentInsetRight="0dp"
             app:contentInsetEnd="0dp"
             app:contentInsetLeft="0dp"
+            android:background="@color/white"
             app:contentInsetRight="0dp"
             app:contentInsetStart="0dp">
 
@@ -42,13 +43,14 @@
                         android:padding="@dimen/_6sdp"
                         app:srcCompat="@drawable/ic_back"/>
 
-                <TextView
+                <com.tebet.mojual.common.view.AppTextView
                         android:id="@+id/tv_base_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/iv_back"
                         android:lines="1"
+                        android:textSize="@dimen/_16ssp"
                         android:textColor="@color/white"
                         app:font_style="bold"/>
 

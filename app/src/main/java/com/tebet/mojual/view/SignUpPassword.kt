@@ -17,6 +17,7 @@ class SignUpPassword : BaseActivity() {
         get() = R.layout.activity_sign_up_password
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        title = "Sign Up"
         btnNext.setOnClickListener {
             showLoading(true)
             val updateProfileRequest = UpdateProfileRequest()

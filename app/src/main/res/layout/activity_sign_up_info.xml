@@ -9,26 +9,31 @@
         <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp" android:layout_height="wrap_content"
                                                   android:layout_weight="1"
                                                   android:gravity="center"
+                                                  android:textSize="@dimen/_14ssp"
                                                   android:fontFamily="bold"
                                                   android:id="@+id/tvTitleStep1"
                                                   android:text="Demographic"/>
         <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content"
                                                   android:layout_height="wrap_content"
+                                                  android:textSize="@dimen/_14ssp"
                                                   android:fontFamily="bold"
                                                   android:text=">"/>
         <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp" android:layout_height="wrap_content"
                                                   android:layout_weight="1"
                                                   android:gravity="center"
                                                   android:fontFamily="bold"
+                                                  android:textSize="@dimen/_14ssp"
                                                   android:id="@+id/tvTitleStep2"
                                                   android:text="Contact"/>
         <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content"
                                                   android:fontFamily="bold"
+                                                  android:textSize="@dimen/_14ssp"
                                                   android:layout_height="wrap_content"
                                                   android:text=">"/>
         <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp" android:layout_height="match_parent"
                                                   android:layout_weight="1"
                                                   android:id="@+id/tvTitleStep3"
+                                                  android:textSize="@dimen/_14ssp"
                                                   android:fontFamily="bold"
                                                   android:gravity="center"
                                                   android:text="Payment"/>

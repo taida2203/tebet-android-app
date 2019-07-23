@@ -17,6 +17,7 @@ class ForgotPassword : BaseActivity() {
         get() = R.layout.activity_sign_up_password
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        title = "Input new password"
         btnNext.setOnClickListener {
             val updateProfileRequest = UpdateProfileRequest()
             updateProfileRequest.password = tvPassword.text?.trim().toString()
