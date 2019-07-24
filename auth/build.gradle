@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven-publish'
 
 android {
@@ -35,10 +35,9 @@ dependencies {
     implementation AppDependencies.retrofit
     implementation AppDependencies.retrofitAdapter
     implementation AppDependencies.retrofitConverter
-    implementation("com.squareup.retrofit2:adapter-rxjava:2.5.0") { transitive = true }
+    implementation AppDependencies.okHttpLogger
 //    implementation "com.google.android.gms:play-services-auth:$playServicesVersion"
     implementation "com.ashokvarma.android:gander:$ganderVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$squareLoggerVersion"
     implementation AppDependencies.timber
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'pub.devrel:easypermissions:1.2.0'

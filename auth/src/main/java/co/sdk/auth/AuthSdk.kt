@@ -54,10 +54,11 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         }
 
     init {
-        co.common.util.PreferenceUtils.init(context)
+        init(context)
         Utility.init(context)
-        FacebookSdk.setApplicationId("1670061399880500")
-        FacebookSdk.sdkInitialize(context)
+        FacebookSdk.setApplicationId(context.resources.getString(R.string.facebook_app_id))
+        FacebookSdk.setAutoLogAppEventsEnabled(false)
+        FacebookSdk.setAdvertiserIDCollectionEnabled(false)
         FacebookSdk.setAutoLogAppEventsEnabled(false)
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

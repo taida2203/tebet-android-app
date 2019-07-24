@@ -16,7 +16,7 @@ import co.sdk.auth.network.ServiceHelper
 import com.tebet.mojual.R
 import com.tebet.mojual.common.base.BaseActivity
 import com.tebet.mojual.data.models.UserProfile
-import com.tebet.mojual.network.ApiService
+import com.tebet.mojual.data.remote.ApiInterface
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -42,7 +42,7 @@ class Login : BaseActivity() {
             AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(logoutWhileExpired = false), object : ApiCallBack<Token>() {
                 override fun onSuccess(responeCode: Int, response: Token?) {
                     showLoading(true)
-                    ServiceHelper.createService(ApiService::class.java).getProfile()
+                    ServiceHelper.createService(ApiInterface::class.java).getProfile()
                         .enqueue(object : retrofit2.Callback<AuthJson<UserProfile>> {
                             override fun onResponse(
                                 call: Call<AuthJson<UserProfile>>,
@@ -70,7 +70,7 @@ class Login : BaseActivity() {
                     config.token = AuthSdk.instance.getBrandLoginToken()?.token
                     config.phone = AuthSdk.instance.getBrandLoginToken()?.phone
 
-                    ServiceHelper.createService(ApiService::class.java).register(config)
+                    ServiceHelper.createService(ApiInterface::class.java).register(config)
                         .enqueue(object : retrofit2.Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 showLoading(false)

@@ -4,4 +4,6 @@
 
     <string name="general_message_error">We are unable to connect right now, please try again later.</string>
 
+    <string name="facebook_app_id" translatable="false">1230019173833488</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN" translatable="false">7a28dfdbb6b3b972e8cddceea5065a66</string>
 </resources>

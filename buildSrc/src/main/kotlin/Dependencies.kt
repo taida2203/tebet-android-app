@@ -70,6 +70,7 @@ object AppDependencies {
     const val daggerSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
     const val glassfishAnnotation = "org.glassfish:javax.annotation:${Versions.glassfishAnnotation}"
     const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    const val glideExtension = "com.github.bumptech.glide:okhttp3-integration:${Versions.glide}"
     const val gson = "com.google.code.gson:gson:${Versions.gson}"
     const val javaxAnnotation = "javax.annotation:jsr250-api:${Versions.javaxAnnotation}"
     const val javaxInject = "javax.inject:javax.inject:${Versions.javaxInject}"
@@ -94,6 +95,8 @@ object AppDependencies {
     const val lifecycle = "android.arch.lifecycle:extensions:${Versions.lifecycle}"
     const val lifecycleCompiler = "android.arch.lifecycle:compiler:${Versions.lifecycleCompiler}"
     const val moshiConverter = "com.squareup.retrofit2:converter-moshi:2.0.0-beta3"
+    const val sdp = "com.intuit.sdp:sdp-android:1.0.6"
+    const val ssp = "com.intuit.ssp:ssp-android:1.0.6"
 
 }
 

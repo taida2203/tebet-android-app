@@ -10,7 +10,7 @@ import co.sdk.auth.network.ServiceHelper
 import com.tebet.mojual.R
 import com.tebet.mojual.common.base.BaseActivity
 import com.tebet.mojual.data.models.SensorData
-import com.tebet.mojual.network.ApiService
+import com.tebet.mojual.data.remote.ApiInterface
 import kotlinx.android.synthetic.main.activity_home.*
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
@@ -39,7 +39,7 @@ class HomeActivity : BaseActivity() {
 
     private fun getData() {
         Handler().postDelayed({
-            ServiceHelper.createService(ApiService::class.java).getData().enqueue(object : retrofit2.Callback<ResponseBody> {
+            ServiceHelper.createService(ApiInterface::class.java).getData().enqueue(object : retrofit2.Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 }
 

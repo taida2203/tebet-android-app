@@ -1,4 +1,4 @@
-package com.tebet.mojual.network
+package com.tebet.mojual.data.remote
 
 import co.sdk.auth.core.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
@@ -12,7 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 
-interface ApiService {
+interface ApiInterface {
     /*
     Retrofit get annotation with our URL
     And our method that will return us the List of ContactList

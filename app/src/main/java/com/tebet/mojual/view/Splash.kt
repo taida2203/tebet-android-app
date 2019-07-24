@@ -11,14 +11,12 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.models.AuthJson
-import co.sdk.auth.core.models.Token
 import co.sdk.auth.network.ServiceHelper
 import com.tebet.mojual.R
 import com.tebet.mojual.common.base.BaseActivity
 import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.data.models.UserProfile
-import com.tebet.mojual.network.ApiService
-import okhttp3.ResponseBody
+import com.tebet.mojual.data.remote.ApiInterface
 import retrofit2.Call
 import retrofit2.Response
 import java.security.MessageDigest
@@ -53,7 +51,7 @@ class Splash : BaseActivity() {
         Handler().postDelayed({
             if (applicationContext.checkConnectivity()) {
                 if (AuthSdk.instance.currentToken?.appToken != null) {
-                    ServiceHelper.createService(ApiService::class.java).getProfile()
+                    ServiceHelper.createService(ApiInterface::class.java).getProfile()
                         .enqueue(object : retrofit2.Callback<AuthJson<UserProfile>> {
                             override fun onResponse(call: Call<AuthJson<UserProfile>>, response: Response<AuthJson<UserProfile>>) {
                                 if (response.body()?.data?.status.equals("INIT")) {

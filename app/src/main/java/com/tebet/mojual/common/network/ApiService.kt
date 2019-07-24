@@ -4,7 +4,7 @@ import android.content.Context
 import com.ashokvarma.gander.GanderInterceptor
 import com.tebet.mojual.BuildConfig
 import com.tebet.mojual.common.constant.ConfigEnv
-import com.tebet.mojual.common.handler.AppController
+import com.tebet.mojual.App
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -53,7 +53,7 @@ class ApiService {
 
         if (ConfigEnv.environment !== ConfigEnv.Environment.PRODUCTION) {
             client.addInterceptor(
-                GanderInterceptor(AppController.getInstance().context)
+                GanderInterceptor(App.instance.context)
                     .showNotification(true)
             )
         }
@@ -86,7 +86,7 @@ class ApiService {
 
         if (ConfigEnv.environment !== ConfigEnv.Environment.PRODUCTION) {
             client.addInterceptor(
-                GanderInterceptor(AppController.getInstance().getContext())
+                GanderInterceptor(App.instance.context)
                     .showNotification(true)
             )
         }
