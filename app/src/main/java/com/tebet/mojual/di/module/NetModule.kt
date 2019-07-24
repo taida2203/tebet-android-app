@@ -16,6 +16,7 @@ import retrofit2.MoshiConverterFactory
 import retrofit2.Retrofit
 import retrofit2.Retrofit.Builder
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -38,6 +39,7 @@ class NetModule(private val baseUrl: String) {
         .readTimeout(60, TimeUnit.SECONDS)
         .writeTimeout(60, TimeUnit.SECONDS)
         .addInterceptor(ganderInterceptor)
+
         .addInterceptor(
             AuthenticationV2Interceptor()
         ).build()
@@ -70,7 +72,7 @@ class NetModule(private val baseUrl: String) {
     @Singleton
     fun providesRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Builder().client(okHttpClient).baseUrl(baseUrl)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
