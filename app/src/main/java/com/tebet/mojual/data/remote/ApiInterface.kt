@@ -5,6 +5,7 @@ import co.sdk.auth.core.models.AuthJson
 import co.sdk.auth.core.models.Token
 import com.tebet.mojual.data.models.UpdateProfileRequest
 import com.tebet.mojual.data.models.UserProfile
+import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -27,7 +28,7 @@ interface ApiInterface {
     fun register(@Body endChatSessionRequest: LoginConfiguration): Call<ResponseBody>
 
     @GET("profile/profile")
-    fun getProfile(): Call<AuthJson<UserProfile>>
+    fun getProfile(): Observable<AuthJson<UserProfile>>
 
     @PUT("profile/profile")
     fun updateProfile(@Body updateProfileRequest: UpdateProfileRequest): Call<ResponseBody>

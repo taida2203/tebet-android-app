@@ -1,6 +1,7 @@
 package com.tebet.mojual.di.module
 
 import com.tebet.mojual.view.HomeActivity
+import com.tebet.mojual.view.splash.view.Splash
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -12,4 +13,6 @@ import dagger.android.ContributesAndroidInjector
 abstract class BuildersModule {
   @ContributesAndroidInjector
   abstract fun homeActivity(): HomeActivity
+  @ContributesAndroidInjector
+  abstract fun splashActivity(): Splash
 }

@@ -104,8 +104,6 @@ class App : MultiDexApplication(), HasActivityInjector {
             private set
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun activityInjector(): AndroidInjector<Activity> = activityInjector
 }
 

@@ -10,8 +10,6 @@ import java.io.IOException;
 
 
 class AuthenticationInterceptor implements Interceptor {
-
-
     AuthenticationInterceptor() {
     }
 

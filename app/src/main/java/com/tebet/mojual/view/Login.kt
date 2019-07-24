@@ -17,6 +17,7 @@ import com.tebet.mojual.R
 import com.tebet.mojual.common.base.BaseActivity
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.ApiInterface
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -42,26 +43,26 @@ class Login : BaseActivity() {
             AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(logoutWhileExpired = false), object : ApiCallBack<Token>() {
                 override fun onSuccess(responeCode: Int, response: Token?) {
                     showLoading(true)
-                    ServiceHelper.createService(ApiInterface::class.java).getProfile()
-                        .enqueue(object : retrofit2.Callback<AuthJson<UserProfile>> {
-                            override fun onResponse(
-                                call: Call<AuthJson<UserProfile>>,
-                                response: Response<AuthJson<UserProfile>>
-                            ) {
-                                showLoading(false)
-                                if (response.body()?.data?.status.equals("INIT")) {
-                                    startActivity(Intent(this@Login, SignUpPassword::class.java))
-                                } else {
-                                    startActivity(Intent(this@Login, HomeActivity::class.java))
-                                }
-                                finish()
-                            }
-
-                            override fun onFailure(call: Call<AuthJson<UserProfile>>, t: Throwable) {
-                                showLoading(false)
-                                handleError(t)
-                            }
-                        })
+//                    ServiceHelper.createService(ApiInterface::class.java).getProfile()
+//                        .enqueue(object : retrofit2.Callback<AuthJson<UserProfile>> {
+//                            override fun onResponse(
+//                                call: Call<AuthJson<UserProfile>>,
+//                                response: Response<AuthJson<UserProfile>>
+//                            ) {
+//                                showLoading(false)
+//                                if (response.body()?.data?.status.equals("INIT")) {
+//                                    startActivity(Intent(this@Login, SignUpPassword::class.java))
+//                                } else {
+//                                    startActivity(Intent(this@Login, HomeActivity::class.java))
+//                                }
+//                                finish()
+//                            }
+//
+//                            override fun onFailure(call: Call<AuthJson<UserProfile>>, t: Throwable) {
+//                                showLoading(false)
+//                                handleError(t)
+//                            }
+//                        })
                 }
 
                 override fun onFailed(exeption: LoginException) {

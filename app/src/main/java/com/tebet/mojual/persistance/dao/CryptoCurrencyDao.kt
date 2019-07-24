@@ -14,9 +14,9 @@ import io.reactivex.Single
 @Dao
 interface UserProfileDao {
 
-    @Query("SELECT * FROM UserProfile ORDER BY userId limit :limit offset :offset")
-    fun queryUserProfile(limit: Int, offset: Int): Single<UserProfile>
+    @Query("SELECT * FROM UserProfile ORDER BY userId")
+    fun queryUserProfile(): Single<UserProfile>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUserProfile(cryptoCurrency: UserProfile)
+    fun insertUserProfile(userProfile: UserProfile)
 }
