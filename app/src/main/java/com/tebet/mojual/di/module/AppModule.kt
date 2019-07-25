@@ -1,13 +1,11 @@
 package com.tebet.mojual.di.module
 
 import android.app.Application
-import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.tebet.mojual.persistance.dao.UserProfileDao
 import com.tebet.mojual.persistance.local.Database
-import com.tebet.mojual.view.splash.view.SplashViewModelFactory
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -47,12 +45,6 @@ class AppModule(private val app: Application) {
     fun provideUserProfileDao(
         database: Database
     ): UserProfileDao = database.userProfileDao()
-
-    @Provides
-    @Singleton
-    fun provideSplashViewModelFactory(
-        factory: SplashViewModelFactory
-    ): ViewModelProvider.Factory = factory
 
 //  @Provides
 //  @Singleton

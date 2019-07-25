@@ -1,4 +1,4 @@
-package com.tebet.mojual.view.splash.view
+package com.tebet.mojual.view.splash
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,15 +16,15 @@ import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivitySplashScreenBinding
 import com.tebet.mojual.view.HomeActivity
-import com.tebet.mojual.view.Login
+import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.SignUpPassword
 import com.tebet.mojual.view.base.BaseActivityNew
-import com.tebet.mojual.view.splash.viewmodel.SplashViewModel
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import javax.inject.Inject
 
-open class Splash : BaseActivityNew<ActivitySplashScreenBinding, SplashViewModel>(), SplashNavigator {
+open class Splash : BaseActivityNew<ActivitySplashScreenBinding, SplashViewModel>(),
+    SplashNavigator {
     @Inject
     lateinit var factory: ViewModelProviderFactory
     override val bindingVariable: Int

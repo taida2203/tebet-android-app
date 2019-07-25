@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".view.splash.view.Splash">
+        tools:context=".view.splash.Splash">
     <data>
         <variable
                 name="viewModel"
-                type="com.tebet.mojual.view.splash.viewmodel.SplashViewModel"/>
+                type="com.tebet.mojual.view.splash.SplashViewModel"/>
     </data>
 
     <LinearLayout

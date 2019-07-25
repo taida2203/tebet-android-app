@@ -1,147 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/activity_komentar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".view.base.BaseActivityNew">
+    <data>
+        <variable
+                name="viewModel"
+                type="com.tebet.mojual.view.base.BaseActivityNew"/>
+    </data>
 
     <RelativeLayout
-            android:id="@+id/placeHolder"
+            android:id="@+id/activity_komentar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/baseToolbar"/>
-
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/baseToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:contentInsetStart="0dp"
-            android:contentInsetLeft="0dp"
-            android:contentInsetEnd="0dp"
-            android:contentInsetRight="0dp"
-            app:contentInsetEnd="0dp"
-            app:contentInsetLeft="0dp"
-            android:background="@color/white"
-            app:contentInsetRight="0dp"
-            app:contentInsetStart="0dp">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
+                android:id="@+id/placeHolder"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_below="@+id/baseToolbar"/>
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/baseToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:contentInsetStart="0dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetEnd="0dp"
+                android:contentInsetRight="0dp"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                android:background="@color/white"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp">
 
             <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <ImageButton
-                        android:id="@+id/ivBack"
+                <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_6sdp"
-                        app:srcCompat="@drawable/ic_back"/>
-
-                <com.tebet.mojual.common.view.AppTextView
-                        android:id="@+id/tvBaseTitle"
-                        android:layout_width="match_parent"
-                        android:gravity="center"
-                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:lines="1"
-                        android:textSize="@dimen/_16ssp"
-                        android:textColor="@color/white"
-                        app:font_style="bold"/>
+                        android:orientation="horizontal">
 
-            </RelativeLayout>
+                    <ImageButton
+                            android:id="@+id/ivBack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_6sdp"
+                            app:srcCompat="@drawable/ic_back"/>
 
-            <RelativeLayout
-                    android:id="@+id/rlHomeCakapCornerMenuContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:padding="@dimen/_5sdp">
+                    <com.tebet.mojual.common.view.AppTextView
+                            android:id="@+id/tvBaseTitle"
+                            android:layout_width="match_parent"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:lines="1"
+                            android:textSize="@dimen/_16ssp"
+                            android:textColor="@color/white"
+                            app:font_style="bold"/>
 
-                <ImageView
-                        android:id="@+id/iv_cakap_history"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/nav_back"
-                />
+                </RelativeLayout>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:id="@+id/rlTalkMenuContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:padding="@dimen/_5sdp"
-                    android:visibility="gone">
-
-                <ImageView
-                        android:id="@+id/iv_cakap_chat_history"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:padding="@dimen/_1sdp"
-                />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:id="@+id/rlHomeNotificationContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:padding="@dimen/_5sdp"
-                    android:visibility="gone">
-
-                <ImageView
-                        android:id="@+id/iv_notification"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/_3sdp"
-                        app:srcCompat="@drawable/ic_notifications"/>
-
-                <TextView
-                        android:id="@+id/tvHomeNotificationCount"
+                <RelativeLayout
+                        android:id="@+id/rlHomeCakapCornerMenuContainer"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/_6sdp"
-                        android:background="@drawable/notification_badage"
-                        android:padding="@dimen/_2sdp"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_8ssp"
-                        app:font_style="bold"
-                        android:visibility="gone"/>
+                        android:padding="@dimen/_5sdp">
+
+                    <ImageView
+                            android:id="@+id/iv_cakap_history"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/nav_back"
+                    />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/rlTalkMenuContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:padding="@dimen/_5sdp"
+                        android:visibility="gone">
+
+                    <ImageView
+                            android:id="@+id/iv_cakap_chat_history"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:padding="@dimen/_1sdp"
+                    />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/rlHomeNotificationContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:padding="@dimen/_5sdp"
+                        android:visibility="gone">
+
+                    <ImageView
+                            android:id="@+id/iv_notification"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/_3sdp"
+                            app:srcCompat="@drawable/ic_notifications"/>
+
+                    <TextView
+                            android:id="@+id/tvHomeNotificationCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:background="@drawable/notification_badage"
+                            android:padding="@dimen/_2sdp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_8ssp"
+                            app:font_style="bold"
+                            android:visibility="gone"/>
+                </RelativeLayout>
+
             </RelativeLayout>
 
-        </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
 
-    </androidx.appcompat.widget.Toolbar>
+        <FrameLayout
+                android:id="@+id/full_screen_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-    <FrameLayout
-            android:id="@+id/full_screen_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <ProgressBar
+                android:layout_weight="1"
+                android:id="@+id/progressBar"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:minWidth="40dp"/>
 
-    <ProgressBar
-            android:layout_weight="1"
-            android:id="@+id/progressBar"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_height="wrap_content"
-            android:minHeight="40dp"
-            android:minWidth="40dp"/>
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

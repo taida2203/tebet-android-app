@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.tebet.mojual.view.splash.view
+package com.tebet.mojual.view.splash
 
 /**
  * Created by amitshekhar on 08/07/17.

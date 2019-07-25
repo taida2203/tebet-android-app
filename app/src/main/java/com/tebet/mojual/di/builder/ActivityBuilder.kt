@@ -17,7 +17,8 @@
 package com.tebet.mojual.di.builder
 
 import com.tebet.mojual.view.HomeActivity
-import com.tebet.mojual.view.splash.view.Splash
+import com.tebet.mojual.view.login.Login
+import com.tebet.mojual.view.splash.Splash
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -46,6 +47,9 @@ abstract class ActivityBuilder
 {
     @ContributesAndroidInjector
     abstract fun homeActivity(): HomeActivity
+
+    @ContributesAndroidInjector
+    abstract fun loginActivity(): Login
 
     @ContributesAndroidInjector
     abstract fun splashActivity(): Splash

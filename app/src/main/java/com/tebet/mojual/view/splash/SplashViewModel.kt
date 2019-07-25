@@ -1,4 +1,4 @@
-package com.tebet.mojual.view.splash.viewmodel
+package com.tebet.mojual.view.splash
 
 import androidx.lifecycle.MutableLiveData
 import co.sdk.auth.AuthSdk
@@ -7,7 +7,6 @@ import com.tebet.mojual.R
 import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.data.repository.ProfileRepository
 import com.tebet.mojual.view.base.BaseViewModel
-import com.tebet.mojual.view.splash.view.SplashNavigator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit.MILLISECONDS
