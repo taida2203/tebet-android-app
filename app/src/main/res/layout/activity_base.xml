@@ -10,10 +10,10 @@
             android:id="@+id/placeHolder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/base_toolbar"/>
+            android:layout_below="@+id/baseToolbar"/>
 
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/base_toolbar"
+            android:id="@+id/baseToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:contentInsetStart="0dp"
@@ -37,14 +37,14 @@
                     android:orientation="horizontal">
 
                 <ImageButton
-                        android:id="@+id/iv_back"
+                        android:id="@+id/ivBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_6sdp"
                         app:srcCompat="@drawable/ic_back"/>
 
                 <com.tebet.mojual.common.view.AppTextView
-                        android:id="@+id/tv_base_title"
+                        android:id="@+id/tvBaseTitle"
                         android:layout_width="match_parent"
                         android:gravity="center"
                         android:layout_height="wrap_content"

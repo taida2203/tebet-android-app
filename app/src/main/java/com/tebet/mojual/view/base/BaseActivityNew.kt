@@ -1,70 +1,164 @@
-package com.tebet.mojual.common.base
+/*
+ *  Copyright (C) 2017 MINDORKS NEXTGEN PRIVATE LIMITED
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      https://mindorks.com/license/apache-v2
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License
+ */
 
+package com.tebet.mojual.view.base
+
+import android.annotation.TargetApi
 import android.app.ActivityManager
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.annotation.ColorInt
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import co.common.network.ApiException
-import co.common.view.BaseView
+import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.R
 import com.tebet.mojual.notification.view.NotificationActivity
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_base.*
-import java.lang.ref.WeakReference
-import co.sdk.auth.core.models.LoginException
+
+/**
+ * Created by amitshekhar on 07/07/17.
+ */
+
+abstract class BaseActivityNew<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivity(),
+    BaseFragmentNew.Callback {
+
+    // TODO
+    // this can probably depend on isLoading variable of BaseViewModel,
+    // since its going to be common for all the activities
+    private val mProgressDialog: ProgressDialog? = null
+    var viewDataBinding: T? = null
+        private set
+    private var mViewModel: V? = null
+
+    /**
+     * Override for set binding variable
+     *
+     * @return variable id
+     */
+    abstract val bindingVariable: Int
+
+    /**
+     * Override for set view model
+     *
+     * @return view model instance
+     */
+    abstract val viewModel: V
+
+    override fun onFragmentAttached() {
+
+    }
+
+    override fun onFragmentDetached(tag: String) {
+
+    }
+
+    //    @Override
+    //    protected void attachBaseContext(Context newBase) {
+    //        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    //    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        performDependencyInjection()
+        super.onCreate(savedInstanceState)
+        performDataBinding()
+//        ivBack.setOnClickListener { onBackPressed() }
+//        setSupportActionBar(baseToolbar)
+//        iv_notification.setOnClickListener {
+//            startActivity(Intent(this, NotificationActivity::class.java))
+//        }
+//        iv_cakap_history.setOnClickListener {
+//            //            startActivity(Intent(this, CornerHistoryActivity::class.java))
+//        }
+        layoutInflater.inflate(contentLayoutId, placeHolder)
+        onCreateBase(savedInstanceState, contentLayoutId)
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    fun hasPermission(permission: String): Boolean {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun hideKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    fun hideLoading() {
+        if (mProgressDialog != null && mProgressDialog.isShowing) {
+            mProgressDialog.cancel()
+        }
+    }
+
+    //    public boolean isNetworkConnected() {
+    //        return NetworkUtils.isNetworkConnected(getApplicationContext());
+    //    }
 
 
-abstract class BaseActivity : AppCompatActivity(), BaseView {
-    lateinit var baseToolbar: Toolbar
-    lateinit var ivBack: ImageButton
-        private set
-    lateinit var tvBaseTitle: TextView
-        private set
+    fun performDependencyInjection() {
+        AndroidInjection.inject(this)
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    fun requestPermissionsSafely(permissions: Array<String>, requestCode: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, requestCode)
+        }
+    }
+
+    //    public void showLoading() {
+    //        hideLoading();
+    //        mProgressDialog = CommonUtils.showLoadingDialog(this);
+    //    }
+
+    private fun performDataBinding() {
+        viewDataBinding = DataBindingUtil.setContentView(this, contentLayoutId)
+        this.mViewModel = if (mViewModel == null) viewModel else mViewModel
+        viewDataBinding!!.setVariable(bindingVariable, mViewModel)
+        viewDataBinding!!.executePendingBindings()
+    }
+
     protected lateinit var navLayout : RelativeLayout
     //    protected lateinit var load: Loading
     private var notifExtra: MutableMap<String, String>? = null
     private var isActive: Boolean = false
+
+    /**
+     * @return layout resource id
+     */
+    @get:LayoutRes
     protected abstract val contentLayoutId: Int
-    protected lateinit var mView: WeakReference<BaseView>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-//        LanguageUtil.instance.updateLanguage(this)
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
-
-        baseToolbar = findViewById(R.id.baseToolbar)
-        ivBack = findViewById(R.id.ivBack)
-        navLayout = findViewById(R.id.rlHomeCakapCornerMenuContainer)
-        rlHomeCakapCornerMenuContainer
-        tvBaseTitle = findViewById(R.id.tvBaseTitle)
-        tvBaseTitle.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
-        tvBaseTitle.typeface = Typeface.DEFAULT_BOLD
-        ivBack.setOnClickListener { onBackPressed() }
-        setSupportActionBar(baseToolbar)
-
-        title = ""
-        mView = WeakReference(this)
-
-        iv_notification.setOnClickListener {
-            startActivity(Intent(this, NotificationActivity::class.java))
-        }
-        iv_cakap_history.setOnClickListener {
-            //            startActivity(Intent(this, CornerHistoryActivity::class.java))
-        }
-        layoutInflater.inflate(contentLayoutId, placeHolder)
-
-//        ButterKnife.bind(this)
-        onCreateBase(savedInstanceState, contentLayoutId)
-    }
 
     fun fullScreenChildHolder(isFullScreen: Boolean) {
         if (isFullScreen) {
@@ -112,9 +206,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 //        }
 //    }
 
-    fun getActivity(): BaseActivity {
-        return this
-    }
 
     fun showpDialog(isShowProgressDialog: Boolean) {
 //        if (load.isShowing && isShowProgressDialog) return
@@ -151,9 +242,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         tvBaseTitle.text = title
     }
 
-    override fun getContext(): Context? {
-        return this
-    }
 
     fun enableBackButton(isEnable: Boolean) {
         when {
@@ -196,10 +284,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     override fun onPause() {
         super.onPause()
         isActive = false
-    }
-
-    override fun isActive(): Boolean {
-        return isActive
     }
 
     override fun onBackPressed() {
@@ -345,3 +429,4 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         return true
     }
 }
+

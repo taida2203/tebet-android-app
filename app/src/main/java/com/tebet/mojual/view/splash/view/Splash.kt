@@ -11,43 +11,42 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import co.sdk.auth.AuthSdk
-import co.sdk.auth.core.models.AuthJson
+import com.tebet.mojual.BR
 import com.tebet.mojual.R
-import com.tebet.mojual.common.base.BaseActivity
-import com.tebet.mojual.common.util.checkConnectivity
-import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.ViewModelProviderFactory
+import com.tebet.mojual.databinding.ActivitySplashScreenBinding
 import com.tebet.mojual.view.HomeActivity
 import com.tebet.mojual.view.Login
 import com.tebet.mojual.view.SignUpPassword
+import com.tebet.mojual.view.base.BaseActivityNew
 import com.tebet.mojual.view.splash.viewmodel.SplashViewModel
-import dagger.android.AndroidInjection
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import javax.inject.Inject
 
-class Splash : BaseActivity() {
-    private val TAG = javaClass.simpleName
-
-    private var referralCode = ""
-
-    lateinit var splashViewModel: SplashViewModel
+open class Splash : BaseActivityNew<ActivitySplashScreenBinding, SplashViewModel>(), SplashNavigator {
     @Inject
-    lateinit var splashViewModelFactory: SplashViewModelFactory
+    lateinit var factory: ViewModelProviderFactory
+    override val bindingVariable: Int
+        get() = BR.viewModel
+
+    override val viewModel: SplashViewModel
+        get() = ViewModelProviders.of(this, factory).get(SplashViewModel::class.java)
 
     override val contentLayoutId: Int
         get() = R.layout.activity_splash_screen
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
-        AndroidInjection.inject(this)
-        splashViewModel = ViewModelProviders.of(this, splashViewModelFactory).get(SplashViewModel::class.java)
+        viewModel.navigator = this
         if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
         try {
             val info = packageManager.getPackageInfo(
-                    "com.tebet.mojual",
-                    PackageManager.GET_SIGNATURES)
+                "com.tebet.mojual",
+                PackageManager.GET_SIGNATURES
+            )
             for (signature in info.signatures) {
                 val md = MessageDigest.getInstance("SHA")
                 md.update(signature.toByteArray())
@@ -56,50 +55,19 @@ class Splash : BaseActivity() {
         } catch (e: PackageManager.NameNotFoundException) {
         } catch (e: NoSuchAlgorithmException) {
         }
-
-        splashViewModel.profileResult.observe(this,
-            Observer<AuthJson<UserProfile>> {response ->
-                if (response.data?.status.equals("INIT")) {
-                    finish()
-                    startActivity(Intent(this@Splash, SignUpPassword::class.java))
-                } else {
-                    finish()
-                    startActivity(Intent(this@Splash, HomeActivity::class.java))
-                }
-            })
-
-        supportActionBar!!.hide()
+        supportActionBar?.hide()
         Handler().postDelayed({
-            if (applicationContext.checkConnectivity()) {
-                if (AuthSdk.instance.currentToken?.appToken != null) {
-                    splashViewModel.loadProfile()
-//                    ServiceHelper.createService(ApiInterface::class.java).getProfile()
-//                        .enqueue(object : retrofit2.Callback<AuthJson<UserProfile>> {
-//                            override fun onResponse(call: Call<AuthJson<UserProfile>>, response: Response<AuthJson<UserProfile>>) {
-//
-//                            }
-//
-//                            override fun onFailure(call: Call<AuthJson<UserProfile>>, t: Throwable) {
-//                                finish()
-//                                startActivity(Intent(this@Splash, Login::class.java))
-//                            }
-//                        })
-                } else {
-                    finish()
-                    startActivity(Intent(this@Splash, Login::class.java))
-                }
-
-            } else {
-                val builder = AlertDialog.Builder(this@Splash)
-                builder.setMessage(getString(R.string.general_message_error))
-                // add a button
-                builder.setPositiveButton(getString(R.string.general_button_ok)) { dialog, which -> finish() }
-                // create and show the alert dialog
-                val dialog = builder.create()
-                dialog.show()
-            }
+            viewModel.loadProfile()
         }, duration.toLong())
-
+        viewModel.profileError.observe(this, Observer<String> { error ->
+            val builder = AlertDialog.Builder(this@Splash)
+            builder.setMessage(getString(R.string.general_message_error))
+            // add a button
+            builder.setPositiveButton(getString(R.string.general_button_ok)) { dialog, which -> finish() }
+            // create and show the alert dialog
+            val dialog = builder.create()
+            dialog.show()
+        })
 //        FirebaseDynamicLinks.getInstance()
 //                .getDynamicLink(intent)
 //                .addOnSuccessListener(this) { pendingDynamicLinkData ->
@@ -128,6 +96,21 @@ class Splash : BaseActivity() {
 //                    // ...
 //                }
 //                .addOnFailureListener(this) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
+    }
+
+    override fun openLoginScreen() {
+        finish()
+        startActivity(Intent(this, Login::class.java))
+    }
+
+    override fun openHomeScreen() {
+        finish()
+        startActivity(Intent(this, HomeActivity::class.java))
+    }
+
+    override fun openSetPasswordScreen() {
+        finish()
+        startActivity(Intent(this, SignUpPassword::class.java))
     }
 
     companion object {
