@@ -3,15 +3,10 @@ package com.tebet.mojual.view.login
 import androidx.lifecycle.MutableLiveData
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.LoginConfiguration
-import co.sdk.auth.network.ServiceHelper
-import com.tebet.mojual.data.remote.ApiInterface
 import com.tebet.mojual.data.repository.ProfileRepository
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Response
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

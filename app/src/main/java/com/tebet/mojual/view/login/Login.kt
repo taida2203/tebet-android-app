@@ -15,7 +15,7 @@ import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivityLoginBinding
 import com.tebet.mojual.view.HomeActivity
-import com.tebet.mojual.view.LoginWithPassword
+import com.tebet.mojual.view.loginpassword.LoginWithPassword
 import com.tebet.mojual.view.SignUpPassword
 import com.tebet.mojual.view.base.BaseActivityNew
 import javax.inject.Inject
@@ -72,13 +72,7 @@ class Login : BaseActivityNew<ActivityLoginBinding, LoginViewModel>(), LoginNavi
         get() = R.layout.activity_login
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
-        //Inside your activity's onCreate:
-//        DaggerLoginComponent.builder()
-//            .loginModule(LoginModule(this))
-//            .build()
-//            .inject(this)
         viewModel.navigator = this
-//        title = "Login with phone number"
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
