@@ -56,12 +56,22 @@ class LoginWithPassword : BaseActivityNew<ActivityLoginPasswordBinding, LoginWit
     }
 
     override fun doForgotPassword() {
-        AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(false), object : ApiCallBack<Token>() {
+        AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(true), object : ApiCallBack<Token>() {
             override fun onSuccess(responeCode: Int, response: Token?) {
                 openForgotPasswordScreen()
             }
 
             override fun onFailed(exeption: LoginException) {
+                if (exeption.errorCode == 502) return
+                AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
+                    override fun onSuccess(responeCode: Int, response: Any?) {
+                        doForgotPassword()
+                    }
+
+                    override fun onFailed(exeption: LoginException) {
+                    }
+
+                })
                 handleError(exeption)
             }
         })

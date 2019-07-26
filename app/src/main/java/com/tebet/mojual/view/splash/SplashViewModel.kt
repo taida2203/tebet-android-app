@@ -6,11 +6,12 @@ import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit.MILLISECONDS
-import javax.inject.Inject
 
 class SplashViewModel constructor(dataManager: DataManager) : BaseViewModel<SplashNavigator>(dataManager) {
     var profileError: MutableLiveData<String> = MutableLiveData()
@@ -22,14 +23,18 @@ class SplashViewModel constructor(dataManager: DataManager) : BaseViewModel<Spla
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .debounce(400, MILLISECONDS)
-                        .subscribe({ profileResponse ->
-                            if (profileResponse.data?.status.equals("INIT")) {
-                                navigator.openSetPasswordScreen()
-                            } else {
-                                navigator.openHomeScreen()
+                        .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                            override fun onSuccess(dataResponse: UserProfile) {
+                                if (dataResponse.status.equals("INIT")) {
+                                    navigator.openSetPasswordScreen()
+                                } else {
+                                    navigator.openHomeScreen()
+                                }
                             }
-                        }, { e ->
-                            navigator.openLoginScreen()
+
+                            override fun onFailure(error: String) {
+                                navigator.openLoginScreen()
+                            }
                         })
                 )
             } else {

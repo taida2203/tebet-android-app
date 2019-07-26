@@ -3,7 +3,6 @@ package com.tebet.mojual
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.repository.ProfileRepository
 import com.tebet.mojual.view.base.BaseActivityViewModel
 import com.tebet.mojual.view.login.LoginViewModel
 import com.tebet.mojual.view.loginpassword.LoginWithPasswordViewModel
