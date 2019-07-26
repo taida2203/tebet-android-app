@@ -32,7 +32,7 @@ class SplashViewModel constructor(dataManager: DataManager) : BaseViewModel<Spla
                                 }
                             }
 
-                            override fun onFailure(error: String) {
+                            override fun onFailure(error: String?) {
                                 navigator.openLoginScreen()
                             }
                         })
