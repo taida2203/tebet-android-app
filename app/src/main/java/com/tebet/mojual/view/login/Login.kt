@@ -21,11 +21,31 @@ import com.tebet.mojual.view.base.BaseActivityNew
 import javax.inject.Inject
 
 class Login : BaseActivityNew<ActivityLoginBinding, LoginViewModel>(), LoginNavigator {
+    companion object {
+        var LOGIN_PASSWORD = 1991
+    }
+
     override val bindingVariable: Int
         get() = BR.viewModel
 
     override val viewModel: LoginViewModel
         get() = ViewModelProviders.of(this, factory).get(LoginViewModel::class.java)
+
+    override val contentLayoutId: Int
+        get() = R.layout.activity_login
+
+    override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        viewModel.navigator = this
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+//        showLoading(false)
+        data?.let { AuthSdk.instance.onActivityResult(requestCode, resultCode, it) }
+        when (resultCode) {
+            LOGIN_PASSWORD -> if (requestCode == Activity.RESULT_OK) finish()
+        }
+    }
 
     override fun openLoginScreen() {
         startActivityForResult(
@@ -60,25 +80,5 @@ class Login : BaseActivityNew<ActivityLoginBinding, LoginViewModel>(), LoginNavi
 
     override fun openRegistrationScreen() {
         startActivity(Intent(this@Login, SignUpPassword::class.java))
-    }
-
-    companion object {
-        var LOGIN_PASSWORD = 1991
-    }
-
-    override val contentLayoutId: Int
-        get() = R.layout.activity_login
-
-    override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
-        viewModel.navigator = this
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-//        showLoading(false)
-        data?.let { AuthSdk.instance.onActivityResult(requestCode, resultCode, it) }
-        when (resultCode) {
-            LOGIN_PASSWORD -> if (requestCode == Activity.RESULT_OK) finish()
-        }
     }
 }

@@ -25,6 +25,10 @@ import javax.inject.Inject
 
 open class Splash : BaseActivityNew<ActivitySplashScreenBinding, SplashViewModel>(),
     SplashNavigator {
+    companion object {
+        private val duration = 3000
+    }
+
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -109,9 +113,5 @@ open class Splash : BaseActivityNew<ActivitySplashScreenBinding, SplashViewModel
     override fun openSetPasswordScreen() {
         finish()
         startActivity(Intent(this, SignUpPassword::class.java))
-    }
-
-    companion object {
-        private val duration = 3000
     }
 }

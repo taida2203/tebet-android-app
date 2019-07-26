@@ -27,28 +27,22 @@ open class ForgotPassword : BaseActivityNew<ActivityLoginBinding, ForgotPassword
     override val viewModel: ForgotPasswordViewModel
         get() = ViewModelProviders.of(this, factory).get(ForgotPasswordViewModel::class.java)
 
+    override val contentLayoutId: Int
+        get() = R.layout.activity_sign_up_password
+
+    override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        viewModel.navigator = this
+        title = "Input new password"
+        btnNext.setOnClickListener {
+            val updateProfileRequest = UpdateProfileRequest()
+            updateProfileRequest.password = tvPassword.text?.trim().toString()
+        }
+    }
+
     override fun openHomeScreen() {
         this@ForgotPassword.finish()
         startActivity(Intent(this@ForgotPassword, HomeActivity::class.java))
     }
 
-    override val contentLayoutId: Int
-        get() = R.layout.activity_sign_up_password
 
-    override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
-//        title = "Input new password"
-        btnNext.setOnClickListener {
-            val updateProfileRequest = UpdateProfileRequest()
-            updateProfileRequest.password = tvPassword.text?.trim().toString()
-//            ServiceHelper.createService(ApiInterface::class.java).updateProfile(updateProfileRequest)
-//                .enqueue(object : retrofit2.Callback<ResponseBody> {
-//                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-//                        handleError(t)
-//                    }
-//
-//                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-//                    }
-//                })
-        }
-    }
 }

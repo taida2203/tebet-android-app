@@ -22,7 +22,6 @@ class SplashViewModel constructor(dataManager: DataManager) : BaseViewModel<Spla
                     dataManager.getProfile()
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .debounce(400, MILLISECONDS)
                         .subscribeWith(object : CallbackWrapper<UserProfile>() {
                             override fun onSuccess(dataResponse: UserProfile) {
                                 if (dataResponse.status.equals("INIT")) {

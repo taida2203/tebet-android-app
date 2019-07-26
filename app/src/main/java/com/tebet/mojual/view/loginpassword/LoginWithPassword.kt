@@ -28,6 +28,20 @@ class LoginWithPassword : BaseActivityNew<ActivityLoginPasswordBinding, LoginWit
     override val viewModel: LoginWithPasswordViewModel
         get() = ViewModelProviders.of(this, factory).get(LoginWithPasswordViewModel::class.java)
 
+    override val contentLayoutId: Int
+        get() = R.layout.activity_login_password
+
+    override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        viewModel.navigator = this
+        title = "Login with phone number"
+//        navLayout.visibility = View.VISIBLE
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        data?.let { AuthSdk.instance.onActivityResult(requestCode, resultCode, it) }
+    }
+
     override fun openHomeScreen() {
         setResult(Activity.RESULT_OK)
         finish()
@@ -75,19 +89,5 @@ class LoginWithPassword : BaseActivityNew<ActivityLoginPasswordBinding, LoginWit
                 handleError(exeption)
             }
         })
-    }
-
-    override val contentLayoutId: Int
-        get() = R.layout.activity_login_password
-
-    override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
-        viewModel.navigator = this
-        title = "Login with phone number"
-//        navLayout.visibility = View.VISIBLE
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        data?.let { AuthSdk.instance.onActivityResult(requestCode, resultCode, it) }
     }
 }
