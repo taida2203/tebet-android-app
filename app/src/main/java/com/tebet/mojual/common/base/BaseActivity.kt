@@ -43,8 +43,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
         baseToolbar = findViewById(R.id.baseToolbar)
         ivBack = findViewById(R.id.ivBack)
-        navLayout = findViewById(R.id.rlHomeCakapCornerMenuContainer)
-        rlHomeCakapCornerMenuContainer
         tvBaseTitle = findViewById(R.id.tvBaseTitle)
         tvBaseTitle.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
         tvBaseTitle.typeface = Typeface.DEFAULT_BOLD
@@ -56,9 +54,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
         iv_notification.setOnClickListener {
             startActivity(Intent(this, NotificationActivity::class.java))
-        }
-        iv_cakap_history.setOnClickListener {
-            //            startActivity(Intent(this, CornerHistoryActivity::class.java))
         }
         layoutInflater.inflate(contentLayoutId, placeHolder)
 
@@ -75,22 +70,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
             }
         } else {
             (placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.BELOW, R.id.baseToolbar)
-        }
-    }
-
-    fun showNotification(isShow: Boolean) {
-        if (isShow) {
-            rlHomeNotificationContainer.visibility = View.VISIBLE
-        } else {
-            rlHomeNotificationContainer.visibility = View.GONE
-        }
-    }
-
-    fun showCakapMenu(isShow: Boolean) {
-        if (isShow) {
-            rlHomeCakapCornerMenuContainer.visibility = View.VISIBLE
-        } else {
-            rlHomeCakapCornerMenuContainer.visibility = View.GONE
         }
     }
 

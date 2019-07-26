@@ -18,22 +18,22 @@ class SignUpPassword : BaseActivity() {
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         title = "Sign Up"
-        btnNext.setOnClickListener {
-            showLoading(true)
-            val updateProfileRequest = UpdateProfileRequest()
-            updateProfileRequest.password = tvPassword.text.toString().trim()
-            ServiceHelper.createService(ApiInterface::class.java).updateProfile(updateProfileRequest).enqueue(object : retrofit2.Callback<ResponseBody> {
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    showLoading(false)
-                    handleError(t)
-                }
-
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    showLoading(false)
-                    this@SignUpPassword.finish()
-                    startActivity(Intent(this@SignUpPassword, SignUpInfo::class.java))
-                }
-            })
-        }
+//        btnNext.setOnClickListener {
+//            showLoading(true)
+//            val updateProfileRequest = UpdateProfileRequest()
+//            updateProfileRequest.password = tvPassword.text.toString().trim()
+//            ServiceHelper.createService(ApiInterface::class.java).updateProfile(updateProfileRequest).enqueue(object : retrofit2.Callback<ResponseBody> {
+//                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                    showLoading(false)
+//                    handleError(t)
+//                }
+//
+//                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+//                    showLoading(false)
+//                    this@SignUpPassword.finish()
+//                    startActivity(Intent(this@SignUpPassword, SignUpInfo::class.java))
+//                }
+//            })
+//        }
     }
 }

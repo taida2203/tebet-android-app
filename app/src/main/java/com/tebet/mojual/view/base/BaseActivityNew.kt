@@ -40,6 +40,7 @@ import androidx.fragment.app.Fragment
 import co.common.network.ApiException
 import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.R
+import com.tebet.mojual.databinding.ActivityBaseBinding
 import com.tebet.mojual.notification.view.NotificationActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_base.*
@@ -58,6 +59,8 @@ abstract class BaseActivityNew<T : ViewDataBinding, V : BaseViewModel<*>> : AppC
     var viewDataBinding: T? = null
         private set
     private var mViewModel: V? = null
+
+    private lateinit var baseBinding: ActivityBaseBinding
 
     /**
      * Override for set binding variable
@@ -89,16 +92,12 @@ abstract class BaseActivityNew<T : ViewDataBinding, V : BaseViewModel<*>> : AppC
     override fun onCreate(savedInstanceState: Bundle?) {
         performDependencyInjection()
         super.onCreate(savedInstanceState)
+        baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base)
+        baseBinding.viewModel = BaseActivityViewModel()
+
         performDataBinding()
-//        ivBack.setOnClickListener { onBackPressed() }
-//        setSupportActionBar(baseToolbar)
-//        iv_notification.setOnClickListener {
-//            startActivity(Intent(this, NotificationActivity::class.java))
-//        }
-//        iv_cakap_history.setOnClickListener {
-//            //            startActivity(Intent(this, CornerHistoryActivity::class.java))
-//        }
-        layoutInflater.inflate(contentLayoutId, placeHolder)
+        baseBinding.ivBack.setOnClickListener { onBackPressed() }
+        setSupportActionBar(baseBinding.baseToolbar)
         onCreateBase(savedInstanceState, contentLayoutId)
     }
 
@@ -143,7 +142,7 @@ abstract class BaseActivityNew<T : ViewDataBinding, V : BaseViewModel<*>> : AppC
     //    }
 
     private fun performDataBinding() {
-        viewDataBinding = DataBindingUtil.setContentView(this, contentLayoutId)
+        viewDataBinding = DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding.placeHolder, true)
         this.mViewModel = if (mViewModel == null) viewModel else mViewModel
         viewDataBinding!!.setVariable(bindingVariable, mViewModel)
         viewDataBinding!!.executePendingBindings()
@@ -181,11 +180,6 @@ abstract class BaseActivityNew<T : ViewDataBinding, V : BaseViewModel<*>> : AppC
     }
 
     fun showCakapMenu(isShow: Boolean) {
-        if (isShow) {
-            rlHomeCakapCornerMenuContainer.visibility = View.VISIBLE
-        } else {
-            rlHomeCakapCornerMenuContainer.visibility = View.GONE
-        }
     }
 
 //    override fun onResume() {

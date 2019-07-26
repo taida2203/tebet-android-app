@@ -32,6 +32,6 @@ interface ApiInterface {
     fun getProfile(): Observable<AuthJson<UserProfile>>
 
     @PUT("profile/profile")
-    fun updateProfile(@Body updateProfileRequest: UpdateProfileRequest): Call<ResponseBody>
+    fun updateProfile(@Body updateProfileRequest: UpdateProfileRequest): Observable<AuthJson<EmptyResponse>>
 }
 

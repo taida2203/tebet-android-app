@@ -15,7 +15,7 @@ import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivityLoginPasswordBinding
-import com.tebet.mojual.view.ForgotPassword
+import com.tebet.mojual.view.forgotpassword.ForgotPassword
 import com.tebet.mojual.view.HomeActivity
 import com.tebet.mojual.view.base.BaseActivityNew
 import javax.inject.Inject
@@ -74,7 +74,7 @@ class LoginWithPassword : BaseActivityNew<ActivityLoginPasswordBinding, LoginWit
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
-//        title = "Login with phone number"
+        title = "Login with phone number"
 //        navLayout.visibility = View.VISIBLE
     }
 

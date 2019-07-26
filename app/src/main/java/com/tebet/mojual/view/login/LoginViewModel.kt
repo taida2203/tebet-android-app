@@ -42,7 +42,7 @@ class LoginViewModel @Inject constructor(private var profileRepository: ProfileR
 
     fun register() {
         compositeDisposable.add(
-            profileRepository.registerFromApi(
+            profileRepository.registerApi(
                 LoginConfiguration(
                     logoutWhileExpired = false,
                     token = AuthSdk.instance.getBrandLoginToken()?.token,
