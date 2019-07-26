@@ -3,15 +3,15 @@ package com.tebet.mojual.view.login
 import androidx.lifecycle.MutableLiveData
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.LoginConfiguration
+import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.repository.ProfileRepository
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(private var profileRepository: ProfileRepository) :
-    BaseViewModel<LoginNavigator>() {
+class LoginViewModel(dataManager: DataManager) :
+    BaseViewModel<LoginNavigator>(dataManager) {
     var profileError: MutableLiveData<String> = MutableLiveData()
 
     fun onLoginClick() {
@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(private var profileRepository: ProfileR
 
     fun loadProfile() {
         compositeDisposable.add(
-            profileRepository.getProfile()
+            dataManager.getProfile()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(400, TimeUnit.MILLISECONDS)
@@ -42,7 +42,7 @@ class LoginViewModel @Inject constructor(private var profileRepository: ProfileR
 
     fun register() {
         compositeDisposable.add(
-            profileRepository.registerApi(
+            dataManager.register(
                 LoginConfiguration(
                     logoutWhileExpired = false,
                     token = AuthSdk.instance.getBrandLoginToken()?.token,

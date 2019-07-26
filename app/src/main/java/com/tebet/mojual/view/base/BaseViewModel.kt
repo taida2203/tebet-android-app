@@ -18,6 +18,7 @@ package com.tebet.mojual.view.base
 
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.ViewModel
+import com.tebet.mojual.data.DataManager
 import io.reactivex.disposables.CompositeDisposable
 
 import java.lang.ref.WeakReference
@@ -27,13 +28,13 @@ import java.lang.ref.WeakReference
  */
 
 abstract class BaseViewModel<N>(
-//    val dataManager: DataManager,
+    val dataManager: DataManager
 //    val schedulerProvider: SchedulerProvider
 ) : ViewModel() {
 
     val isLoading = ObservableBoolean()
 
-    val compositeDisposable: CompositeDisposable
+    val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private var mNavigator: WeakReference<N>? = null
 
@@ -42,10 +43,6 @@ abstract class BaseViewModel<N>(
         set(navigator) {
             this.mNavigator = WeakReference(navigator)
         }
-
-    init {
-        this.compositeDisposable = CompositeDisposable()
-    }
 
     override fun onCleared() {
         compositeDisposable.dispose()

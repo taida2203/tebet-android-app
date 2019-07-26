@@ -17,7 +17,7 @@ import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivitySplashScreenBinding
 import com.tebet.mojual.view.HomeActivity
 import com.tebet.mojual.view.login.Login
-import com.tebet.mojual.view.SignUpPassword
+import com.tebet.mojual.view.registration.SignUpPassword
 import com.tebet.mojual.view.base.BaseActivityNew
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -25,8 +25,6 @@ import javax.inject.Inject
 
 open class Splash : BaseActivityNew<ActivitySplashScreenBinding, SplashViewModel>(),
     SplashNavigator {
-    @Inject
-    lateinit var factory: ViewModelProviderFactory
     override val bindingVariable: Int
         get() = BR.viewModel
 

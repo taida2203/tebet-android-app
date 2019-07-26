@@ -5,22 +5,20 @@ import co.sdk.auth.AuthSdk
 import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.checkConnectivity
-import com.tebet.mojual.data.repository.ProfileRepository
+import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
-class SplashViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository
-) : BaseViewModel<SplashNavigator>() {
+class SplashViewModel constructor(dataManager: DataManager) : BaseViewModel<SplashNavigator>(dataManager) {
     var profileError: MutableLiveData<String> = MutableLiveData()
     fun loadProfile() {
         if (App.instance.checkConnectivity()) {
             if (AuthSdk.instance.currentToken?.appToken != null) {
                 compositeDisposable.add(
-                    profileRepository.getProfile()
+                    dataManager.getProfile()
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .debounce(400, MILLISECONDS)

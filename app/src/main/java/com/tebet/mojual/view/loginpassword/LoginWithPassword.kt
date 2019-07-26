@@ -22,8 +22,6 @@ import javax.inject.Inject
 
 class LoginWithPassword : BaseActivityNew<ActivityLoginPasswordBinding, LoginWithPasswordViewModel>(),
     LoginWithPasswordNavigator {
-    @Inject
-    lateinit var factory: ViewModelProviderFactory
 
     override val bindingVariable: Int
         get() = BR.viewModel

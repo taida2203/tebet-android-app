@@ -16,13 +16,11 @@ import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivityLoginBinding
 import com.tebet.mojual.view.HomeActivity
 import com.tebet.mojual.view.loginpassword.LoginWithPassword
-import com.tebet.mojual.view.SignUpPassword
+import com.tebet.mojual.view.registration.SignUpPassword
 import com.tebet.mojual.view.base.BaseActivityNew
 import javax.inject.Inject
 
 class Login : BaseActivityNew<ActivityLoginBinding, LoginViewModel>(), LoginNavigator {
-    @Inject
-    lateinit var factory: ViewModelProviderFactory
     override val bindingVariable: Int
         get() = BR.viewModel
 

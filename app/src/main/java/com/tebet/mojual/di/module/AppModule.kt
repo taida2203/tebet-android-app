@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.tebet.mojual.data.AppDataManger
+import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.persistance.dao.UserProfileDao
 import com.tebet.mojual.persistance.local.Database
 import dagger.Module
@@ -45,6 +47,12 @@ class AppModule(private val app: Application) {
     fun provideUserProfileDao(
         database: Database
     ): UserProfileDao = database.userProfileDao()
+
+    @Provides
+    @Singleton
+    internal fun provideDataManager(appDataManager: AppDataManger): DataManager {
+        return appDataManager
+    }
 
 //  @Provides
 //  @Singleton

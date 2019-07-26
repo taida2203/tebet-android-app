@@ -27,7 +27,7 @@
         <activity android:name=".view.SignUpInfo"/>
         <activity android:name=".view.GoogleMapActivity"/>
 
-        <activity android:name=".view.SignUpPassword"/>
+        <activity android:name=".view.registration.SignUpPassword"/>
         <activity android:name=".view.loginpassword.LoginWithPassword"/>
         <activity android:name=".view.forgotpassword.ForgotPassword"/>
         <meta-data

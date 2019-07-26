@@ -37,13 +37,17 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import co.common.network.ApiException
 import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.R
+import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivityBaseBinding
 import com.tebet.mojual.notification.view.NotificationActivity
+import com.tebet.mojual.view.forgotpassword.ForgotPasswordViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_base.*
+import javax.inject.Inject
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -61,6 +65,9 @@ abstract class BaseActivityNew<T : ViewDataBinding, V : BaseViewModel<*>> : AppC
     private var mViewModel: V? = null
 
     private lateinit var baseBinding: ActivityBaseBinding
+
+    @Inject
+    lateinit var factory: ViewModelProviderFactory
 
     /**
      * Override for set binding variable
@@ -93,7 +100,7 @@ abstract class BaseActivityNew<T : ViewDataBinding, V : BaseViewModel<*>> : AppC
         performDependencyInjection()
         super.onCreate(savedInstanceState)
         baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base)
-        baseBinding.viewModel = BaseActivityViewModel()
+        baseBinding.viewModel = ViewModelProviders.of(this, factory).get(BaseActivityViewModel::class.java)
 
         performDataBinding()
         baseBinding.ivBack.setOnClickListener { onBackPressed() }

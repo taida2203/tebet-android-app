@@ -20,10 +20,7 @@ import retrofit2.Call
 import retrofit2.Response
 import javax.inject.Inject
 
-class ForgotPassword : BaseActivityNew<ActivityLoginBinding, ForgotPasswordViewModel>(), ForgotPasswordNavigator {
-    @Inject
-    lateinit var factory: ViewModelProviderFactory
-
+open class ForgotPassword : BaseActivityNew<ActivityLoginBinding, ForgotPasswordViewModel>(), ForgotPasswordNavigator {
     override val bindingVariable: Int
         get() = BR.viewModel
 
