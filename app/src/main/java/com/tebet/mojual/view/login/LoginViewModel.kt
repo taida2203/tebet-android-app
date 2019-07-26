@@ -2,10 +2,21 @@ package com.tebet.mojual.view.login
 
 import androidx.lifecycle.MutableLiveData
 import co.sdk.auth.AuthSdk
+import co.sdk.auth.core.LoginConfiguration
+import co.sdk.auth.network.ServiceHelper
+import com.tebet.mojual.data.remote.ApiInterface
+import com.tebet.mojual.data.repository.ProfileRepository
 import com.tebet.mojual.view.base.BaseViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Response
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor() : BaseViewModel<LoginNavigator>() {
+class LoginViewModel @Inject constructor(private var profileRepository: ProfileRepository) :
+    BaseViewModel<LoginNavigator>() {
     var profileError: MutableLiveData<String> = MutableLiveData()
 
     fun onLoginClick() {
@@ -13,64 +24,43 @@ class LoginViewModel @Inject constructor() : BaseViewModel<LoginNavigator>() {
     }
 
     fun onRegistrationClick() {
-//        AuthSdk.instance.login(loginActivity, AuthAccountKitMethod(), LoginConfiguration(logoutWhileExpired = false), object : ApiCallBack<Token>() {
-//            override fun onSuccess(responeCode: Int, response: Token?) {
-//                showLoading(true)
-//                    ServiceHelper.createService(ApiInterface::class.java).getProfile()
-//                        .enqueue(object : retrofit2.Callback<AuthJson<UserProfile>> {
-//                            override fun onResponse(
-//                                call: Call<AuthJson<UserProfile>>,
-//                                response: Response<AuthJson<UserProfile>>
-//                            ) {
-//                                showLoading(false)
-//                                if (response.body()?.data?.status.equals("INIT")) {
-//                                    startActivity(Intent(this@Login, SignUpPassword::class.java))
-//                                } else {
-//                                    startActivity(Intent(this@Login, HomeActivity::class.java))
-//                                }
-//                                finish()
-//                            }
-//
-//                            override fun onFailure(call: Call<AuthJson<UserProfile>>, t: Throwable) {
-//                                showLoading(false)
-//                                handleError(t)
-//                            }
-//                        })
-//            }
-//
-//            override fun onFailed(exeption: LoginException) {
-//                if(exeption.errorCode == 502) return
-//                val config = LoginConfiguration(false)
-//                config.token = AuthSdk.instance.getBrandLoginToken()?.token
-//                config.phone = AuthSdk.instance.getBrandLoginToken()?.phone
-//
-//                ServiceHelper.createService(ApiInterface::class.java).register(config)
-//                    .enqueue(object : retrofit2.Callback<ResponseBody> {
-//                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-////                            showLoading(false)
-////                            handleError(t)
-//                        }
-//
-//                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-//                            AuthSdk.instance.login(
-//                                loginActivity,
-//                                AuthAccountKitMethod(),
-//                                LoginConfiguration(false),
-//                                object : ApiCallBack<Token>() {
-//                                    override fun onSuccess(responeCode: Int, response: Token?) {
-////                                        showLoading(false)
-//                                        navigator.openRegistrationScreen()
-//                                    }
-//
-//                                    override fun onFailed(exeption: LoginException) {
-////                                        showLoading(false)
-////                                        handleError(exeption)
-//                                    }
-//                                })
-//                        }
-//                    })
-//            }
-//        })
+        navigator.doAccountKitLogin(true)
+    }
+
+    fun loadProfile() {
+        compositeDisposable.add(
+            profileRepository.getProfile()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .subscribe({ profileResponse ->
+                    if (profileResponse.data?.status.equals("INIT")) {
+                        navigator.openRegistrationScreen()
+                    } else {
+                        navigator.openHomeScreen()
+                    }
+                }, { e ->
+                    navigator.openLoginScreen()
+                })
+        )
+    }
+
+    fun register() {
+        compositeDisposable.add(
+            profileRepository.registerFromApi(
+                LoginConfiguration(
+                    logoutWhileExpired = false,
+                    token = AuthSdk.instance.getBrandLoginToken()?.token,
+                    phone = AuthSdk.instance.getBrandLoginToken()?.phone
+                )
+            ).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .subscribe({
+                    navigator.doAccountKitLogin(false)
+                }, {
+                })
+        )
     }
 
 }

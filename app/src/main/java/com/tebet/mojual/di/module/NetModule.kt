@@ -35,22 +35,18 @@ class NetModule(private val baseUrl: String) {
         httpLoggingInterceptor: HttpLoggingInterceptor,
         ganderInterceptor: GanderInterceptor
     ): OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(httpLoggingInterceptor)
         .readTimeout(60, TimeUnit.SECONDS)
         .writeTimeout(60, TimeUnit.SECONDS)
+        .addInterceptor(httpLoggingInterceptor)
         .addInterceptor(ganderInterceptor)
-
-        .addInterceptor(
-            AuthenticationV2Interceptor()
-        ).build()
+        .addInterceptor(AuthenticationV2Interceptor()).build()
 
     @Provides
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        val interceptor = HttpLoggingInterceptor(
-            HttpLoggingInterceptor.Logger { message -> Timber.tag("NETWORK: ").i(message) })
+        val interceptor = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
-            interceptor.level = HttpLoggingInterceptor.Level.BASIC
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
         } else {
             interceptor.level = HttpLoggingInterceptor.Level.NONE
         }

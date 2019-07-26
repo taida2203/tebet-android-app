@@ -1,6 +1,8 @@
 package com.tebet.mojual.data.repository
 
+import co.sdk.auth.core.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
+import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.ApiInterface
 import com.tebet.mojual.persistance.dao.UserProfileDao
@@ -43,5 +45,9 @@ class ProfileRepository @Inject constructor(
             .toObservable()
             .doOnNext {
             }
+    }
+
+    fun registerFromApi(loginConfiguration: LoginConfiguration): Observable<AuthJson<EmptyResponse>> {
+        return apiInterface.register(loginConfiguration)
     }
 }

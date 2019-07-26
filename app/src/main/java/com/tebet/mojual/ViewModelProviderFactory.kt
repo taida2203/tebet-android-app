@@ -24,33 +24,8 @@ open class ViewModelProviderFactory
         if (modelClass.isAssignableFrom(SplashViewModel::class.java)) {
             return SplashViewModel(profileRepository) as T
         } else if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel() as T
+            return LoginViewModel(profileRepository) as T
         }
-//        if (modelClass.isAssignableFrom(AboutViewModel::class.java!!)) {
-//
-//            return AboutViewModel(dataManager, schedulerProvider) as T
-//        } else if (modelClass.isAssignableFrom(FeedViewModel::class.java!!)) {
-//
-//            return FeedViewModel(dataManager, schedulerProvider) as T
-//        } else if (modelClass.isAssignableFrom(LoginViewModel::class.java!!)) {
-//
-//            return LoginViewModel(dataManager, schedulerProvider) as T
-//        } else if (modelClass.isAssignableFrom(MainViewModel::class.java!!)) {
-//
-//            return MainViewModel(dataManager, schedulerProvider) as T
-//        } else if (modelClass.isAssignableFrom(BlogViewModel::class.java!!)) {
-//
-//            return BlogViewModel(dataManager, schedulerProvider) as T
-//        } else if (modelClass.isAssignableFrom(RateUsViewModel::class.java!!)) {
-//
-//            return RateUsViewModel(dataManager, schedulerProvider) as T
-//        } else if (modelClass.isAssignableFrom(OpenSourceViewModel::class.java!!)) {
-//
-//            return OpenSourceViewModel(dataManager, schedulerProvider) as T
-//        } else if (modelClass.isAssignableFrom(SplashViewModel::class.java!!)) {
-//
-//            return SplashViewModel(dataManager, schedulerProvider) as T
-//        }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
 }
