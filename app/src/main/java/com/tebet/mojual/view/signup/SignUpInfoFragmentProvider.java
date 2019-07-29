@@ -1,6 +1,7 @@
 package com.tebet.mojual.view.signup;
 
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1;
+import com.tebet.mojual.view.signup.step2.SignUpInfoStep2;
 import com.tebet.mojual.view.signup.step2.SignUpInfoStep3;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -12,7 +13,7 @@ public abstract class SignUpInfoFragmentProvider {
     abstract SignUpInfoStep1 signUpInfoStep1Factory();
 
     @ContributesAndroidInjector()
-    abstract SignUpInfoStep3 signUpInfoStep2Factory();
+    abstract SignUpInfoStep2 signUpInfoStep2Factory();
 
     @ContributesAndroidInjector()
     abstract SignUpInfoStep3 signUpInfoStep3Factory();
