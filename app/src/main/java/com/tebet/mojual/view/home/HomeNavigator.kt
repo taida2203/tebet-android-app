@@ -6,4 +6,5 @@ interface HomeNavigator {
     fun openBorrowScreen()
     fun openTipsScreen()
     fun onBackPressed()
+    fun showProfile()
 }

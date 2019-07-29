@@ -8,6 +8,7 @@ import com.tebet.mojual.view.forgotpassword.ForgotPassword
 import com.tebet.mojual.view.forgotpassword.ForgotPasswordViewModel
 import com.tebet.mojual.view.home.HomeViewModel
 import com.tebet.mojual.view.home.content.HomeContentViewModel
+import com.tebet.mojual.view.home.content.ProfileViewModel
 import com.tebet.mojual.view.login.LoginViewModel
 import com.tebet.mojual.view.loginpassword.LoginWithPasswordViewModel
 import com.tebet.mojual.view.signup.SignUpViewModel
@@ -32,6 +33,7 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(dataManager) as T
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> SignUpViewModel(dataManager) as T
             modelClass.isAssignableFrom(HomeContentViewModel::class.java) -> HomeContentViewModel(dataManager) as T
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(dataManager) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

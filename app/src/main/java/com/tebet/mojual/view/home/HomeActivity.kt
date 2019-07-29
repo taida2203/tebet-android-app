@@ -8,13 +8,13 @@ import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.content.HomeFragment
+import com.tebet.mojual.view.home.content.ProfileFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector {
-
+class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector, HomeNavigator {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
@@ -29,6 +29,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
         get() = R.layout.activity_home
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        viewModel.navigator = this
         title = "Home"
         openFragment(HomeFragment(), R.id.contentHolder)
 //        getData()
@@ -43,6 +44,26 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
 //                }
 //            })
 //        }
+    }
+
+    override fun openSellNowScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun openCheckQualityScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun openBorrowScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun openTipsScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showProfile() {
+        openFragment(ProfileFragment(), R.id.contentHolder)
     }
 
     private fun getData() {

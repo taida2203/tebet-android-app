@@ -21,6 +21,7 @@ import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.home.content.HomeFragmentProvider
 import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.loginpassword.LoginWithPassword
+import com.tebet.mojual.view.profile.ProfileFragmentProvider
 import com.tebet.mojual.view.registration.SignUpPassword
 import com.tebet.mojual.view.splash.Splash
 import dagger.Module
@@ -49,7 +50,7 @@ abstract class ActivityBuilder
 //    abstract SplashActivity bindSplashActivity();
 
 {
-    @ContributesAndroidInjector(modules = [HomeFragmentProvider::class])
+    @ContributesAndroidInjector(modules = [HomeFragmentProvider::class, ProfileFragmentProvider::class])
     abstract fun homeActivity(): HomeActivity
 
     @ContributesAndroidInjector

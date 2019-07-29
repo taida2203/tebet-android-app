@@ -1,14 +1,19 @@
-package com.tebet.mojual.view.home
+package com.tebet.mojual.view.home.content
 
+import co.sdk.auth.AuthSdk
+import co.sdk.auth.core.models.ApiCallBack
+import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
+import com.tebet.mojual.view.base.BaseNavigator
 import com.tebet.mojual.view.base.BaseViewModel
+import com.tebet.mojual.view.profile.ProfileNavigator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class HomeViewModel(dataManager: DataManager) :
-    BaseViewModel<HomeNavigator>(dataManager) {
+class ProfileViewModel(dataManager: DataManager) :
+    BaseViewModel<ProfileNavigator>(dataManager) {
 
     fun loadProfile() {
         compositeDisposable.add(
@@ -28,7 +33,15 @@ class HomeViewModel(dataManager: DataManager) :
         )
     }
 
-    fun showProfile() {
-        navigator.showProfile()
+    fun logout() {
+        AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
+            override fun onSuccess(responeCode: Int, response: Any?) {
+                navigator.openLoginScreen()
+            }
+
+            override fun onFailed(exeption: LoginException) {
+                navigator.openLoginScreen()
+            }
+        })
     }
 }
