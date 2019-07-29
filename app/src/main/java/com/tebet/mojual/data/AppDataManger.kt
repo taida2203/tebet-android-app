@@ -7,12 +7,12 @@ import com.tebet.mojual.data.models.UpdateProfileRequest
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.ApiInterface
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import javax.inject.Inject
 
 class AppDataManger @Inject constructor(private var api: ApiInterface) : DataManager {
-
     override fun getDataMock(): Call<ResponseBody> {
         return api.getDataMock()
     }
@@ -31,6 +31,13 @@ class AppDataManger @Inject constructor(private var api: ApiInterface) : DataMan
 
     override fun updateProfile(updateProfileRequest: UpdateProfileRequest): Observable<AuthJson<EmptyResponse>> {
         return api.updateProfile(updateProfileRequest)
+    }
+
+    override fun uploadImage(
+        folder: MultipartBody.Part,
+        file: MultipartBody.Part
+    ): Observable<AuthJson<EmptyResponse>> {
+        return api.uploadImage(folder, file)
     }
 }
 

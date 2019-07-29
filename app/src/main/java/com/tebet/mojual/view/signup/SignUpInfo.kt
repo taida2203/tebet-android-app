@@ -10,6 +10,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
@@ -48,6 +49,9 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>(), S
 
     override val contentLayoutId: Int
         get() = R.layout.activity_sign_up_info
+
+    var cameraCaptureData: MutableLiveData<String> = MutableLiveData()
+        private set
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         title = "Sign Up"
@@ -170,7 +174,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>(), S
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_TAKE_PHOTO) {
-            currentPhotoPath
+            cameraCaptureData.postValue(currentPhotoPath)
         }
     }
 }

@@ -7,12 +7,10 @@ import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.UpdateProfileRequest
 import com.tebet.mojual.data.models.UserProfile
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface ApiInterface {
     /*
@@ -33,5 +31,9 @@ interface ApiInterface {
 
     @PUT("profile/profile")
     fun updateProfile(@Body updateProfileRequest: UpdateProfileRequest): Observable<AuthJson<EmptyResponse>>
+
+    @Multipart
+    @POST("storage/file")
+    fun uploadImage(@Part folder: MultipartBody.Part, @Part file: MultipartBody.Part): Observable<AuthJson<EmptyResponse>>
 }
 
