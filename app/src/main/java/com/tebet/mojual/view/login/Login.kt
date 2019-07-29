@@ -12,15 +12,13 @@ import co.sdk.auth.core.models.LoginException
 import co.sdk.auth.core.models.Token
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
-import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivityLoginBinding
-import com.tebet.mojual.view.HomeActivity
+import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.loginpassword.LoginWithPassword
 import com.tebet.mojual.view.registration.SignUpPassword
-import com.tebet.mojual.view.base.BaseActivityNew
-import javax.inject.Inject
+import com.tebet.mojual.view.base.BaseActivity
 
-class Login : BaseActivityNew<ActivityLoginBinding, LoginViewModel>(), LoginNavigator {
+class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigator {
     companion object {
         var LOGIN_PASSWORD = 1991
     }

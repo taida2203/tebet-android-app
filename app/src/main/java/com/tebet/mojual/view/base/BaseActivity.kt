@@ -1,76 +1,170 @@
-package com.tebet.mojual.common.base
+package com.tebet.mojual.view.base
 
+import android.annotation.TargetApi
 import android.app.ActivityManager
+import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
-import android.graphics.Typeface
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.annotation.ColorInt
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import co.common.network.ApiException
-import co.common.view.BaseView
-import com.tebet.mojual.R
-import com.tebet.mojual.notification.view.NotificationActivity
-import kotlinx.android.synthetic.main.activity_base.*
-import java.lang.ref.WeakReference
 import co.sdk.auth.core.models.LoginException
+import com.tebet.mojual.R
+import com.tebet.mojual.ViewModelProviderFactory
+import com.tebet.mojual.databinding.ActivityBaseBinding
+import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_base.*
+import javax.inject.Inject
+
+/**
+ * Created by amitshekhar on 07/07/17.
+ */
+
+abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivity(),
+    BaseFragment.Callback, BaseActivityNavigator {
+
+    // TODO
+    // this can probably depend on isLoading variable of BaseViewModel,
+    // since its going to be common for all the activities
+    private val mProgressDialog: ProgressDialog? = null
+    var viewDataBinding: T? = null
+        private set
+    private var mViewModel: V? = null
+
+    private lateinit var baseBinding: ActivityBaseBinding
+
+    @Inject
+    lateinit var factory: ViewModelProviderFactory
+
+    /**
+     * Override for set binding variable
+     *
+     * @return variable id
+     */
+    abstract val bindingVariable: Int
+
+    /**
+     * Override for set view model
+     *
+     * @return view model instance
+     */
+    abstract val viewModel: V
+
+    override fun onFragmentAttached() {
+
+    }
+
+    override fun onFragmentDetached(tag: String) {
+
+    }
+
+    //    @Override
+    //    protected void attachBaseContext(Context newBase) {
+    //        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    //    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        performDependencyInjection()
+        super.onCreate(savedInstanceState)
+        baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base)
+        baseBinding.viewModel = ViewModelProviders.of(this, factory).get(BaseActivityViewModel::class.java)
+        baseBinding.viewModel?.navigator = this
+        performDataBinding()
+        setSupportActionBar(baseBinding.baseToolbar)
+        onCreateBase(savedInstanceState, contentLayoutId)
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    fun hasPermission(permission: String): Boolean {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun hideKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    fun hideLoading() {
+        if (mProgressDialog != null && mProgressDialog.isShowing) {
+            mProgressDialog.cancel()
+        }
+    }
+
+    //    public boolean isNetworkConnected() {
+    //        return NetworkUtils.isNetworkConnected(getApplicationContext());
+    //    }
 
 
-abstract class BaseActivity : AppCompatActivity(), BaseView {
-    lateinit var baseToolbar: Toolbar
-    lateinit var ivBack: ImageButton
-        private set
-    lateinit var tvBaseTitle: TextView
-        private set
+    fun performDependencyInjection() {
+        AndroidInjection.inject(this)
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    fun requestPermissionsSafely(permissions: Array<String>, requestCode: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, requestCode)
+        }
+    }
+
+    //    public void showLoading() {
+    //        hideLoading();
+    //        mProgressDialog = CommonUtils.showLoadingDialog(this);
+    //    }
+
+    private fun performDataBinding() {
+        viewDataBinding = DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding.placeHolder, true)
+        this.mViewModel = if (mViewModel == null) viewModel else mViewModel
+        viewDataBinding!!.setVariable(bindingVariable, mViewModel)
+        viewDataBinding!!.executePendingBindings()
+    }
+
     protected lateinit var navLayout : RelativeLayout
     //    protected lateinit var load: Loading
     private var notifExtra: MutableMap<String, String>? = null
     private var isActive: Boolean = false
+
+    /**
+     * @return layout resource id
+     */
+    @get:LayoutRes
     protected abstract val contentLayoutId: Int
-    protected lateinit var mView: WeakReference<BaseView>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-//        LanguageUtil.instance.updateLanguage(this)
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
-
-        baseToolbar = findViewById(R.id.baseToolbar)
-        ivBack = findViewById(R.id.ivBack)
-        tvBaseTitle = findViewById(R.id.tvBaseTitle)
-        tvBaseTitle.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
-        tvBaseTitle.typeface = Typeface.DEFAULT_BOLD
-        ivBack.setOnClickListener { onBackPressed() }
-        setSupportActionBar(baseToolbar)
-
-        title = ""
-        mView = WeakReference(this)
-
-        iv_notification.setOnClickListener {
-            startActivity(Intent(this, NotificationActivity::class.java))
-        }
-        layoutInflater.inflate(contentLayoutId, placeHolder)
-
-//        ButterKnife.bind(this)
-        onCreateBase(savedInstanceState, contentLayoutId)
-    }
 
     fun fullScreenChildHolder(isFullScreen: Boolean) {
         if (isFullScreen) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                (placeHolder.layoutParams as RelativeLayout.LayoutParams).removeRule(RelativeLayout.BELOW)
+                (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).removeRule(RelativeLayout.BELOW)
             } else {
-                (placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.BELOW, 0)
+                (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.BELOW, 0)
             }
         } else {
-            (placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.BELOW, R.id.baseToolbar)
+            (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.BELOW, R.id.baseToolbar)
         }
+    }
+
+    fun showNotification(isShow: Boolean) {
+        if (isShow) {
+            rlHomeNotificationContainer.visibility = View.VISIBLE
+        } else {
+            rlHomeNotificationContainer.visibility = View.GONE
+        }
+    }
+
+    fun showCakapMenu(isShow: Boolean) {
     }
 
 //    override fun onResume() {
@@ -91,9 +185,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 //        }
 //    }
 
-    fun getActivity(): BaseActivity {
-        return this
-    }
 
     fun showpDialog(isShowProgressDialog: Boolean) {
 //        if (load.isShowing && isShowProgressDialog) return
@@ -122,27 +213,24 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
     override fun setTitle(titleId: Int) {
         super.setTitle("")
-        tvBaseTitle.text = getString(titleId).toString().toUpperCase()
+        baseBinding.tvBaseTitle.text = getString(titleId).toString().toUpperCase()
     }
 
     override fun setTitle(title: CharSequence?) {
         super.setTitle("")
-        tvBaseTitle.text = title
+        baseBinding.tvBaseTitle.text = title
     }
 
-    override fun getContext(): Context? {
-        return this
-    }
 
     fun enableBackButton(isEnable: Boolean) {
         when {
             isEnable -> {
-                ivBack.visibility = View.VISIBLE
-                tvBaseTitle.setOnClickListener { onBackPressed() }
+                baseBinding.ivBack.visibility = View.VISIBLE
+                baseBinding.ivBack.setOnClickListener { onBackPressed() }
             }
             else -> {
-                ivBack.visibility = View.INVISIBLE
-                tvBaseTitle.setOnClickListener(null)
+                baseBinding.ivBack.visibility = View.INVISIBLE
+                baseBinding.tvBaseTitle.setOnClickListener(null)
             }
         }
     }
@@ -175,10 +263,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     override fun onPause() {
         super.onPause()
         isActive = false
-    }
-
-    override fun isActive(): Boolean {
-        return isActive
     }
 
     override fun onBackPressed() {
@@ -324,3 +408,4 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         return true
     }
 }
+

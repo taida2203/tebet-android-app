@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.forgotpassword
 
+import com.tebet.mojual.common.view.AppEditText
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.UpdateProfileRequest
@@ -11,10 +12,10 @@ import java.util.concurrent.TimeUnit
 
 class ForgotPasswordViewModel(dataManager: DataManager) :
     BaseViewModel<ForgotPasswordNavigator>(dataManager) {
-    fun forgotPassword() {
+    fun forgotPassword(tvPassword: AppEditText?) {
         compositeDisposable.add(
             dataManager.updateProfile(
-                UpdateProfileRequest()
+                UpdateProfileRequest(tvPassword?.text?.trim().toString())
             ).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(400, TimeUnit.MILLISECONDS)
@@ -27,5 +28,9 @@ class ForgotPasswordViewModel(dataManager: DataManager) :
                     }
                 })
         )
+    }
+
+    fun onForgotPasswordClick() {
+        navigator.forgotPassword()
     }
 }

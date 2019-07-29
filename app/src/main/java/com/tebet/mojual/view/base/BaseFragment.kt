@@ -25,20 +25,20 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.tebet.mojual.ViewModelProviderFactory
 import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
-/**
- * Created by amitshekhar on 09/07/17.
- */
-
-abstract class BaseFragmentNew<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment() {
-
-    var baseActivityNew: BaseActivityNew<*, *>? = null
+abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment() {
+    var baseActivity: BaseActivity<*, *>? = null
         private set
     private var mRootView: View? = null
     var viewDataBinding: T? = null
         private set
     private var mViewModel: V? = null
+
+    @Inject
+    lateinit var factory: ViewModelProviderFactory
 
     /**
      * Override for set binding variable
@@ -62,9 +62,9 @@ abstract class BaseFragmentNew<T : ViewDataBinding, V : BaseViewModel<*>> : Frag
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is BaseActivityNew<*, *>) {
-            val activity = context as BaseActivityNew<*, *>?
-            this.baseActivityNew = activity
+        if (context is BaseActivity<*, *>) {
+            val activity = context as BaseActivity<*, *>?
+            this.baseActivity = activity
             activity!!.onFragmentAttached()
         }
     }
@@ -83,7 +83,7 @@ abstract class BaseFragmentNew<T : ViewDataBinding, V : BaseViewModel<*>> : Frag
     }
 
     override fun onDetach() {
-        baseActivityNew = null
+        baseActivity = null
         super.onDetach()
     }
 
@@ -95,8 +95,8 @@ abstract class BaseFragmentNew<T : ViewDataBinding, V : BaseViewModel<*>> : Frag
     }
 
     fun hideKeyboard() {
-        if (baseActivityNew != null) {
-            baseActivityNew!!.hideKeyboard()
+        if (baseActivity != null) {
+            baseActivity!!.hideKeyboard()
         }
     }
 

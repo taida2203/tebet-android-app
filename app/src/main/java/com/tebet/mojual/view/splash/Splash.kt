@@ -13,17 +13,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
-import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivitySplashScreenBinding
-import com.tebet.mojual.view.HomeActivity
+import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.registration.SignUpPassword
-import com.tebet.mojual.view.base.BaseActivityNew
+import com.tebet.mojual.view.base.BaseActivity
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import javax.inject.Inject
 
-open class Splash : BaseActivityNew<ActivitySplashScreenBinding, SplashViewModel>(),
+open class Splash : BaseActivity<ActivitySplashScreenBinding, SplashViewModel>(),
     SplashNavigator {
     companion object {
         private val duration = 3000

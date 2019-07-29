@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_centerInParent="true"
-                  android:gravity="center_horizontal"
-                  android:layout_marginLeft="@dimen/_80sdp"
-                  android:layout_marginRight="@dimen/_80sdp">
+    </data>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white">
+        <FrameLayout android:id="@+id/contentHolder"
+                     android:layout_width="match_parent" android:layout_height="0dp"
+                     android:layout_weight="1"/>
+
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                      android:text="Tilt"/>
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                      android:id="@+id/tvTilt"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                          android:gravity="center"
+                          android:layout_weight="1" android:orientation="vertical">
+                <ImageView android:layout_width="@dimen/_36sdp" android:layout_height="@dimen/_36sdp"
+                           android:src="@drawable/ic_cam_off"/>
+                <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content"
+                                                          android:text="Home"
+                                                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                          android:gravity="center"
+                          android:layout_weight="1" android:orientation="vertical">
+                <ImageView android:layout_width="@dimen/_36sdp" android:layout_height="@dimen/_36sdp"
+                           android:src="@drawable/ic_cam_off"/>
+                <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content"
+                                                          android:text="Inbox"
+                                                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                          android:gravity="center"
+                          android:layout_weight="1" android:orientation="vertical">
+                <ImageView android:layout_width="@dimen/_36sdp" android:layout_height="@dimen/_36sdp"
+                           android:src="@drawable/ic_cam_off"/>
+                <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content"
+                                                          android:text="History"
+                                                          android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                      android:text="Temperature"/>
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                      android:id="@+id/tvTemp"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                      android:text="Gravity"/>
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                      android:id="@+id/tvGravity"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                      android:text="Battery"/>
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                      android:id="@+id/tvBattery"/>
-        </LinearLayout>
-        <com.tebet.mojual.common.view.AppButtonRounded android:layout_width="wrap_content"
-                                                       android:layout_height="wrap_content"
-                                                       android:layout_marginTop="@dimen/_36sdp"
-                                                       android:text="Logout"
-                                                       android:id="@+id/btnLogout"/>
     </LinearLayout>
-</RelativeLayout>
+</layout>

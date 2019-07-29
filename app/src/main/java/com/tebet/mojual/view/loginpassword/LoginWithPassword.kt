@@ -13,14 +13,12 @@ import co.sdk.auth.core.models.LoginException
 import co.sdk.auth.core.models.Token
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
-import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivityLoginPasswordBinding
 import com.tebet.mojual.view.forgotpassword.ForgotPassword
-import com.tebet.mojual.view.HomeActivity
-import com.tebet.mojual.view.base.BaseActivityNew
-import javax.inject.Inject
+import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.base.BaseActivity
 
-class LoginWithPassword : BaseActivityNew<ActivityLoginPasswordBinding, LoginWithPasswordViewModel>(),
+class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPasswordViewModel>(),
     LoginWithPasswordNavigator {
 
     override val bindingVariable: Int

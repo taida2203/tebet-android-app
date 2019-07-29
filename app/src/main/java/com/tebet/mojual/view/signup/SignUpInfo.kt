@@ -1,22 +1,30 @@
-package com.tebet.mojual.view
+package com.tebet.mojual.view.signup
 
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProviders
+import com.tebet.mojual.BR
 import com.tebet.mojual.R
-import com.tebet.mojual.common.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_sign_up_info.*
-import kotlinx.android.synthetic.main.activity_sign_up_password.*
-import kotlinx.android.synthetic.main.activity_sign_up_password.btnNext
+import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
+import com.tebet.mojual.view.base.BaseActivity
+import com.tebet.mojual.view.home.HomeActivity
 
-class SignUpInfo : BaseActivity() {
+class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>() {
     enum class SCREEN_STEP {
         STEP_1, STEP_2, STEP_3, STEP_FINISH
     }
 
-    var screenStep: SCREEN_STEP = SCREEN_STEP.STEP_1
+    var screenStep: SCREEN_STEP =
+        SCREEN_STEP.STEP_1
+
+    override val bindingVariable: Int
+        get() = BR.viewModel
+
+    override val viewModel: SignUpViewModel
+        get() = ViewModelProviders.of(this, factory).get(SignUpViewModel::class.java)
 
     override val contentLayoutId: Int
         get() = R.layout.activity_sign_up_info
@@ -24,7 +32,7 @@ class SignUpInfo : BaseActivity() {
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         title = "Sign Up"
         refreshScreenStep()
-        btnNext.setOnClickListener {
+        viewDataBinding?.btnNext?.setOnClickListener {
             when (screenStep) {
                 SCREEN_STEP.STEP_1 ->
                     screenStep = SCREEN_STEP.STEP_2
@@ -37,8 +45,8 @@ class SignUpInfo : BaseActivity() {
 
             refreshScreenStep()
         }
-        btnBack.background = ContextCompat.getDrawable(this,R.drawable.rounded_btn_grey)
-        btnBack.setOnClickListener {
+        viewDataBinding?.btnBack?.background = ContextCompat.getDrawable(this,R.drawable.rounded_btn_grey)
+        viewDataBinding?.btnBack?.setOnClickListener {
             onBackPressed()
         }
     }
@@ -55,30 +63,30 @@ class SignUpInfo : BaseActivity() {
     }
 
     private fun refreshScreenStep() {
-        btnBack.visibility = View.VISIBLE
+        viewDataBinding?.btnBack?.visibility = View.VISIBLE
 
-        tvTitleStep1.setTypeface(null, Typeface.NORMAL)
-        tvTitleStep2.setTypeface(null, Typeface.NORMAL)
-        tvTitleStep3.setTypeface(null, Typeface.NORMAL)
+        viewDataBinding?.tvTitleStep1?.setTypeface(null, Typeface.NORMAL)
+        viewDataBinding?.tvTitleStep2?.setTypeface(null, Typeface.NORMAL)
+        viewDataBinding?.tvTitleStep3?.setTypeface(null, Typeface.NORMAL)
 
         when (screenStep) {
             SCREEN_STEP.STEP_1 -> {
                 openFragment(SignUpInfoStep1(), R.id.placeHolderChild)
-                btnBack.visibility = View.GONE
-                tvTitleStep1.setTypeface(null, Typeface.BOLD)
-                tvTitleStep1.setTextColor(ContextCompat.getColor(this,R.color.dark_green))
+                viewDataBinding?.btnBack?.visibility = View.GONE
+                viewDataBinding?.tvTitleStep1?.setTypeface(null, Typeface.BOLD)
+                viewDataBinding?.tvTitleStep1?.setTextColor(ContextCompat.getColor(this,R.color.dark_green))
             }
 
             SCREEN_STEP.STEP_2 -> {
                 openFragment(SignUpInfoStep2(), R.id.placeHolderChild)
-                tvTitleStep2.setTypeface(null, Typeface.BOLD)
-                tvTitleStep2.setTextColor(ContextCompat.getColor(this,R.color.dark_green))
+                viewDataBinding?.tvTitleStep2?.setTypeface(null, Typeface.BOLD)
+                viewDataBinding?.tvTitleStep2?.setTextColor(ContextCompat.getColor(this,R.color.dark_green))
             }
 
             SCREEN_STEP.STEP_3 -> {
                 openFragment(SignUpInfoStep3(), R.id.placeHolderChild)
-                tvTitleStep3.setTypeface(null, Typeface.BOLD)
-                tvTitleStep3.setTextColor(ContextCompat.getColor(this,R.color.dark_green))
+                viewDataBinding?.tvTitleStep3?.setTypeface(null, Typeface.BOLD)
+                viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this,R.color.dark_green))
             }
 
             else -> {

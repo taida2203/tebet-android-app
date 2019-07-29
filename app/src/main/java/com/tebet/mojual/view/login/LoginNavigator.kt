@@ -6,4 +6,5 @@ interface LoginNavigator {
     fun openRegistrationScreen()
     fun doAccountKitLogin(isRegistrationFLow: Boolean)
     fun openHomeScreen()
+    fun onBackPressed()
 }

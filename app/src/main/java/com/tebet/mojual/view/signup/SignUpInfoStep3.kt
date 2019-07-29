@@ -1,4 +1,4 @@
-package com.tebet.mojual.view
+package com.tebet.mojual.view.signup
 
 import android.os.Bundle
 import android.view.LayoutInflater

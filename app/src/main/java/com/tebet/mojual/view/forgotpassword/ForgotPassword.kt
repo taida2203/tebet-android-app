@@ -3,24 +3,13 @@ package com.tebet.mojual.view.forgotpassword
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
-import co.sdk.auth.network.ServiceHelper
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
-import com.tebet.mojual.ViewModelProviderFactory
-import com.tebet.mojual.common.base.BaseActivity
-import com.tebet.mojual.data.models.UpdateProfileRequest
-import com.tebet.mojual.data.remote.ApiInterface
-import com.tebet.mojual.databinding.ActivityLoginBinding
-import com.tebet.mojual.view.HomeActivity
-import com.tebet.mojual.view.base.BaseActivityNew
-import com.tebet.mojual.view.login.LoginViewModel
-import kotlinx.android.synthetic.main.activity_sign_up_password.*
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Response
-import javax.inject.Inject
+import com.tebet.mojual.databinding.ActivitySignUpPasswordBinding
+import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.base.BaseActivity
 
-open class ForgotPassword : BaseActivityNew<ActivityLoginBinding, ForgotPasswordViewModel>(), ForgotPasswordNavigator {
+open class ForgotPassword : BaseActivity<ActivitySignUpPasswordBinding, ForgotPasswordViewModel>(), ForgotPasswordNavigator {
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -33,10 +22,6 @@ open class ForgotPassword : BaseActivityNew<ActivityLoginBinding, ForgotPassword
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         title = "Input new password"
-        btnNext.setOnClickListener {
-            val updateProfileRequest = UpdateProfileRequest()
-            updateProfileRequest.password = tvPassword.text?.trim().toString()
-        }
     }
 
     override fun openHomeScreen() {
@@ -44,5 +29,7 @@ open class ForgotPassword : BaseActivityNew<ActivityLoginBinding, ForgotPassword
         startActivity(Intent(this@ForgotPassword, HomeActivity::class.java))
     }
 
-
+    override fun forgotPassword() {
+        viewModel.forgotPassword(viewDataBinding?.tvPassword)
+    }
 }
