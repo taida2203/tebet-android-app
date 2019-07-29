@@ -1,4 +1,4 @@
-package com.tebet.mojual.view.home.content
+package com.tebet.mojual.view.profile
 
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.models.ApiCallBack
@@ -6,9 +6,7 @@ import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
-import com.tebet.mojual.view.base.BaseNavigator
 import com.tebet.mojual.view.base.BaseViewModel
-import com.tebet.mojual.view.profile.ProfileNavigator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 

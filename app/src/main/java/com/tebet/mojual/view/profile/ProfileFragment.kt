@@ -1,4 +1,4 @@
-package com.tebet.mojual.view.home.content
+package com.tebet.mojual.view.profile
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,6 @@ import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentProfileBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.login.Login
-import com.tebet.mojual.view.profile.ProfileNavigator
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(), ProfileNavigator {
     override val bindingVariable: Int

@@ -4,11 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.view.base.BaseActivityViewModel
-import com.tebet.mojual.view.forgotpassword.ForgotPassword
 import com.tebet.mojual.view.forgotpassword.ForgotPasswordViewModel
 import com.tebet.mojual.view.home.HomeViewModel
 import com.tebet.mojual.view.home.content.HomeContentViewModel
-import com.tebet.mojual.view.home.content.ProfileViewModel
+import com.tebet.mojual.view.profile.ProfileViewModel
 import com.tebet.mojual.view.login.LoginViewModel
 import com.tebet.mojual.view.loginpassword.LoginWithPasswordViewModel
 import com.tebet.mojual.view.signup.SignUpViewModel

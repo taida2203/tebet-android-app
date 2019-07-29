@@ -16,7 +16,6 @@
 
 package com.tebet.mojual.view.profile;
 
-import com.tebet.mojual.view.home.content.ProfileFragment;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 

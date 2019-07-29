@@ -8,7 +8,7 @@ import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.content.HomeFragment
-import com.tebet.mojual.view.home.content.ProfileFragment
+import com.tebet.mojual.view.profile.ProfileFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
