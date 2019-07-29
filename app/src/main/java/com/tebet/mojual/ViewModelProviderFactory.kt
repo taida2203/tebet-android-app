@@ -13,6 +13,8 @@ import com.tebet.mojual.view.login.LoginViewModel
 import com.tebet.mojual.view.loginpassword.LoginWithPasswordViewModel
 import com.tebet.mojual.view.signup.SignUpViewModel
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1Model
+import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
+import com.tebet.mojual.view.signup.step2.SignUpInfoStep3Model
 import com.tebet.mojual.view.splash.SplashViewModel
 
 import javax.inject.Inject
@@ -36,6 +38,8 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(HomeContentViewModel::class.java) -> HomeContentViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SignUpInfoStep1Model::class.java) -> SignUpInfoStep1Model(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(SignUpInfoStep2Model::class.java) -> SignUpInfoStep2Model(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(SignUpInfoStep3Model::class.java) -> SignUpInfoStep3Model(dataManager, schedulerProvider) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

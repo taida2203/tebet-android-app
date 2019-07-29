@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white" android:orientation="vertical">
-    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Bank Name"
-                                              android:layout_marginBottom="@dimen/_10sdp"/>
-    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Bank account number"
-                                              android:layout_marginBottom="@dimen/_10sdp"/>
-    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Bank account name"
-                                              android:layout_marginBottom="@dimen/_10sdp"/>
-    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Bank region"
-                                              android:layout_marginBottom="@dimen/_10sdp"/>
-</LinearLayout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+    </data>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white" android:orientation="vertical">
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="Bank Name"
+                                                  android:layout_marginBottom="@dimen/_10sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="Bank account number"
+                                                  android:layout_marginBottom="@dimen/_10sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="Bank account name"
+                                                  android:layout_marginBottom="@dimen/_10sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="Bank region"
+                                                  android:layout_marginBottom="@dimen/_10sdp"/>
+    </LinearLayout>
+</layout>

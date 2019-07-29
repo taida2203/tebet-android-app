@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white" android:orientation="vertical">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:layout_marginBottom="@dimen/_10sdp">
-        <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="viewModel" type="com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model"/>
+    </data>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white" android:orientation="vertical">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="center_vertical"
+                      android:layout_marginBottom="@dimen/_10sdp">
+            <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp"
+                                                      android:layout_height="wrap_content"
+                                                      android:layout_weight="1"
+                                                      android:text="DOMICILE ADDRESS"/>
+            <ImageView android:layout_width="@dimen/_18sdp" android:layout_height="@dimen/_18sdp"
+                       android:src="@drawable/signup_collapse_btn"/>
+        </LinearLayout>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
                                                   android:layout_height="wrap_content"
-                                                  android:layout_weight="1"
-                                                  android:text="DOMICILE ADDRESS"/>
-        <ImageView android:layout_width="@dimen/_18sdp" android:layout_height="@dimen/_18sdp"
-                   android:src="@drawable/signup_collapse_btn"/>
-    </LinearLayout>
-    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Address"
-                                              android:layout_marginBottom="@dimen/_20sdp"/>
-    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Kelurahan"
-                                              android:layout_marginBottom="@dimen/_20sdp"/>
-    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="Kecamatan"
-                                              android:layout_marginBottom="@dimen/_20sdp"/>
-    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="RT/RW"
-                                              android:layout_marginBottom="@dimen/_20sdp"/>
-    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:hint="City"
-                                              android:layout_marginBottom="@dimen/_20sdp"/>
-    <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                                              android:layout_marginBottom="@dimen/_20sdp"
-                                              android:hint="Choose on Map"/>
-
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-        <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp"
+                                                  android:hint="Address"
+                                                  android:layout_marginBottom="@dimen/_20sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
                                                   android:layout_height="wrap_content"
-                                                  android:layout_weight="1"
-                                                  android:text="PICKUP ADDRESS"/>
-        <ImageView android:layout_width="@dimen/_18sdp" android:layout_height="@dimen/_18sdp"
-                   android:gravity="center_vertical"
-                   android:src="@drawable/signup_expand_btn"/>
-    </LinearLayout>
+                                                  android:hint="Kelurahan"
+                                                  android:layout_marginBottom="@dimen/_20sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="Kecamatan"
+                                                  android:layout_marginBottom="@dimen/_20sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="RT/RW"
+                                                  android:layout_marginBottom="@dimen/_20sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="City"
+                                                  android:layout_marginBottom="@dimen/_20sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:layout_marginBottom="@dimen/_20sdp"
+                                                  android:hint="Choose on Map"/>
 
-</LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp"
+                                                      android:layout_height="wrap_content"
+                                                      android:layout_weight="1"
+                                                      android:text="PICKUP ADDRESS"/>
+            <ImageView android:layout_width="@dimen/_18sdp" android:layout_height="@dimen/_18sdp"
+                       android:gravity="center_vertical"
+                       android:src="@drawable/signup_expand_btn"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

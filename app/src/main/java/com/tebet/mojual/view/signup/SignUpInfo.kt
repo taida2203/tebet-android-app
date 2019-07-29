@@ -26,6 +26,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import java.io.File
 import java.io.IOException
 import androidx.lifecycle.Observer
+import com.tebet.mojual.view.signup.step2.SignUpInfoStep2
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
