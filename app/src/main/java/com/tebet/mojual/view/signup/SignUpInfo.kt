@@ -2,17 +2,37 @@ package com.tebet.mojual.view.signup
 
 import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.signup.step1.SignUpInfoStep1
+import com.tebet.mojual.view.signup.step1.SignUpInfoStep1Navigator
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import javax.inject.Inject
 
-class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>() {
+class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>(), SignUpInfoStep1Navigator,
+    HasSupportFragmentInjector {
+    @Inject
+    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
     enum class SCREEN_STEP {
         STEP_1, STEP_2, STEP_3, STEP_FINISH
     }
@@ -93,6 +113,64 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>() {
                 this@SignUpInfo.finish()
                 startActivity(Intent(this@SignUpInfo, HomeActivity::class.java))
             }
+        }
+    }
+
+    override fun captureAvatar() {
+        dispatchTakePictureIntent()
+    }
+
+    override fun captureEKTP() {
+        dispatchTakePictureIntent()
+    }
+
+    lateinit var currentPhotoPath: String
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
+    }
+    val REQUEST_TAKE_PHOTO = 1
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            // Ensure that there's a camera activity to handle the intent
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                // Create the File where the photo should go
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    // Error occurred while creating the File
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        this,
+                        "com.tebet.mojual.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            currentPhotoPath
         }
     }
 }

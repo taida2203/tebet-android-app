@@ -3,6 +3,7 @@ package com.tebet.mojual.view.profile
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.models.ApiCallBack
 import co.sdk.auth.core.models.LoginException
+import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
@@ -10,8 +11,11 @@ import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ProfileViewModel(dataManager: DataManager) :
-    BaseViewModel<ProfileNavigator>(dataManager) {
+class ProfileViewModel(
+    dataManager: DataManager,
+    schedulerProvider: SchedulerProvider
+) :
+    BaseViewModel<ProfileNavigator>(dataManager, schedulerProvider) {
 
     fun loadProfile() {
         compositeDisposable.add(

@@ -17,6 +17,7 @@ import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.loginpassword.LoginWithPassword
 import com.tebet.mojual.view.registration.SignUpPassword
 import com.tebet.mojual.view.base.BaseActivity
+import com.tebet.mojual.view.forgotpassword.ForgotPassword
 
 class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigator {
     companion object {
@@ -63,8 +64,7 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
             LoginConfiguration(logoutWhileExpired = false),
             object : ApiCallBack<Token>() {
                 override fun onSuccess(responeCode: Int, response: Token?) {
-                    viewModel.loadProfile()
-                    showLoading(true)
+                    viewModel.loadProfile(isRegistrationFLow)
                 }
 
                 override fun onFailed(exeption: LoginException) {
@@ -77,6 +77,10 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
     }
 
     override fun openRegistrationScreen() {
-        startActivity(Intent(this@Login, SignUpPassword::class.java))
+        startActivity(Intent(this, SignUpPassword::class.java))
+    }
+
+    override fun openUpdatePasswordScreen() {
+        startActivity(Intent(this, ForgotPassword::class.java))
     }
 }

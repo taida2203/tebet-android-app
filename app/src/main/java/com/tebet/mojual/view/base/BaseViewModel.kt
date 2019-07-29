@@ -18,18 +18,15 @@ package com.tebet.mojual.view.base
 
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.ViewModel
+import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import io.reactivex.disposables.CompositeDisposable
 
 import java.lang.ref.WeakReference
 
-/**
- * Created by amitshekhar on 07/07/17.
- */
-
 abstract class BaseViewModel<N>(
-    val dataManager: DataManager
-//    val schedulerProvider: SchedulerProvider
+    val dataManager: DataManager,
+    val schedulerProvider: SchedulerProvider
 ) : ViewModel() {
 
     val isLoading = ObservableBoolean()

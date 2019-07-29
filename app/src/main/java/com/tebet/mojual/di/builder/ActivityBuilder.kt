@@ -23,6 +23,8 @@ import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.loginpassword.LoginWithPassword
 import com.tebet.mojual.view.profile.ProfileFragmentProvider
 import com.tebet.mojual.view.registration.SignUpPassword
+import com.tebet.mojual.view.signup.SignUpInfo
+import com.tebet.mojual.view.signup.SignUpInfoFragmentProvider
 import com.tebet.mojual.view.splash.Splash
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -67,4 +69,7 @@ abstract class ActivityBuilder
 
     @ContributesAndroidInjector
     abstract fun signUpPasswordActivity(): SignUpPassword
+
+    @ContributesAndroidInjector(modules = [SignUpInfoFragmentProvider::class])
+    abstract fun signUpInfoActivity(): SignUpInfo
 }

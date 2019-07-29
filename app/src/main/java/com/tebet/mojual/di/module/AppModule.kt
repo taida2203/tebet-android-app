@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.tebet.mojual.common.util.rx.AppSchedulerProvider
+import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.AppDataManger
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.persistance.dao.UserProfileDao
@@ -52,6 +54,12 @@ class AppModule(private val app: Application) {
     @Singleton
     internal fun provideDataManager(appDataManager: AppDataManger): DataManager {
         return appDataManager
+    }
+
+
+    @Provides
+    internal fun provideSchedulerProvider(): SchedulerProvider {
+        return AppSchedulerProvider()
     }
 
 //  @Provides

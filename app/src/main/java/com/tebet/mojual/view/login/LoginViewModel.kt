@@ -1,18 +1,19 @@
 package com.tebet.mojual.view.login
 
-import androidx.lifecycle.MutableLiveData
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.LoginConfiguration
+import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
-class LoginViewModel(dataManager: DataManager) :
-    BaseViewModel<LoginNavigator>(dataManager) {
+class LoginViewModel(
+    dataManager: DataManager,
+    schedulerProvider: SchedulerProvider
+) :
+    BaseViewModel<LoginNavigator>(dataManager, schedulerProvider) {
 
     fun onLoginClick() {
         navigator.openLoginScreen()
@@ -22,15 +23,19 @@ class LoginViewModel(dataManager: DataManager) :
         navigator.doAccountKitLogin(true)
     }
 
-    fun loadProfile() {
+    fun loadProfile(registrationFLow: Boolean) {
         compositeDisposable.add(
             dataManager.getProfile()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onSuccess(dataResponse: UserProfile) {
                         if (dataResponse.status.equals("INIT")) {
-                            navigator.openRegistrationScreen()
+                            if (!registrationFLow) {
+                                navigator.openUpdatePasswordScreen()
+                            } else {
+                                navigator.openRegistrationScreen()
+                            }
                         } else {
                             navigator.openHomeScreen()
                         }
@@ -43,17 +48,19 @@ class LoginViewModel(dataManager: DataManager) :
     }
 
     fun register() {
+        val config = LoginConfiguration(
+            logoutWhileExpired = false,
+            token = AuthSdk.instance.getBrandLoginToken()?.token,
+            phone = AuthSdk.instance.getBrandLoginToken()?.phone
+        )
         compositeDisposable.add(
-            dataManager.register(
-                LoginConfiguration(
-                    logoutWhileExpired = false,
-                    token = AuthSdk.instance.getBrandLoginToken()?.token,
-                    phone = AuthSdk.instance.getBrandLoginToken()?.phone
-                )
-            ).subscribeWith(object : CallbackWrapper<EmptyResponse>() {
+            dataManager.register(config).subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
                 override fun onSuccess(dataResponse: EmptyResponse) {
-                    navigator.doAccountKitLogin(false)
+                    navigator.doAccountKitLogin(true)
                 }
+
                 override fun onFailure(error: String?) {
                 }
             }

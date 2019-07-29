@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.forgotpassword
 
+import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.common.view.AppEditText
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.EmptyResponse
@@ -10,8 +11,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class ForgotPasswordViewModel(dataManager: DataManager) :
-    BaseViewModel<ForgotPasswordNavigator>(dataManager) {
+class ForgotPasswordViewModel(
+    dataManager: DataManager,
+    schedulerProvider: SchedulerProvider
+) :
+    BaseViewModel<ForgotPasswordNavigator>(dataManager, schedulerProvider) {
     fun forgotPassword(tvPassword: AppEditText?) {
         compositeDisposable.add(
             dataManager.updateProfile(

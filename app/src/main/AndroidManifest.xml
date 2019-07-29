@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
           package="com.tebet.mojual">
+    <uses-feature android:name="android.hardware.camera"
+                  android:required="true"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+                     android:maxSdkVersion="18" />
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -30,6 +34,17 @@
         <activity android:name=".view.registration.SignUpPassword"/>
         <activity android:name=".view.loginpassword.LoginWithPassword"/>
         <activity android:name=".view.forgotpassword.ForgotPassword"/>
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="com.tebet.mojual.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths"/>
+        </provider>
+
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
                 android:resource="@drawable/ic_notifications"/>

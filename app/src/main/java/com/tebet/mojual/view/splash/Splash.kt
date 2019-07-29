@@ -18,6 +18,7 @@ import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.registration.SignUpPassword
 import com.tebet.mojual.view.base.BaseActivity
+import com.tebet.mojual.view.signup.SignUpInfo
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -106,6 +107,7 @@ open class Splash : BaseActivity<ActivitySplashScreenBinding, SplashViewModel>()
     override fun openHomeScreen() {
         finish()
         startActivity(Intent(this, HomeActivity::class.java))
+//        startActivity(Intent(this, SignUpInfo::class.java))
     }
 
     override fun openSetPasswordScreen() {
