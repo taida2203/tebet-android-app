@@ -21,10 +21,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.tebet.mojual.ViewModelProviderFactory
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
@@ -65,7 +67,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         if (context is BaseActivity<*, *>) {
             val activity = context as BaseActivity<*, *>?
             this.baseActivity = activity
-            activity!!.onFragmentAttached()
+            activity?.onFragmentAttached()
         }
     }
 
@@ -73,6 +75,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         performDependencyInjection()
         super.onCreate(savedInstanceState)
         mViewModel = viewModel
+        mViewModel?.baseErrorHandlerData?.observe(this, Observer<String> {
+            (activity as BaseActivity<*, *>).handleError(it)
+        })
         setHasOptionsMenu(false)
     }
 

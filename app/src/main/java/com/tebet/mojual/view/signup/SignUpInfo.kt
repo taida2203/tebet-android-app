@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -24,6 +25,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import java.io.File
 import java.io.IOException
+import androidx.lifecycle.Observer
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -73,6 +75,9 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>(), S
         viewDataBinding?.btnBack?.setOnClickListener {
             onBackPressed()
         }
+        viewModel.baseErrorHandlerData.observe(this, Observer<String> {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        })
     }
 
     override fun onBackPressed() {

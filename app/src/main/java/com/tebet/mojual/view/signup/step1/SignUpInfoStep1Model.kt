@@ -1,10 +1,8 @@
 package com.tebet.mojual.view.signup.step1
 
-import com.google.gson.Gson
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.EmptyResponse
-import com.tebet.mojual.data.models.UpdateProfileRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -46,6 +44,7 @@ class SignUpInfoStep1Model(
                     }
 
                     override fun onFailure(error: String?) {
+                        handleError(error)
                     }
                 })
         )

@@ -17,6 +17,7 @@
 package com.tebet.mojual.view.base
 
 import androidx.databinding.ObservableBoolean
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
@@ -35,6 +36,9 @@ abstract class BaseViewModel<N>(
 
     private var mNavigator: WeakReference<N>? = null
 
+    var baseErrorHandlerData: MutableLiveData<String> = MutableLiveData()
+    private set
+
     var navigator: N
         get() = mNavigator?.get()!!
         set(navigator) {
@@ -48,5 +52,9 @@ abstract class BaseViewModel<N>(
 
     fun setIsLoading(isLoading: Boolean) {
         this.isLoading.set(isLoading)
+    }
+
+    protected fun handleError(error: String?) {
+        baseErrorHandlerData.postValue(error)
     }
 }

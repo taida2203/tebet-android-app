@@ -18,12 +18,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import co.common.network.ApiException
 import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivityBaseBinding
+import com.tebet.mojual.view.signup.SignUpInfo
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_base.*
 import javax.inject.Inject
@@ -34,7 +37,6 @@ import javax.inject.Inject
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivity(),
     BaseFragment.Callback, BaseActivityNavigator {
-
     // TODO
     // this can probably depend on isLoading variable of BaseViewModel,
     // since its going to be common for all the activities
@@ -82,6 +84,9 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         baseBinding.viewModel = ViewModelProviders.of(this, factory).get(BaseActivityViewModel::class.java)
         baseBinding.viewModel?.navigator = this
         performDataBinding()
+        mViewModel?.baseErrorHandlerData?.observe(this, Observer<String> {
+            handleError(it)
+        })
         setSupportActionBar(baseBinding.baseToolbar)
         onCreateBase(savedInstanceState, contentLayoutId)
     }
@@ -406,6 +411,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             return totalMemory < 1024 || Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP
         }
         return true
+    }
+
+    fun handleError(it: String?) {
+        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
     }
 }
 
