@@ -16,7 +16,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
-import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.HomeActivity
@@ -82,7 +81,6 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         viewModel.baseErrorHandlerData.observe(this, Observer<String> {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
-        viewModel.loadProfile()
     }
 
     override fun onBackPressed() {
@@ -137,11 +135,11 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
     }
 
     override fun captureAvatar() {
-        dispatchTakePictureIntent()
+        dispatchTakePictureIntent(REQUEST_TAKE_AVATAR)
     }
 
     override fun captureEKTP() {
-        dispatchTakePictureIntent()
+        dispatchTakePictureIntent(REQUEST_TAKE_EKTP)
     }
 
     lateinit var currentPhotoPath: String
@@ -160,9 +158,10 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
             currentPhotoPath = absolutePath
         }
     }
-    val REQUEST_TAKE_PHOTO = 1
+    private val REQUEST_TAKE_AVATAR = 1
+    private val REQUEST_TAKE_EKTP = 2
 
-    private fun dispatchTakePictureIntent() {
+    private fun dispatchTakePictureIntent(requestCode: Int) {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(packageManager)?.also {
@@ -181,7 +180,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                    startActivityForResult(takePictureIntent, requestCode)
                 }
             }
         }
@@ -189,8 +188,18 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_TAKE_PHOTO) {
-            cameraCaptureData.postValue(currentPhotoPath)
+        when (requestCode) {
+            REQUEST_TAKE_AVATAR -> {
+                viewModel.userProfile.avatarLocal = "file://$currentPhotoPath"
+                viewModel.uploadAvatar(currentPhotoPath)
+                currentStepFragment?.viewModel?.userProfile?.set(viewModel.userProfile)
+            }
+            REQUEST_TAKE_EKTP -> {
+                viewModel.userProfile.ktpLocal = "file://$currentPhotoPath"
+                cameraCaptureData.postValue(currentPhotoPath)
+                viewModel.uploadEKTP(currentPhotoPath)
+                currentStepFragment?.viewModel?.userProfile?.set(viewModel.userProfile)
+            }
         }
     }
 }

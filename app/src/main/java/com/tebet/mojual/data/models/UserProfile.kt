@@ -1,10 +1,13 @@
 package com.tebet.mojual.data.models
 
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import com.tebet.mojual.BR
 
 @Entity(
     tableName = "UserProfile"
@@ -13,10 +16,8 @@ class UserProfile(
     @Json(name = "status")
     @ColumnInfo(name = "status")
     var status: String? = null,
-
     var authenticationType: String? = null,
     var avatar: String? = null,
-    var avatarLocal: String? = null,
     var bankCode: String? = null,
     var bankName: String? = null,
     var bankRegionCode: String? = null,
@@ -29,7 +30,6 @@ class UserProfile(
     var fullName: String? = null,
     var gender: String? = null,
     var ktp: String? = null,
-    var ktpLocal: String? = null,
     var lastName: String? = null,
     var password: String? = null,
     @Json(name = "phone")
@@ -51,4 +51,17 @@ class UserProfile(
     @Json(name = "username")
     @ColumnInfo(name = "username")
     var username: String? = null
-)
+) : BaseObservable() {
+    var avatarLocal: String? = null
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.avatarLocal)
+        }
+    var ktpLocal: String? = null
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.ktpLocal)
+        }
+}

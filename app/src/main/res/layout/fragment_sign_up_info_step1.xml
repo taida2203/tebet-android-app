@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="viewModel" type="com.tebet.mojual.view.signup.step1.SignUpInfoStep1Model"/>
     </data>
@@ -19,9 +20,10 @@
                                                       android:gravity="center"/>
             <ImageView android:layout_width="@dimen/_100sdp" android:layout_height="@dimen/_100sdp"
                        android:layout_gravity="center"
-                       android:src="@android:drawable/ic_menu_camera"
                        android:background="@drawable/circle_image_view"
                        android:onClick="@{()-> viewModel.onCaptureAvatar()}"
+                       app:imageUrl="@{viewModel.userProfile.avatarLocal}"
+                       android:src="@android:drawable/ic_menu_camera"
                        android:layout_marginBottom="@dimen/_20sdp"/>
             <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
                                                       android:layout_height="wrap_content"
@@ -43,7 +45,7 @@
                 <ImageView android:layout_width="match_parent" android:layout_height="wrap_content"
                            android:onClick="@{()-> viewModel.onCaptureEKTP()}"
                            android:src="@drawable/signup_ktp_blank"
-                />
+                           app:imageUrl="@{viewModel.userProfile.ktpLocal}"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

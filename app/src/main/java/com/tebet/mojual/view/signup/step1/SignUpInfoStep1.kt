@@ -11,7 +11,6 @@ import com.tebet.mojual.view.signup.SignUpInfo
 import com.tebet.mojual.view.signup.SignUpInfoStep
 
 class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInfoStep1Model>(), SignUpInfoStep1Navigator {
-    private var imagePath: String? = null
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -24,10 +23,10 @@ class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInf
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = (activity as SignUpInfo)
-        (activity as SignUpInfo).cameraCaptureData.observe(this, Observer<String> {
-            imagePath = it
-            viewModel.uploadImage(imagePath)
-        })
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun captureAvatar() {

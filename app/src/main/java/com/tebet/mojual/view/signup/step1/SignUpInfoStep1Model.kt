@@ -24,27 +24,4 @@ class SignUpInfoStep1Model(
     fun onCaptureEKTP() {
         navigator.captureEKTP()
     }
-
-    fun uploadImage(imagePath: String?) {
-        val uploadText = MultipartBody.Part.createFormData("folder", "avatar")
-        val file = File(imagePath)
-        val uploadData = MultipartBody.Part.createFormData(
-            "file",
-            file.name,
-            RequestBody.create(MediaType.parse("image/png"), file)
-        )
-        compositeDisposable.add(
-            dataManager.uploadImage(uploadText, uploadData).subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .debounce(400, TimeUnit.MILLISECONDS)
-                .subscribeWith(object : CallbackWrapper<String>() {
-                    override fun onSuccess(dataResponse: String) {
-                    }
-
-                    override fun onFailure(error: String?) {
-                        handleError(error)
-                    }
-                })
-        )
-    }
 }

@@ -20,6 +20,5 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        viewDataBinding?.userProfile = userProfile.get()
     }
 }
