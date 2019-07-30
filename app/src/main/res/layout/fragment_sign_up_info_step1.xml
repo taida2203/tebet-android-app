@@ -5,10 +5,11 @@
     </data>
     <ScrollView
             android:layout_width="match_parent" android:orientation="vertical"
+            android:scrollbars="none"
             android:layout_marginTop="@dimen/_8sdp" android:layout_height="match_parent">
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white" android:orientation="vertical">
 
             <com.tebet.mojual.common.view.AppTextView android:layout_width="match_parent"
@@ -25,10 +26,12 @@
             <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
                                                       android:layout_height="wrap_content"
                                                       android:hint="Full Name"
+                                                      android:text="@={viewModel.userProfile.fullName}"
                                                       android:layout_marginBottom="@dimen/_20sdp"/>
             <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
                                                       android:layout_height="wrap_content"
                                                       android:hint="Date of Birth"
+                                                      android:text="@={viewModel.userProfile.birthday}"
                                                       android:layout_marginBottom="@dimen/_20sdp"/>
             <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
                                                       android:layout_height="wrap_content"

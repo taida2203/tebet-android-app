@@ -1,13 +1,14 @@
 package com.tebet.mojual.view.signup.step2
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
-import com.tebet.mojual.databinding.FragmentSignUpInfoStep2Binding
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep3Binding
-import com.tebet.mojual.view.base.BaseFragment
+import com.tebet.mojual.view.signup.SignUpInfoStep
+import com.tebet.mojual.view.signup.step3.SignUpInfoStep3Model
 
-class SignUpInfoStep3 : BaseFragment<FragmentSignUpInfoStep3Binding, SignUpInfoStep3Model>() {
+class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInfoStep3Model>() {
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -16,4 +17,9 @@ class SignUpInfoStep3 : BaseFragment<FragmentSignUpInfoStep3Binding, SignUpInfoS
 
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_info_step3
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        viewDataBinding?.userProfile = userProfile.get()
+    }
 }

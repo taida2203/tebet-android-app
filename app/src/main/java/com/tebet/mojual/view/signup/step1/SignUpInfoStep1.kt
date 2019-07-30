@@ -1,15 +1,16 @@
 package com.tebet.mojual.view.signup.step1
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep1Binding
-import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.signup.SignUpInfo
+import com.tebet.mojual.view.signup.SignUpInfoStep
 
-class SignUpInfoStep1 : BaseFragment<FragmentSignUpInfoStep1Binding, SignUpInfoStep1Model>(), SignUpInfoStep1Navigator {
+class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInfoStep1Model>(), SignUpInfoStep1Navigator {
     private var imagePath: String? = null
     override val bindingVariable: Int
         get() = BR.viewModel
@@ -34,5 +35,4 @@ class SignUpInfoStep1 : BaseFragment<FragmentSignUpInfoStep1Binding, SignUpInfoS
 
     override fun captureEKTP() {
     }
-
 }

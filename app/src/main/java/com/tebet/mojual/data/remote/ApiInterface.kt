@@ -34,6 +34,6 @@ interface ApiInterface {
 
     @Multipart
     @POST("storage/file")
-    fun uploadImage(@Part folder: MultipartBody.Part, @Part file: MultipartBody.Part): Observable<AuthJson<EmptyResponse>>
+    fun uploadImage(@Part folder: MultipartBody.Part, @Part file: MultipartBody.Part): Observable<AuthJson<String>>
 }
 

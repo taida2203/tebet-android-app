@@ -36,7 +36,7 @@ class AppDataManger @Inject constructor(private var api: ApiInterface) : DataMan
     override fun uploadImage(
         folder: MultipartBody.Part,
         file: MultipartBody.Part
-    ): Observable<AuthJson<EmptyResponse>> {
+    ): Observable<AuthJson<String>> {
         return api.uploadImage(folder, file)
     }
 }

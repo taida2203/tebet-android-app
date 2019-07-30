@@ -2,9 +2,8 @@ package com.tebet.mojual.view.signup.step1
 
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.remote.CallbackWrapper
-import com.tebet.mojual.view.base.BaseViewModel
+import com.tebet.mojual.view.signup.step2.SignUpInfoStepViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
@@ -17,8 +16,7 @@ class SignUpInfoStep1Model(
     dataManager: DataManager,
     schedulerProvider: SchedulerProvider
 ) :
-    BaseViewModel<SignUpInfoStep1Navigator>(dataManager, schedulerProvider) {
-
+    SignUpInfoStepViewModel<SignUpInfoStep1Navigator>(dataManager, schedulerProvider) {
     fun onCaptureAvatar() {
         navigator.captureAvatar()
     }
@@ -39,8 +37,8 @@ class SignUpInfoStep1Model(
             dataManager.uploadImage(uploadText, uploadData).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(400, TimeUnit.MILLISECONDS)
-                .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
-                    override fun onSuccess(dataResponse: EmptyResponse) {
+                .subscribeWith(object : CallbackWrapper<String>() {
+                    override fun onSuccess(dataResponse: String) {
                     }
 
                     override fun onFailure(error: String?) {

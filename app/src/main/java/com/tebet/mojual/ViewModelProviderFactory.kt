@@ -11,10 +11,10 @@ import com.tebet.mojual.view.home.content.HomeContentViewModel
 import com.tebet.mojual.view.profile.ProfileViewModel
 import com.tebet.mojual.view.login.LoginViewModel
 import com.tebet.mojual.view.loginpassword.LoginWithPasswordViewModel
-import com.tebet.mojual.view.signup.SignUpViewModel
+import com.tebet.mojual.view.signup.SignUpInfoViewModel
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1Model
 import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
-import com.tebet.mojual.view.signup.step2.SignUpInfoStep3Model
+import com.tebet.mojual.view.signup.step3.SignUpInfoStep3Model
 import com.tebet.mojual.view.splash.SplashViewModel
 
 import javax.inject.Inject
@@ -34,7 +34,7 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(BaseActivityViewModel::class.java) -> BaseActivityViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(ForgotPasswordViewModel::class.java) -> ForgotPasswordViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(dataManager, schedulerProvider) as T
-            modelClass.isAssignableFrom(SignUpViewModel::class.java) -> SignUpViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(SignUpInfoViewModel::class.java) -> SignUpInfoViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(HomeContentViewModel::class.java) -> HomeContentViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SignUpInfoStep1Model::class.java) -> SignUpInfoStep1Model(dataManager, schedulerProvider) as T

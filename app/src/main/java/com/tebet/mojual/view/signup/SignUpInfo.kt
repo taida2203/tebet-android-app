@@ -12,28 +12,30 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1Navigator
+import com.tebet.mojual.view.signup.step2.SignUpInfoStep2
+import com.tebet.mojual.view.signup.step2.SignUpInfoStep3
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import java.io.File
 import java.io.IOException
-import androidx.lifecycle.Observer
-import com.tebet.mojual.view.signup.step2.SignUpInfoStep2
-import com.tebet.mojual.view.signup.step2.SignUpInfoStep3
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>(), SignUpInfoStep1Navigator,
+class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(), SignUpInfoStep1Navigator,
     HasSupportFragmentInjector {
+    private var currentStepFragment: SignUpInfoStep<*, *>? = null
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
@@ -48,8 +50,8 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>(), S
     override val bindingVariable: Int
         get() = BR.viewModel
 
-    override val viewModel: SignUpViewModel
-        get() = ViewModelProviders.of(this, factory).get(SignUpViewModel::class.java)
+    override val viewModel: SignUpInfoViewModel
+        get() = ViewModelProviders.of(this, factory).get(SignUpInfoViewModel::class.java)
 
     override val contentLayoutId: Int
         get() = R.layout.activity_sign_up_info
@@ -80,6 +82,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>(), S
         viewModel.baseErrorHandlerData.observe(this, Observer<String> {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
+        viewModel.loadProfile()
     }
 
     override fun onBackPressed() {
@@ -102,29 +105,35 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpViewModel>(), S
 
         when (screenStep) {
             SCREEN_STEP.STEP_1 -> {
-                openFragment(SignUpInfoStep1(), R.id.placeHolderChild)
+                currentStepFragment = SignUpInfoStep1()
+                openFragment(currentStepFragment as SignUpInfoStep1, R.id.placeHolderChild)
                 viewDataBinding?.btnBack?.visibility = View.GONE
                 viewDataBinding?.tvTitleStep1?.setTypeface(null, Typeface.BOLD)
-                viewDataBinding?.tvTitleStep1?.setTextColor(ContextCompat.getColor(this,R.color.dark_green))
+                viewDataBinding?.tvTitleStep1?.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
             }
 
             SCREEN_STEP.STEP_2 -> {
-                openFragment(SignUpInfoStep2(), R.id.placeHolderChild)
+                currentStepFragment = SignUpInfoStep2()
+                openFragment(currentStepFragment as SignUpInfoStep2, R.id.placeHolderChild)
                 viewDataBinding?.tvTitleStep2?.setTypeface(null, Typeface.BOLD)
-                viewDataBinding?.tvTitleStep2?.setTextColor(ContextCompat.getColor(this,R.color.dark_green))
+                viewDataBinding?.tvTitleStep2?.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
             }
 
             SCREEN_STEP.STEP_3 -> {
-                openFragment(SignUpInfoStep3(), R.id.placeHolderChild)
+                currentStepFragment = SignUpInfoStep3()
+                openFragment(currentStepFragment as SignUpInfoStep3, R.id.placeHolderChild)
                 viewDataBinding?.tvTitleStep3?.setTypeface(null, Typeface.BOLD)
-                viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this,R.color.dark_green))
+                viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
             }
-
             else -> {
                 this@SignUpInfo.finish()
                 startActivity(Intent(this@SignUpInfo, HomeActivity::class.java))
             }
         }
+    }
+
+    override fun onFragmentAttached() {
+        super.onFragmentAttached()
     }
 
     override fun captureAvatar() {
