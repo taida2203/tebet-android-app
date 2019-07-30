@@ -106,8 +106,7 @@ open class Splash : BaseActivity<ActivitySplashScreenBinding, SplashViewModel>()
 
     override fun openHomeScreen() {
         finish()
-//        startActivity(Intent(this, HomeActivity::class.java))
-        startActivity(Intent(this, SignUpInfo::class.java))
+        startActivity(Intent(this, HomeActivity::class.java))
     }
 
     override fun openSetPasswordScreen() {
