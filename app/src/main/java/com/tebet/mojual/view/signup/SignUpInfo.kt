@@ -89,7 +89,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         when (screenStep) {
             SCREEN_STEP.STEP_2 ->
                 screenStep = SCREEN_STEP.STEP_1
-            SCREEN_STEP.STEP_3 ->
+            SCREEN_STEP.STEP_3, SCREEN_STEP.STEP_FINISH ->
                 screenStep = SCREEN_STEP.STEP_2
             else -> SCREEN_STEP.STEP_1
         }
@@ -126,6 +126,8 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                 viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
             }
             else -> {
+                viewDataBinding?.tvTitleStep3?.setTypeface(null, Typeface.BOLD)
+                viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
                 viewModel.updateUserProfile()
             }
         }
