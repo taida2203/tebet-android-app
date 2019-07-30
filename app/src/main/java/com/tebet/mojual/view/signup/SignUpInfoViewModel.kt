@@ -3,6 +3,7 @@ package com.tebet.mojual.view.signup
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
@@ -58,5 +59,23 @@ class SignUpInfoViewModel(
         return dataManager.uploadImage(uploadText, uploadData).subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(400, TimeUnit.MILLISECONDS)
+    }
+
+    fun updateUserProfile() {
+        compositeDisposable.add(
+            dataManager.updateProfile(userProfile)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
+                    override fun onSuccess(dataResponse: EmptyResponse) {
+                        navigator.openHomeScreen()
+                    }
+
+                    override fun onFailure(error: String?) {
+                        handleError(error)
+                    }
+                })
+        )
     }
 }

@@ -2,9 +2,8 @@ package com.tebet.mojual.data.remote
 
 import co.sdk.auth.core.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
-import co.sdk.auth.core.models.Token
 import com.tebet.mojual.data.models.EmptyResponse
-import com.tebet.mojual.data.models.UpdateProfileRequest
+import com.tebet.mojual.data.models.UpdatePasswordRequest
 import com.tebet.mojual.data.models.UserProfile
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -30,7 +29,7 @@ interface ApiInterface {
     fun getProfile(): Observable<AuthJson<UserProfile>>
 
     @PUT("profile/profile")
-    fun updateProfile(@Body updateProfileRequest: UpdateProfileRequest): Observable<AuthJson<EmptyResponse>>
+    fun updateProfile(@Body updateProfileRequest: UserProfile): Observable<AuthJson<EmptyResponse>>
 
     @Multipart
     @POST("storage/file")

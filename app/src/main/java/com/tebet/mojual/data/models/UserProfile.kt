@@ -12,7 +12,7 @@ import com.tebet.mojual.BR
 @Entity(
     tableName = "UserProfile"
 )
-class UserProfile(
+open class UserProfile(
     @Json(name = "status")
     @ColumnInfo(name = "status")
     var status: String? = null,
@@ -31,7 +31,6 @@ class UserProfile(
     var gender: String? = null,
     var ktp: String? = null,
     var lastName: String? = null,
-    var password: String? = null,
     @Json(name = "phone")
     @ColumnInfo(name = "phone")
     var phone: String? = null,

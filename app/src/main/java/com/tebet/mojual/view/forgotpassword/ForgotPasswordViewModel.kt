@@ -4,7 +4,7 @@ import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.common.view.AppEditText
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.EmptyResponse
-import com.tebet.mojual.data.models.UpdateProfileRequest
+import com.tebet.mojual.data.models.UpdatePasswordRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,7 +19,7 @@ class ForgotPasswordViewModel(
     fun forgotPassword(tvPassword: AppEditText?) {
         compositeDisposable.add(
             dataManager.updateProfile(
-                UpdateProfileRequest(tvPassword?.text?.trim().toString())
+                UpdatePasswordRequest(tvPassword?.text?.trim().toString())
             ).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(400, TimeUnit.MILLISECONDS)

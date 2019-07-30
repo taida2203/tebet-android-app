@@ -33,7 +33,8 @@ import java.util.*
 import javax.inject.Inject
 
 class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(), SignUpInfoStep1Navigator,
-    HasSupportFragmentInjector {
+    HasSupportFragmentInjector, SignUpNavigator {
+
     private var currentStepFragment: SignUpInfoStep<*, *>? = null
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -43,7 +44,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         STEP_1, STEP_2, STEP_3, STEP_FINISH
     }
 
-    var screenStep: SCREEN_STEP =
+    private var screenStep: SCREEN_STEP =
         SCREEN_STEP.STEP_1
 
     override val bindingVariable: Int
@@ -59,6 +60,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         private set
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        viewModel.navigator = this
         title = "Sign Up"
         refreshScreenStep()
         viewDataBinding?.btnNext?.setOnClickListener {
@@ -124,14 +126,9 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                 viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
             }
             else -> {
-                this@SignUpInfo.finish()
-                startActivity(Intent(this@SignUpInfo, HomeActivity::class.java))
+                viewModel.updateUserProfile()
             }
         }
-    }
-
-    override fun onFragmentAttached() {
-        super.onFragmentAttached()
     }
 
     override fun captureAvatar() {
@@ -142,7 +139,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         dispatchTakePictureIntent(REQUEST_TAKE_EKTP)
     }
 
-    lateinit var currentPhotoPath: String
+    private lateinit var currentPhotoPath: String
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -186,19 +183,22 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         }
     }
 
+    override fun openHomeScreen() {
+        finish()
+        startActivity(Intent(this, HomeActivity::class.java))
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_TAKE_AVATAR -> {
                 viewModel.userProfile.avatarLocal = "file://$currentPhotoPath"
                 viewModel.uploadAvatar(currentPhotoPath)
-                currentStepFragment?.viewModel?.userProfile?.set(viewModel.userProfile)
             }
             REQUEST_TAKE_EKTP -> {
                 viewModel.userProfile.ktpLocal = "file://$currentPhotoPath"
                 cameraCaptureData.postValue(currentPhotoPath)
                 viewModel.uploadEKTP(currentPhotoPath)
-                currentStepFragment?.viewModel?.userProfile?.set(viewModel.userProfile)
             }
         }
     }

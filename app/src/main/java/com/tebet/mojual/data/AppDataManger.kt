@@ -3,7 +3,7 @@ package com.tebet.mojual.data
 import co.sdk.auth.core.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.data.models.EmptyResponse
-import com.tebet.mojual.data.models.UpdateProfileRequest
+import com.tebet.mojual.data.models.UpdatePasswordRequest
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.ApiInterface
 import io.reactivex.Observable
@@ -29,7 +29,7 @@ class AppDataManger @Inject constructor(private var api: ApiInterface) : DataMan
         return api.getProfile()
     }
 
-    override fun updateProfile(updateProfileRequest: UpdateProfileRequest): Observable<AuthJson<EmptyResponse>> {
+    override fun updateProfile(updateProfileRequest: UserProfile): Observable<AuthJson<EmptyResponse>> {
         return api.updateProfile(updateProfileRequest)
     }
 
