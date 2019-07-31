@@ -29,9 +29,6 @@ import com.tebet.mojual.view.splash.Splash
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-/**
- * Created by amitshekhar on 14/09/17.
- */
 @Module
 abstract class ActivityBuilder
 //    @ContributesAndroidInjector(modules = {

@@ -1,5 +1,7 @@
 package com.tebet.mojual.data
 
-import com.tebet.mojual.data.remote.ApiInterface
+import com.tebet.mojual.data.local.db.DbHelper
+import com.tebet.mojual.data.local.prefs.PreferencesHelper
+import com.tebet.mojual.data.remote.ApiHelper
 
-interface DataManager: ApiInterface
+interface DataManager: ApiHelper, DbHelper, PreferencesHelper

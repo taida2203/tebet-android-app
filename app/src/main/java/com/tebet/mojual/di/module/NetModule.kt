@@ -7,18 +7,16 @@ import com.tebet.mojual.App
 import com.tebet.mojual.BuildConfig
 import com.tebet.mojual.common.constant.ConfigEnv
 import com.tebet.mojual.common.network.AuthenticationV2Interceptor
-import com.tebet.mojual.data.remote.ApiInterface
+import com.tebet.mojual.data.remote.ApiHelper
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.MoshiConverterFactory
 import retrofit2.Retrofit
 import retrofit2.Retrofit.Builder
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -76,7 +74,7 @@ class NetModule(private val baseUrl: String) {
 
     @Provides
     @Singleton
-    fun providesApiInterface(retrofit: Retrofit): ApiInterface = retrofit.create(
-        ApiInterface::class.java
+    fun providesApiInterface(retrofit: Retrofit): ApiHelper = retrofit.create(
+        ApiHelper::class.java
     )
 }

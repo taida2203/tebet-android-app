@@ -14,13 +14,11 @@
  *  limitations under the License
  */
 
-package com.tebet.mojual.view.splash
+package com.tebet.mojual.data.local.prefs;
 
-interface SplashNavigator {
+public interface PreferencesHelper {
 
-    fun openLoginScreen()
+    String getAccessToken();
 
-    fun openHomeScreen()
-
-    fun openSetPasswordScreen()
+    void setAccessToken(String accessToken);
 }

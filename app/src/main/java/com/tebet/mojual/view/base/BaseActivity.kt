@@ -31,10 +31,6 @@ import kotlinx.android.synthetic.main.activity_base.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
-/**
- * Created by amitshekhar on 07/07/17.
- */
-
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivity(),
     BaseFragment.Callback, BaseActivityNavigator {
     // TODO

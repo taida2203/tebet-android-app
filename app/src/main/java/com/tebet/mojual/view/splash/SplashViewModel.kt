@@ -1,6 +1,7 @@
 package com.tebet.mojual.view.splash
 
 import androidx.lifecycle.MutableLiveData
+import androidx.room.EmptyResultSetException
 import co.sdk.auth.AuthSdk
 import com.tebet.mojual.App
 import com.tebet.mojual.R
@@ -8,10 +9,8 @@ import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
-import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.observers.DisposableObserver
 
 class SplashViewModel(
     dataManager: DataManager,
@@ -23,10 +22,21 @@ class SplashViewModel(
             if (AuthSdk.instance.currentToken?.appToken != null) {
                 compositeDisposable.add(
                     dataManager.getProfile()
+                        .concatMap { profileResponse ->
+                            dataManager.insertUserProfile(profileResponse.data)
+                        }.concatMap {
+                            dataManager.userProfile
+                        }.concatMap { userProfileDao ->
+                            userProfileDao.queryUserProfile().doOnError { message -> EmptyResultSetException("") }
+                                .toObservable()
+                        }
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                            override fun onSuccess(dataResponse: UserProfile) {
+                        .subscribeWith(object : DisposableObserver<UserProfile>() {
+                            override fun onComplete() {
+                            }
+
+                            override fun onNext(dataResponse: UserProfile) {
                                 if (dataResponse.status.equals("INIT")) {
                                     navigator.openSetPasswordScreen()
                                 } else {
@@ -34,7 +44,7 @@ class SplashViewModel(
                                 }
                             }
 
-                            override fun onFailure(error: String?) {
+                            override fun onError(e: Throwable) {
                                 navigator.openLoginScreen()
                             }
                         })

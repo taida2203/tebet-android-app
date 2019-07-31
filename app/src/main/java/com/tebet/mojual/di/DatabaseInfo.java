@@ -14,13 +14,14 @@
  *  limitations under the License
  */
 
-package com.tebet.mojual.view.splash
+package com.tebet.mojual.di;
 
-interface SplashNavigator {
+import javax.inject.Qualifier;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-    fun openLoginScreen()
+@Qualifier
+@Retention(RetentionPolicy.RUNTIME)
+public @interface DatabaseInfo {
 
-    fun openHomeScreen()
-
-    fun openSetPasswordScreen()
 }

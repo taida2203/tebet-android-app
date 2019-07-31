@@ -14,13 +14,15 @@
  *  limitations under the License
  */
 
-package com.tebet.mojual.view.splash
+package com.tebet.mojual.data.local.db;
 
-interface SplashNavigator {
 
-    fun openLoginScreen()
+import com.tebet.mojual.data.local.db.dao.UserProfileDao;
+import com.tebet.mojual.data.models.UserProfile;
+import io.reactivex.Observable;
 
-    fun openHomeScreen()
+public interface DbHelper {
+    Observable<UserProfileDao> getUserProfile();
 
-    fun openSetPasswordScreen()
+    Observable<Boolean> insertUserProfile(final UserProfile userProfile);
 }

@@ -30,6 +30,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
+        enableBackButton = false
         title = "Home"
         openFragment(HomeFragment(), R.id.contentHolder)
 //        getData()
@@ -68,7 +69,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
 
     private fun getData() {
 //        Handler().postDelayed({
-//            ServiceHelper.createService(ApiInterface::class.java).getData().enqueue(object : retrofit2.Callback<ResponseBody> {
+//            ServiceHelper.createService(ApiHelper::class.java).getData().enqueue(object : retrofit2.Callback<ResponseBody> {
 //                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
 //                }
 //

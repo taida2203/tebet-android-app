@@ -1,6 +1,7 @@
 package com.tebet.mojual.di.module
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -9,8 +10,13 @@ import com.tebet.mojual.common.util.rx.AppSchedulerProvider
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.AppDataManger
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.persistance.dao.UserProfileDao
-import com.tebet.mojual.persistance.local.Database
+import com.tebet.mojual.data.local.db.AppDatabase
+import com.tebet.mojual.data.local.db.AppDbHelper
+import com.tebet.mojual.data.local.db.DbHelper
+import com.tebet.mojual.data.local.prefs.AppPreferencesHelper
+import com.tebet.mojual.data.local.prefs.PreferencesHelper
+import com.tebet.mojual.di.DatabaseInfo
+import com.tebet.mojual.di.PreferenceInfo
 import dagger.Module
 import dagger.Provides
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
@@ -36,21 +42,32 @@ class AppModule(private val app: Application) {
     @Singleton
     fun provideApplication(): Application = app
 
-    @Provides
-    @Singleton
-    fun provideUserProfileDatabase(app: Application): Database = Room.databaseBuilder(
-        app,
-        Database::class.java, "Tebet_DB"
-    )
-        /*.addMigrations(MIGRATION_1_2)*/
-        .fallbackToDestructiveMigration()
-        .build()
 
     @Provides
     @Singleton
-    fun provideUserProfileDao(
-        database: Database
-    ): UserProfileDao = database.userProfileDao()
+    internal fun provideAppDatabase(@DatabaseInfo dbName: String, context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, dbName).fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @DatabaseInfo
+    internal fun provideDatabaseName(): String {
+        return "TEBET_DB"
+    }
+
+    @Provides
+    @PreferenceInfo
+    internal fun providePreferenceName(): String {
+        return "TEBET_PREF"
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideContext(application: Application): Context {
+        return application
+    }
+
 
     @Provides
     @Singleton
@@ -71,6 +88,18 @@ class AppModule(private val app: Application) {
             .setDefaultFontPath("fonts/montserrat/Montserrat-Regular.otf")
             .setFontAttrId(R.attr.fontPath)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideDbHelper(appDbHelper: AppDbHelper): DbHelper {
+        return appDbHelper
+    }
+
+    @Provides
+    @Singleton
+    internal fun providePreferencesHelper(appPreferencesHelper: AppPreferencesHelper): PreferencesHelper {
+        return appPreferencesHelper
     }
 
 //  @Provides
