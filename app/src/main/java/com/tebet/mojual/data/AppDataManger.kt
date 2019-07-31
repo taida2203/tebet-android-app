@@ -1,7 +1,10 @@
 package com.tebet.mojual.data
 
+import androidx.room.EmptyResultSetException
 import co.sdk.auth.core.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
+import com.tebet.mojual.App
+import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.data.local.db.DbHelper
 import com.tebet.mojual.data.local.db.dao.UserProfileDao
 import com.tebet.mojual.data.local.prefs.PreferencesHelper
@@ -45,9 +48,16 @@ class AppDataManger @Inject constructor(private var api: ApiHelper, private var 
     }
 
     override fun getProfile(): Observable<AuthJson<UserProfile>> {
-        return api.getProfile().doOnNext { userProfile ->
-            room.insertUserProfile(userProfile.data)
+        if (App.instance.checkConnectivity()) {
+            var userProfileTemp: AuthJson<UserProfile>? = null
+            return api.getProfile().concatMap { userProfile ->
+                userProfileTemp = userProfile
+                room.insertUserProfile(userProfile.data)
+            }.concatMap {
+                Observable.just(userProfileTemp)
+            }
         }
+        return getUserProfileDB()
     }
 
     override fun updateProfile(updateProfileRequest: UserProfile): Observable<AuthJson<EmptyResponse>> {
@@ -63,6 +73,13 @@ class AppDataManger @Inject constructor(private var api: ApiHelper, private var 
         file: MultipartBody.Part
     ): Observable<AuthJson<String>> {
         return api.uploadImage(folder, file)
+    }
+
+    override fun getUserProfileDB(): Observable<AuthJson<UserProfile>> {
+        return room.userProfile.concatMap { userProfileDao ->
+            userProfileDao.queryUserProfile().doOnError { message -> EmptyResultSetException("") }
+                .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
+        }
     }
 }
 

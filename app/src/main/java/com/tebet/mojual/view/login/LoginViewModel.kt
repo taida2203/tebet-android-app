@@ -3,17 +3,11 @@ package com.tebet.mojual.view.login
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.LoginConfiguration
-import co.sdk.auth.core.models.ApiCallBack
-import co.sdk.auth.core.models.AuthJson
-import co.sdk.auth.core.models.LoginException
-import co.sdk.auth.core.models.Token
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
-import io.reactivex.Observable
 
 class LoginViewModel(
     dataManager: DataManager,
@@ -34,11 +28,9 @@ class LoginViewModel(
                 LoginConfiguration(logoutWhileExpired = false)
             ).doOnError { error ->
                 registerNewUser()
+            }.concatMap { result ->
+                dataManager.getProfile()
             }
-                .concatMap { result ->
-                    dataManager.getProfile()
-                        .observeOn(schedulerProvider.ui())
-                }
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onSuccess(dataResponse: UserProfile) {
