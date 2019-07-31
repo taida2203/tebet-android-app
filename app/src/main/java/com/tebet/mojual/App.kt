@@ -20,6 +20,7 @@ import dagger.android.HasActivityInjector
 import timber.log.Timber
 import com.tebet.mojual.di.module.AppModule
 import com.tebet.mojual.di.module.NetModule
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 import java.util.Locale
 import javax.inject.Inject
@@ -29,6 +30,8 @@ class App : MultiDexApplication(), HasActivityInjector {
         get() = this
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+    @Inject
+    lateinit var mCalligraphyConfig: CalligraphyConfig
 
     override fun onCreate() {
         super.onCreate()
@@ -50,6 +53,8 @@ class App : MultiDexApplication(), HasActivityInjector {
         LeakCanary.install(this)
 
         Timber.plant(if (ConfigEnv.needCrashLogging) CrashReportingTree() else Timber.DebugTree())
+        CalligraphyConfig.initDefault(mCalligraphyConfig)
+
         Utility.init(this)
         PreferenceUtils.init(this)
 

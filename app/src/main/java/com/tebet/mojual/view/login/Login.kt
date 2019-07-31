@@ -35,6 +35,7 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
+        enableBackButton = false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

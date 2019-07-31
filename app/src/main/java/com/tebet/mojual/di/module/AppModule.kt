@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.AppSchedulerProvider
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.AppDataManger
@@ -12,6 +13,7 @@ import com.tebet.mojual.persistance.dao.UserProfileDao
 import com.tebet.mojual.persistance.local.Database
 import dagger.Module
 import dagger.Provides
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import javax.inject.Singleton
 
 /**
@@ -60,6 +62,15 @@ class AppModule(private val app: Application) {
     @Provides
     internal fun provideSchedulerProvider(): SchedulerProvider {
         return AppSchedulerProvider()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideCalligraphyDefaultConfig(): CalligraphyConfig {
+        return CalligraphyConfig.Builder()
+            .setDefaultFontPath("fonts/montserrat/Montserrat-Regular.otf")
+            .setFontAttrId(R.attr.fontPath)
+            .build()
     }
 
 //  @Provides

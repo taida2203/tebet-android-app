@@ -28,6 +28,7 @@ import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivityBaseBinding
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_base.*
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
 /**
@@ -62,6 +63,21 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
      * @return view model instance
      */
     abstract val viewModel: V
+
+    var enableBackButton: Boolean = true
+        set(isEnable) {
+            field = isEnable
+            when {
+                isEnable -> {
+                    baseBinding.ivBack.visibility = View.VISIBLE
+                    baseBinding.ivBack.setOnClickListener { onBackPressed() }
+                }
+                else -> {
+                    baseBinding.ivBack.visibility = View.INVISIBLE
+                    baseBinding.tvBaseTitle.setOnClickListener(null)
+                }
+            }
+        }
 
     override fun onFragmentAttached() {
 
@@ -223,20 +239,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     override fun setTitle(title: CharSequence?) {
         super.setTitle("")
         baseBinding.tvBaseTitle.text = title
-    }
-
-
-    fun enableBackButton(isEnable: Boolean) {
-        when {
-            isEnable -> {
-                baseBinding.ivBack.visibility = View.VISIBLE
-                baseBinding.ivBack.setOnClickListener { onBackPressed() }
-            }
-            else -> {
-                baseBinding.ivBack.visibility = View.INVISIBLE
-                baseBinding.tvBaseTitle.setOnClickListener(null)
-            }
-        }
     }
 
     protected fun showError(e: ApiException) {
@@ -418,6 +420,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     override fun activity(): Activity {
         return this
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 }
 

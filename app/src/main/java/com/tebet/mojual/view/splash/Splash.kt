@@ -39,6 +39,7 @@ open class Splash : BaseActivity<ActivitySplashScreenBinding, SplashViewModel>()
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
+        enableBackButton = false
         if (Build.VERSION.SDK_INT >= 21) {
             window.decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
