@@ -60,8 +60,4 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
     override fun openRegistrationScreen() {
         startActivity(Intent(this, SignUpPassword::class.java))
     }
-
-    override fun openUpdatePasswordScreen() {
-        startActivity(Intent(this, ForgotPassword::class.java))
-    }
 }

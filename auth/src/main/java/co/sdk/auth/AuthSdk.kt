@@ -33,6 +33,7 @@ import co.sdk.auth.utils.Utility
 import co.common.util.PreferenceUtils.*
 import com.tebet.mojual.sdk.auth.BuildConfig
 import com.tebet.mojual.sdk.auth.R
+import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -186,6 +187,23 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         }
         if (getAuthMethod() is AuthGoogleMethod) {
             (authMethod as AuthGoogleMethod).onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    fun login(context: Activity, authMethod: AuthMethod?, config: LoginConfiguration): Observable<Token> {
+        return Observable.create { emitter ->
+            run {
+                login(context, authMethod, config, object : ApiCallBack<Token>() {
+                    override fun onSuccess(responeCode: Int, response: Token?) {
+                        response?.let { emitter.onNext(it) }
+                    }
+
+                    override fun onFailed(exeption: LoginException) {
+                        emitter.onError(Throwable(exeption.errorMessage))
+                    }
+                })
+            }
+
         }
     }
 

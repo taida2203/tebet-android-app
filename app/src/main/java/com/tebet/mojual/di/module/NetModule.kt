@@ -10,6 +10,7 @@ import com.tebet.mojual.common.network.AuthenticationV2Interceptor
 import com.tebet.mojual.data.remote.ApiInterface
 import dagger.Module
 import dagger.Provides
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.MoshiConverterFactory
@@ -69,7 +70,7 @@ class NetModule(private val baseUrl: String) {
     fun providesRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Builder().client(okHttpClient).baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
     }
 

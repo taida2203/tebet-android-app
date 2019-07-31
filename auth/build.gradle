@@ -36,6 +36,11 @@ dependencies {
     implementation AppDependencies.retrofitAdapter
     implementation AppDependencies.retrofitConverter
     implementation AppDependencies.okHttpLogger
+
+    implementation AppDependencies.rxAndroid
+    implementation AppDependencies.rxJava
+    implementation AppDependencies.rxKotlin
+
 //    implementation "com.google.android.gms:play-services-auth:$playServicesVersion"
     implementation "com.ashokvarma.android:gander:$ganderVersion"
     implementation AppDependencies.timber
