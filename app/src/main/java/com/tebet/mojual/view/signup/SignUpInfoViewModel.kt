@@ -24,7 +24,7 @@ class SignUpInfoViewModel(
     var userProfile: UserProfile = UserProfile()
 
     fun uploadAvatar(currentPhotoPath: String) {
-        compositeDisposable.add(uploadImage(currentPhotoPath).subscribeWith(object : CallbackWrapper<String>() {
+        compositeDisposable.add(uploadImage(currentPhotoPath, "avatar").subscribeWith(object : CallbackWrapper<String>() {
             override fun onSuccess(dataResponse: String) {
                 userProfile.avatar = dataResponse
             }
@@ -36,7 +36,7 @@ class SignUpInfoViewModel(
     }
 
     fun uploadEKTP(currentPhotoPath: String) {
-        compositeDisposable.add(uploadImage(currentPhotoPath).subscribeWith(object : CallbackWrapper<String>() {
+        compositeDisposable.add(uploadImage(currentPhotoPath, "ktp").subscribeWith(object : CallbackWrapper<String>() {
             override fun onSuccess(dataResponse: String) {
                 userProfile.ktp = dataResponse
 
@@ -48,8 +48,8 @@ class SignUpInfoViewModel(
         }))
     }
 
-    private fun uploadImage(imagePath: String?): Observable<AuthJson<String>> {
-        val uploadText = MultipartBody.Part.createFormData("folder", "avatar")
+    private fun uploadImage(imagePath: String?, folderName: String): Observable<AuthJson<String>> {
+        val uploadText = MultipartBody.Part.createFormData("folder", folderName)
         val file = File(imagePath)
         val uploadData = MultipartBody.Part.createFormData(
             "file",

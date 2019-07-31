@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="addressData" type="com.tebet.mojual.data.models.Address"/>
+    </data>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="Address"
+                                                  android:text="@={addressData.address}"
+                                                  android:layout_marginBottom="@dimen/_20sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="Kelurahan"
+                                                  android:text="@={addressData.kelurahan}"
+                                                  android:layout_marginBottom="@dimen/_20sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="Kecamatan"
+                                                  android:text="@={addressData.kecamatan}"
+                                                  android:layout_marginBottom="@dimen/_20sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="RT/RW"
+                                                  android:text="@={addressData.rtrw}"
+                                                  android:layout_marginBottom="@dimen/_20sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:hint="City"
+                                                  android:text="@={addressData.city}"
+                                                  android:layout_marginBottom="@dimen/_20sdp"/>
+        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:layout_marginBottom="@dimen/_20sdp"
+                                                  android:hint="Choose on Map"/>
+    </LinearLayout>
+</layout>

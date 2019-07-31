@@ -1,3 +1,3 @@
 package com.tebet.mojual.data.models
 
-data class UpdatePasswordRequest(var password: String) : UserProfile()
+data class UpdatePasswordRequest(var password: String)

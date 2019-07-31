@@ -18,7 +18,7 @@ class ForgotPasswordViewModel(
     BaseViewModel<ForgotPasswordNavigator>(dataManager, schedulerProvider) {
     fun forgotPassword(tvPassword: AppEditText?) {
         compositeDisposable.add(
-            dataManager.updateProfile(
+            dataManager.updatePassword(
                 UpdatePasswordRequest(tvPassword?.text?.trim().toString())
             ).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

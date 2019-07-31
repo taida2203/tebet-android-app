@@ -31,6 +31,9 @@ interface ApiInterface {
     @PUT("profile/profile")
     fun updateProfile(@Body updateProfileRequest: UserProfile): Observable<AuthJson<EmptyResponse>>
 
+    @PUT("profile/profile")
+    fun updatePassword(@Body updateProfileRequest: UpdatePasswordRequest): Observable<AuthJson<EmptyResponse>>
+
     @Multipart
     @POST("storage/file")
     fun uploadImage(@Part folder: MultipartBody.Part, @Part file: MultipartBody.Part): Observable<AuthJson<String>>

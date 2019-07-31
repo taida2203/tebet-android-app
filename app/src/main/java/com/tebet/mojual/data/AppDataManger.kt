@@ -33,6 +33,10 @@ class AppDataManger @Inject constructor(private var api: ApiInterface) : DataMan
         return api.updateProfile(updateProfileRequest)
     }
 
+    override fun updatePassword(updateProfileRequest: UpdatePasswordRequest): Observable<AuthJson<EmptyResponse>> {
+        return api.updatePassword(updateProfileRequest)
+    }
+
     override fun uploadImage(
         folder: MultipartBody.Part,
         file: MultipartBody.Part

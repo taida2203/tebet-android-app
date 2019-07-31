@@ -6,9 +6,18 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white" android:orientation="vertical">
+            android:background="@color/white"
+            android:orientation="vertical">
+
+        <com.mindorks.placeholderview.ExpandablePlaceHolderView
+                android:id="@+id/expandableView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"/>
+
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:gravity="center_vertical"
+                      android:visibility="gone"
                       android:layout_marginBottom="@dimen/_10sdp">
             <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp"
                                                       android:layout_height="wrap_content"
@@ -17,30 +26,6 @@
             <ImageView android:layout_width="@dimen/_18sdp" android:layout_height="@dimen/_18sdp"
                        android:src="@drawable/signup_collapse_btn"/>
         </LinearLayout>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:hint="Address"
-                                                  android:layout_marginBottom="@dimen/_20sdp"/>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:hint="Kelurahan"
-                                                  android:layout_marginBottom="@dimen/_20sdp"/>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:hint="Kecamatan"
-                                                  android:layout_marginBottom="@dimen/_20sdp"/>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:hint="RT/RW"
-                                                  android:layout_marginBottom="@dimen/_20sdp"/>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:hint="City"
-                                                  android:layout_marginBottom="@dimen/_20sdp"/>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:layout_marginBottom="@dimen/_20sdp"
-                                                  android:hint="Choose on Map"/>
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
             <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp"

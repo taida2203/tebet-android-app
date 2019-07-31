@@ -12,7 +12,7 @@ import com.tebet.mojual.BR
 @Entity(
     tableName = "UserProfile"
 )
-open class UserProfile(
+data class UserProfile(
     @Json(name = "status")
     @ColumnInfo(name = "status")
     var status: String? = null,
