@@ -39,7 +39,6 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        showLoading(false)
         data?.let { AuthSdk.instance.onActivityResult(requestCode, resultCode, it) }
         when (resultCode) {
             LOGIN_PASSWORD -> if (requestCode == Activity.RESULT_OK) finish()
@@ -48,32 +47,13 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
 
     override fun openLoginScreen() {
         startActivityForResult(
-            Intent(this@Login, LoginWithPassword::class.java),
+            Intent(this, LoginWithPassword::class.java),
             LOGIN_PASSWORD
         )
     }
 
     override fun openHomeScreen() {
-        startActivity(Intent(this@Login, HomeActivity::class.java))
-    }
-
-    override fun doAccountKitLogin(isRegistrationFLow: Boolean) {
-        AuthSdk.instance.login(
-            this,
-            AuthAccountKitMethod(),
-            LoginConfiguration(logoutWhileExpired = false),
-            object : ApiCallBack<Token>() {
-                override fun onSuccess(responeCode: Int, response: Token?) {
-                    viewModel.loadProfile(isRegistrationFLow)
-                }
-
-                override fun onFailed(exeption: LoginException) {
-                    if (exeption.errorCode == 502) return
-                    if (isRegistrationFLow) {
-                        viewModel.register()
-                    }
-                }
-            })
+        startActivity(Intent(this, HomeActivity::class.java))
     }
 
     override fun openRegistrationScreen() {

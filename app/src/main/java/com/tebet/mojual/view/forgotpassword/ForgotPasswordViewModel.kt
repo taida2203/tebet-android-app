@@ -16,10 +16,13 @@ class ForgotPasswordViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<ForgotPasswordNavigator>(dataManager, schedulerProvider) {
-    fun forgotPassword(tvPassword: AppEditText?) {
+    var userInputPassword: String = ""
+    var userInputPassword2: String = ""
+
+    fun onForgotPasswordClick() {
         compositeDisposable.add(
             dataManager.updatePassword(
-                UpdatePasswordRequest(tvPassword?.text?.trim().toString())
+                UpdatePasswordRequest(userInputPassword)
             ).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(400, TimeUnit.MILLISECONDS)
@@ -32,9 +35,5 @@ class ForgotPasswordViewModel(
                     }
                 })
         )
-    }
-
-    fun onForgotPasswordClick() {
-        navigator.forgotPassword()
     }
 }

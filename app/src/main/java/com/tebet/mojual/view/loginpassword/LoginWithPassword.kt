@@ -50,42 +50,4 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
         finish()
         startActivity(Intent(this, ForgotPassword::class.java))
     }
-
-    override fun doLogin() {
-        val configuration = LoginConfiguration(false)
-        configuration.username = viewDataBinding?.etPhone?.text.toString()
-        configuration.password = viewDataBinding?.etPassword?.text.toString()
-        AuthSdk.instance.login(this, AuthPasswordMethod(), configuration, object :
-            ApiCallBack<Token>() {
-            override fun onSuccess(responeCode: Int, response: Token?) {
-                openHomeScreen()
-            }
-
-            override fun onFailed(exeption: LoginException) {
-                handleError(exeption)
-            }
-        })
-    }
-
-    override fun doForgotPassword() {
-        AuthSdk.instance.login(this, AuthAccountKitMethod(), LoginConfiguration(true), object : ApiCallBack<Token>() {
-            override fun onSuccess(responeCode: Int, response: Token?) {
-                openForgotPasswordScreen()
-            }
-
-            override fun onFailed(exeption: LoginException) {
-                if (exeption.errorCode == 502) return
-                AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
-                    override fun onSuccess(responeCode: Int, response: Any?) {
-                        doForgotPassword()
-                    }
-
-                    override fun onFailed(exeption: LoginException) {
-                    }
-
-                })
-                handleError(exeption)
-            }
-        })
-    }
 }

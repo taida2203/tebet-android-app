@@ -1,7 +1,11 @@
 package com.tebet.mojual.view.login
 
 import co.sdk.auth.AuthSdk
+import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.LoginConfiguration
+import co.sdk.auth.core.models.ApiCallBack
+import co.sdk.auth.core.models.LoginException
+import co.sdk.auth.core.models.Token
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.EmptyResponse
@@ -20,7 +24,58 @@ class LoginViewModel(
     }
 
     fun onRegistrationClick() {
-        navigator.doAccountKitLogin(true)
+        navigator.showLoading(true)
+        AuthSdk.instance.login(
+            navigator.activity(),
+            AuthAccountKitMethod(),
+            LoginConfiguration(logoutWhileExpired = false),
+            object : ApiCallBack<Token>() {
+                override fun onSuccess(responeCode: Int, response: Token?) {
+                    navigator.showLoading(false)
+                    loadProfile(true)
+                }
+
+                override fun onFailed(exeption: LoginException) {
+                    if (exeption.errorCode == 502) {
+                        navigator.showLoading(false)
+                        return
+                    }
+                    val config = LoginConfiguration(
+                        logoutWhileExpired = false,
+                        token = AuthSdk.instance.getBrandLoginToken()?.token,
+                        phone = AuthSdk.instance.getBrandLoginToken()?.phone
+                    )
+                    compositeDisposable.add(
+                        dataManager.register(config).subscribeOn(schedulerProvider.io())
+                            .observeOn(schedulerProvider.ui())
+                            .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
+                                override fun onSuccess(dataResponse: EmptyResponse) {
+                                    AuthSdk.instance.login(
+                                        navigator.activity(),
+                                        AuthAccountKitMethod(),
+                                        LoginConfiguration(logoutWhileExpired = false),
+                                        object : ApiCallBack<Token>() {
+                                            override fun onSuccess(responeCode: Int, response: Token?) {
+                                                navigator.showLoading(false)
+                                                loadProfile(true)
+                                            }
+
+                                            override fun onFailed(exeption: LoginException) {
+                                                if (exeption.errorCode == 502) {
+                                                    navigator.showLoading(false)
+                                                    return
+                                                }
+                                            }
+                                        })
+                                }
+
+                                override fun onFailure(error: String?) {
+                                    navigator.showLoading(false)
+                                }
+                            }
+                            ))
+                }
+            })
     }
 
     fun loadProfile(registrationFLow: Boolean) {
@@ -46,25 +101,4 @@ class LoginViewModel(
                 })
         )
     }
-
-    fun register() {
-        val config = LoginConfiguration(
-            logoutWhileExpired = false,
-            token = AuthSdk.instance.getBrandLoginToken()?.token,
-            phone = AuthSdk.instance.getBrandLoginToken()?.phone
-        )
-        compositeDisposable.add(
-            dataManager.register(config).subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
-                override fun onSuccess(dataResponse: EmptyResponse) {
-                    navigator.doAccountKitLogin(true)
-                }
-
-                override fun onFailure(error: String?) {
-                }
-            }
-            ))
-    }
-
 }

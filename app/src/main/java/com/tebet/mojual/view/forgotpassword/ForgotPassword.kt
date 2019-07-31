@@ -9,7 +9,8 @@ import com.tebet.mojual.databinding.ActivitySignUpPasswordBinding
 import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.base.BaseActivity
 
-open class ForgotPassword : BaseActivity<ActivitySignUpPasswordBinding, ForgotPasswordViewModel>(), ForgotPasswordNavigator {
+open class ForgotPassword : BaseActivity<ActivitySignUpPasswordBinding, ForgotPasswordViewModel>(),
+    ForgotPasswordNavigator {
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -25,11 +26,7 @@ open class ForgotPassword : BaseActivity<ActivitySignUpPasswordBinding, ForgotPa
     }
 
     override fun openHomeScreen() {
-        this@ForgotPassword.finish()
-        startActivity(Intent(this@ForgotPassword, HomeActivity::class.java))
-    }
-
-    override fun forgotPassword() {
-        viewModel.forgotPassword(viewDataBinding?.tvPassword)
+        finish()
+        startActivity(Intent(this, HomeActivity::class.java))
     }
 }

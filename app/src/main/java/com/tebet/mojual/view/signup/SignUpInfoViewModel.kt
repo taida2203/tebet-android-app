@@ -24,7 +24,9 @@ class SignUpInfoViewModel(
     var userProfile: UserProfile = UserProfile()
 
     fun uploadAvatar(currentPhotoPath: String) {
-        compositeDisposable.add(uploadImage(currentPhotoPath, "avatar").subscribeWith(object : CallbackWrapper<String>() {
+        navigator.showLoading(true)
+        compositeDisposable.add(uploadImage(currentPhotoPath, "avatar").subscribeWith(object :
+            CallbackWrapper<String>() {
             override fun onSuccess(dataResponse: String) {
                 userProfile.avatar = dataResponse
             }
@@ -32,10 +34,16 @@ class SignUpInfoViewModel(
             override fun onFailure(error: String?) {
                 handleError(error)
             }
+
+            override fun onComplete() {
+                super.onComplete()
+                navigator.showLoading(false)
+            }
         }))
     }
 
     fun uploadEKTP(currentPhotoPath: String) {
+        navigator.showLoading(true)
         compositeDisposable.add(uploadImage(currentPhotoPath, "ktp").subscribeWith(object : CallbackWrapper<String>() {
             override fun onSuccess(dataResponse: String) {
                 userProfile.ktp = dataResponse
@@ -44,6 +52,11 @@ class SignUpInfoViewModel(
 
             override fun onFailure(error: String?) {
                 handleError(error)
+            }
+
+            override fun onComplete() {
+                super.onComplete()
+                navigator.showLoading(false)
             }
         }))
     }
@@ -62,6 +75,7 @@ class SignUpInfoViewModel(
     }
 
     fun updateUserProfile() {
+        navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.updateProfile(userProfile)
                 .subscribeOn(Schedulers.newThread())
@@ -74,6 +88,11 @@ class SignUpInfoViewModel(
 
                     override fun onFailure(error: String?) {
                         handleError(error)
+                    }
+
+                    override fun onComplete() {
+                        super.onComplete()
+                        navigator.showLoading(false)
                     }
                 })
         )

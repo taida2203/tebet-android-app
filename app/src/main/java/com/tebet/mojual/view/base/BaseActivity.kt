@@ -1,6 +1,7 @@
 package com.tebet.mojual.view.base
 
 import android.annotation.TargetApi
+import android.app.Activity
 import android.app.ActivityManager
 import android.app.ProgressDialog
 import android.content.Context
@@ -18,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import co.common.network.ApiException
@@ -26,7 +26,6 @@ import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivityBaseBinding
-import com.tebet.mojual.view.signup.SignUpInfo
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_base.*
 import javax.inject.Inject
@@ -200,8 +199,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 //        }
     }
 
-    fun showLoading(isShow: Boolean) {
-        progressBar.visibility = if (isShow) View.VISIBLE else View.GONE
+    override fun showLoading(isLoading: Boolean) {
+        baseBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     fun handleError(exeption: LoginException?) {
@@ -415,6 +414,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     fun handleError(it: String?) {
         Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun activity(): Activity {
+        return this
     }
 }
 
