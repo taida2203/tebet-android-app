@@ -16,6 +16,7 @@
 
 package com.tebet.mojual.view.base
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -31,7 +32,7 @@ import com.tebet.mojual.ViewModelProviderFactory
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment(), BaseActivityNavigator {
     var baseActivity: BaseActivity<*, *>? = null
         private set
     private var mRootView: View? = null
@@ -124,5 +125,16 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         fun onFragmentAttached()
 
         fun onFragmentDetached(tag: String)
+    }
+
+    override fun showLoading(isLoading: Boolean) {
+        (activity() as BaseActivity<*, *>).showLoading(isLoading)
+    }
+
+    override fun activity(): Activity? {
+        return baseActivity
+    }
+
+    override fun onBackPressed() {
     }
 }

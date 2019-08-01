@@ -17,10 +17,10 @@ import com.tebet.mojual.databinding.ActivityLoginPasswordBinding
 import com.tebet.mojual.view.forgotpassword.ForgotPassword
 import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.base.BaseActivity
+import com.tebet.mojual.view.registration.SignUpPassword
 
 class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPasswordViewModel>(),
     LoginWithPasswordNavigator {
-
     override val bindingVariable: Int
         get() = BR.viewModel
     override val viewModel: LoginWithPasswordViewModel
@@ -49,5 +49,10 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
     override fun openForgotPasswordScreen() {
         finish()
         startActivity(Intent(this, ForgotPassword::class.java))
+    }
+
+    override fun openRegistrationScreen() {
+        finish()
+        startActivity(Intent(this, SignUpPassword::class.java))
     }
 }

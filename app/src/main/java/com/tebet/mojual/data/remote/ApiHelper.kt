@@ -2,6 +2,7 @@ package com.tebet.mojual.data.remote
 
 import co.sdk.auth.core.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
+import com.tebet.mojual.data.models.CreateOrderRequest
 import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.UpdatePasswordRequest
 import com.tebet.mojual.data.models.UserProfile
@@ -37,5 +38,8 @@ interface ApiHelper {
     @Multipart
     @POST("storage/file")
     fun uploadImage(@Part folder: MultipartBody.Part, @Part file: MultipartBody.Part): Observable<AuthJson<String>>
+
+    @POST("order/order")
+    fun createOrder(@Body createOrderRequest: CreateOrderRequest): Observable<AuthJson<EmptyResponse>>
 }
 

@@ -38,7 +38,8 @@ object ConfigEnv {
             "dev" -> {
                 environment = ConfigEnv.Environment.DEV
 
-                apiRoot = "https://dev.api.mo-jual.com"
+//                apiRoot = "https://dev.api.mo-jual.com"
+                apiRoot = "http://10.0.2.2:4000"
                 isAnalyticEnabled = true
                 agoraAppId = "xxx"
                 consumerKey = "android_student_cakap"

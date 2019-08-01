@@ -9,6 +9,8 @@ import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.content.HomeFragment
 import com.tebet.mojual.view.profile.ProfileFragment
+import com.tebet.mojual.view.sale.SaleFragment
+import com.tebet.mojual.view.saledetail.SaleDetailFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -17,6 +19,7 @@ import javax.inject.Inject
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector, HomeNavigator {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
 
     override val bindingVariable: Int
@@ -30,9 +33,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
-        enableBackButton = false
         title = "Home"
-        openFragment(HomeFragment(), R.id.contentHolder)
+        showHomeScreen()
 //        getData()
 //        btnLogout.setOnClickListener {
 //            AuthSdk.instance.logout(false, object : ApiCallBack<Any>() {
@@ -47,10 +49,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
 //        }
     }
 
-    override fun openSellNowScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun openCheckQualityScreen() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -63,8 +61,25 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showProfile() {
+    override fun showHomeScreen() {
+        enableBackButton = false
+        openFragment(HomeFragment(), R.id.contentHolder)
+    }
+
+
+    override fun showProfileScreen() {
+        enableBackButton = true
         openFragment(ProfileFragment(), R.id.contentHolder)
+    }
+
+    override fun showSellScreen() {
+        enableBackButton = true
+        openFragment(SaleFragment(), R.id.contentHolder)
+    }
+
+    override fun showOrderDetailScreen() {
+        enableBackButton = true
+        openFragment(SaleDetailFragment(), R.id.contentHolder)
     }
 
     private fun getData() {

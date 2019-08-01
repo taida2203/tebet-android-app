@@ -17,6 +17,7 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
             <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                           android:gravity="center"
+                          android:onClick="@{()->viewModel.onHomeClick()}"
                           android:layout_weight="1" android:orientation="vertical">
                 <ImageView android:layout_width="@dimen/_36sdp" android:layout_height="@dimen/_36sdp"
                            android:src="@drawable/ic_cam_off"/>
@@ -44,7 +45,7 @@
             </LinearLayout>
             <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                           android:gravity="center"
-                          android:onClick="@{()->viewModel.showProfile()}"
+                          android:onClick="@{()->viewModel.onProfileClick()}"
                           android:layout_weight="1" android:orientation="vertical">
                 <ImageView android:layout_width="@dimen/_36sdp" android:layout_height="@dimen/_36sdp"
                            android:src="@drawable/ic_cam_off"/>

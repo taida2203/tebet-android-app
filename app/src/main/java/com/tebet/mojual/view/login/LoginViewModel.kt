@@ -21,71 +21,72 @@ class LoginViewModel(
 
     fun onRegistrationClick() {
         navigator.showLoading(true)
-        compositeDisposable.add(
-            AuthSdk.instance.login(
-                navigator.activity(),
-                AuthAccountKitMethod(),
-                LoginConfiguration(logoutWhileExpired = false)
-            ).doOnError { error ->
-                registerNewUser()
-            }.concatMap { result ->
-                dataManager.getProfile()
-            }
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                    override fun onSuccess(dataResponse: UserProfile) {
-                        when {
-                            dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
-                            else -> navigator.openHomeScreen()
+        navigator.activity()?.let {
+            compositeDisposable.add(
+                AuthSdk.instance.login(
+                    it,
+                    AuthAccountKitMethod(),
+                    LoginConfiguration(logoutWhileExpired = false)
+                ).doOnError { error -> registerNewUser() }
+                    .concatMap { result -> dataManager.getProfile() }
+                    .observeOn(schedulerProvider.ui())
+                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                        override fun onSuccess(dataResponse: UserProfile) {
+                            when {
+                                dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
+                                else -> navigator.openHomeScreen()
+                            }
                         }
-                    }
 
-                    override fun onFailure(error: String?) {
-                        handleError(error)
-                    }
+                        override fun onFailure(error: String?) {
+                            handleError(error)
+                        }
 
-                    override fun onComplete() {
-                        super.onComplete()
-                        navigator.showLoading(false)
-                    }
-                })
-        )
+                        override fun onComplete() {
+                            super.onComplete()
+                            navigator.showLoading(false)
+                        }
+                    })
+            )
+        }
     }
 
     private fun registerNewUser() {
-        compositeDisposable.add(
-            dataManager.register(
-                LoginConfiguration(
-                    logoutWhileExpired = false,
-                    token = AuthSdk.instance.getBrandLoginToken()?.token,
-                    phone = AuthSdk.instance.getBrandLoginToken()?.phone
-                )
-            )
-                .concatMap { registerResponse ->
-                    AuthSdk.instance.login(
-                        navigator.activity(),
-                        AuthAccountKitMethod(),
-                        LoginConfiguration(logoutWhileExpired = false)
+        navigator.activity()?.let {
+            compositeDisposable.add(
+                dataManager.register(
+                    LoginConfiguration(
+                        logoutWhileExpired = false,
+                        token = AuthSdk.instance.getBrandLoginToken()?.token,
+                        phone = AuthSdk.instance.getBrandLoginToken()?.phone
                     )
-                }.concatMap { loginResponse -> dataManager.getProfile() }
-                .subscribeWith(object :
-                    CallbackWrapper<UserProfile>() {
-                    override fun onSuccess(dataResponse: UserProfile) {
-                        when {
-                            dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
-                            else -> navigator.openHomeScreen()
+                )
+                    .concatMap { registerResponse ->
+                        AuthSdk.instance.login(
+                            it,
+                            AuthAccountKitMethod(),
+                            LoginConfiguration(logoutWhileExpired = false)
+                        )
+                    }.concatMap { loginResponse -> dataManager.getProfile() }
+                    .subscribeWith(object :
+                        CallbackWrapper<UserProfile>() {
+                        override fun onSuccess(dataResponse: UserProfile) {
+                            when {
+                                dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
+                                else -> navigator.openHomeScreen()
+                            }
                         }
-                    }
 
-                    override fun onFailure(error: String?) {
-                        handleError(error)
-                    }
+                        override fun onFailure(error: String?) {
+                            handleError(error)
+                        }
 
-                    override fun onComplete() {
-                        super.onComplete()
-                        navigator.showLoading(false)
-                    }
-                })
-        )
+                        override fun onComplete() {
+                            super.onComplete()
+                            navigator.showLoading(false)
+                        }
+                    })
+            )
+        }
     }
 }

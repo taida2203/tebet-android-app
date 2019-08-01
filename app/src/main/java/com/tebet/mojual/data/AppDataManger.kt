@@ -8,6 +8,7 @@ import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.data.local.db.DbHelper
 import com.tebet.mojual.data.local.db.dao.UserProfileDao
 import com.tebet.mojual.data.local.prefs.PreferencesHelper
+import com.tebet.mojual.data.models.CreateOrderRequest
 import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.UpdatePasswordRequest
 import com.tebet.mojual.data.models.UserProfile
@@ -81,5 +82,10 @@ class AppDataManger @Inject constructor(private var api: ApiHelper, private var 
                 .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
         }
     }
+
+    override fun createOrder(createOrderRequest: CreateOrderRequest): Observable<AuthJson<EmptyResponse>> {
+        return api.createOrder(createOrderRequest)
+    }
+
 }
 
