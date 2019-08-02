@@ -11,6 +11,7 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/_15sdp"
                 android:background="@color/white" android:orientation="vertical">
 
             <com.tebet.mojual.common.view.AppTextView android:layout_width="match_parent"
@@ -18,13 +19,20 @@
                                                       android:text="Your selfie photo, please capture front of your face."
                                                       android:layout_marginBottom="@dimen/_20sdp"
                                                       android:gravity="center"/>
-            <ImageView android:layout_width="@dimen/_100sdp" android:layout_height="@dimen/_100sdp"
-                       android:layout_gravity="center"
-                       android:background="@drawable/circle_image_view"
-                       android:onClick="@{()-> viewModel.onCaptureAvatar()}"
-                       app:imageUrl="@{viewModel.userProfile.avatarLocal}"
-                       android:src="@android:drawable/ic_menu_camera"
-                       android:layout_marginBottom="@dimen/_20sdp"/>
+            <RelativeLayout android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_100sdp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/circle_image_view"
+                            android:onClick="@{()-> viewModel.onCaptureAvatar()}"
+                            android:src="@drawable/photo_camera"
+                            android:layout_marginBottom="@dimen/_20sdp">
+                <ImageView android:layout_width="@dimen/_50sdp"
+                           android:layout_height="@dimen/_50sdp"
+                           app:imageUrl="@{viewModel.userProfile.avatarLocal}"
+                           android:background="@drawable/photo_camera"
+                           android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
             <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
                                                       android:layout_height="wrap_content"
                                                       android:hint="Full Name"
@@ -40,12 +48,22 @@
                                                       android:hint="KTP Number"
                                                       android:layout_marginBottom="@dimen/_20sdp"/>
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                          android:background="@drawable/rounded_btn_grey"
+                          android:background="@drawable/rounded_bg_signup"
+                          android:orientation="vertical"
+                          android:layout_marginBottom="@dimen/_10sdp"
                           android:gravity="center">
-                <ImageView android:layout_width="match_parent" android:layout_height="wrap_content"
+                <ImageView android:layout_width="@dimen/_50sdp" android:layout_height="@dimen/_50sdp"
                            android:onClick="@{()-> viewModel.onCaptureEKTP()}"
-                           android:src="@drawable/signup_ktp_blank"
-                           app:imageUrl="@{viewModel.userProfile.ktpLocal}"/>
+                           android:src="@drawable/icon_card"
+                           android:layout_marginBottom="@dimen/_15sdp"
+                           android:layout_marginTop="@dimen/_30sdp"/>
+                <com.tebet.mojual.common.view.AppTextView android:layout_width="match_parent"
+                                                          android:layout_height="wrap_content"
+                                                          android:text="Upload KTP Photo"
+                                                          android:textStyle="bold"
+                                                          android:textSize="@dimen/_14ssp"
+                                                          android:layout_marginBottom="@dimen/_20sdp"
+                                                          android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

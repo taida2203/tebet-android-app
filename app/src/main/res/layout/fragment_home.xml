@@ -7,15 +7,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:padding="@dimen/_15sdp">
         <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content"
                                                   android:text="BONUS"
-                                                  android:layout_height="wrap_content"/>
+                                                  android:layout_height="wrap_content"
+                                                  android:textStyle="bold"
+                                                  android:textColor="@color/gray_text"/>
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:gravity="center" android:orientation="horizontal">
             <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp" android:layout_height="wrap_content"
                                                       android:layout_weight="1"
-                                                      android:text="RP 1.000.000"/>
+                                                      android:text="RP 1.000.000"
+                                                      android:textStyle="bold"/>
             <androidx.appcompat.widget.AppCompatRatingBar android:layout_width="wrap_content"
                                                           android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -25,42 +29,88 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
                       android:orientation="vertical">
             <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
-                          android:gravity="center">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                          android:gravity="bottom"
+                          android:layout_marginBottom="5dp">
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_marginRight="5dp"
                               android:gravity="center"
+                              android:background="@drawable/border_edit_text"
                               android:onClick="@{()-> viewModel.onSellClick()}"
                               android:orientation="vertical">
-                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                               android:src="@drawable/ic_cam_off"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    <ImageView android:layout_width="@dimen/_100sdp"
+                               android:layout_height="@dimen/_100sdp"
+                               android:layout_marginTop="20dp"
+                               android:layout_marginBottom="10dp"
+                               android:src="@drawable/icon_sell"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textSize="@dimen/_20ssp"
+                              android:layout_marginBottom="10dp"
+                              android:textStyle="bold"
+                              android:textColor="@color/leaf_green"
                               android:text="Sell now"/>
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                               android:gravity="center"
+                              android:layout_marginLeft="5dp"
+                              android:background="@drawable/border_edit_text"
                               android:orientation="vertical">
-                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                               android:src="@drawable/ic_cam_off"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:text="Check Quality"/>
+                    <ImageView android:layout_width="@dimen/_100sdp"
+                               android:layout_height="@dimen/_100sdp"
+                               android:layout_marginBottom="10dp"
+                               android:layout_marginTop="20dp"
+                               android:src="@drawable/icon_check"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textSize="@dimen/_20ssp"
+                              android:textStyle="bold"
+                              android:textColor="@color/leaf_green"
+                              android:text="Check Quality"
+                              android:layout_marginBottom="10dp"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
-                          android:gravity="center">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                          android:gravity="top"
+                          android:layout_marginTop="5dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_marginRight="5dp"
                               android:gravity="center"
+                              android:background="@drawable/border_edit_text"
                               android:orientation="vertical">
-                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                               android:src="@drawable/ic_cam_off"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:text="Sell now"/>
+                    <ImageView android:layout_width="@dimen/_100sdp"
+                               android:layout_height="@dimen/_100sdp"
+                               android:layout_marginBottom="10dp"
+                               android:layout_marginTop="20dp"
+                               android:src="@drawable/icon_borrow"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textSize="@dimen/_20ssp"
+                              android:text="Borrow"
+                              android:textStyle="bold"
+                              android:textColor="@color/leaf_green"
+                              android:layout_marginBottom="10dp"/>
                 </LinearLayout>
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content" android:layout_weight="1"
                               android:gravity="center"
+                              android:layout_marginLeft="5dp"
+                              android:background="@drawable/border_edit_text"
                               android:orientation="vertical">
-                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                               android:src="@drawable/ic_cam_off"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:text="Check Quality"/>
+                    <ImageView android:layout_width="@dimen/_100sdp"
+                               android:layout_height="@dimen/_100sdp"
+                               android:layout_marginTop="20dp"
+                               android:layout_marginBottom="10dp"
+                               android:src="@drawable/icon_tips"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textSize="@dimen/_20ssp"
+                              android:text="Tips"
+                              android:textStyle="bold"
+                              android:textColor="@color/leaf_green"
+                              android:layout_marginBottom="10dp"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

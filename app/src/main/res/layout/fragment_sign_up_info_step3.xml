@@ -6,6 +6,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="@dimen/_15sdp"
             android:background="@color/white" android:orientation="vertical">
         <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
                                                   android:layout_height="wrap_content"

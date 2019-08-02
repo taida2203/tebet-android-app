@@ -15,6 +15,7 @@
     <color name="down_grey_color">#56656c</color>
     <color name="green_color">#96CD7A</color>
     <color name="up_linear_grey">#EEF2F5</color>
+    <color name="gray_signup">#BCD3DB</color>
 
     <color name="inputnolight">#333333</color>
     <color name="edittext_color">#333333</color>
@@ -38,7 +39,7 @@
     <color name="down_back_spinner">#ced7db</color>
     <color name="tab_indicator_color">#84C462</color>
 
-
+    <color name="leaf_green">#03834A</color>
     <color name="green_intensive">#12AE4E</color>
     <color name="active_color">#84C462</color>
     <color name="expired_color">#788f9b</color>
@@ -236,5 +237,7 @@
     <color name="cakap_chat_session_run_out_countdown_background">#f5f4f8</color>
     <color name="cakap_chat_session_run_out_countdown_text">#00adc6</color>
     <color name="cakap_chat_session_run_out_match_again_text">#343439</color>
+    <color name="gray_text">#AFAFAF</color>
+    <color name="green_ic">#476f45</color>
 
 </resources>

@@ -3,6 +3,7 @@ package com.tebet.mojual.view.loginpassword
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.AuthAccountKitMethod
