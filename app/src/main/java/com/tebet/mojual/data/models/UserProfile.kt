@@ -30,6 +30,7 @@ data class UserProfile(
     var fullName: String? = null,
     var gender: String? = null,
     var ktp: String? = null,
+    var ktpNumber: String? = null,
     var lastName: String? = null,
     @Json(name = "phone")
     @ColumnInfo(name = "phone")
