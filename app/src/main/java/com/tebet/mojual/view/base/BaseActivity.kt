@@ -99,6 +99,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             handleError(it)
         })
         setSupportActionBar(baseBinding.baseToolbar)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         onCreateBase(savedInstanceState, contentLayoutId)
     }
 

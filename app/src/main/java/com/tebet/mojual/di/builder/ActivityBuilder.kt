@@ -27,30 +27,13 @@ import com.tebet.mojual.view.sale.SaleFragmentProvider
 import com.tebet.mojual.view.saledetail.SaleDetailFragmentProvider
 import com.tebet.mojual.view.signup.SignUpInfo
 import com.tebet.mojual.view.signup.SignUpInfoFragmentProvider
+import com.tebet.mojual.view.signup.step2.map.GoogleMapActivity
 import com.tebet.mojual.view.splash.Splash
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class ActivityBuilder
-//    @ContributesAndroidInjector(modules = {
-//            FeedActivityModule.class,
-//            BlogFragmentProvider.class,
-//            OpenSourceFragmentProvider.class})
-//    abstract FeedActivity bindFeedActivity();
-//
-//    @ContributesAndroidInjector
-//    abstract LoginActivity bindLoginActivity();
-//
-//    @ContributesAndroidInjector(modules = {
-//            AboutFragmentProvider.class,
-//            RateUsDialogProvider.class})
-//    abstract MainActivity bindMainActivity();
-//
-//    @ContributesAndroidInjector
-//    abstract SplashActivity bindSplashActivity();
-
-{
+abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [HomeFragmentProvider::class, ProfileFragmentProvider::class, SaleFragmentProvider::class, SaleDetailFragmentProvider::class])
     abstract fun homeActivity(): HomeActivity
 
@@ -68,6 +51,9 @@ abstract class ActivityBuilder
 
     @ContributesAndroidInjector
     abstract fun signUpPasswordActivity(): SignUpPassword
+
+    @ContributesAndroidInjector
+    abstract fun googleMapActivityActivity(): GoogleMapActivity
 
     @ContributesAndroidInjector(modules = [SignUpInfoFragmentProvider::class])
     abstract fun signUpInfoActivity(): SignUpInfo

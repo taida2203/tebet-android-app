@@ -29,7 +29,7 @@
         <activity android:name=".view.home.HomeActivity"/>
         <activity android:name=".view.login.Login"/>
         <activity android:name=".view.signup.SignUpInfo"/>
-        <activity android:name=".view.GoogleMapActivity"/>
+        <activity android:name=".view.signup.step2.map.GoogleMapActivity"/>
 
         <activity android:name=".view.registration.SignUpPassword"/>
         <activity android:name=".view.loginpassword.LoginWithPassword"/>

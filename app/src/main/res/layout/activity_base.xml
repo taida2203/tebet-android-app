@@ -60,7 +60,7 @@
                             android:lines="1"
                             android:onClick="@{()-> viewModel.onBackPressed()}"
                             android:textSize="@dimen/_16ssp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/leaf_green"
                             app:font_style="bold"/>
 
                 </RelativeLayout>

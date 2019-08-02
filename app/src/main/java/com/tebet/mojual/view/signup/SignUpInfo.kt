@@ -34,8 +34,6 @@ import javax.inject.Inject
 
 class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(), SignUpInfoStep1Navigator,
     HasSupportFragmentInjector, SignUpNavigator {
-
-    private var currentStepFragment: SignUpInfoStep<*, *>? = null
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
@@ -55,6 +53,8 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
 
     override val contentLayoutId: Int
         get() = R.layout.activity_sign_up_info
+
+    private var currentStepFragment: SignUpInfoStep<*, *>? = null
 
     var cameraCaptureData: MutableLiveData<String> = MutableLiveData()
         private set

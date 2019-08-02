@@ -1,6 +1,5 @@
-package com.tebet.mojual.view.signup.step2
+package com.tebet.mojual.view.signup.step2.address
 
-import android.widget.EditText
 import android.widget.LinearLayout
 import com.mindorks.placeholderview.ExpandablePlaceHolderView
 import com.mindorks.placeholderview.annotations.Click
@@ -11,9 +10,14 @@ import com.mindorks.placeholderview.annotations.expand.ChildPosition
 import com.mindorks.placeholderview.annotations.expand.ParentPosition
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
+import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
 
 @Layout(R.layout.item_address_content)
-class ChildItem(private val mExpandablePlaceHolderView: ExpandablePlaceHolderView, var address: Address) {
+class ChildItem(
+    private val mExpandablePlaceHolderView: ExpandablePlaceHolderView,
+    var address: Address,
+    var viewModel: SignUpInfoStep2Model
+) {
 
     @ParentPosition
     internal var mParentPosition: Int = 0
@@ -30,7 +34,7 @@ class ChildItem(private val mExpandablePlaceHolderView: ExpandablePlaceHolderVie
     fun onResolved() {
         //        itemNameTxt.setText(childTitleList.get(mParentPosition).get(mChildPosition));
         //        itemIcon.setImageDrawable(mExpandablePlaceHolderView.getResources().getDrawable(R.drawable.signup_expand_btn));
-        inputAddress?.setAddressData(inputAddress, address)
+        inputAddress?.setAddressData(inputAddress, address, viewModel)
     }
 
     @Click(R.id.mainView)

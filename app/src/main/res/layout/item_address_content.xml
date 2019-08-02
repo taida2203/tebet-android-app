@@ -6,9 +6,9 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <com.tebet.mojual.view.signup.step2.AddressInputView android:layout_width="match_parent"
-                                                         android:id="@+id/inputAddress"
-                                                         android:layout_height="wrap_content">
+    <com.tebet.mojual.view.signup.step2.address.AddressInputView android:layout_width="match_parent"
+                                                                 android:id="@+id/inputAddress"
+                                                                 android:layout_height="wrap_content">
 
-    </com.tebet.mojual.view.signup.step2.AddressInputView>
+    </com.tebet.mojual.view.signup.step2.address.AddressInputView>
 </LinearLayout>

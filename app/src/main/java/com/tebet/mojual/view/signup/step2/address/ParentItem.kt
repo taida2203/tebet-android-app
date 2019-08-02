@@ -1,4 +1,4 @@
-package com.tebet.mojual.view.signup.step2
+package com.tebet.mojual.view.signup.step2.address
 
 import android.content.Context
 import android.widget.ImageView

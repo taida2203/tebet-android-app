@@ -15,6 +15,7 @@ import com.tebet.mojual.view.sale.SaleViewModel
 import com.tebet.mojual.view.saledetail.SaleDetailViewModel
 import com.tebet.mojual.view.signup.SignUpInfoViewModel
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1Model
+import com.tebet.mojual.view.signup.step2.map.GoogleMapViewModel
 import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
 import com.tebet.mojual.view.signup.step3.SignUpInfoStep3Model
 import com.tebet.mojual.view.splash.SplashViewModel
@@ -44,6 +45,10 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(SignUpInfoStep3Model::class.java) -> SignUpInfoStep3Model(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SaleViewModel::class.java) -> SaleViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SaleDetailViewModel::class.java) -> SaleDetailViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(GoogleMapViewModel::class.java) -> GoogleMapViewModel(
+                dataManager,
+                schedulerProvider
+            ) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

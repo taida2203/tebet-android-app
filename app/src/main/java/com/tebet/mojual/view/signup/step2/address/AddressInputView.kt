@@ -1,4 +1,4 @@
-package com.tebet.mojual.view.signup.step2
+package com.tebet.mojual.view.signup.step2.address
 
 import android.content.Context
 import android.os.Build
@@ -11,6 +11,7 @@ import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
 import com.tebet.mojual.databinding.LayoutAddressInputBinding
+import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
 
 @InverseBindingMethods(
     value = [InverseBindingMethod(
@@ -20,6 +21,7 @@ import com.tebet.mojual.databinding.LayoutAddressInputBinding
     )]
 )
 class AddressInputView : LinearLayout {
+    private lateinit var viewModel: SignUpInfoStep2Model
     private var mBinding: LayoutAddressInputBinding? = null
     var addressData: ObservableField<Address> = ObservableField(Address())
     //    public String getFilterValue() {
@@ -53,15 +55,23 @@ class AddressInputView : LinearLayout {
     private fun init(context: Context) {
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_address_input, this, true)
         mBinding?.setVariable(BR.addressData, addressData.get())
+        mBinding?.setVariable(BR.view, this)
         orientation = LinearLayout.HORIZONTAL
     }
 
-    @BindingAdapter(value = ["bind:addressData"], requireAll = false)
-    fun setAddressData(positionView: AddressInputView?, address: Address) {
+//    @BindingAdapter(value = ["bind:addressData"], requireAll = false)
+    fun setAddressData(
+    positionView: AddressInputView?,
+    address: Address,
+    viewModel: SignUpInfoStep2Model
+    ) {
         addressData.set(address)
         mBinding?.setVariable(BR.addressData, addressData.get())
+        this.viewModel = viewModel
     }
 
-    companion object {
+    fun onChooseMapClick() {
+        viewModel.onChooseMapClick(addressData)
+
     }
 }

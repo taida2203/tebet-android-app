@@ -1,12 +1,12 @@
-package com.tebet.mojual.view
+package com.tebet.mojual.view.signup.step2.map
 
 import android.Manifest
+import android.app.Activity
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -14,12 +14,26 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.databinding.ActivitySignUpGoogleMapBinding
+import com.tebet.mojual.view.base.BaseActivity
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
 
 
-class GoogleMapActivity : FragmentActivity(), EasyPermissions.PermissionCallbacks {
+class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMapViewModel>(),
+    EasyPermissions.PermissionCallbacks {
+
+    override val bindingVariable: Int
+        get() = BR.viewModel
+
+    override val viewModel: GoogleMapViewModel
+        get() = ViewModelProviders.of(this, factory).get(GoogleMapViewModel::class.java)
+
+    override val contentLayoutId: Int
+        get() = R.layout.activity_sign_up_google_map
+
     private lateinit var googleMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
@@ -28,10 +42,8 @@ class GoogleMapActivity : FragmentActivity(), EasyPermissions.PermissionCallback
     private val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
     private var lastLocation: Location? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_google_map)
-
+    override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        title = "Select location on Map"
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         initPermission()
         locationCallback = object : LocationCallback() {
@@ -71,6 +83,15 @@ class GoogleMapActivity : FragmentActivity(), EasyPermissions.PermissionCallback
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync { it ->
             googleMap = it
+            googleMap.uiSettings.isMyLocationButtonEnabled = true
+            googleMap.setOnMapClickListener { selectedLocation ->
+                intent.putExtra(
+                    "LOCATION",
+                    (selectedLocation.latitude.toString() + " " + selectedLocation.longitude.toString())
+                )
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
             if (lastLocation != null) {
                 val cu = CameraUpdateFactory.newLatLngZoom(
                     LatLng(
