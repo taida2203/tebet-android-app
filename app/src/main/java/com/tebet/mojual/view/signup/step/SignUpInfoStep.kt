@@ -1,15 +1,22 @@
-package com.tebet.mojual.view.signup
+package com.tebet.mojual.view.signup.step
 
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import com.tebet.mojual.view.base.BaseFragment
-import com.tebet.mojual.view.signup.step2.SignUpInfoStepViewModel
+import android.view.WindowManager
+import com.tebet.mojual.view.signup.SignUpInfo
+
 
 abstract class SignUpInfoStep<T : ViewDataBinding, V : SignUpInfoStepViewModel<*>> : BaseFragment<T, V>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.userProfile.set((activity as SignUpInfo).viewModel.userProfile)
+    }
+    abstract fun validate(): Boolean
+    override fun onCreate(savedInstanceState: Bundle?) {
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        super.onCreate(savedInstanceState)
+
     }
 }

@@ -2,15 +2,17 @@ package com.tebet.mojual.view.signup.step1
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep1Binding
 import com.tebet.mojual.view.signup.SignUpInfo
-import com.tebet.mojual.view.signup.SignUpInfoStep
+import com.tebet.mojual.view.signup.step.SignUpInfoStep
+import java.util.*
 
-class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInfoStep1Model>(), SignUpInfoStep1Navigator {
+class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInfoStep1Model>(),
+    SignUpInfoStep1Navigator {
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -19,6 +21,8 @@ class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInf
 
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_info_step1
+    lateinit var validator: Validator
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +31,16 @@ class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInf
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        validator = Validator(viewDataBinding)
     }
 
     override fun captureAvatar() {
     }
 
     override fun captureEKTP() {
+    }
+
+    override fun validate(): Boolean {
+        return validator.validate(Arrays.asList(viewDataBinding?.fullName, viewDataBinding?.birthday, viewDataBinding?.ktpNumber))
     }
 }

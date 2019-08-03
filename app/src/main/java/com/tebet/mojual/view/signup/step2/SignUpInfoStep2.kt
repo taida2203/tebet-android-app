@@ -9,7 +9,7 @@ import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep2Binding
-import com.tebet.mojual.view.signup.SignUpInfoStep
+import com.tebet.mojual.view.signup.step.SignUpInfoStep
 import com.tebet.mojual.view.signup.step2.address.ChildItem
 import com.tebet.mojual.view.signup.step2.address.ParentItem
 import com.tebet.mojual.view.signup.step2.map.GoogleMapActivity
@@ -73,4 +73,7 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
         }
     }
 
+    override fun validate(): Boolean {
+        return true
+    }
 }

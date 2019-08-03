@@ -19,6 +19,7 @@ import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.signup.step.SignUpInfoStep
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1Navigator
 import com.tebet.mojual.view.signup.step2.SignUpInfoStep2
@@ -64,6 +65,13 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         title = "Sign Up"
         refreshScreenStep()
         viewDataBinding?.btnNext?.setOnClickListener {
+            currentStepFragment?.let {
+                if (!it.validate()) {
+                    Toast.makeText(this@SignUpInfo, "Fill all reqired field !!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            }
+
             when (screenStep) {
                 SCREEN_STEP.STEP_1 ->
                     screenStep = SCREEN_STEP.STEP_2

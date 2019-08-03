@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Address
+import com.tebet.mojual.view.signup.step.SignUpInfoStepViewModel
 
 class SignUpInfoStep2Model(
     dataManager: DataManager,

@@ -1,72 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
-        <variable name="viewModel" type="com.tebet.mojual.view.signup.step1.SignUpInfoStep1Model"/>
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.signup.step1.SignUpInfoStep1Model" />
     </data>
+
     <ScrollView
-            android:layout_width="match_parent" android:orientation="vertical"
-            android:scrollbars="none"
-            android:layout_marginTop="@dimen/_8sdp" android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="vertical"
+        android:scrollbars="none">
+
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/_15sdp">
+
+            <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_15sdp"
-                android:background="@color/white" android:orientation="vertical">
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:gravity="center"
+                android:text="Your selfie photo, please capture front of your face." />
 
-            <com.tebet.mojual.common.view.AppTextView android:layout_width="match_parent"
-                                                      android:layout_height="wrap_content"
-                                                      android:text="Your selfie photo, please capture front of your face."
-                                                      android:layout_marginBottom="@dimen/_20sdp"
-                                                      android:gravity="center"/>
-            <RelativeLayout android:layout_width="@dimen/_100sdp"
-                            android:layout_height="@dimen/_100sdp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/circle_image_view"
-                            android:onClick="@{()-> viewModel.onCaptureAvatar()}"
-                            android:src="@drawable/photo_camera"
-                            android:layout_marginBottom="@dimen/_20sdp">
-                <ImageView android:layout_width="@dimen/_50sdp"
-                           android:layout_height="@dimen/_50sdp"
-                           app:imageUrl="@{viewModel.userProfile.avatarLocal}"
-                           android:background="@drawable/photo_camera"
-                           android:layout_centerInParent="true"/>
+            <RelativeLayout
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/circle_image_view"
+                android:onClick="@{()-> viewModel.onCaptureAvatar()}"
+                android:src="@drawable/photo_camera">
+
+                <ImageView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/photo_camera"
+                    app:imageUrl="@{viewModel.userProfile.avatarLocal}" />
 
             </RelativeLayout>
-            <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                      android:layout_height="wrap_content"
-                                                      android:hint="Full Name"
-                                                      android:text="@={viewModel.userProfile.fullName}"
-                                                      android:layout_marginBottom="@dimen/_20sdp"/>
-            <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                      android:layout_height="wrap_content"
-                                                      android:hint="Date of Birth"
-                                                      android:cursorVisible="false"
-                                                      android:focusable="false"
-                                                      android:text="@={viewModel.userProfile.birthday}"
-                                                      android:layout_marginBottom="@dimen/_20sdp"/>
-            <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                      android:layout_height="wrap_content"
-                                                      android:hint="KTP Number"
-                                                      android:text="@={viewModel.userProfile.ktpNumber}"
-                                                      android:layout_marginBottom="@dimen/_20sdp"/>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                          android:background="@drawable/rounded_bg_signup"
-                          android:orientation="vertical"
-                          android:layout_marginBottom="@dimen/_10sdp"
-                          android:gravity="center">
-                <ImageView android:layout_width="@dimen/_50sdp" android:layout_height="@dimen/_50sdp"
-                           android:onClick="@{()-> viewModel.onCaptureEKTP()}"
-                           android:src="@drawable/icon_card"
-                           android:layout_marginBottom="@dimen/_15sdp"
-                           android:layout_marginTop="@dimen/_30sdp"/>
-                <com.tebet.mojual.common.view.AppTextView android:layout_width="match_parent"
-                                                          android:layout_height="wrap_content"
-                                                          android:text="Upload KTP Photo"
-                                                          android:textStyle="bold"
-                                                          android:textSize="@dimen/_14ssp"
-                                                          android:layout_marginBottom="@dimen/_20sdp"
-                                                          android:gravity="center"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_20sdp"
+                app:hintEnabled="false">
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:id="@+id/fullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Full Name"
+                    android:imeOptions="actionNext"
+                    android:text="@={viewModel.userProfile.fullName}"
+                    app:validateEmpty="@{true}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_20sdp"
+                app:hintEnabled="false">
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:id="@+id/birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Date of Birth"
+                    android:imeOptions="actionNext"
+                    android:text="@={viewModel.userProfile.birthday}"
+                    app:validateEmpty="@{true}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_20sdp"
+                app:hintEnabled="false">
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:id="@+id/ktpNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="KTP Number"
+                    android:imeOptions="actionDone"
+                    android:text="@={viewModel.userProfile.ktpNumber}"
+                    app:validateEmpty="@{true}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/rounded_bg_signup"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:onClick="@{()-> viewModel.onCaptureEKTP()}"
+                    android:src="@drawable/icon_card" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:gravity="center"
+                    android:text="Upload KTP Photo"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -2,12 +2,11 @@ package com.tebet.mojual.common.view
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import androidx.core.view.setPadding
+import com.google.android.material.textfield.TextInputEditText
 import com.tebet.mojual.R
 
-open class AppEditText : AppCompatEditText {
+open class AppEditText : TextInputEditText {
     constructor(context: Context) : super(context) {
         setFont(null)
     }
@@ -27,6 +26,7 @@ open class AppEditText : AppCompatEditText {
         this.setTextColor(ContextCompat.getColor(context, R.color.grey))
         this.setHintTextColor(ContextCompat.getColor(context, R.color.grey))
         setLines(1)
+        setSingleLine(true)
 //        val typeArray = context.theme.obtainStyledAttributes(
 //            attributeSet,
 //            R.styleable.SquTextFont,

@@ -101,14 +101,14 @@ dependencies {
 
     implementation AppDependencies.sdp
     implementation AppDependencies.ssp
-    implementation 'com.intuit.sdp:sdp-android:1.0.6'
-    implementation 'com.intuit.ssp:ssp-android:1.0.6'
     implementation 'pub.devrel:easypermissions:1.2.0'
     implementation 'com.beust:klaxon:5.0.1'
     implementation "com.ashokvarma.android:gander:$ganderVersion"
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation "com.mindorks:placeholderview:0.7.3"
     implementation "uk.co.chrisjenx:calligraphy:2.2.0"
+    compile 'com.github.Ilhasoft:data-binding-validator:2.0.0'
+
 
     // App dependencies
     implementation AppDependencies.androidSupportAndroidX
