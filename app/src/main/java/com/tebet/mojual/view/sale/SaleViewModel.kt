@@ -6,6 +6,7 @@ import com.tebet.mojual.data.models.CreateOrderRequest
 import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import java.util.*
 
 class SaleViewModel(
     dataManager: DataManager,
@@ -13,9 +14,10 @@ class SaleViewModel(
 ) :
     BaseViewModel<SaleNavigator>(dataManager, schedulerProvider) {
     fun onSubmitClick() {
+        var currentCal = Calendar.getInstance()
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.createOrder(CreateOrderRequest(2, 1564647842696L))
+            dataManager.createOrder(CreateOrderRequest(2, currentCal.timeInMillis + 1000))
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
                     override fun onSuccess(dataResponse: EmptyResponse) {
