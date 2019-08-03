@@ -19,16 +19,13 @@ class SaleViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
                     override fun onSuccess(dataResponse: EmptyResponse) {
+                        navigator.showLoading(false)
                         navigator.openSaleScreen()
                     }
 
                     override fun onFailure(error: String?) {
-                        handleError(error)
-                    }
-
-                    override fun onComplete() {
-                        super.onComplete()
                         navigator.showLoading(false)
+                        handleError(error)
                     }
                 })
         )

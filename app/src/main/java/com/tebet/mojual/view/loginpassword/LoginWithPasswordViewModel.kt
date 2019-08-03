@@ -33,6 +33,7 @@ class LoginWithPasswordViewModel(
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {
                         override fun onSuccess(dataResponse: UserProfile) {
+                            navigator.showLoading(false)
                             when {
                                 dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
                                 else -> navigator.openHomeScreen()
@@ -40,16 +41,10 @@ class LoginWithPasswordViewModel(
                         }
 
                         override fun onFailure(error: String?) {
+                            navigator.showLoading(false)
                             handleError(error)
                         }
-
-                        override fun onComplete() {
-                            super.onComplete()
-                            navigator.showLoading(false)
-                        }
-
-                    }
-                    )
+                    })
             )
         }
     }

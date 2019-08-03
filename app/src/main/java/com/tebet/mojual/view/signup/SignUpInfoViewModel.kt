@@ -28,16 +28,13 @@ class SignUpInfoViewModel(
         compositeDisposable.add(uploadImage(currentPhotoPath, "avatar").subscribeWith(object :
             CallbackWrapper<String>() {
             override fun onSuccess(dataResponse: String) {
+                navigator.showLoading(false)
                 userProfile.avatar = dataResponse
             }
 
             override fun onFailure(error: String?) {
-                handleError(error)
-            }
-
-            override fun onComplete() {
-                super.onComplete()
                 navigator.showLoading(false)
+                handleError(error)
             }
         }))
     }
@@ -46,17 +43,14 @@ class SignUpInfoViewModel(
         navigator.showLoading(true)
         compositeDisposable.add(uploadImage(currentPhotoPath, "ktp").subscribeWith(object : CallbackWrapper<String>() {
             override fun onSuccess(dataResponse: String) {
+                navigator.showLoading(false)
                 userProfile.ktp = dataResponse
 
             }
 
             override fun onFailure(error: String?) {
-                handleError(error)
-            }
-
-            override fun onComplete() {
-                super.onComplete()
                 navigator.showLoading(false)
+                handleError(error)
             }
         }))
     }
@@ -83,16 +77,13 @@ class SignUpInfoViewModel(
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
                     override fun onSuccess(dataResponse: EmptyResponse) {
+                        navigator.showLoading(false)
                         navigator.openHomeScreen()
                     }
 
                     override fun onFailure(error: String?) {
-                        handleError(error)
-                    }
-
-                    override fun onComplete() {
-                        super.onComplete()
                         navigator.showLoading(false)
+                        handleError(error)
                     }
                 })
         )

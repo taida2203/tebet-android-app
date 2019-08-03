@@ -32,6 +32,7 @@ class LoginViewModel(
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {
                         override fun onSuccess(dataResponse: UserProfile) {
+                            navigator.showLoading(false)
                             when {
                                 dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
                                 else -> navigator.openHomeScreen()
@@ -39,12 +40,8 @@ class LoginViewModel(
                         }
 
                         override fun onFailure(error: String?) {
-                            handleError(error)
-                        }
-
-                        override fun onComplete() {
-                            super.onComplete()
                             navigator.showLoading(false)
+                            handleError(error)
                         }
                     })
             )
@@ -71,6 +68,7 @@ class LoginViewModel(
                     .subscribeWith(object :
                         CallbackWrapper<UserProfile>() {
                         override fun onSuccess(dataResponse: UserProfile) {
+                            navigator.showLoading(false)
                             when {
                                 dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
                                 else -> navigator.openHomeScreen()
@@ -78,12 +76,8 @@ class LoginViewModel(
                         }
 
                         override fun onFailure(error: String?) {
-                            handleError(error)
-                        }
-
-                        override fun onComplete() {
-                            super.onComplete()
                             navigator.showLoading(false)
+                            handleError(error)
                         }
                     })
             )
