@@ -10,7 +10,7 @@ import io.reactivex.Single
 @Dao
 interface CityDao {
     @Query("SELECT * FROM city")
-    fun queryCity(): Single<City>
+    fun queryCity(): Single<List<City>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCity(bank: City)

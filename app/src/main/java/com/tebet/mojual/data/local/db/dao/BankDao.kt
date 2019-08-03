@@ -1,14 +1,16 @@
 package com.tebet.mojual.data.local.db.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.tebet.mojual.data.models.Bank
-import com.tebet.mojual.data.models.UserProfile
 import io.reactivex.Single
 
 @Dao
 interface BankDao {
     @Query("SELECT * FROM bank")
-    fun queryBank(): Single<Bank>
+    fun queryBank(): Single<List<Bank>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertBank(bank: Bank)

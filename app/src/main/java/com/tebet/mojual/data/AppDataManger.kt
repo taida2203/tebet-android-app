@@ -23,6 +23,20 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
+    override fun getCityDB(): Observable<AuthJson<List<City>>> {
+        return room.city.concatMap { cityDao ->
+            cityDao.queryCity().doOnError { message -> EmptyResultSetException("") }
+                .toObservable().map { citys -> AuthJson(null, "", citys) }
+        }
+    }
+
+    override fun getBankDB(): Observable<AuthJson<List<Bank>>> {
+        return room.bank.concatMap { bankDao ->
+            bankDao.queryBank().doOnError { message -> EmptyResultSetException("") }
+                .toObservable().map { banks -> AuthJson(null, "", banks) }
+        }
+    }
+
     override fun getBank(): Observable<BankDao> {
         return room.bank
     }

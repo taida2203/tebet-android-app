@@ -2,7 +2,7 @@ package com.tebet.mojual.view.signup;
 
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1;
 import com.tebet.mojual.view.signup.step2.SignUpInfoStep2;
-import com.tebet.mojual.view.signup.step2.SignUpInfoStep3;
+import com.tebet.mojual.view.signup.step3.SignUpInfoStep3;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 

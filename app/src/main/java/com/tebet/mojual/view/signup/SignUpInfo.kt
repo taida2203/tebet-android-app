@@ -23,7 +23,7 @@ import com.tebet.mojual.view.signup.step.SignUpInfoStep
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1Navigator
 import com.tebet.mojual.view.signup.step2.SignUpInfoStep2
-import com.tebet.mojual.view.signup.step2.SignUpInfoStep3
+import com.tebet.mojual.view.signup.step3.SignUpInfoStep3
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
