@@ -16,7 +16,11 @@
 
 package com.tebet.mojual.data.local.db;
 
+import com.tebet.mojual.data.local.db.dao.BankDao;
+import com.tebet.mojual.data.local.db.dao.CityDao;
 import com.tebet.mojual.data.local.db.dao.UserProfileDao;
+import com.tebet.mojual.data.models.Bank;
+import com.tebet.mojual.data.models.City;
 import com.tebet.mojual.data.models.UserProfile;
 import io.reactivex.Observable;
 
@@ -51,6 +55,48 @@ public class AppDbHelper implements DbHelper {
             @Override
             public Boolean call() throws Exception {
                 mAppDatabase.userProfileDao().insertUserProfile(userProfile);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Observable<BankDao> getBank() {
+        return Observable.fromCallable(new Callable<BankDao>() {
+            @Override
+            public BankDao call() throws Exception {
+                return mAppDatabase.bankDao();
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> insertBank(Bank bank) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.bankDao().insertBank(bank);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Observable<CityDao> getCity() {
+        return Observable.fromCallable(new Callable<CityDao>() {
+            @Override
+            public CityDao call() throws Exception {
+                return mAppDatabase.cityDao();
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> insertCity(City city) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.cityDao().insertCity(city);
                 return true;
             }
         });

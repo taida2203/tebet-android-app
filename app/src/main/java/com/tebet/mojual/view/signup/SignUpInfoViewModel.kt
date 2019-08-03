@@ -3,6 +3,7 @@ package com.tebet.mojual.view.signup
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.Bank
 import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
@@ -79,6 +80,25 @@ class SignUpInfoViewModel(
                     override fun onSuccess(dataResponse: EmptyResponse) {
                         navigator.showLoading(false)
                         navigator.openHomeScreen()
+                    }
+
+                    override fun onFailure(error: String?) {
+                        navigator.showLoading(false)
+                        handleError(error)
+                    }
+                })
+        )
+    }
+
+    fun loadData() {
+        navigator.showLoading(true)
+        compositeDisposable.add(
+            dataManager.getCities()
+                .concatMap { cities -> dataManager.getBanks() }
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : CallbackWrapper<List<Bank>>() {
+                    override fun onSuccess(dataResponse: List<Bank>) {
+                        navigator.showLoading(false)
                     }
 
                     override fun onFailure(error: String?) {

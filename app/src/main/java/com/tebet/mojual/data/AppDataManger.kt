@@ -6,12 +6,11 @@ import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.App
 import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.data.local.db.DbHelper
+import com.tebet.mojual.data.local.db.dao.BankDao
+import com.tebet.mojual.data.local.db.dao.CityDao
 import com.tebet.mojual.data.local.db.dao.UserProfileDao
 import com.tebet.mojual.data.local.prefs.PreferencesHelper
-import com.tebet.mojual.data.models.CreateOrderRequest
-import com.tebet.mojual.data.models.EmptyResponse
-import com.tebet.mojual.data.models.UpdatePasswordRequest
-import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.remote.ApiHelper
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -19,7 +18,35 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import javax.inject.Inject
 
-class AppDataManger @Inject constructor(private var api: ApiHelper, private var room: DbHelper, private var preferences: PreferencesHelper) : DataManager {
+class AppDataManger @Inject constructor(
+    private var api: ApiHelper,
+    private var room: DbHelper,
+    private var preferences: PreferencesHelper
+) : DataManager {
+    override fun getBank(): Observable<BankDao> {
+        return room.bank
+    }
+
+    override fun insertBank(bank: Bank?): Observable<Boolean> {
+        return room.insertBank(bank)
+    }
+
+    override fun getCity(): Observable<CityDao> {
+        return room.city
+    }
+
+    override fun insertCity(city: City?): Observable<Boolean> {
+        return room.insertCity(city)
+    }
+
+    override fun getBanks(): Observable<AuthJson<List<Bank>>> {
+        return api.getBanks()
+    }
+
+    override fun getCities(): Observable<AuthJson<List<City>>> {
+        return api.getCities()
+    }
+
     override fun insertUserProfile(userProfile: UserProfile?): Observable<Boolean> {
         return room.insertUserProfile(userProfile)
     }

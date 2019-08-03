@@ -2,10 +2,7 @@ package com.tebet.mojual.data.remote
 
 import co.sdk.auth.core.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
-import com.tebet.mojual.data.models.CreateOrderRequest
-import com.tebet.mojual.data.models.EmptyResponse
-import com.tebet.mojual.data.models.UpdatePasswordRequest
-import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.models.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
@@ -28,6 +25,12 @@ interface ApiHelper {
 
     @GET("profile/profile")
     fun getProfile(): Observable<AuthJson<UserProfile>>
+
+    @GET("common/bank")
+    fun getBanks(): Observable<AuthJson<List<Bank>>>
+
+    @GET("common/city")
+    fun getCities(): Observable<AuthJson<List<City>>>
 
     @PUT("profile/profile")
     fun updateProfile(@Body updateProfileRequest: UserProfile): Observable<AuthJson<EmptyResponse>>

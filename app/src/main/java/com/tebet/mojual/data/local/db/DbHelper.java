@@ -17,7 +17,11 @@
 package com.tebet.mojual.data.local.db;
 
 
+import com.tebet.mojual.data.local.db.dao.BankDao;
+import com.tebet.mojual.data.local.db.dao.CityDao;
 import com.tebet.mojual.data.local.db.dao.UserProfileDao;
+import com.tebet.mojual.data.models.Bank;
+import com.tebet.mojual.data.models.City;
 import com.tebet.mojual.data.models.UserProfile;
 import io.reactivex.Observable;
 
@@ -25,4 +29,12 @@ public interface DbHelper {
     Observable<UserProfileDao> getUserProfile();
 
     Observable<Boolean> insertUserProfile(final UserProfile userProfile);
+
+    Observable<BankDao> getBank();
+
+    Observable<Boolean> insertBank(final Bank bank);
+
+    Observable<CityDao> getCity();
+
+    Observable<Boolean> insertCity(final City city);
 }

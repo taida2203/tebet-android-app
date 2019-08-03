@@ -91,6 +91,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         viewModel.baseErrorHandlerData.observe(this, Observer<String> {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
+        viewModel.loadData()
     }
 
     override fun onBackPressed() {

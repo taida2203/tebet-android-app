@@ -22,11 +22,6 @@ import dagger.Provides
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import javax.inject.Singleton
 
-/**
- * Created by Ege Kuzubasioglu on 9.06.2018 at 21:05.
- * Copyright (c) 2018. All rights reserved.
- */
-
 @Module
 class AppModule(private val app: Application) {
     companion object {
