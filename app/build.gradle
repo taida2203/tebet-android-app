@@ -107,7 +107,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation "com.mindorks:placeholderview:0.7.3"
     implementation "uk.co.chrisjenx:calligraphy:2.2.0"
-    compile 'com.github.Ilhasoft:data-binding-validator:2.0.0'
+    implementation 'com.github.Ilhasoft:data-binding-validator:2.0.0'
 
 
     // App dependencies
