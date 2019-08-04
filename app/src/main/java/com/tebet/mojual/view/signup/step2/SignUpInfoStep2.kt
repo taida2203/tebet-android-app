@@ -25,6 +25,8 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_info_step2
 
+    var addressViews = ArrayList<ChildItem>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = this
@@ -33,26 +35,28 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding?.expandableView?.let {
-            it.addView(ParentItem(it.context, "DOMICILE ADDRESS"))
+            it.addView(ParentItem(it.context, "DOMICILE ADDRESS", true))
             if (viewModel.userProfile.get()?.domicileAddress == null) viewModel.userProfile.get()?.domicileAddress =
                 Address()
             if (viewModel.userProfile.get()?.pickupAddress == null) viewModel.userProfile.get()?.pickupAddress =
                 Address()
-            it.addView(
+            addressViews.add(
                 ChildItem(
                     it,
                     viewModel.userProfile.get()?.domicileAddress ?: Address(),
                     viewModel
                 )
             )
+            it.addView(addressViews[0])
             it.addView(ParentItem(it.context, "PICKUP ADDRESS"))
-            it.addView(
+            addressViews.add(
                 ChildItem(
                     it,
                     viewModel.userProfile.get()?.pickupAddress ?: Address(),
                     viewModel
                 )
             )
+            it.addView(addressViews[1])
             it.expand(0)
         }
     }
@@ -66,14 +70,14 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
         when (requestCode) {
             500 -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    viewModel.address?.get()?.latitude = 21.035732
-                    viewModel.address?.get()?.longitude = 105.8476363
+                    val dataReturn = data?.getParcelableExtra<Address>("LOCATION")
+                    viewModel.address?.set(dataReturn)
                 }
             }
         }
     }
 
     override fun validate(): Boolean {
-        return true
+        return addressViews.firstOrNull { address -> !address.validate() }?.validate() ?: true
     }
 }

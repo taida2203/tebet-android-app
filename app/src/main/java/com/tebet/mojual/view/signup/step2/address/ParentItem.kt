@@ -15,7 +15,7 @@ import java.util.ArrayList
 @Parent
 @SingleTop
 @Layout(R.layout.item_address_title)
-class ParentItem(private val mContext: Context, private val title: String) {
+class ParentItem(private val mContext: Context, private val title: String, private val isExpandDefault: Boolean = false) {
 
     @ParentPosition
     internal var mParentPosition: Int = 0
@@ -23,26 +23,30 @@ class ParentItem(private val mContext: Context, private val title: String) {
     @View(R.id.itemNameTxt)
     internal var itemNameTxt: TextView? = null
 
-    @Toggle(R.id.itemIcon)
+
     @View(R.id.itemIcon)
     internal var itemIcon: ImageView? = null
 
+    @Toggle(R.id.mainView)
     @View(R.id.mainView)
     internal var mainView: LinearLayout? = null
 
     @Resolve
     fun onResolved() {
-        itemIcon?.setImageDrawable(mContext.resources.getDrawable(R.drawable.signup_collapse_btn))
+        itemIcon?.setImageDrawable(mContext.resources.getDrawable(R.drawable.signup_expand_btn))
         itemNameTxt?.text = title
+        if(isExpandDefault){
+            onExpand()
+        }
     }
 
     @Expand
     fun onExpand() {
-        itemIcon?.setImageDrawable(mContext.resources.getDrawable(R.drawable.signup_expand_btn))
+        itemIcon?.setImageDrawable(mContext.resources.getDrawable(R.drawable.signup_collapse_btn))
     }
 
     @Collapse
     fun onCollapse() {
-        itemIcon?.setImageDrawable(mContext.resources.getDrawable(R.drawable.signup_collapse_btn))
+        itemIcon?.setImageDrawable(mContext.resources.getDrawable(R.drawable.signup_expand_btn))
     }
 }

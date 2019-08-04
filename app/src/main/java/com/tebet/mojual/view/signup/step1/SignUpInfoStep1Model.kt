@@ -16,4 +16,8 @@ class SignUpInfoStep1Model(
     fun onCaptureEKTP() {
         navigator.captureEKTP()
     }
+
+    fun onSelectDateClick() {
+        navigator.selectBirthDay()
+    }
 }

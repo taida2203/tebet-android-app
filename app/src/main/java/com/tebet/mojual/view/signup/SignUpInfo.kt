@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import co.common.view.dialog.DateDialog
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
@@ -35,8 +36,10 @@ import javax.inject.Inject
 
 class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(), SignUpInfoStep1Navigator,
     HasSupportFragmentInjector, SignUpNavigator {
+
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var birthDayDialog: DateDialog
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
     enum class SCREEN_STEP {
@@ -84,7 +87,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
 
             refreshScreenStep()
         }
-        viewDataBinding?.btnBack?.background = ContextCompat.getDrawable(this,R.drawable.rounded_btn_grey)
+        viewDataBinding?.btnBack?.background = ContextCompat.getDrawable(this, R.color.grey)
         viewDataBinding?.btnBack?.setOnClickListener {
             onBackPressed()
         }
@@ -166,6 +169,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
             currentPhotoPath = absolutePath
         }
     }
+
     private val REQUEST_TAKE_AVATAR = 1
     private val REQUEST_TAKE_EKTP = 2
 
@@ -212,5 +216,14 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                 viewModel.uploadEKTP(currentPhotoPath)
             }
         }
+    }
+
+    override fun selectBirthDay() {
+        birthDayDialog = DateDialog()
+        birthDayDialog.setMaxDate(Calendar.getInstance())
+        birthDayDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
+            viewModel.userProfile.birthday = "$dayOfMonth/$month/$year"
+        }
+        birthDayDialog.show(supportFragmentManager, "")
     }
 }

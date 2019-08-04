@@ -1,44 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <variable name="view" type="com.tebet.mojual.view.signup.step2.address.AddressInputView"/>
-        <variable name="addressData" type="com.tebet.mojual.data.models.Address"/>
+
+        <variable
+            name="view"
+            type="com.tebet.mojual.view.signup.step2.address.AddressInputView" />
+
+        <variable
+            name="addressData"
+            type="com.tebet.mojual.data.models.Address" />
     </data>
+
     <LinearLayout
-            android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:hint="Address"
-                                                  android:text="@={addressData.address}"
-                                                  android:layout_marginBottom="@dimen/_20sdp"/>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:hint="Kelurahan"
-                                                  android:text="@={addressData.kelurahan}"
-                                                  android:layout_marginBottom="@dimen/_20sdp"/>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:hint="Kecamatan"
-                                                  android:text="@={addressData.kecamatan}"
-                                                  android:layout_marginBottom="@dimen/_20sdp"/>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:hint="RT/RW"
-                                                  android:text="@={addressData.rtrw}"
-                                                  android:layout_marginBottom="@dimen/_20sdp"/>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:hint="City"
-                                                  android:text="@={addressData.city}"
-                                                  android:layout_marginBottom="@dimen/_20sdp"/>
-        <com.tebet.mojual.common.view.AppEditText android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  android:layout_marginBottom="@dimen/_20sdp"
-                                                  android:cursorVisible="false"
-                                                  android:focusable="false"
-                                                  android:onClick="@{()-> view.onChooseMapClick()}"
-                                                  android:hint="Choose on Map"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:hintEnabled="false">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                android:text="@={addressData.address}"
+                app:validateEmpty="@{true}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:hintEnabled="false">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Kelurahan"
+                android:text="@={addressData.kelurahan}"
+                app:validateEmpty="@{true}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:hintEnabled="false">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Kecamatan"
+                android:text="@={addressData.kecamatan}"
+                app:validateEmpty="@{true}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:hintEnabled="false">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="RT/RW"
+                android:text="@={addressData.rtrw}"
+                app:validateEmpty="@{true}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:hintEnabled="false">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="City"
+                android:text="@={addressData.city}"
+                app:validateEmpty="@{true}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.tebet.mojual.common.view.AppEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:hint="Choose on Map"
+            android:onClick="@{()-> view.onChooseMapClick()}" />
     </LinearLayout>
 </layout>

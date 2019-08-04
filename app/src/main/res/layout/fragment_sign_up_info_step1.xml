@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.tebet.mojual.view.signup.step1.SignUpInfoStep1Model" />
@@ -44,9 +46,15 @@
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/photo_camera"
-                    app:imageUrl="@{viewModel.userProfile.avatarLocal}" />
+                    android:background="@drawable/photo_camera" />
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.userProfile.avatarLocal == null ? View.GONE : View.VISIBLE}"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    app:imageUrl="@{viewModel.userProfile.avatarLocal}" />
             </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -77,8 +85,11 @@
                     android:id="@+id/birthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false"
                     android:hint="Date of Birth"
                     android:imeOptions="actionNext"
+                    android:onClick="@{()-> viewModel.onSelectDateClick()}"
                     android:text="@={viewModel.userProfile.birthday}"
                     app:validateEmpty="@{true}" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -106,6 +117,7 @@
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@drawable/rounded_bg_signup"
                 android:gravity="center"
+                android:onClick="@{()-> viewModel.onCaptureEKTP()}"
                 android:orientation="vertical">
 
                 <ImageView
@@ -113,7 +125,6 @@
                     android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
-                    android:onClick="@{()-> viewModel.onCaptureEKTP()}"
                     android:src="@drawable/icon_card" />
 
                 <com.tebet.mojual.common.view.AppTextView
@@ -124,6 +135,14 @@
                     android:text="Upload KTP Photo"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.userProfile.ktpLocal == null ? View.GONE : View.VISIBLE}"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    app:imageUrl="@{viewModel.userProfile.ktpLocal}" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

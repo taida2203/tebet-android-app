@@ -20,40 +20,5 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:gravity="center_vertical"
-            android:visibility="gone">
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="DOMICILE ADDRESS" />
-
-            <ImageView
-                android:layout_width="@dimen/_18sdp"
-                android:layout_height="@dimen/_18sdp"
-                android:src="@drawable/signup_collapse_btn" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="PICKUP ADDRESS" />
-
-            <ImageView
-                android:layout_width="@dimen/_18sdp"
-                android:layout_height="@dimen/_18sdp"
-                android:gravity="center_vertical"
-                android:src="@drawable/signup_expand_btn" />
-        </LinearLayout>
     </LinearLayout>
 </layout>

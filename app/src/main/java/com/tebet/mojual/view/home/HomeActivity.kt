@@ -19,7 +19,6 @@ import javax.inject.Inject
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector, HomeNavigator {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
 
     override val bindingVariable: Int
@@ -30,6 +29,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
 
     override val contentLayoutId: Int
         get() = R.layout.activity_home
+
+    private var currentFragment: Fragment? = null
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
@@ -80,6 +81,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
     override fun showOrderDetailScreen() {
         enableBackButton = true
         openFragment(SaleDetailFragment(), R.id.contentHolder)
+    }
+
+    override fun openFragment(fragment: Fragment, placeHolder: Int, tag: String) {
+        currentFragment = fragment
+        super.openFragment(fragment, placeHolder, tag)
+    }
+
+    override fun onBackPressed() {
+        if (currentFragment != null && currentFragment !is HomeFragment) {
+            showHomeScreen()
+            return
+        }
+        super.onBackPressed()
     }
 
     private fun getData() {

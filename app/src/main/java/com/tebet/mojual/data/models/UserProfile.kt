@@ -22,7 +22,6 @@ data class UserProfile(
     var bankName: String? = null,
     var bankRegionCode: String? = null,
     var bankRegionName: String? = null,
-    var birthday: String? = null,
     @Ignore
     var domicileAddress: Address? = null,
     var email: String? = null,
@@ -63,5 +62,11 @@ data class UserProfile(
         set(value) {
             field = value
             notifyPropertyChanged(BR.ktpLocal)
+        }
+    var birthday: String? = null
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.birthday)
         }
 }

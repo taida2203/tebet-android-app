@@ -73,7 +73,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
-                        <com.view.SquTextView
+                        <TextView
                             android:id="@+id/tv_single"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                         android:layout_marginRight="-10dp"
                         android:layout_toLeftOf="@+id/tv_multiple_left"/>
 
-                    <com.view.SquTextView
+                    <TextView
                         android:id="@+id/tv_multiple_left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/tv_multiple_right"/>
-                    <com.view.SquTextView
+                    <TextView
                         android:id="@+id/tv_multiple_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <com.view.SquTextView
+            <TextView
                 android:id="@+id/tv_Hint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

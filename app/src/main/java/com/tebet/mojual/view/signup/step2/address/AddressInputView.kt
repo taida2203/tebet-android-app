@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.databinding.*
+import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
@@ -24,6 +25,7 @@ class AddressInputView : LinearLayout {
     private lateinit var viewModel: SignUpInfoStep2Model
     private var mBinding: LayoutAddressInputBinding? = null
     var addressData: ObservableField<Address> = ObservableField(Address())
+    lateinit var validator: Validator
     //    public String getFilterValue() {
     ////        return mBinding.filterPositionValue.getText().toString();
     //    }
@@ -56,6 +58,7 @@ class AddressInputView : LinearLayout {
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_address_input, this, true)
         mBinding?.setVariable(BR.addressData, addressData.get())
         mBinding?.setVariable(BR.view, this)
+        validator = Validator(mBinding)
         orientation = LinearLayout.HORIZONTAL
     }
 
@@ -72,6 +75,9 @@ class AddressInputView : LinearLayout {
 
     fun onChooseMapClick() {
         viewModel.onChooseMapClick(addressData)
+    }
 
+    fun validate() : Boolean {
+        return validator.validate()
     }
 }

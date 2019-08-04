@@ -1,9 +1,12 @@
 package com.tebet.mojual.view.signup.step1
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.DatePicker
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
+import co.common.view.dialog.DateDialog
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep1Binding
@@ -41,6 +44,15 @@ class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInf
     }
 
     override fun validate(): Boolean {
-        return validator.validate(Arrays.asList(viewDataBinding?.fullName, viewDataBinding?.birthday, viewDataBinding?.ktpNumber))
+        return validator.validate(
+            Arrays.asList(
+                viewDataBinding?.fullName,
+                viewDataBinding?.birthday,
+                viewDataBinding?.ktpNumber
+            )
+        )
+    }
+
+    override fun selectBirthDay() {
     }
 }
