@@ -41,18 +41,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/ivBack"
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_6sdp"
-                        app:srcCompat="@drawable/ic_back" />
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                    <ImageButton
+                            android:id="@+id/ivBack"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:padding="@dimen/_6sdp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/icon_back"/>
 
                     <com.tebet.mojual.common.view.AppTextView
                         android:id="@+id/tvBaseTitle"
@@ -66,7 +68,7 @@
                         android:textSize="@dimen/_16ssp"
                         app:font_style="bold" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlHomeNotificationContainer"
