@@ -3,6 +3,7 @@ package com.tebet.mojual.view.forgotpassword
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
+import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivitySignUpPasswordBinding
@@ -20,13 +21,27 @@ open class ForgotPassword : BaseActivity<ActivitySignUpPasswordBinding, ForgotPa
     override val contentLayoutId: Int
         get() = R.layout.activity_sign_up_password
 
+    private lateinit var validator: Validator
+
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
+        validator = Validator(viewDataBinding)
         title = "Input new password"
     }
 
     override fun openHomeScreen() {
         finish()
         startActivity(Intent(this, HomeActivity::class.java))
+    }
+
+    override fun dataValid(): Boolean {
+        if (!validator.validate()) {
+            return false
+        }
+        if (viewModel.userInputPassword != viewModel.userInputPassword2) {
+            viewDataBinding?.tvPasswordLayout?.error = "Password not match"
+            return false
+        }
+        return true
     }
 }

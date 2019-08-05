@@ -23,7 +23,6 @@ open class AppEditText : TextInputEditText {
     private fun setFont(attributeSet: AttributeSet?) {
         this.background = ContextCompat.getDrawable(context, R.drawable.border_edit_text)
         this.setPadding(20, 20, 20, 20)
-        this.setTextColor(ContextCompat.getColor(context, R.color.grey))
         this.setHintTextColor(ContextCompat.getColor(context, R.color.grey))
         setLines(1)
         setSingleLine(true)

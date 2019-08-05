@@ -18,12 +18,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.tebet.mojual.common.view.AppEditTextLayout
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
-            app:hintEnabled="false">
+            >
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
@@ -31,14 +31,14 @@
                 android:hint="Address"
                 android:text="@={addressData.address}"
                 app:validateEmpty="@{true}" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.tebet.mojual.common.view.AppEditTextLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.tebet.mojual.common.view.AppEditTextLayout
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
-            app:hintEnabled="false">
+            >
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
@@ -46,14 +46,14 @@
                 android:hint="Kelurahan"
                 android:text="@={addressData.kelurahan}"
                 app:validateEmpty="@{true}" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.tebet.mojual.common.view.AppEditTextLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.tebet.mojual.common.view.AppEditTextLayout
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
-            app:hintEnabled="false">
+            >
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
@@ -61,14 +61,14 @@
                 android:hint="Kecamatan"
                 android:text="@={addressData.kecamatan}"
                 app:validateEmpty="@{true}" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.tebet.mojual.common.view.AppEditTextLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.tebet.mojual.common.view.AppEditTextLayout
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
-            app:hintEnabled="false">
+            >
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
@@ -76,14 +76,14 @@
                 android:hint="RT/RW"
                 android:text="@={addressData.rtrw}"
                 app:validateEmpty="@{true}" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.tebet.mojual.common.view.AppEditTextLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.tebet.mojual.common.view.AppEditTextLayout
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
-            app:hintEnabled="false">
+            >
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
@@ -91,7 +91,7 @@
                 android:hint="City"
                 android:text="@={addressData.city}"
                 app:validateEmpty="@{true}" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.tebet.mojual.common.view.AppEditTextLayout>
 
         <com.tebet.mojual.common.view.AppEditText
             android:layout_width="match_parent"

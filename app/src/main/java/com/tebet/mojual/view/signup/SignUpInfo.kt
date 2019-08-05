@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -202,14 +203,16 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            REQUEST_TAKE_AVATAR -> {
-                viewModel.userProfile.avatarLocal = "file://$currentPhotoPath"
-                viewModel.uploadAvatar(currentPhotoPath)
-            }
-            REQUEST_TAKE_EKTP -> {
-                viewModel.userProfile.ktpLocal = "file://$currentPhotoPath"
-                viewModel.uploadEKTP(currentPhotoPath)
+        if (!TextUtils.isEmpty(currentPhotoPath)) {
+            when (requestCode) {
+                REQUEST_TAKE_AVATAR -> {
+                    viewModel.userProfile.avatarLocal = "file://$currentPhotoPath"
+                    viewModel.uploadAvatar(currentPhotoPath)
+                }
+                REQUEST_TAKE_EKTP -> {
+                    viewModel.userProfile.ktpLocal = "file://$currentPhotoPath"
+                    viewModel.uploadEKTP(currentPhotoPath)
+                }
             }
         }
     }

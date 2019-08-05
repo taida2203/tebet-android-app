@@ -57,12 +57,11 @@
                     app:imageUrl="@{viewModel.userProfile.avatarLocal}" />
             </RelativeLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.tebet.mojual.common.view.AppEditTextLayout
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_20sdp"
-                app:hintEnabled="false">
+                android:layout_marginBottom="@dimen/_20sdp">
 
                 <com.tebet.mojual.common.view.AppEditText
                     android:id="@+id/fullName"
@@ -71,15 +70,14 @@
                     android:hint="Full Name"
                     android:imeOptions="actionNext"
                     android:text="@={viewModel.userProfile.fullName}"
-                    app:validateEmpty="@{true}" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:validateType='@{"username"}' />
+            </com.tebet.mojual.common.view.AppEditTextLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.tebet.mojual.common.view.AppEditTextLayout
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_20sdp"
-                app:hintEnabled="false">
+                android:layout_marginBottom="@dimen/_20sdp">
 
                 <com.tebet.mojual.common.view.AppEditText
                     android:id="@+id/birthday"
@@ -92,14 +90,13 @@
                     android:onClick="@{()-> viewModel.onSelectDateClick()}"
                     android:text="@={viewModel.userProfile.birthday}"
                     app:validateEmpty="@{true}" />
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.tebet.mojual.common.view.AppEditTextLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.tebet.mojual.common.view.AppEditTextLayout
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_20sdp"
-                app:hintEnabled="false">
+                android:layout_marginBottom="@dimen/_20sdp">
 
                 <com.tebet.mojual.common.view.AppEditText
                     android:id="@+id/ktpNumber"
@@ -109,7 +106,7 @@
                     android:imeOptions="actionDone"
                     android:text="@={viewModel.userProfile.ktpNumber}"
                     app:validateEmpty="@{true}" />
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.tebet.mojual.common.view.AppEditTextLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

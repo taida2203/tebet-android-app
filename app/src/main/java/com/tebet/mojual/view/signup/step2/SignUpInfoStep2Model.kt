@@ -15,6 +15,6 @@ class SignUpInfoStep2Model(
 
     fun onChooseMapClick(address: ObservableField<Address>) {
         this.address = address
-        navigator.selectLocation()
+        navigator.selectLocation(address.get())
     }
 }

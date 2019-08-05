@@ -24,7 +24,7 @@ class ChildItem(
     @ChildPosition
     internal var mChildPosition: Int = 0
     @View(R.id.inputAddress)
-    lateinit var inputAddress: AddressInputView
+    var inputAddress: AddressInputView? = null
     //    @View(R.id.itemIcon)
     //    ImageView itemIcon;
     @View(R.id.mainView)
@@ -43,7 +43,7 @@ class ChildItem(
 //        mExpandablePlaceHolderView.removeView(this)
     }
 
-    fun validate() : Boolean {
-        return inputAddress.validate()
+    fun validate(): Boolean {
+        return inputAddress?.validate() ?: false
     }
 }

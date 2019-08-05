@@ -6,4 +6,5 @@ interface LoginWithPasswordNavigator : BaseActivityNavigator{
     fun openHomeScreen()
     fun openForgotPasswordScreen()
     fun openRegistrationScreen()
+    fun dataValid(): Boolean
 }

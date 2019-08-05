@@ -20,6 +20,10 @@ class ForgotPasswordViewModel(
     var userInputPassword2: String = ""
 
     fun onForgotPasswordClick() {
+        if (!navigator.dataValid()) {
+            return
+        }
+
         compositeDisposable.add(
             dataManager.updatePassword(
                 UpdatePasswordRequest(userInputPassword)

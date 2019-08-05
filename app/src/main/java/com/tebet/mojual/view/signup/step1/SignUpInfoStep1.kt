@@ -1,18 +1,15 @@
 package com.tebet.mojual.view.signup.step1
 
-import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
-import android.widget.DatePicker
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
-import co.common.view.dialog.DateDialog
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep1Binding
 import com.tebet.mojual.view.signup.SignUpInfo
 import com.tebet.mojual.view.signup.step.SignUpInfoStep
-import java.util.*
 
 class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInfoStep1Model>(),
     SignUpInfoStep1Navigator {
@@ -24,7 +21,7 @@ class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInf
 
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_info_step1
-    lateinit var validator: Validator
+    private lateinit var validator: Validator
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,12 +42,8 @@ class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInf
 
     override fun validate(): Boolean {
         return validator.validate(
-            Arrays.asList(
-                viewDataBinding?.fullName,
-                viewDataBinding?.birthday,
-                viewDataBinding?.ktpNumber
-            )
-        )
+            listOf(viewDataBinding?.fullName, viewDataBinding?.birthday, viewDataBinding?.ktpNumber)
+        ) && !TextUtils.isEmpty(viewModel.userProfile.get()?.ktpLocal) && !TextUtils.isEmpty(viewModel.userProfile.get()?.avatarLocal)
     }
 
     override fun selectBirthDay() {

@@ -11,7 +11,7 @@ class SignUpPassword : ForgotPassword() {
         get() = R.layout.activity_sign_up_password
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
-        viewModel.navigator = this
+        super.onCreateBase(savedInstanceState, layoutId)
         title = "Sign Up"
     }
 

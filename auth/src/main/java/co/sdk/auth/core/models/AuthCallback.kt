@@ -38,38 +38,40 @@ abstract class AuthCallback<T> : Callback<AuthJson<T>> {
                     onFail(call, AuthException(401, response.message()))
                 }
             })
-        } else if (response.code() == 400) {
+        } else {
             val exception = AuthException()
             exception.errorCode = response.code()
+            val errorBody = response.errorBody()?.string()
+            val jsonObject = JSONObject(errorBody)
             try {
-                val errorBody = response.errorBody()!!.string()
-
-                val jsonObject = JSONObject(errorBody)
-                val userMessage = jsonObject.getJSONArray("messages")
-                exception.errorMessage = userMessage.getString(0)
-                exception.errorMessages = listOf(userMessage.getString(0))
+                exception.errorMessage = jsonObject.getString("message")
             } catch (e: Exception) {
-                exception.errorMessage = Utility.instance.getString(R.string.general_message_error)
-                Timber.d(e)
+                val userMessages = jsonObject.getJSONArray("messages")
+                try {
+                    exception.errorMessages = listOf(userMessages.getString(0))
+                } catch (e: Exception) {
+                    exception.errorMessage = Utility.instance.getString(R.string.general_message_error)
+                }
             }
 
             onFail(call, exception)
-        } else {
-            val exeption = AuthException()
-            exeption.errorCode = response.code()
-            try {
-                exeption.errorMessages = response.body()?.getMessage()
-            } catch (e: Exception) {
-            }
-
-            try {
-                exeption.errorMessage = response.message()
-            } catch (e: Exception) {
-                exeption.errorMessage = Utility.instance.getString(R.string.general_message_error)
-            }
-
-            onFail(call, exeption)
         }
+//        else {
+//            val exeption = AuthException()
+//            exeption.errorCode = response.code()
+//            try {
+//                exeption.errorMessages = response.body()?.getMessage()
+//            } catch (e: Exception) {
+//            }
+//
+//            try {
+//                exeption.errorMessage = response.message()
+//            } catch (e: Exception) {
+//                exeption.errorMessage = Utility.instance.getString(R.string.general_message_error)
+//            }
+//
+//            onFail(call, exeption)
+//        }
     }
 
     override fun onFailure(call: Call<AuthJson<T>>, t: Throwable) {

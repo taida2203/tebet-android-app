@@ -22,6 +22,9 @@ class LoginWithPasswordViewModel(
     var userInputPassword: String = ""
 
     fun doLogin() {
+        if (!navigator.dataValid()) {
+            return
+        }
         navigator.showLoading(true)
         val configuration = LoginConfiguration(false)
         configuration.username = userInputPhone
@@ -52,30 +55,38 @@ class LoginWithPasswordViewModel(
     fun doForgotPassword() {
         navigator.showLoading(true)
         navigator.activity()?.let {
-            AuthSdk.instance.login(
-                it, AuthAccountKitMethod(), LoginConfiguration(true)
-                , object : ApiCallBack<Token>() {
-                    override fun onSuccess(responeCode: Int, response: Token?) {
-                        navigator.showLoading(false)
-                        navigator.openForgotPasswordScreen()
-                    }
-
-                    override fun onFailed(exeption: LoginException) {
-                        if (exeption.errorCode == 502) return
-                        AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
-                            override fun onSuccess(responeCode: Int, response: Any?) {
+            AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
+                override fun onSuccess(responeCode: Int, response: Any?) {
+                    AuthSdk.instance.login(
+                        it, AuthAccountKitMethod(), LoginConfiguration(true)
+                        , object : ApiCallBack<Token>() {
+                            override fun onSuccess(responeCode: Int, response: Token?) {
                                 navigator.showLoading(false)
-                                doForgotPassword()
+                                navigator.openForgotPasswordScreen()
                             }
 
                             override fun onFailed(exeption: LoginException) {
-                                navigator.showLoading(false)
-                            }
+                                if (exeption.errorCode == 502) return
+                                AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
+                                    override fun onSuccess(responeCode: Int, response: Any?) {
+                                        navigator.showLoading(false)
+                                        doForgotPassword()
+                                    }
 
+                                    override fun onFailed(exeption: LoginException) {
+                                        navigator.showLoading(false)
+                                    }
+
+                                })
+                                handleError(exeption.errorMessage)
+                            }
                         })
-                        handleError(exeption.errorMessage)
-                    }
-                })
+                }
+
+                override fun onFailed(exeption: LoginException) {
+                }
+
+            })
         }
     }
 }

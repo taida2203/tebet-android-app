@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
+import br.com.ilhasoft.support.validation.Validator
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.AuthPasswordMethod
@@ -30,8 +31,11 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
     override val contentLayoutId: Int
         get() = R.layout.activity_login_password
 
+    private lateinit var validator: Validator
+
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
+        validator = Validator(viewDataBinding)
         title = "Login with phone number"
 //        navLayout.visibility = View.VISIBLE
     }
@@ -55,5 +59,9 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
     override fun openRegistrationScreen() {
         finish()
         startActivity(Intent(this, SignUpPassword::class.java))
+    }
+
+    override fun dataValid(): Boolean {
+        return validator.validate()
     }
 }

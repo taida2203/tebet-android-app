@@ -5,32 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
-
-import com.facebook.FacebookSdk
-
-import co.sdk.auth.core.AuthAccountKitMethod
-import co.sdk.auth.core.AuthClientCredentialMethod
-import co.sdk.auth.core.AuthFacebookMethod
-import co.sdk.auth.core.AuthGoogleMethod
-import co.sdk.auth.core.AuthMethod
-import co.sdk.auth.core.AuthOTPMethod
-import co.sdk.auth.core.AuthPasswordMethod
-import co.sdk.auth.core.LoginConfiguration
-import co.sdk.auth.core.models.ApiCallBack
-import co.sdk.auth.core.models.AuthCallback
-import co.sdk.auth.core.models.AuthException
-import co.sdk.auth.core.models.AuthJson
-import co.sdk.auth.core.models.LoginException
-import co.sdk.auth.core.models.LoginInput
-import co.sdk.auth.core.models.LogoutInput
-import co.sdk.auth.core.models.OTP
-import co.sdk.auth.core.models.RequestOTPInput
-import co.sdk.auth.core.models.Token
+import co.common.util.PreferenceUtils.*
+import co.sdk.auth.core.*
+import co.sdk.auth.core.models.*
 import co.sdk.auth.network.ServiceHelper
 import co.sdk.auth.network.api.ApiService
 import co.sdk.auth.network.api.OTPApi
 import co.sdk.auth.utils.Utility
-import co.common.util.PreferenceUtils.*
+import com.facebook.FacebookSdk
 import com.tebet.mojual.sdk.auth.BuildConfig
 import com.tebet.mojual.sdk.auth.R
 import io.reactivex.Observable
@@ -168,9 +150,6 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
     }
 
     fun getAuthMethod(): AuthMethod? {
-        if (authMethod == null) {
-            authMethod = getObject<AuthFacebookMethod>(AUTH_LOGIN_METHOD, AuthFacebookMethod::class.java) as AuthFacebookMethod
-        }
         return authMethod
     }
 
@@ -207,12 +186,12 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         }
     }
 
-    fun logout(forceLogout: Boolean, callback: ApiCallBack<Any>) {
+    fun logout(forceLogout: Boolean, callback: ApiCallBack<Any>?) {
         if (getAuthMethod() == null) {
-            callback.onSuccess(200, AuthJson<Any>("true", context.getString(R.string.general_message_error)))
+            callback?.onSuccess(200, AuthJson<Any>("true", context.getString(R.string.general_message_error)))
             return
         }
-        getAuthMethod()!!.logout(context, forceLogout, object : ApiCallBack<Any>() {
+        getAuthMethod()?.logout(context, forceLogout, object : ApiCallBack<Any>() {
             override fun onSuccess(code: Int, response: Any?) {
                 val logoutInput = LogoutInput()
                 logoutInput.deviceId = deviceId
@@ -222,7 +201,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
 //                        response.body()?.let {
 //                            callback?.onSuccess(code, it)
 //                        }
-                        callback.onSuccess(code,response.body())
+                        callback?.onSuccess(code,response.body())
                         return
                     }
 
@@ -234,14 +213,14 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
                                 callback.onSuccess(200, AuthJson<Any>("true", errorMessage ?: ""))
                             }
                         } else {
-                            callback!!.onFailed(LoginException(-1, context.getString(R.string.general_message_error)))
+                            callback?.onFailed(LoginException(-1, context.getString(R.string.general_message_error)))
                         }
                     }
                 })
             }
 
             override fun onFailed(exeption: LoginException) {
-                callback!!.onFailed(exeption)
+                callback?.onFailed(exeption)
             }
         })
     }

@@ -6,11 +6,11 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,19 +20,16 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.Address
 import com.tebet.mojual.databinding.ActivitySignUpGoogleMapBinding
 import com.tebet.mojual.view.base.BaseActivity
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
-import com.google.android.gms.location.LocationServices
-import com.tebet.mojual.data.models.Address
-import com.tebet.mojual.data.models.UserProfile
 import java.util.*
 
 
 class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMapViewModel>(),
     EasyPermissions.PermissionCallbacks {
-
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -46,6 +43,7 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
+    var address: Address = Address()
 //    private val defaultLocation = LatLng(21.035732, 105.8476363)
 
     private val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -63,6 +61,8 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
                 stopLocationUpdate()
             }
         }
+
+        address = intent.getParcelableExtra("LOCATION")
         initPermission()
         initMap()
     }
@@ -96,20 +96,27 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
             googleMap = it
             googleMap.setOnMapClickListener { selectedLocation ->
                 val geo = Geocoder(this, Locale.getDefault())
-                val data = geo.getFromLocation(selectedLocation.latitude, selectedLocation.longitude, 1)
-                val currentAddress = Address()
-                currentAddress.address = data[0].getAddressLine(0)
-                currentAddress.country = data[0].countryName
-                currentAddress.postalCode = data[0].postalCode
-                currentAddress.latitude = selectedLocation.latitude
-                currentAddress.longitude = selectedLocation.longitude
+                object: AsyncTask<Void, Void, Void>() {
+                    override fun doInBackground(vararg params: Void?): Void? {
+                        val data = geo.getFromLocation(selectedLocation.latitude, selectedLocation.longitude, 1)
+                        address.address = data.firstOrNull()?.getAddressLine(0)
+                        address.country = data.firstOrNull()?.countryName
+                        address.postalCode = data.firstOrNull()?.postalCode
+                        return null
+                    }
 
-                intent.putExtra(
-                    "LOCATION",
-                    (currentAddress)
-                )
-                setResult(Activity.RESULT_OK, intent)
-                finish()
+                    override fun onPostExecute(result: Void?) {
+                        super.onPostExecute(result)
+                        address.latitude = selectedLocation.latitude
+                        address.longitude = selectedLocation.longitude
+                        intent.putExtra(
+                            "LOCATION",
+                            address
+                        )
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    }
+                }.execute()
             }
             Handler().postDelayed({
                 if (lastLocation != null) {

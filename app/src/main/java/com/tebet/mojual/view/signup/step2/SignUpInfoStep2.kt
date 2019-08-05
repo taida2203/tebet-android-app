@@ -61,8 +61,10 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
         }
     }
 
-    override fun selectLocation() {
-        startActivityForResult(Intent(activity, GoogleMapActivity::class.java), 500)
+    override fun selectLocation(address: Address?) {
+        var intent = Intent(activity, GoogleMapActivity::class.java)
+        intent.putExtra("LOCATION", address)
+        startActivityForResult(intent, 500)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
