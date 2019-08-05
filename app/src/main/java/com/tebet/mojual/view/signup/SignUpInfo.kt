@@ -66,6 +66,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         title = "Sign Up"
         refreshScreenStep()
         viewDataBinding?.btnNext?.setOnClickListener {
+            hideKeyboard()
             currentStepFragment?.let {
                 if (!it.validate()) {
                     Toast.makeText(this@SignUpInfo, "Fill all required field !!", Toast.LENGTH_SHORT).show()
@@ -82,7 +83,6 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                     screenStep = SCREEN_STEP.STEP_FINISH
                 else -> SCREEN_STEP.STEP_1
             }
-            hideKeyboard()
             refreshScreenStep()
         }
         viewDataBinding?.btnBack?.background = ContextCompat.getDrawable(this, R.color.grey)
