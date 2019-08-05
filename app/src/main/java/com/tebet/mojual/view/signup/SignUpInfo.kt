@@ -60,9 +60,6 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
 
     private var currentStepFragment: SignUpInfoStep<*, *>? = null
 
-    var cameraCaptureData: MutableLiveData<String> = MutableLiveData()
-        private set
-
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         title = "Sign Up"
@@ -212,7 +209,6 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
             }
             REQUEST_TAKE_EKTP -> {
                 viewModel.userProfile.ktpLocal = "file://$currentPhotoPath"
-                cameraCaptureData.postValue(currentPhotoPath)
                 viewModel.uploadEKTP(currentPhotoPath)
             }
         }

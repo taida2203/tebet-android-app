@@ -66,11 +66,9 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             when {
                 isEnable -> {
                     baseBinding.ivBack.visibility = View.VISIBLE
-                    baseBinding.ivBack.setOnClickListener { onBackPressed() }
                 }
                 else -> {
                     baseBinding.ivBack.visibility = View.INVISIBLE
-                    baseBinding.tvBaseTitle.setOnClickListener(null)
                 }
             }
         }
@@ -98,6 +96,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         mViewModel?.baseErrorHandlerData?.observe(this, Observer<String> {
             handleError(it)
         })
+        baseBinding.ivBack.setOnClickListener { onBackPressed() }
         setSupportActionBar(baseBinding.baseToolbar)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         onCreateBase(savedInstanceState, contentLayoutId)

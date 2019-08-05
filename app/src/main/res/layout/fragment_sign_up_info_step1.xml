@@ -111,39 +111,42 @@
                     app:validateEmpty="@{true}" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:background="@drawable/rounded_bg_signup"
-                android:gravity="center"
-                android:onClick="@{()-> viewModel.onCaptureEKTP()}"
-                android:orientation="vertical">
+                android:layout_marginBottom="@dimen/_10sdp">
 
-                <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    android:src="@drawable/icon_card" />
-
-                <com.tebet.mojual.common.view.AppTextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:background="@drawable/rounded_bg_signup"
                     android:gravity="center"
-                    android:text="Upload KTP Photo"
-                    android:textSize="@dimen/_14ssp"
-                    android:textStyle="bold" />
+                    android:onClick="@{()-> viewModel.onCaptureEKTP()}"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:src="@drawable/icon_card" />
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:gravity="center"
+                        android:text="Upload KTP Photo"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:visibility="@{viewModel.userProfile.ktpLocal == null ? View.GONE : View.VISIBLE}"
-                    app:civ_border_color="#FF000000"
-                    app:civ_border_width="2dp"
                     app:imageUrl="@{viewModel.userProfile.ktpLocal}" />
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </layout>
