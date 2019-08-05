@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
-import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep1Binding
@@ -21,7 +20,6 @@ class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInf
 
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_info_step1
-    private lateinit var validator: Validator
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +29,6 @@ class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInf
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        validator = Validator(viewDataBinding)
     }
 
     override fun captureAvatar() {

@@ -37,25 +37,25 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
         viewDataBinding?.expandableView?.let {
             it.addView(ParentItem(it.context, "DOMICILE ADDRESS", true))
             if (viewModel.userProfile.get()?.domicileAddress == null) viewModel.userProfile.get()?.domicileAddress =
-                Address()
+                Address(localTagPos = 0)
             if (viewModel.userProfile.get()?.pickupAddress == null) viewModel.userProfile.get()?.pickupAddress =
-                Address()
+                Address(localTagPos = 1)
             addressViews.add(
                 ChildItem(
                     it,
-                    viewModel.userProfile.get()?.domicileAddress ?: Address(),
                     viewModel
                 )
             )
+            addressViews[0].address = viewModel.userProfile.get()?.domicileAddress ?: Address(localTagPos = 0)
             it.addView(addressViews[0])
             it.addView(ParentItem(it.context, "PICKUP ADDRESS"))
             addressViews.add(
                 ChildItem(
                     it,
-                    viewModel.userProfile.get()?.pickupAddress ?: Address(),
                     viewModel
                 )
             )
+            addressViews[1].address = viewModel.userProfile.get()?.pickupAddress ?: Address(localTagPos = 0)
             it.addView(addressViews[1])
             it.expand(0)
         }
@@ -72,8 +72,24 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
         when (requestCode) {
             500 -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val dataReturn = data?.getParcelableExtra<Address>("LOCATION")
-                    viewModel.address?.set(dataReturn)
+                    val dataReturn: Address? = try {
+                        data?.getSerializableExtra("LOCATION") as Address
+                    } catch (e: Exception) {
+                    } as Address
+                    when (dataReturn?.localTagPos) {
+                        0 -> {
+                            viewModel.userProfile.get()?.domicileAddress = dataReturn
+                            viewModel.userProfile.get()?.domicileAddress?.let {
+                                addressViews[0].address = it
+                            }
+                        }
+                        1 -> {
+                            viewModel.userProfile.get()?.pickupAddress = dataReturn
+                            viewModel.userProfile.get()?.pickupAddress?.let {
+                                addressViews[1].address = it
+                            }
+                        }
+                    }
                 }
             }
         }

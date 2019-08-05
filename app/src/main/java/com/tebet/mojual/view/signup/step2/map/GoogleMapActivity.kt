@@ -4,9 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.location.Location
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import androidx.core.app.ActivityCompat
@@ -25,7 +23,6 @@ import com.tebet.mojual.databinding.ActivitySignUpGoogleMapBinding
 import com.tebet.mojual.view.base.BaseActivity
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
-import java.util.*
 
 
 class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMapViewModel>(),
@@ -50,6 +47,7 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
     private var lastLocation: Location? = null
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
+        viewModel.navigator = this
         title = "Select location on Map"
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         locationCallback = object : LocationCallback() {
@@ -61,8 +59,10 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
                 stopLocationUpdate()
             }
         }
-
-        address = intent.getParcelableExtra("LOCATION")
+        address = try {
+            intent?.getSerializableExtra("LOCATION") as Address
+        } catch (e: Exception) {
+        } as Address
         initPermission()
         initMap()
     }
@@ -95,28 +95,8 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
         mapFragment?.getMapAsync { it ->
             googleMap = it
             googleMap.setOnMapClickListener { selectedLocation ->
-                val geo = Geocoder(this, Locale.getDefault())
-                object: AsyncTask<Void, Void, Void>() {
-                    override fun doInBackground(vararg params: Void?): Void? {
-                        val data = geo.getFromLocation(selectedLocation.latitude, selectedLocation.longitude, 1)
-                        address.address = data.firstOrNull()?.getAddressLine(0)
-                        address.country = data.firstOrNull()?.countryName
-                        address.postalCode = data.firstOrNull()?.postalCode
-                        return null
-                    }
-
-                    override fun onPostExecute(result: Void?) {
-                        super.onPostExecute(result)
-                        address.latitude = selectedLocation.latitude
-                        address.longitude = selectedLocation.longitude
-                        intent.putExtra(
-                            "LOCATION",
-                            address
-                        )
-                        setResult(Activity.RESULT_OK, intent)
-                        finish()
-                    }
-                }.execute()
+                viewModel.selectedLocation = selectedLocation
+                viewModel.getAddress(selectedLocation)
             }
             Handler().postDelayed({
                 if (lastLocation != null) {
@@ -206,5 +186,20 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
             if (location != null)
                 lastLocation = location
         }
+    }
+
+    override fun finish() {
+        viewModel.selectedLocation?.let {
+            address.latitude = it.latitude
+            address.longitude = it.longitude
+            address.localAddress = viewModel.selectedAddress
+            intent.putExtra(
+                "LOCATION",
+                address
+            )
+            setResult(Activity.RESULT_OK, intent)
+
+        }
+        super.finish()
     }
 }

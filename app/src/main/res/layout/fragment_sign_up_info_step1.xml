@@ -69,8 +69,11 @@
                     android:layout_height="wrap_content"
                     android:hint="Full Name"
                     android:imeOptions="actionNext"
+                    android:maxLength="50"
                     android:text="@={viewModel.userProfile.fullName}"
-                    app:validateType='@{"username"}' />
+                    app:validateEmpty="@{true}"
+                    app:validateRegex='@{"^[a-zA-Z]+(([&apos;,. -][a-zA-Z ])?[a-zA-Z]*)*$"}'
+                    app:validateRegexMessage="@{@string/fullNameErrorMessage}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
             <com.tebet.mojual.common.view.AppEditTextLayout
@@ -104,8 +107,11 @@
                     android:layout_height="wrap_content"
                     android:hint="KTP Number"
                     android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="16"
                     android:text="@={viewModel.userProfile.ktpNumber}"
-                    app:validateEmpty="@{true}" />
+                    app:validateEmpty="@{true}"
+                    app:validateMinLength="@{16}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
             <RelativeLayout

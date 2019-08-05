@@ -26,6 +26,8 @@ object ConfigEnv {
         private set
     lateinit var consumerSecret: String
         private set
+    lateinit var googleApiKey: String
+        private set
 
     val isProductionEnv: Boolean
         get() = environment == ConfigEnv.Environment.PRODUCTION
@@ -44,6 +46,7 @@ object ConfigEnv {
                 agoraAppId = "xxx"
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
+                googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
             "staging" -> {
                 environment = ConfigEnv.Environment.STAGING
@@ -53,6 +56,7 @@ object ConfigEnv {
                 agoraAppId = "yyy"
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
+                googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
             "hotfix" -> {
                 environment = ConfigEnv.Environment.HOTFIX
@@ -62,6 +66,7 @@ object ConfigEnv {
                 agoraAppId = "yyy"
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
+                googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
             "production" -> {
                 environment = ConfigEnv.Environment.PRODUCTION
@@ -71,6 +76,7 @@ object ConfigEnv {
                 agoraAppId = "zzz"
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
+                googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
         }
     }

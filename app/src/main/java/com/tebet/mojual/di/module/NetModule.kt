@@ -1,12 +1,11 @@
 package com.tebet.mojual.di.module
 
 import com.ashokvarma.gander.GanderInterceptor
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tebet.mojual.App
 import com.tebet.mojual.BuildConfig
 import com.tebet.mojual.common.constant.ConfigEnv
 import com.tebet.mojual.common.network.AuthenticationV2Interceptor
+import com.tebet.mojual.data.remote.ApiGoogleHelper
 import com.tebet.mojual.data.remote.ApiHelper
 import dagger.Module
 import dagger.Provides
@@ -19,11 +18,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-
-/**
- * Created by Ege Kuzubasioglu on 10.06.2018 at 00:42.
- * Copyright (c) 2018. All rights reserved.
- */
 
 @Module
 class NetModule(private val baseUrl: String) {
@@ -61,11 +55,7 @@ class NetModule(private val baseUrl: String) {
 
     @Provides
     @Singleton
-    fun providesMoshi(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-
-    @Provides
-    @Singleton
-    fun providesRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
+    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Builder().client(okHttpClient).baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
@@ -77,4 +67,13 @@ class NetModule(private val baseUrl: String) {
     fun providesApiInterface(retrofit: Retrofit): ApiHelper = retrofit.create(
         ApiHelper::class.java
     )
+
+    @Provides
+    @Singleton
+    fun providesApiGoogleInterface(okHttpClient: OkHttpClient): ApiGoogleHelper {
+        return Builder().client(okHttpClient).baseUrl("https://maps.googleapis.com/maps/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .build().create(ApiGoogleHelper::class.java)
+    }
 }

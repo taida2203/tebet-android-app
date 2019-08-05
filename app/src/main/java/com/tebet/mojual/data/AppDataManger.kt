@@ -11,6 +11,8 @@ import com.tebet.mojual.data.local.db.dao.CityDao
 import com.tebet.mojual.data.local.db.dao.UserProfileDao
 import com.tebet.mojual.data.local.prefs.PreferencesHelper
 import com.tebet.mojual.data.models.*
+import com.tebet.mojual.data.models.google_map.GeoCodeResponse
+import com.tebet.mojual.data.remote.ApiGoogleHelper
 import com.tebet.mojual.data.remote.ApiHelper
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -20,9 +22,15 @@ import javax.inject.Inject
 
 class AppDataManger @Inject constructor(
     private var api: ApiHelper,
+    private var apiGoogle: ApiGoogleHelper,
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
+
+    override fun getReserveGeoLocation(latlng: String, key: String): Observable<GeoCodeResponse> {
+        return apiGoogle.getReserveGeoLocation(latlng, key)
+    }
+
     override fun getCityDB(): Observable<AuthJson<List<City>>> {
         return room.city.concatMap { cityDao ->
             cityDao.queryCity().doOnError { message -> EmptyResultSetException("") }
@@ -45,6 +53,10 @@ class AppDataManger @Inject constructor(
         return room.insertBank(bank)
     }
 
+    override fun insertBanks(banks: MutableList<Bank>?): Observable<Boolean> {
+        return room.insertBanks(banks)
+    }
+
     override fun getCity(): Observable<CityDao> {
         return room.city
     }
@@ -54,7 +66,16 @@ class AppDataManger @Inject constructor(
     }
 
     override fun getBanks(): Observable<AuthJson<List<Bank>>> {
-        return api.getBanks()
+        if (App.instance.checkConnectivity()) {
+            var banksTemp: AuthJson<List<Bank>>? = null
+            return api.getBanks().concatMap { bankResponse ->
+                banksTemp = bankResponse
+                room.insertBanks(bankResponse.data)
+            }.concatMap {
+                Observable.just(banksTemp)
+            }
+        }
+        return getBankDB()
     }
 
     override fun getCities(): Observable<AuthJson<List<City>>> {

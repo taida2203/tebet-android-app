@@ -137,4 +137,8 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
 
     override fun onBackPressed() {
     }
+
+    override fun finish() {
+        activity?.finish()
+    }
 }

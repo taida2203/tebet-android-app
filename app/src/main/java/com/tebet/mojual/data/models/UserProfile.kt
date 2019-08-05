@@ -22,8 +22,6 @@ data class UserProfile(
     var bankName: String? = null,
     var bankRegionCode: String? = null,
     var bankRegionName: String? = null,
-    @Ignore
-    var domicileAddress: Address? = null,
     var email: String? = null,
     var firstName: String? = null,
     var fullName: String? = null,
@@ -34,8 +32,7 @@ data class UserProfile(
     @Json(name = "phone")
     @ColumnInfo(name = "phone")
     var phone: String? = null,
-    @Ignore
-    var pickupAddress: Address? = null,
+
     @Json(name = "profileId")
     @ColumnInfo(name = "profileId")
     var profileId: Int? = null,
@@ -68,5 +65,20 @@ data class UserProfile(
         set(value) {
             field = value
             notifyPropertyChanged(BR.birthday)
+        }
+    @Ignore
+    var domicileAddress: Address? = null
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.domicileAddress)
+        }
+
+    @Ignore
+    var pickupAddress: Address? = null
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.pickupAddress)
         }
 }

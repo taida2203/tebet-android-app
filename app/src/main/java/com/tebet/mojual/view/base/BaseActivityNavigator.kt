@@ -6,4 +6,5 @@ interface BaseActivityNavigator {
     fun onBackPressed()
     fun showLoading(isLoading: Boolean)
     fun activity(): Activity?
+    fun finish()
 }

@@ -65,7 +65,7 @@ class AddressInputView : LinearLayout {
 //    @BindingAdapter(value = ["bind:addressData"], requireAll = false)
     fun setAddressData(
     positionView: AddressInputView?,
-    address: Address,
+    address: Address?,
     viewModel: SignUpInfoStep2Model
     ) {
         addressData.set(address)

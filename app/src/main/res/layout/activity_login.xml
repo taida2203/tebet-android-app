@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data>
-        <variable
-                name="viewModel"
-                type="com.tebet.mojual.view.login.LoginViewModel"/>
-    </data>
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/_20sdp"
-            android:background="@color/white">
 
-        <ImageView android:layout_width="match_parent" android:layout_height="wrap_content"
-                   android:layout_marginLeft="@dimen/_48sdp"
-                   android:layout_marginRight="@dimen/_48sdp"
-                   android:layout_marginTop="@dimen/_128sdp"
-                   android:src="@drawable/mojual_logo"/>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:layout_alignParentBottom="true" android:orientation="vertical">
-            <com.tebet.mojual.common.view.AppButtonRounded android:layout_width="match_parent"
-                                                           android:layout_height="wrap_content"
-                                                           android:text="@string/login_screen_btn_login"
-                                                           android:id="@+id/btnLogin"
-                                                           android:onClick="@{() -> viewModel.onLoginClick()}"
-                                                           android:layout_marginBottom="@dimen/_10sdp"/>
-            <com.tebet.mojual.common.view.AppButtonRounded android:layout_width="match_parent"
-                                                           android:layout_height="wrap_content"
-                                                           android:text="@string/login_screen_btn_register"
-                                                           android:onClick="@{() -> viewModel.onRegistrationClick()}"
-                                                           android:id="@+id/btnRegistration"/>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.login.LoginViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/_20sdp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_48sdp"
+            android:layout_marginTop="@dimen/_128sdp"
+            android:layout_marginRight="@dimen/_48sdp"
+            android:src="@drawable/mojual_logo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <com.tebet.mojual.common.view.AppButtonRounded
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:enabled="@{!viewModel.isLoading}"
+                android:onClick="@{() -> viewModel.onLoginClick()}"
+                android:text="@string/login_screen_btn_login" />
+
+            <com.tebet.mojual.common.view.AppButtonRounded
+                android:id="@+id/btnRegistration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="@{!viewModel.isLoading}"
+                android:onClick="@{() -> viewModel.onRegistrationClick()}"
+                android:text="@string/login_screen_btn_register" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

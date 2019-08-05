@@ -23,9 +23,11 @@ import com.tebet.mojual.data.models.Bank;
 import com.tebet.mojual.data.models.City;
 import com.tebet.mojual.data.models.UserProfile;
 import io.reactivex.Observable;
+import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 
@@ -76,6 +78,17 @@ public class AppDbHelper implements DbHelper {
             @Override
             public Boolean call() throws Exception {
                 mAppDatabase.bankDao().insertBank(bank);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> insertBanks(@Nullable List<Bank> banks) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.bankDao().insertAll(banks);
                 return true;
             }
         });

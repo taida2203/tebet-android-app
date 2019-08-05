@@ -24,6 +24,9 @@ import com.tebet.mojual.data.models.Bank;
 import com.tebet.mojual.data.models.City;
 import com.tebet.mojual.data.models.UserProfile;
 import io.reactivex.Observable;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public interface DbHelper {
     Observable<UserProfileDao> getUserProfile();
@@ -33,6 +36,8 @@ public interface DbHelper {
     Observable<BankDao> getBank();
 
     Observable<Boolean> insertBank(final Bank bank);
+
+    Observable<Boolean> insertBanks(@Nullable List<Bank> banks);
 
     Observable<CityDao> getCity();
 

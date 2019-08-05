@@ -68,7 +68,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         viewDataBinding?.btnNext?.setOnClickListener {
             currentStepFragment?.let {
                 if (!it.validate()) {
-                    Toast.makeText(this@SignUpInfo, "Fill all reqired field !!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignUpInfo, "Fill all required field !!", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
             }
@@ -82,7 +82,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                     screenStep = SCREEN_STEP.STEP_FINISH
                 else -> SCREEN_STEP.STEP_1
             }
-
+            hideKeyboard()
             refreshScreenStep()
         }
         viewDataBinding?.btnBack?.background = ContextCompat.getDrawable(this, R.color.grey)
@@ -103,6 +103,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                 screenStep = SCREEN_STEP.STEP_2
             else -> SCREEN_STEP.STEP_1
         }
+        hideKeyboard()
         refreshScreenStep()
     }
 
@@ -203,13 +204,15 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (!TextUtils.isEmpty(currentPhotoPath)) {
-            when (requestCode) {
-                REQUEST_TAKE_AVATAR -> {
+        when (requestCode) {
+            REQUEST_TAKE_AVATAR -> {
+                if (!TextUtils.isEmpty(currentPhotoPath)) {
                     viewModel.userProfile.avatarLocal = "file://$currentPhotoPath"
                     viewModel.uploadAvatar(currentPhotoPath)
                 }
-                REQUEST_TAKE_EKTP -> {
+            }
+            REQUEST_TAKE_EKTP -> {
+                if (!TextUtils.isEmpty(currentPhotoPath)) {
                     viewModel.userProfile.ktpLocal = "file://$currentPhotoPath"
                     viewModel.uploadEKTP(currentPhotoPath)
                 }

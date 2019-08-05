@@ -15,5 +15,5 @@ data class Bank(
     var code: String,
 
     @ColumnInfo(name = "name")
-    var name: String? = null
+    var name: String = ""
 )

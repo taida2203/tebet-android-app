@@ -14,4 +14,7 @@ interface BankDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertBank(bank: Bank)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(banks: List<Bank>)
 }

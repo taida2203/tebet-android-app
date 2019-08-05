@@ -99,6 +99,7 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:hint="Choose on Map"
+            android:text="@={addressData.localAddress}"
             android:onClick="@{()-> view.onChooseMapClick()}" />
     </LinearLayout>
 </layout>

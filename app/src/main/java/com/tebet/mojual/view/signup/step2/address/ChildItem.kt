@@ -15,10 +15,13 @@ import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
 @Layout(R.layout.item_address_content)
 class ChildItem(
     private val mExpandablePlaceHolderView: ExpandablePlaceHolderView,
-    var address: Address,
     var viewModel: SignUpInfoStep2Model
 ) {
-
+    var address: Address? = null
+        set(value) {
+            field = value
+            inputAddress?.setAddressData(inputAddress, address, viewModel)
+        }
     @ParentPosition
     internal var mParentPosition: Int = 0
     @ChildPosition

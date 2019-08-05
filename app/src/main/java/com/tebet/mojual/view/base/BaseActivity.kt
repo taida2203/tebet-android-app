@@ -212,6 +212,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     override fun showLoading(isLoading: Boolean) {
+        viewModel.setIsLoading(isLoading)
         baseBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
@@ -420,6 +421,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
+
+    override fun finish() {
+        super.finish()
     }
 }
 

@@ -18,4 +18,5 @@
     <string name="login_password_screen_phone">Phone</string>
     <string name="login_screen_btn_forgot_password">Forgot password</string>
     <string name="passwordErrorMessage">Password must at least 6 char</string>
+    <string name="fullNameErrorMessage">Invalid name</string>
 </resources>
