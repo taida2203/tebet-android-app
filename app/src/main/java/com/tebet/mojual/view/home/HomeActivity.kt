@@ -1,11 +1,16 @@
 package com.tebet.mojual.view.home
 
 import android.os.Bundle
+import android.view.View
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.ActivityHomeBinding
+import com.tebet.mojual.databinding.ItemHomeAvatarBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.content.HomeFragment
 import com.tebet.mojual.view.profile.ProfileFragment
@@ -19,6 +24,7 @@ import javax.inject.Inject
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector, HomeNavigator {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
 
     override val bindingVariable: Int
@@ -32,10 +38,30 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
 
     private var currentFragment: Fragment? = null
 
+    var topLeftViewBinding: ItemHomeAvatarBinding? = null
+        private set
+
+    override var enableBackButton: Boolean = super.enableBackButton
+        set(isEnable) {
+            field = isEnable
+            super.enableBackButton = isEnable
+            baseBinding.topLeftHolder.visibility = if (isEnable) View.GONE else View.VISIBLE
+        }
+
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
+        topLeftViewBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_avatar, baseBinding.topLeftHolder, true)
         title = "Home"
         showHomeScreen()
+        viewModel.loadData()
+        topLeftViewBinding?.avatar?.setOnClickListener { it ->
+            showProfileScreen()
+        }
+        viewModel.profileLiveData.observe(this, Observer<UserProfile> {
+            topLeftViewBinding?.userProfile = it
+        })
+
 //        getData()
 //        btnLogout.setOnClickListener {
 //            AuthSdk.instance.logout(false, object : ApiCallBack<Any>() {

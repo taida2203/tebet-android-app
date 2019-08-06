@@ -41,7 +41,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         private set
     private var mViewModel: V? = null
 
-    private lateinit var baseBinding: ActivityBaseBinding
+    protected lateinit var baseBinding: ActivityBaseBinding
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
@@ -60,15 +60,16 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
      */
     abstract val viewModel: V
 
-    var enableBackButton: Boolean = true
+    open var enableBackButton: Boolean = true
         set(isEnable) {
             field = isEnable
             when {
                 isEnable -> {
                     baseBinding.ivBack.visibility = View.VISIBLE
+                    baseBinding.topLeftHolder.visibility = View.GONE
                 }
                 else -> {
-                    baseBinding.ivBack.visibility = View.INVISIBLE
+                    baseBinding.ivBack.visibility = View.GONE
                 }
             }
         }
