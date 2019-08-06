@@ -23,4 +23,6 @@ interface SplashNavigator {
     fun openHomeScreen()
 
     fun openSetPasswordScreen()
+
+    fun openSignUpInfoScreen()
 }

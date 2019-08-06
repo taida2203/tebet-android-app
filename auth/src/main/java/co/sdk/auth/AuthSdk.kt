@@ -174,7 +174,24 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
             run {
                 login(context, authMethod, config, object : ApiCallBack<Token>() {
                     override fun onSuccess(responeCode: Int, response: Token?) {
-                        response?.let { emitter.onNext(it) }
+                        response?.let { emitter.onNext(it) } ?: emitter.onNext(Token())
+                    }
+
+                    override fun onFailed(exeption: LoginException) {
+                        emitter.onError(Throwable(exeption.errorMessage))
+                    }
+                })
+            }
+
+        }
+    }
+
+    fun logout(forceLogout: Boolean? = false): Observable<Any> {
+        return Observable.create { emitter ->
+            run {
+                logout(true, object : ApiCallBack<Any>() {
+                    override fun onSuccess(responeCode: Int, response: Any?) {
+                        emitter.onNext("")
                     }
 
                     override fun onFailed(exeption: LoginException) {

@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.signup
 
+import androidx.lifecycle.MutableLiveData
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
@@ -8,8 +9,7 @@ import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Function3
-import io.reactivex.observers.DisposableObserver
+import io.reactivex.functions.Function4
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -23,6 +23,7 @@ class SignUpInfoViewModel(
 ) :
     BaseViewModel<SignUpNavigator>(dataManager, schedulerProvider) {
     var userProfile: UserProfile = UserProfile()
+    var userProfileLiveData: MutableLiveData<UserProfile> = MutableLiveData()
 
     fun uploadAvatar(currentPhotoPath: String) {
         navigator.showLoading(true)
@@ -93,22 +94,22 @@ class SignUpInfoViewModel(
     fun loadData() {
         navigator.showLoading(true)
         compositeDisposable.add(
-            Observable.zip(dataManager.getCities(), dataManager.getRegions(), dataManager.getBanks(),
-                Function3<AuthJson<List<City>>, AuthJson<List<Region>>, AuthJson<List<Bank>>, Triple<List<City>?, List<Region>?, List<Bank>?>>
-                { cities, regions, banks -> Triple(cities.data, regions.data, banks.data) })
+            Observable.zip(
+                dataManager.getCities(), dataManager.getRegions(), dataManager.getBanks(), dataManager.getProfile(),
+                Function4<AuthJson<List<City>>, AuthJson<List<Region>>, AuthJson<List<Bank>>, AuthJson<UserProfile>, AuthJson<UserProfile>>
+                { cities, regions, banks, profile -> profile })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableObserver<Triple<List<City>?, List<Region>?, List<Bank>?>>() {
-                    override fun onNext(t: Triple<List<City>?, List<Region>?, List<Bank>?>) {
+                .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                    override fun onFailure(error: String?) {
                         navigator.showLoading(false)
+                        handleError(error)
                     }
 
-                    override fun onError(e: Throwable) {
+                    override fun onSuccess(dataResponse: UserProfile) {
                         navigator.showLoading(false)
-                        handleError(e.message)
-                    }
-
-                    override fun onComplete() {
+                        userProfile = dataResponse
+                        userProfileLiveData.value = userProfile
                     }
                 })
         )

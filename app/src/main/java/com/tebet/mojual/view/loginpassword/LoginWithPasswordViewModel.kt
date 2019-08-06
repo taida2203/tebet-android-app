@@ -39,6 +39,7 @@ class LoginWithPasswordViewModel(
                             navigator.showLoading(false)
                             when {
                                 dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
+                                dataResponse.status.equals("INIT_PROFILE") -> navigator.openSignUpInfoScreen()
                                 else -> navigator.openHomeScreen()
                             }
                         }

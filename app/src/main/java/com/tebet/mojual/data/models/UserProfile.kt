@@ -48,6 +48,8 @@ data class UserProfile(
     @ColumnInfo(name = "username")
     var username: String? = null
 ) : BaseObservable() {
+    companion object{
+    }
     var avatarLocal: String? = null
         @Bindable get() = field
         set(value) {

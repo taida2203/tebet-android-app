@@ -23,11 +23,13 @@ class LoginViewModel(
         navigator.showLoading(true)
         navigator.activity()?.let {
             compositeDisposable.add(
-                AuthSdk.instance.login(
-                    it,
-                    AuthAccountKitMethod(),
-                    LoginConfiguration(logoutWhileExpired = false)
-                ).doOnError { error -> registerNewUser() }
+                AuthSdk.instance.logout(true).concatMap { _ ->
+                    AuthSdk.instance.login(
+                        it,
+                        AuthAccountKitMethod(),
+                        LoginConfiguration(logoutWhileExpired = false)
+                    ).doOnError { error -> registerNewUser() }
+                }
                     .concatMap { result -> dataManager.getProfile() }
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {
@@ -35,13 +37,13 @@ class LoginViewModel(
                             navigator.showLoading(false)
                             when {
                                 dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
+                                dataResponse.status.equals("INIT_PROFILE") -> navigator.openSignUpInfoScreen()
                                 else -> navigator.openHomeScreen()
                             }
                         }
 
                         override fun onFailure(error: String?) {
                             navigator.showLoading(false)
-                            handleError(error)
                         }
                     })
             )
@@ -50,6 +52,7 @@ class LoginViewModel(
 
     private fun registerNewUser() {
         navigator.activity()?.let {
+            navigator.showLoading(true)
             compositeDisposable.add(
                 dataManager.register(
                     LoginConfiguration(
@@ -71,6 +74,7 @@ class LoginViewModel(
                             navigator.showLoading(false)
                             when {
                                 dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
+                                dataResponse.status.equals("INIT_PROFILE") -> navigator.openSignUpInfoScreen()
                                 else -> navigator.openHomeScreen()
                             }
                         }

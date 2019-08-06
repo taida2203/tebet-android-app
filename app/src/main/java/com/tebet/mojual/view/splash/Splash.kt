@@ -100,6 +100,11 @@ open class Splash : BaseActivity<ActivitySplashScreenBinding, SplashViewModel>()
 //                .addOnFailureListener(this) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
     }
 
+    override fun openSignUpInfoScreen() {
+        finish()
+        startActivity(Intent(this, SignUpInfo::class.java))
+    }
+
     override fun openLoginScreen() {
         finish()
         startActivity(Intent(this, Login::class.java))

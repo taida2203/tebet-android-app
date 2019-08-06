@@ -20,6 +20,7 @@ import com.tebet.mojual.view.forgotpassword.ForgotPassword
 import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.registration.SignUpPassword
+import com.tebet.mojual.view.signup.SignUpInfo
 
 class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPasswordViewModel>(),
     LoginWithPasswordNavigator {
@@ -59,6 +60,11 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
     override fun openRegistrationScreen() {
         finish()
         startActivity(Intent(this, SignUpPassword::class.java))
+    }
+
+    override fun openSignUpInfoScreen() {
+        finish()
+        startActivity(Intent(this, SignUpInfo::class.java))
     }
 
     override fun dataValid(): Boolean {

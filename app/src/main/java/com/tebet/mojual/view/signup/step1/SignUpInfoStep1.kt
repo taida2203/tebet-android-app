@@ -40,7 +40,8 @@ class SignUpInfoStep1 : SignUpInfoStep<FragmentSignUpInfoStep1Binding, SignUpInf
     override fun validate(): Boolean {
         return validator.validate(
             listOf(viewDataBinding?.fullName, viewDataBinding?.birthday, viewDataBinding?.ktpNumber)
-        ) && !TextUtils.isEmpty(viewModel.userProfile.get()?.ktpLocal) && !TextUtils.isEmpty(viewModel.userProfile.get()?.avatarLocal)
+        ) && (!TextUtils.isEmpty(viewModel.userProfile.get()?.ktpLocal) || !TextUtils.isEmpty(viewModel.userProfile.get()?.ktp)) &&
+                (!TextUtils.isEmpty(viewModel.userProfile.get()?.avatarLocal) || !TextUtils.isEmpty(viewModel.userProfile.get()?.avatar))
     }
 
     override fun selectBirthDay() {

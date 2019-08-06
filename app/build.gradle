@@ -51,13 +51,9 @@ android {
             dimension "dev"
             buildConfigField "String", "ENV_NAME", String.format("\"%s\"", "dev")
         }
-        staging {
+        local {
             dimension "dev"
-            buildConfigField "String", "ENV_NAME", String.format("\"%s\"", "staging")
-        }
-        hotfix {
-            dimension "dev"
-            buildConfigField "String", "ENV_NAME", String.format("\"%s\"", "hotfix")
+            buildConfigField "String", "ENV_NAME", String.format("\"%s\"", "local")
         }
         production {
             dimension "dev"

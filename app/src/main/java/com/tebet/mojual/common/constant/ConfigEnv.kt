@@ -9,7 +9,7 @@ import com.tebet.mojual.BuildConfig
 
 object ConfigEnv {
 
-    enum class Environment { DEV, STAGING, PRODUCTION, STABLE, HOTFIX
+    enum class Environment { DEV, LOCAL, PRODUCTION
     }
 
     lateinit var environment: Environment
@@ -19,8 +19,6 @@ object ConfigEnv {
         private set
 
     var isAnalyticEnabled = false
-        private set
-    lateinit var agoraAppId: String
         private set
     lateinit var consumerKey: String
         private set
@@ -41,29 +39,16 @@ object ConfigEnv {
                 environment = ConfigEnv.Environment.DEV
 
                 apiRoot = "https://dev.api.mo-jual.com"
-//                apiRoot = "http://10.0.2.2:4000"
                 isAnalyticEnabled = true
-                agoraAppId = "xxx"
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
                 googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
-            "staging" -> {
-                environment = ConfigEnv.Environment.STAGING
+            "local" -> {
+                environment = ConfigEnv.Environment.LOCAL
 
-                apiRoot = "https://dev.api.mo-jual.com"
+                apiRoot = "http://10.0.2.2:4000"
                 isAnalyticEnabled = true
-                agoraAppId = "yyy"
-                consumerKey = "android_student_cakap"
-                consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
-                googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
-            }
-            "hotfix" -> {
-                environment = ConfigEnv.Environment.HOTFIX
-
-                apiRoot = "https://dev.api.mo-jual.com"
-                isAnalyticEnabled = true
-                agoraAppId = "yyy"
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
                 googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
@@ -73,7 +58,6 @@ object ConfigEnv {
 
                 apiRoot = "https://dev.api.mo-jual.com"
                 isAnalyticEnabled = true
-                agoraAppId = "zzz"
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
                 googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"

@@ -18,6 +18,7 @@ import com.tebet.mojual.view.loginpassword.LoginWithPassword
 import com.tebet.mojual.view.registration.SignUpPassword
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.forgotpassword.ForgotPassword
+import com.tebet.mojual.view.signup.SignUpInfo
 
 class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigator {
     companion object {
@@ -41,8 +42,8 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         data?.let { AuthSdk.instance.onActivityResult(requestCode, resultCode, it) }
-        when (resultCode) {
-            LOGIN_PASSWORD -> if (requestCode == Activity.RESULT_OK) finish()
+        when (requestCode) {
+            LOGIN_PASSWORD -> if (resultCode == Activity.RESULT_OK) finish()
         }
     }
 
@@ -53,11 +54,19 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
         )
     }
 
+    override fun openSignUpInfoScreen() {
+        finish()
+        startActivity(Intent(this, SignUpInfo::class.java))
+    }
+
+
     override fun openHomeScreen() {
+        finish()
         startActivity(Intent(this, HomeActivity::class.java))
     }
 
     override fun openRegistrationScreen() {
+        finish()
         startActivity(Intent(this, SignUpPassword::class.java))
     }
 }

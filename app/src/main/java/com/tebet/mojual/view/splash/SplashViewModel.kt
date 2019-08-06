@@ -25,10 +25,10 @@ class SplashViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onSuccess(dataResponse: UserProfile) {
-                        if (dataResponse.status.equals("INIT")) {
-                            navigator.openSetPasswordScreen()
-                        } else {
-                            navigator.openHomeScreen()
+                        when {
+                            dataResponse.status.equals("INIT") -> navigator.openSetPasswordScreen()
+                            dataResponse.status.equals("INIT_PROFILE") -> navigator.openSignUpInfoScreen()
+                            else -> navigator.openHomeScreen()
                         }
                     }
 

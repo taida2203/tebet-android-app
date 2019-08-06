@@ -5,22 +5,23 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class Token(
-        @SerializedName("access_token")
-        @Expose
-        var accessToken: String?,
-        @SerializedName("token_type")
-        @Expose
-        var tokenType: String?,
-        @SerializedName("refresh_token")
-        @Expose
-        var refreshToken: String?,
-        @SerializedName("expires_in")
-        @Expose
-        var expiresIn: Int,
-        @SerializedName("scope")
-        @Expose
-        var scope: String?,
-        var isNewUser: Boolean) {
+    @SerializedName("access_token")
+    @Expose
+    var accessToken: String? = null,
+    @SerializedName("token_type")
+    @Expose
+    var tokenType: String? = null,
+    @SerializedName("refresh_token")
+    @Expose
+    var refreshToken: String? = null,
+    @SerializedName("expires_in")
+    @Expose
+    var expiresIn: Int? = null,
+    @SerializedName("scope")
+    @Expose
+    var scope: String? = null,
+    var isNewUser: Boolean? = false
+) {
 
     val appToken: String
         get() {

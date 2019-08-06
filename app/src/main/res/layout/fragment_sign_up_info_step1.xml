@@ -51,10 +51,10 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{viewModel.userProfile.avatarLocal == null ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{viewModel.userProfile.avatarLocal == null &amp;&amp; viewModel.userProfile.avatar==null ? View.GONE : View.VISIBLE}"
                     app:civ_border_color="#FF000000"
                     app:civ_border_width="2dp"
-                    app:imageUrl="@{viewModel.userProfile.avatarLocal}" />
+                    app:imageUrl="@{viewModel.userProfile.avatarLocal ?? viewModel.userProfile.avatar}" />
             </RelativeLayout>
 
             <com.tebet.mojual.common.view.AppEditTextLayout
@@ -147,8 +147,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.userProfile.ktpLocal == null ? View.GONE : View.VISIBLE}"
-                    app:imageUrl="@{viewModel.userProfile.ktpLocal}" />
+                    android:visibility="@{viewModel.userProfile.ktpLocal == null &amp;&amp; viewModel.userProfile.ktp==null ? View.GONE : View.VISIBLE}"
+                    app:imageUrl="@{viewModel.userProfile.ktpLocal ?? viewModel.userProfile.ktp}" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
