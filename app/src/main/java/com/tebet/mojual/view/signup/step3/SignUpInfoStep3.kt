@@ -41,8 +41,8 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
             }
         viewDataBinding?.etBankName?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
-                if (TextUtils.isEmpty(viewModel.userProfile.get()?.bankCode)) viewModel.userProfile.get()?.bankName = null
-                validator.validate(v)
+                validateBankCode()
+                validator.validate()
             }
         }
         regionAdapter =
@@ -56,7 +56,7 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
             }
         viewDataBinding?.etRegionName?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
-                if (TextUtils.isEmpty(viewModel.userProfile.get()?.bankRegionCode)) viewModel.userProfile.get()?.bankRegionName = null
+                validateBankRegionCode()
                 validator.validate(v)
             }
         }
@@ -73,7 +73,18 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
         })
     }
 
+    private fun validateBankCode() {
+        if (TextUtils.isEmpty(viewModel.userProfile.get()?.bankCode)) viewModel.userProfile.get()?.bankName = null
+    }
+
+    private fun validateBankRegionCode() {
+        if (TextUtils.isEmpty(viewModel.userProfile.get()?.bankRegionCode)) viewModel.userProfile.get()
+            ?.bankRegionName = null
+    }
+
     override fun validate(): Boolean {
+        viewDataBinding?.etBankName?.clearFocus()
+        viewDataBinding?.etRegionName?.clearFocus()
         return validator.validate()
     }
 }

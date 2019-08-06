@@ -16,6 +16,7 @@ abstract class SignUpInfoStep<T : ViewDataBinding, V : SignUpInfoStepViewModel<*
         super.onViewCreated(view, savedInstanceState)
         viewModel.userProfile.set((activity as SignUpInfo).viewModel.userProfile)
         validator = Validator(viewDataBinding)
+        validator.enableFormValidationMode()
     }
     abstract fun validate(): Boolean
     override fun onCreate(savedInstanceState: Bundle?) {

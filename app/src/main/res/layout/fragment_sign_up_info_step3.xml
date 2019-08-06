@@ -43,6 +43,7 @@
                 android:layout_marginBottom="@dimen/_10sdp">
 
                 <com.tebet.mojual.common.view.AppEditText
+                    android:id="@+id/etBankAccountNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Bank account number"
@@ -57,6 +58,7 @@
                 android:layout_marginBottom="@dimen/_10sdp">
 
                 <com.tebet.mojual.common.view.AppEditText
+                    android:id="@+id/etBankAccountName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Bank account name"

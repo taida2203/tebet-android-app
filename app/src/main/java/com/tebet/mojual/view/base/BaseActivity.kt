@@ -149,7 +149,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         viewDataBinding!!.executePendingBindings()
     }
 
-    protected lateinit var navLayout : RelativeLayout
+    protected lateinit var navLayout: RelativeLayout
     //    protected lateinit var load: Loading
     private var notifExtra: MutableMap<String, String>? = null
     private var isActive: Boolean = false
@@ -168,7 +168,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                 (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.BELOW, 0)
             }
         } else {
-            (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.BELOW, R.id.baseToolbar)
+            (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(
+                RelativeLayout.BELOW,
+                R.id.baseToolbar
+            )
         }
     }
 

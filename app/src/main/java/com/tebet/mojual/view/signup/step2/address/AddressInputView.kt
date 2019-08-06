@@ -65,6 +65,7 @@ class AddressInputView : LinearLayout {
         mBinding?.setVariable(BR.addressData, addressData.get())
         mBinding?.setVariable(BR.view, this)
         validator = Validator(mBinding)
+        validator.enableFormValidationMode()
 
         cityAdapter =
             ArrayAdapter(context, android.R.layout.simple_list_item_1, arrayListOf<String>())

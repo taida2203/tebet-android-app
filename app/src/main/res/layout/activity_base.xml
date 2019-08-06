@@ -52,6 +52,7 @@
                         android:id="@+id/ivBack"
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/icon_back"
                         android:padding="@dimen/_6sdp" />
