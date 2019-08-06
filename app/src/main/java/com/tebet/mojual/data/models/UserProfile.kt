@@ -29,6 +29,8 @@ data class UserProfile(
     var ktp: String? = null,
     var ktpNumber: String? = null,
     var lastName: String? = null,
+    var bankAccountNumber: String? = null,
+    var bankAccountName: String? = null,
     @Json(name = "phone")
     @ColumnInfo(name = "phone")
     var phone: String? = null,

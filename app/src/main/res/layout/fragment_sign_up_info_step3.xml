@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Bank account number"
-                    android:text="@={viewModel.userProfile.bankCode}"
+                    android:text="@={viewModel.userProfile.bankAccountNumber}"
                     app:validateEmpty="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Bank account name"
-                    android:text="@={viewModel.userProfile.bankRegionName}"
+                    android:text="@={viewModel.userProfile.bankAccountName}"
                     app:validateEmpty="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Bank region"
-                    android:text="@={viewModel.userProfile.bankRegionCode}"
+                    android:text="@={viewModel.userProfile.bankRegionName}"
                     app:validateEmpty="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
         </LinearLayout>
