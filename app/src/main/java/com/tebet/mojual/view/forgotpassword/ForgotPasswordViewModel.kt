@@ -5,6 +5,7 @@ import com.tebet.mojual.common.view.AppEditText
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.UpdatePasswordRequest
+import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,11 +28,12 @@ class ForgotPasswordViewModel(
         compositeDisposable.add(
             dataManager.updatePassword(
                 UpdatePasswordRequest(userInputPassword)
-            ).subscribeOn(Schedulers.newThread())
+            ).concatMap { dataManager.getProfile() }
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(400, TimeUnit.MILLISECONDS)
-                .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
-                    override fun onSuccess(dataResponse: EmptyResponse) {
+                .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                    override fun onSuccess(dataResponse: UserProfile) {
                         navigator.openHomeScreen()
                     }
 

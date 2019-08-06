@@ -95,7 +95,7 @@ class SignUpInfoViewModel(
         navigator.showLoading(true)
         compositeDisposable.add(
             Observable.zip(
-                dataManager.getCities(), dataManager.getRegions(), dataManager.getBanks(), dataManager.getProfile(),
+                dataManager.getCities(), dataManager.getRegions(), dataManager.getBanks(), dataManager.getUserProfileDB(),
                 Function4<AuthJson<List<City>>, AuthJson<List<Region>>, AuthJson<List<Bank>>, AuthJson<UserProfile>, AuthJson<UserProfile>>
                 { cities, regions, banks, profile -> profile })
                 .subscribeOn(Schedulers.newThread())
