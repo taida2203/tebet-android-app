@@ -19,9 +19,11 @@ package com.tebet.mojual.data.local.db;
 
 import com.tebet.mojual.data.local.db.dao.BankDao;
 import com.tebet.mojual.data.local.db.dao.CityDao;
+import com.tebet.mojual.data.local.db.dao.RegionDao;
 import com.tebet.mojual.data.local.db.dao.UserProfileDao;
 import com.tebet.mojual.data.models.Bank;
 import com.tebet.mojual.data.models.City;
+import com.tebet.mojual.data.models.Region;
 import com.tebet.mojual.data.models.UserProfile;
 import io.reactivex.Observable;
 import org.jetbrains.annotations.Nullable;
@@ -39,7 +41,13 @@ public interface DbHelper {
 
     Observable<Boolean> insertBanks(@Nullable List<Bank> banks);
 
+    Observable<RegionDao> getRegion();
+
+    Observable<Boolean> insertRegions(@Nullable List<Region> regions);
+
     Observable<CityDao> getCity();
 
     Observable<Boolean> insertCity(final City city);
+
+    Observable<Boolean> insertCities(@Nullable List<City> cities);
 }

@@ -18,9 +18,11 @@ package com.tebet.mojual.data.local.db;
 
 import com.tebet.mojual.data.local.db.dao.BankDao;
 import com.tebet.mojual.data.local.db.dao.CityDao;
+import com.tebet.mojual.data.local.db.dao.RegionDao;
 import com.tebet.mojual.data.local.db.dao.UserProfileDao;
 import com.tebet.mojual.data.models.Bank;
 import com.tebet.mojual.data.models.City;
+import com.tebet.mojual.data.models.Region;
 import com.tebet.mojual.data.models.UserProfile;
 import io.reactivex.Observable;
 import org.jetbrains.annotations.Nullable;
@@ -95,6 +97,27 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Observable<RegionDao> getRegion() {
+        return Observable.fromCallable(new Callable<RegionDao>() {
+            @Override
+            public RegionDao call() throws Exception {
+                return mAppDatabase.regionDao();
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> insertRegions(@Nullable List<Region> regions) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.regionDao().insertAll(regions);
+                return true;
+            }
+        });
+    }
+
+    @Override
     public Observable<CityDao> getCity() {
         return Observable.fromCallable(new Callable<CityDao>() {
             @Override
@@ -110,6 +133,17 @@ public class AppDbHelper implements DbHelper {
             @Override
             public Boolean call() throws Exception {
                 mAppDatabase.cityDao().insertCity(city);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> insertCities(@Nullable List<City> cities) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.cityDao().insertAll(cities);
                 return true;
             }
         });

@@ -19,9 +19,7 @@ data class UserProfile(
     var authenticationType: String? = null,
     var avatar: String? = null,
     var bankCode: String? = null,
-    var bankName: String? = null,
     var bankRegionCode: String? = null,
-    var bankRegionName: String? = null,
     var email: String? = null,
     var firstName: String? = null,
     var fullName: String? = null,
@@ -68,6 +66,21 @@ data class UserProfile(
             field = value
             notifyPropertyChanged(BR.birthday)
         }
+
+    var bankName: String? = null
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.bankName)
+        }
+
+    var bankRegionName: String? = null
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.bankRegionName)
+        }
+
     @Ignore
     var domicileAddress: Address? = null
         @Bindable get() = field

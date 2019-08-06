@@ -32,6 +32,9 @@ interface ApiHelper {
     @GET("common/city")
     fun getCities(): Observable<AuthJson<List<City>>>
 
+    @GET("common/region")
+    fun getRegions(): Observable<AuthJson<List<Region>>>
+
     @PUT("profile/profile")
     fun updateProfile(@Body updateProfileRequest: UserProfile): Observable<AuthJson<EmptyResponse>>
 

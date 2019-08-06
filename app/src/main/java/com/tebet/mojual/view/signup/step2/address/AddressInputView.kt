@@ -4,6 +4,9 @@ import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.databinding.*
@@ -29,6 +32,9 @@ class AddressInputView : LinearLayout {
     //    public String getFilterValue() {
     ////        return mBinding.filterPositionValue.getText().toString();
     //    }
+
+    var cityAdapter: ArrayAdapter<String>? = null
+
     val addressValue: Address
         get() = addressData.get()!!
 
@@ -59,14 +65,33 @@ class AddressInputView : LinearLayout {
         mBinding?.setVariable(BR.addressData, addressData.get())
         mBinding?.setVariable(BR.view, this)
         validator = Validator(mBinding)
+
+        cityAdapter =
+            ArrayAdapter(context, android.R.layout.simple_list_item_1, arrayListOf<String>())
+        mBinding?.etCity?.setAdapter(cityAdapter)
+        mBinding?.etCity?.threshold = 1
+        mBinding?.etCity?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                viewModel.userProfile.get()?.bankName = ""
+                viewModel.userProfile.get()?.bankCode = ""
+                validator.validate()
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                viewModel.userProfile.get()?.bankName = viewModel.bankNameLiveData.value?.get(position)?.name
+//                viewModel.userProfile.get()?.bankCode = viewModel.bankNameLiveData.value?.get(position)?.code
+                validator.validate()
+            }
+
+        }
         orientation = LinearLayout.HORIZONTAL
     }
 
-//    @BindingAdapter(value = ["bind:addressData"], requireAll = false)
+    //    @BindingAdapter(value = ["bind:addressData"], requireAll = false)
     fun setAddressData(
-    positionView: AddressInputView?,
-    address: Address?,
-    viewModel: SignUpInfoStep2Model
+        positionView: AddressInputView?,
+        address: Address?,
+        viewModel: SignUpInfoStep2Model
     ) {
         addressData.set(address)
         mBinding?.setVariable(BR.addressData, addressData.get())
@@ -77,7 +102,7 @@ class AddressInputView : LinearLayout {
         viewModel.onChooseMapClick(addressData)
     }
 
-    fun validate() : Boolean {
+    fun validate(): Boolean {
         return validator.validate()
     }
 }

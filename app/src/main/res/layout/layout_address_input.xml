@@ -22,8 +22,7 @@
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp"
-            >
+            android:layout_marginBottom="@dimen/_20sdp">
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
@@ -37,8 +36,7 @@
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp"
-            >
+            android:layout_marginBottom="@dimen/_20sdp">
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
@@ -52,8 +50,7 @@
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp"
-            >
+            android:layout_marginBottom="@dimen/_20sdp">
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
@@ -67,8 +64,7 @@
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp"
-            >
+            android:layout_marginBottom="@dimen/_20sdp">
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
@@ -82,15 +78,16 @@
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp"
-            >
+            android:layout_marginBottom="@dimen/_20sdp">
 
-            <com.tebet.mojual.common.view.AppEditText
+            <com.tebet.mojual.common.view.AppAutoCompleteEditText
+                android:id="@+id/etCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="City"
                 android:text="@={addressData.city}"
                 app:validateEmpty="@{true}" />
+
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
         <com.tebet.mojual.common.view.AppEditText
@@ -99,7 +96,7 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:hint="Choose on Map"
-            android:text="@={addressData.localAddress}"
-            android:onClick="@{()-> view.onChooseMapClick()}" />
+            android:onClick="@{()-> view.onChooseMapClick()}"
+            android:text="@={addressData.localAddress}" />
     </LinearLayout>
 </layout>

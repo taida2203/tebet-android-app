@@ -3,13 +3,13 @@ package com.tebet.mojual.view.signup
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.models.Bank
-import com.tebet.mojual.data.models.EmptyResponse
-import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Function3
+import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -93,17 +93,22 @@ class SignUpInfoViewModel(
     fun loadData() {
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.getCities()
-                .concatMap { cities -> dataManager.getBanks() }
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<List<Bank>>() {
-                    override fun onSuccess(dataResponse: List<Bank>) {
+            Observable.zip(dataManager.getCities(), dataManager.getRegions(), dataManager.getBanks(),
+                Function3<AuthJson<List<City>>, AuthJson<List<Region>>, AuthJson<List<Bank>>, Triple<List<City>?, List<Region>?, List<Bank>?>>
+                { cities, regions, banks -> Triple(cities.data, regions.data, banks.data) })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableObserver<Triple<List<City>?, List<Region>?, List<Bank>?>>() {
+                    override fun onNext(t: Triple<List<City>?, List<Region>?, List<Bank>?>) {
                         navigator.showLoading(false)
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onError(e: Throwable) {
                         navigator.showLoading(false)
-                        handleError(error)
+                        handleError(e.message)
+                    }
+
+                    override fun onComplete() {
                     }
                 })
         )

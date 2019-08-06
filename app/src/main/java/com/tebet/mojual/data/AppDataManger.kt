@@ -8,6 +8,7 @@ import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.data.local.db.DbHelper
 import com.tebet.mojual.data.local.db.dao.BankDao
 import com.tebet.mojual.data.local.db.dao.CityDao
+import com.tebet.mojual.data.local.db.dao.RegionDao
 import com.tebet.mojual.data.local.db.dao.UserProfileDao
 import com.tebet.mojual.data.local.prefs.PreferencesHelper
 import com.tebet.mojual.data.models.*
@@ -26,6 +27,28 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
+    override fun getRegionDB(): Observable<AuthJson<List<Region>>> {
+        return room.region.concatMap { bankDao ->
+            bankDao.queryRegion().doOnError { message -> EmptyResultSetException("") }
+                .toObservable().map { regions -> AuthJson(null, "", regions) }
+        }
+    }
+
+    override fun getRegion(): Observable<RegionDao> {
+        return room.region
+    }
+
+    override fun getRegions(): Observable<AuthJson<List<Region>>> {
+        return api.getRegions()
+    }
+
+    override fun insertRegions(regions: MutableList<Region>?): Observable<Boolean> {
+        return room.insertRegions(regions)
+    }
+
+    override fun insertCities(cities: MutableList<City>?): Observable<Boolean> {
+        return room.insertCities(cities)
+    }
 
     override fun getReserveGeoLocation(latlng: String, key: String): Observable<GeoCodeResponse> {
         return apiGoogle.getReserveGeoLocation(latlng, key)

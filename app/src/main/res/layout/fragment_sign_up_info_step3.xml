@@ -70,12 +70,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_10sdp">
 
-                <com.tebet.mojual.common.view.AppEditText
+                <com.tebet.mojual.common.view.AppAutoCompleteEditText
+                    android:id="@+id/etRegionName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Bank region"
                     android:text="@={viewModel.userProfile.bankRegionName}"
                     app:validateEmpty="@{true}" />
+
             </com.tebet.mojual.common.view.AppEditTextLayout>
         </LinearLayout>
     </ScrollView>

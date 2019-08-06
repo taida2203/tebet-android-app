@@ -4,18 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.tebet.mojual.data.models.Bank
-import com.tebet.mojual.data.models.City
+import com.tebet.mojual.data.models.Region
 import io.reactivex.Single
 
 @Dao
-interface CityDao {
-    @Query("SELECT * FROM city")
-    fun queryCity(): Single<List<City>>
+interface RegionDao {
+    @Query("SELECT * FROM region")
+    fun queryRegion(): Single<List<Region>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCity(bank: City)
+    fun insertRegion(region: Region)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(banks: List<City>)
+    fun insertAll(regions: List<Region>)
 }
