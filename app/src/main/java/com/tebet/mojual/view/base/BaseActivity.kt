@@ -272,6 +272,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     override fun onBackPressed() {
         showLoading(false)
+        hideKeyboard()
         super.onBackPressed()
     }
 

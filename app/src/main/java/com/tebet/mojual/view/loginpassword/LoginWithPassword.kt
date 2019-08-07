@@ -53,6 +53,7 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
     }
 
     override fun openForgotPasswordScreen() {
+        setResult(Activity.RESULT_OK)
         finish()
         startActivity(Intent(this, ForgotPassword::class.java))
     }

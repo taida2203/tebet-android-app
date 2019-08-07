@@ -56,38 +56,30 @@ class LoginWithPasswordViewModel(
     fun doForgotPassword() {
         navigator.showLoading(true)
         navigator.activity()?.let {
-            AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
-                override fun onSuccess(responeCode: Int, response: Any?) {
-                    AuthSdk.instance.login(
-                        it, AuthAccountKitMethod(), LoginConfiguration(true)
-                        , object : ApiCallBack<Token>() {
-                            override fun onSuccess(responeCode: Int, response: Token?) {
-                                navigator.showLoading(false)
-                                navigator.openForgotPasswordScreen()
-                            }
-
-                            override fun onFailed(exeption: LoginException) {
-                                if (exeption.errorCode == 502) return
-                                AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
-                                    override fun onSuccess(responeCode: Int, response: Any?) {
-                                        navigator.showLoading(false)
-                                        doForgotPassword()
-                                    }
-
-                                    override fun onFailed(exeption: LoginException) {
-                                        navigator.showLoading(false)
-                                    }
-
-                                })
-                                handleError(exeption.errorMessage)
-                            }
-                        })
+            compositeDisposable.add(
+                AuthSdk.instance.logout(true).concatMap { _ ->
+                    AuthSdk.instance.login(it, AuthAccountKitMethod(), LoginConfiguration(true)).doOnError {
+                        navigator.showLoading(false)
+                    }
                 }
+                    .concatMap { dataManager.getProfile() }
+                    .observeOn(schedulerProvider.ui())
+                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                        override fun onSuccess(dataResponse: UserProfile) {
+                            navigator.showLoading(false)
+                            when {
+                                dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
+                                dataResponse.status.equals("INIT_PROFILE") -> navigator.openSignUpInfoScreen()
+                                else -> navigator.openForgotPasswordScreen()
+                            }
+                        }
 
-                override fun onFailed(exeption: LoginException) {
-                }
-
-            })
+                        override fun onFailure(error: String?) {
+                            navigator.showLoading(false)
+                            handleError(error)
+                        }
+                    })
+            )
         }
     }
 }

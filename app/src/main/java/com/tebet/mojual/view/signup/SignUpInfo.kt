@@ -109,7 +109,6 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                 screenStep = SCREEN_STEP.STEP_2
             else -> SCREEN_STEP.STEP_1
         }
-        hideKeyboard()
         refreshScreenStep()
     }
 

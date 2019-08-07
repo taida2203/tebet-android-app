@@ -25,6 +25,7 @@ open class ForgotPassword : BaseActivity<ActivitySignUpPasswordBinding, ForgotPa
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
+        enableBackButton = false
         validator = Validator(viewDataBinding)
         title = "Input new password"
     }
