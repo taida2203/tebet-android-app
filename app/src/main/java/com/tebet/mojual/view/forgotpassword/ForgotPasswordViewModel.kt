@@ -18,7 +18,6 @@ class ForgotPasswordViewModel(
 ) :
     BaseViewModel<ForgotPasswordNavigator>(dataManager, schedulerProvider) {
     var userInputPassword: String = ""
-    var userInputPassword2: String = ""
 
     fun onForgotPasswordClick() {
         if (!navigator.dataValid()) {

@@ -36,13 +36,6 @@ open class ForgotPassword : BaseActivity<ActivitySignUpPasswordBinding, ForgotPa
     }
 
     override fun dataValid(): Boolean {
-        if (!validator.validate()) {
-            return false
-        }
-        if (viewModel.userInputPassword != viewModel.userInputPassword2) {
-            viewDataBinding?.tvPasswordLayout?.error = "Password not match"
-            return false
-        }
-        return true
+        return validator.validate()
     }
 }
