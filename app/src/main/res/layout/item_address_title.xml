@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/mainView"
-              android:layout_width="match_parent"
-              android:layout_height="50dp"
-              android:orientation="horizontal"
-              android:gravity="center_vertical">
+    android:id="@+id/mainView"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
     <com.tebet.mojual.common.view.AppTextView
-            android:id="@+id/itemNameTxt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Menu Item"
-            android:layout_marginLeft="10dp"
-            android:textSize="14sp"/>
+        android:id="@+id/itemNameTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:text="Menu Item"
+        android:textSize="@dimen/_14ssp" />
+
     <ImageView
-            android:id="@+id/itemIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/signup_expand_btn"/>
+        android:id="@+id/itemIcon"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp"
+        android:src="@drawable/signup_expand_btn" />
 </LinearLayout>
