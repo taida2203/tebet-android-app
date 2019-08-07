@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Address"
                 android:text="@={addressData.address}"
+                app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Kelurahan"
                 android:text="@={addressData.kelurahan}"
+                app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -57,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Kecamatan"
                 android:text="@={addressData.kecamatan}"
+                app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -71,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:hint="RT/RW"
                 android:text="@={addressData.rtrw}"
+                app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -86,6 +90,24 @@
                 android:layout_height="wrap_content"
                 android:hint="City"
                 android:text="@={addressData.city}"
+                app:validateTypeAutoDismiss="@{true}"
+                app:validateEmpty="@{true}" />
+
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp">
+
+            <com.tebet.mojual.common.view.AppAutoCompleteEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Postal Code"
+                android:inputType="number"
+                android:text="@={addressData.postalCode}"
+                app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
 
         </com.tebet.mojual.common.view.AppEditTextLayout>

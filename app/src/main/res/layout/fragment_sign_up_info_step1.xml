@@ -71,7 +71,7 @@
                     android:imeOptions="actionNext"
                     android:maxLength="50"
                     android:text="@={viewModel.userProfile.fullName}"
-                    app:validateEmpty="@{true}"
+                    app:validateRegexAutoDismiss="@{true}"
                     app:validateRegex='@{"^[a-zA-Z]+(([&apos;,. -][a-zA-Z ])?[a-zA-Z]*)*$"}'
                     app:validateRegexMessage="@{@string/fullNameErrorMessage}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
@@ -92,6 +92,7 @@
                     android:imeOptions="actionNext"
                     android:onClick="@{()-> viewModel.onSelectDateClick()}"
                     android:text="@={viewModel.userProfile.birthday}"
+                    app:validateTypeAutoDismiss="@{true}"
                     app:validateEmpty="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -110,6 +111,7 @@
                     android:inputType="number"
                     android:maxLength="16"
                     android:text="@={viewModel.userProfile.ktpNumber}"
+                    app:validateTypeAutoDismiss="@{true}"
                     app:validateEmpty="@{true}"
                     app:validateMinLength="@{16}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>

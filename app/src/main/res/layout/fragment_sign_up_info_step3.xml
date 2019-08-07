@@ -33,6 +33,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Bank Name"
                     android:text="@={viewModel.userProfile.bankName}"
+                    app:validateTypeAutoDismiss="@{true}"
                     app:validateEmpty="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -48,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Bank account number"
                     android:text="@={viewModel.userProfile.bankAccountNumber}"
+                    app:validateTypeAutoDismiss="@{true}"
                     app:validateEmpty="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -63,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Bank account name"
                     android:text="@={viewModel.userProfile.bankAccountName}"
+                    app:validateTypeAutoDismiss="@{true}"
                     app:validateEmpty="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -78,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Bank region"
                     android:text="@={viewModel.userProfile.bankRegionName}"
+                    app:validateTypeAutoDismiss="@{true}"
                     app:validateEmpty="@{true}" />
 
             </com.tebet.mojual.common.view.AppEditTextLayout>

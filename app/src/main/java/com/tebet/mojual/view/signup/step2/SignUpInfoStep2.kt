@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
+import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep2Binding
 import com.tebet.mojual.view.signup.step.SignUpInfoStep
 import com.tebet.mojual.view.signup.step2.address.ChildItem
@@ -96,6 +97,7 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
     }
 
     override fun validate(): Boolean {
-        return addressViews.firstOrNull { address -> !address.validate() }?.validate() ?: true
+        return (if (!viewModel.userProfile.get()?.email.isNullOrBlank()) validator.validate() else true)
+                && addressViews.firstOrNull { address -> !address.validate() }?.validate() ?: true
     }
 }

@@ -25,7 +25,7 @@ open class AppEditText : TextInputEditText {
         this.setPadding(20, 20, 20, 20)
         this.setHintTextColor(ContextCompat.getColor(context, R.color.grey))
         setLines(1)
-        setSingleLine(true)
+//        setSingleLine(true)
 //        val typeArray = context.theme.obtainStyledAttributes(
 //            attributeSet,
 //            R.styleable.SquTextFont,

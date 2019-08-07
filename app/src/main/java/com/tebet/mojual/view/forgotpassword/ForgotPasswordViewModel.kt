@@ -23,7 +23,7 @@ class ForgotPasswordViewModel(
         if (!navigator.dataValid()) {
             return
         }
-
+        navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.updatePassword(
                 UpdatePasswordRequest(userInputPassword)
@@ -33,10 +33,13 @@ class ForgotPasswordViewModel(
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onSuccess(dataResponse: UserProfile) {
+                        navigator.showLoading(false)
                         navigator.openHomeScreen()
                     }
 
                     override fun onFailure(error: String?) {
+                        navigator.showLoading(false)
+                        handleError(error)
                     }
                 })
         )

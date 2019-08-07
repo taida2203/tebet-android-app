@@ -11,5 +11,5 @@ open class SignUpInfoStepViewModel<N>(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<N>(dataManager, schedulerProvider) {
-    var userProfile: ObservableField<UserProfile> = ObservableField()
+    open var userProfile: ObservableField<UserProfile> = ObservableField()
 }
