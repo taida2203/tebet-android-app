@@ -31,6 +31,7 @@ class BindingUtils {
                 GlideApp.with(context).load(it)
                     .error(R.drawable.signup_avatar_blank)
                     .placeholder(R.drawable.signup_avatar_blank)
+                    .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
             }
         }

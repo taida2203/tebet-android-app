@@ -122,6 +122,7 @@
                 android:layout_marginBottom="@dimen/_10sdp">
 
                 <LinearLayout
+                    android:id="@+id/ktpHolder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_bg_signup"
@@ -147,8 +148,9 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/ktp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:visibility="@{viewModel.userProfile.ktpLocal == null &amp;&amp; viewModel.userProfile.ktp==null ? View.GONE : View.VISIBLE}"
                     app:imageUrl="@{viewModel.userProfile.ktpLocal ?? viewModel.userProfile.ktp}" />
             </RelativeLayout>

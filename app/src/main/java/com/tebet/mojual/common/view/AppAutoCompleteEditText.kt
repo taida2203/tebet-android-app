@@ -6,6 +6,9 @@ import android.widget.AutoCompleteTextView
 import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.tebet.mojual.R
+import android.graphics.drawable.Drawable
+
+
 
 open class AppAutoCompleteEditText : AutoCompleteTextView {
     constructor(context: Context) : super(context) {
@@ -27,22 +30,9 @@ open class AppAutoCompleteEditText : AutoCompleteTextView {
         this.setHintTextColor(ContextCompat.getColor(context, R.color.grey))
         setLines(1)
         setSingleLine(true)
-//        val typeArray = context.theme.obtainStyledAttributes(
-//            attributeSet,
-//            R.styleable.SquTextFont,
-//            0,
-//            0
-//        )
-//
-//        val typefaceType: Int
-//
-//        try {
-//            typefaceType = typeArray.getInteger(R.styleable.SquTextFont_font_style, 1)
-//        } finally {
-//            typeArray.recycle()
-//        }
-//
-//        if (!isInEditMode) typeface = SquTypefaceHandler.getTypeface(typefaceType)
+        val img = ContextCompat.getDrawable(context, R.drawable.signup_dropdown_btn)
+        img?.setBounds( 60, 60, 60, 60 )
+        setCompoundDrawablesWithIntrinsicBounds(null, null, img, null)
     }
 
 

@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp">
 
-            <com.tebet.mojual.common.view.AppAutoCompleteEditText
+            <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Postal Code"
