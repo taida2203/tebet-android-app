@@ -70,6 +70,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                 }
                 else -> {
                     baseBinding.ivBack.visibility = View.GONE
+                    baseBinding.topLeftHolder.visibility = View.VISIBLE
                 }
             }
         }

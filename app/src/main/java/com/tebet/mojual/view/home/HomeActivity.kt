@@ -46,7 +46,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
         set(isEnable) {
             field = isEnable
             super.enableBackButton = isEnable
-            baseBinding.topLeftHolder.visibility = if (isEnable) View.GONE else View.VISIBLE
         }
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {

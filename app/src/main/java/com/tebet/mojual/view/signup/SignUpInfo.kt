@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -112,6 +113,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
 
     private fun refreshScreenStep() {
         enableBackButton = true
+        viewDataBinding?.btnBack?.visibility = View.VISIBLE
 
         viewDataBinding?.tvTitleStep1?.setTypeface(null, Typeface.NORMAL)
         viewDataBinding?.tvTitleStep2?.setTypeface(null, Typeface.NORMAL)
@@ -125,6 +127,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                 currentStepFragment = SignUpInfoStep1()
                 openFragment(currentStepFragment as SignUpInfoStep1, R.id.placeHolderChild)
                 enableBackButton = false
+                viewDataBinding?.btnBack?.visibility = View.GONE
                 viewDataBinding?.tvTitleStep1?.setTypeface(null, Typeface.BOLD)
                 viewDataBinding?.tvTitleStep1?.setTextColor(ContextCompat.getColor(this, R.color.green_dark))
             }

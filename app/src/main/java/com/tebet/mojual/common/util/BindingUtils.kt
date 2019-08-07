@@ -18,7 +18,8 @@ package com.tebet.mojual.common.util
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.tebet.mojual.R
 
 class BindingUtils {
     companion object {
@@ -26,7 +27,12 @@ class BindingUtils {
         @JvmStatic
         fun setImageUrl(imageView: ImageView, url: String?) {
             val context = imageView.context
-            url?.let { Glide.with(context).load(it).into(imageView) }
+            url?.let {
+                GlideApp.with(context).load(it)
+                    .error(R.drawable.signup_avatar_blank)
+                    .placeholder(R.drawable.signup_avatar_blank)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
+            }
         }
     }
 }

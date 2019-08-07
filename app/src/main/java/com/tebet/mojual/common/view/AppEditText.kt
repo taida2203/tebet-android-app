@@ -2,6 +2,7 @@ package com.tebet.mojual.common.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.tebet.mojual.R
@@ -25,7 +26,9 @@ open class AppEditText : TextInputEditText {
         this.setPadding(20, 20, 20, 20)
         this.setHintTextColor(ContextCompat.getColor(context, R.color.grey))
         setLines(1)
-//        setSingleLine(true)
+        if (inputType != 129) {
+            setSingleLine(true)
+        }
 //        val typeArray = context.theme.obtainStyledAttributes(
 //            attributeSet,
 //            R.styleable.SquTextFont,

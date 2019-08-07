@@ -50,15 +50,6 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/ivBack"
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/icon_back"
-                        android:onClick="@{()-> viewModel.onBackPressed()}"
-                        android:padding="@dimen/_6sdp" />
 
                     <com.tebet.mojual.common.view.AppTextView
                         android:id="@+id/tvBaseTitle"
@@ -67,7 +58,7 @@
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:lines="1"
-                        android:visibility="@{!viewModel.enableTopLogo.get() ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{!viewModel.enableTopLogo ? View.VISIBLE : View.GONE}"
                         android:textColor="@color/green_dark"
                         android:textSize="@dimen/_16ssp"
                         app:font_style="bold" />
@@ -78,7 +69,17 @@
                         android:layout_height="@dimen/_22sdp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/mojual_logo"
-                        android:visibility="@{viewModel.enableTopLogo.get() ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{viewModel.enableTopLogo ? View.VISIBLE : View.GONE}" />
+
+                    <ImageButton
+                        android:id="@+id/ivBack"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/icon_back"
+                        android:onClick="@{()-> viewModel.onBackPressed()}"
+                        android:padding="@dimen/_6sdp" />
 
                     <FrameLayout
                         android:id="@+id/topLeftHolder"

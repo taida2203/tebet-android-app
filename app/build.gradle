@@ -120,6 +120,7 @@ dependencies {
     implementation AppDependencies.dagger
     implementation AppDependencies.daggerSupport
     implementation AppDependencies.glide
+    implementation AppDependencies.glideAnnotation
     implementation AppDependencies.glideExtension
     implementation AppDependencies.gson
     implementation AppDependencies.javaxAnnotation
@@ -147,6 +148,7 @@ dependencies {
     releaseImplementation AppDependencies.leakCanaryRelease
 
     kapt AppDependencies.roomCompiler
+    kapt AppDependencies.glideCompiler
     kapt AppDependencies.daggerCompiler
     kapt AppDependencies.daggerProcessor
     kapt AppDependencies.lifecycleCompiler
