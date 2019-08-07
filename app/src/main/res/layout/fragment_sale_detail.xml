@@ -162,6 +162,6 @@
             android:layout_marginTop="30dp"
             android:enabled="@{!viewModel.isLoading}"
             android:onClick="@{()->viewModel.onReCreateOrderClick()}"
-            android:text="CREATE NEW ORDER" />
+            android:text="Create New Order" />
     </LinearLayout>
 </layout>

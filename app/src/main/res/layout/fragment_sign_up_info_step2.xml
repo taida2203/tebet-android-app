@@ -9,33 +9,38 @@
             type="com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
-        <com.tebet.mojual.common.view.AppEditTextLayout
-            style="@style/TextInputLayoutStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:background="@color/white"
+            android:orientation="vertical">
 
-            <com.tebet.mojual.common.view.AppEditText
-                android:id="@+id/email"
+            <com.tebet.mojual.common.view.AppEditTextLayout
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email (Optional)"
-                android:text="@={viewModel.userProfile.get().email}"
-                app:validateType='@{"email"}'
-                app:validateTypeAutoDismiss="@{true}" />
-        </com.tebet.mojual.common.view.AppEditTextLayout>
+                android:layout_marginBottom="@dimen/_20sdp">
 
-        <com.mindorks.placeholderview.ExpandablePlaceHolderView
-            android:id="@+id/expandableView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+                <com.tebet.mojual.common.view.AppEditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email (Optional)"
+                    android:text="@={viewModel.userProfile.get().email}"
+                    app:validateType='@{"email"}'
+                    app:validateTypeAutoDismiss="@{true}" />
+            </com.tebet.mojual.common.view.AppEditTextLayout>
 
-    </LinearLayout>
+            <com.mindorks.placeholderview.ExpandablePlaceHolderView
+                android:id="@+id/expandableView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal" />
+        </LinearLayout>
+    </ScrollView>
 </layout>

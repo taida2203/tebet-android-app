@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import co.sdk.auth.AuthSdk
@@ -16,6 +17,7 @@ import co.sdk.auth.core.models.Token
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivityLoginPasswordBinding
+import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.forgotpassword.ForgotPassword
 import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.base.BaseActivity
@@ -33,10 +35,13 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
         get() = R.layout.activity_login_password
 
     private lateinit var validator: Validator
+    private var topRightViewBinding: ItemHomeIconBinding? = null
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         validator = Validator(viewDataBinding)
+        topRightViewBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
         title = "Login with phone number"
 //        navLayout.visibility = View.VISIBLE
     }

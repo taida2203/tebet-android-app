@@ -22,6 +22,6 @@ class AppButtonRounded : AppCompatButton {
     private fun init() {
         background = ContextCompat.getDrawable(context, R.drawable.rounded_bg_button)
         setTextColor(ContextCompat.getColor(context, R.color.white))
-        isAllCaps = true
+        isAllCaps = false
     }
 }

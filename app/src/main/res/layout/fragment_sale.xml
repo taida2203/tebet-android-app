@@ -122,6 +122,6 @@
             android:layout_height="wrap_content"
             android:enabled="@{!viewModel.isLoading}"
             android:onClick="@{()-> viewModel.onSubmitClick()}"
-            android:text="SUBMIT" />
+            android:text="Submit" />
     </LinearLayout>
 </layout>
