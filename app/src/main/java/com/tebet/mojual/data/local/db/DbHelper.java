@@ -50,4 +50,6 @@ public interface DbHelper {
     Observable<Boolean> insertCity(final City city);
 
     Observable<Boolean> insertCities(@Nullable List<City> cities);
+
+    Observable<Boolean> clearAllTables();
 }

@@ -26,6 +26,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun openLoginScreen() {
         activity?.finish()
-        startActivity(Intent(activity, Login::class.java))
+        val intent = Intent(activity, Login::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
     }
 }

@@ -148,4 +148,15 @@ public class AppDbHelper implements DbHelper {
             }
         });
     }
+
+    @Override
+    public Observable<Boolean> clearAllTables() {
+       return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.clearAllTables();
+                return true;
+            }
+        });
+    }
 }

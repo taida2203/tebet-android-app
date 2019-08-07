@@ -11,6 +11,7 @@ import com.tebet.mojual.R
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.databinding.ItemHomeAvatarBinding
+import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.content.HomeFragment
 import com.tebet.mojual.view.profile.ProfileFragment
@@ -38,8 +39,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
 
     private var currentFragment: Fragment? = null
 
-    var topLeftViewBinding: ItemHomeAvatarBinding? = null
-        private set
+    private var topLeftViewBinding: ItemHomeAvatarBinding? = null
+    private var topRightViewBinding: ItemHomeIconBinding? = null
 
     override var enableBackButton: Boolean = super.enableBackButton
         set(isEnable) {
@@ -52,15 +53,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
         viewModel.navigator = this
         topLeftViewBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_avatar, baseBinding.topLeftHolder, true)
+        topRightViewBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
+        baseBinding.viewModel?.enableTopLogo?.set(true)
         title = "Home"
         showHomeScreen()
         viewModel.loadData()
-        topLeftViewBinding?.avatar?.setOnClickListener { it ->
-            showProfileScreen()
-        }
-        viewModel.profileLiveData.observe(this, Observer<UserProfile> {
-            topLeftViewBinding?.userProfile = it
-        })
+        topLeftViewBinding?.avatar?.setOnClickListener { showProfileScreen() }
+        viewModel.profileLiveData.observe(this, Observer<UserProfile> { topLeftViewBinding?.userProfile = it })
 
 //        getData()
 //        btnLogout.setOnClickListener {

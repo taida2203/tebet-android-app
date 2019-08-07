@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
+import co.common.util.PreferenceUtils
 import co.common.util.PreferenceUtils.*
 import co.sdk.auth.core.*
 import co.sdk.auth.core.models.*
@@ -186,10 +187,10 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         }
     }
 
-    fun logout(forceLogout: Boolean? = false): Observable<Any> {
+    fun logout(forceLogout: Boolean = false): Observable<Any> {
         return Observable.create { emitter ->
             run {
-                logout(true, object : ApiCallBack<Any>() {
+                logout(forceLogout, object : ApiCallBack<Any>() {
                     override fun onSuccess(responeCode: Int, response: Any?) {
                         emitter.onNext("")
                     }
@@ -205,6 +206,8 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
 
     fun logout(forceLogout: Boolean, callback: ApiCallBack<Any>?) {
         if (getAuthMethod() == null) {
+            saveObject(AUTH_LOGIN_TOKEN, null)
+            clearAll()
             callback?.onSuccess(200, AuthJson<Any>("true", context.getString(R.string.general_message_error)))
             return
         }
@@ -215,6 +218,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
                 ServiceHelper.createService(ApiService::class.java).logout(logoutInput).enqueue(object : Callback<AuthJson<Any>> {
                     override fun onResponse(call: Call<AuthJson<Any>>, response: Response<AuthJson<Any>>) {
                         saveObject(AUTH_LOGIN_TOKEN, null)
+                        clearAll()
 //                        response.body()?.let {
 //                            callback?.onSuccess(code, it)
 //                        }
@@ -225,6 +229,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
                     override fun onFailure(call: Call<AuthJson<Any>>, t: Throwable) {
                         if (forceLogout) {
                             saveObject(AUTH_LOGIN_TOKEN, null)
+                            clearAll()
                             if (callback != null) {
                                 val errorMessage = t.message
                                 callback.onSuccess(200, AuthJson<Any>("true", errorMessage ?: ""))

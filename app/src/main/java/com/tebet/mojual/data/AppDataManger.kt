@@ -27,6 +27,10 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
+    override fun clearAllTables(): Observable<Boolean>? {
+        return room.clearAllTables()
+    }
+
     override fun getRegionDB(): Observable<AuthJson<List<Region>>> {
         return room.region.concatMap { bankDao ->
             bankDao.queryRegion().doOnError { message -> EmptyResultSetException("") }

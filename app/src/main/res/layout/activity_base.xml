@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.tebet.mojual.view.base.BaseActivityViewModel" />
@@ -55,6 +57,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/icon_back"
+                        android:onClick="@{()-> viewModel.onBackPressed()}"
                         android:padding="@dimen/_6sdp" />
 
                     <com.tebet.mojual.common.view.AppTextView
@@ -64,10 +67,18 @@
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:lines="1"
-                        android:onClick="@{()-> viewModel.onBackPressed()}"
+                        android:visibility="@{!viewModel.enableTopLogo.get() ? View.VISIBLE : View.GONE}"
                         android:textColor="@color/leaf_green"
                         android:textSize="@dimen/_16ssp"
                         app:font_style="bold" />
+
+                    <ImageView
+                        android:id="@+id/topCenterHolder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_22sdp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/mojual_logo"
+                        android:visibility="@{viewModel.enableTopLogo.get() ? View.VISIBLE : View.GONE}" />
 
                     <FrameLayout
                         android:id="@+id/topLeftHolder"

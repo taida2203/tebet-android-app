@@ -21,7 +21,7 @@ abstract class BaseViewModel<N>(
     private var mNavigator: WeakReference<N>? = null
 
     var baseErrorHandlerData: MutableLiveData<String> = MutableLiveData()
-    private set
+        private set
 
     var navigator: N
         get() = mNavigator?.get()!!

@@ -75,7 +75,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
 
     override fun onFragmentAttached() {
-
     }
 
     override fun onFragmentDetached(tag: String) {
@@ -97,7 +96,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         mViewModel?.baseErrorHandlerData?.observe(this, Observer<String> {
             handleError(it)
         })
-        baseBinding.ivBack.setOnClickListener { onBackPressed() }
         setSupportActionBar(baseBinding.baseToolbar)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         onCreateBase(savedInstanceState, contentLayoutId)
@@ -273,10 +271,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     override fun onBackPressed() {
-//        if (load.isShowing) {
-//            load.hidepDialog()
-//            return
-//        }
+        showLoading(false)
         super.onBackPressed()
     }
 

@@ -1,11 +1,10 @@
 package com.tebet.mojual.view.profile
 
 import co.sdk.auth.AuthSdk
-import co.sdk.auth.core.models.ApiCallBack
-import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.view.base.BaseViewModel
+import io.reactivex.observers.DisposableObserver
 
 class ProfileViewModel(
     dataManager: DataManager,
@@ -14,14 +13,25 @@ class ProfileViewModel(
     BaseViewModel<ProfileNavigator>(dataManager, schedulerProvider) {
 
     fun logout() {
-        AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
-            override fun onSuccess(responeCode: Int, response: Any?) {
-                navigator.openLoginScreen()
-            }
+        navigator.showLoading(true)
+        compositeDisposable.add(
+            AuthSdk.instance.logout(true)
+                .concatMap { dataManager.clearAllTables() }
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : DisposableObserver<Boolean>() {
+                    override fun onComplete() {
+                    }
 
-            override fun onFailed(exeption: LoginException) {
-                navigator.openLoginScreen()
-            }
-        })
+                    override fun onNext(t: Boolean) {
+                        navigator.showLoading(false)
+                        navigator.openLoginScreen()
+                    }
+
+                    override fun onError(e: Throwable) {
+                        navigator.showLoading(false)
+                        navigator.openLoginScreen()
+                    }
+                })
+        )
     }
 }
