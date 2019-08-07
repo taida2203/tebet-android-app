@@ -2,6 +2,7 @@ package com.tebet.mojual.view.signup.step2.address
 
 import android.content.Context
 import android.os.Build
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
+import com.tebet.mojual.data.models.City
 import com.tebet.mojual.databinding.LayoutAddressInputBinding
 import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
 
@@ -62,7 +64,7 @@ class AddressInputView : LinearLayout {
 
     private fun init(context: Context) {
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_address_input, this, true)
-        mBinding?.setVariable(BR.addressData, addressData.get())
+//        mBinding?.setVariable(BR.addressData, addressData.get())
         mBinding?.setVariable(BR.view, this)
         validator = Validator(mBinding)
         validator.enableFormValidationMode()
@@ -71,31 +73,31 @@ class AddressInputView : LinearLayout {
             ArrayAdapter(context, android.R.layout.simple_list_item_1, arrayListOf<String>())
         mBinding?.etCity?.setAdapter(cityAdapter)
         mBinding?.etCity?.threshold = 1
-        mBinding?.etCity?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                viewModel.userProfile.get()?.bankName = ""
-                viewModel.userProfile.get()?.bankCode = ""
-                validator.validate()
+        mBinding?.etCity?.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
+                addressData.get()?.city = viewModel.cityLiveData.value?.get(position)?.name
             }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                viewModel.userProfile.get()?.bankName = viewModel.bankNameLiveData.value?.get(position)?.name
-//                viewModel.userProfile.get()?.bankCode = viewModel.bankNameLiveData.value?.get(position)?.code
-                validator.validate()
+        mBinding?.etCity?.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                if (viewModel.cityLiveData.value?.firstOrNull { city -> city.fullName == addressData.get()?.city } == null) {
+                    addressData.get()?.city = ""
+                }
             }
-
         }
         orientation = LinearLayout.HORIZONTAL
     }
 
     //    @BindingAdapter(value = ["bind:addressData"], requireAll = false)
     fun setAddressData(
-        positionView: AddressInputView?,
         address: Address?,
-        viewModel: SignUpInfoStep2Model
+        viewModel: SignUpInfoStep2Model,
+        cities: List<City>?
     ) {
         addressData.set(address)
-        mBinding?.setVariable(BR.addressData, addressData.get())
+//        mBinding?.setVariable(BR.addressData, addressData.get())
+
+        cityAdapter?.clear()
+        cityAdapter?.addAll(cities?.map { city -> city.fullName } ?: arrayListOf())
         this.viewModel = viewModel
     }
 

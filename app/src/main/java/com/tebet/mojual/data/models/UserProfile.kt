@@ -2,10 +2,7 @@ package com.tebet.mojual.data.models
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.squareup.moshi.Json
 import com.tebet.mojual.BR
 
@@ -83,7 +80,7 @@ data class UserProfile(
             notifyPropertyChanged(BR.bankRegionName)
         }
 
-    @Ignore
+    @Embedded(prefix = "add1_")
     var domicileAddress: Address? = null
         @Bindable get() = field
         set(value) {
@@ -91,7 +88,7 @@ data class UserProfile(
             notifyPropertyChanged(BR.domicileAddress)
         }
 
-    @Ignore
+    @Embedded(prefix = "add2_")
     var pickupAddress: Address? = null
         @Bindable get() = field
         set(value) {

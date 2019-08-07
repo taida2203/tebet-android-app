@@ -7,7 +7,6 @@ import java.io.Serializable
 
 class Address(
     var address: String? = null,
-    var city: String? = null,
     var country: String? = null,
     var kecamatan: String? = null,
     var kelurahan: String? = null,
@@ -22,5 +21,11 @@ class Address(
         set(value) {
             field = value
             notifyPropertyChanged(BR.localAddress)
+        }
+    var city: String? = null
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.city)
         }
 }

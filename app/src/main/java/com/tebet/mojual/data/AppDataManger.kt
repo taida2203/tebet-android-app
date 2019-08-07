@@ -43,7 +43,16 @@ class AppDataManger @Inject constructor(
     }
 
     override fun getRegions(): Observable<AuthJson<List<Region>>> {
-        return api.getRegions()
+        if (App.instance.checkConnectivity()) {
+            var regionsTemp: AuthJson<List<Region>>? = null
+            return api.getRegions().concatMap { regionResponse ->
+                regionsTemp = regionResponse
+                room.insertRegions(regionResponse.data)
+            }.concatMap {
+                Observable.just(regionsTemp)
+            }
+        }
+        return getRegionDB()
     }
 
     override fun insertRegions(regions: MutableList<Region>?): Observable<Boolean> {
@@ -106,7 +115,16 @@ class AppDataManger @Inject constructor(
     }
 
     override fun getCities(): Observable<AuthJson<List<City>>> {
-        return api.getCities()
+        if (App.instance.checkConnectivity()) {
+            var citiesTemp: AuthJson<List<City>>? = null
+            return api.getCities().concatMap { cityResponse ->
+                citiesTemp = cityResponse
+                room.insertCities(cityResponse.data)
+            }.concatMap {
+                Observable.just(citiesTemp)
+            }
+        }
+        return getCityDB()
     }
 
     override fun insertUserProfile(userProfile: UserProfile?): Observable<Boolean> {

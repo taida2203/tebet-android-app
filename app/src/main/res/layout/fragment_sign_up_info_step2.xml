@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email (Optional)"
-                    android:text="@={viewModel.userProfile.get().email}"
+                    android:text="@={viewModel.userProfile.email}"
                     app:validateType='@{"email"}'
                     app:validateTypeAutoDismiss="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>

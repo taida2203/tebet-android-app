@@ -10,6 +10,7 @@ import com.mindorks.placeholderview.annotations.expand.ChildPosition
 import com.mindorks.placeholderview.annotations.expand.ParentPosition
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
+import com.tebet.mojual.data.models.City
 import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
 
 @Layout(R.layout.item_address_content)
@@ -17,10 +18,16 @@ class ChildItem(
     private val mExpandablePlaceHolderView: ExpandablePlaceHolderView,
     var viewModel: SignUpInfoStep2Model
 ) {
+    var cities: List<City>? = ArrayList()
+        set(value) {
+            field = value
+            inputAddress?.setAddressData(address, viewModel, cities)
+        }
+
     var address: Address? = null
         set(value) {
             field = value
-            inputAddress?.setAddressData(inputAddress, address, viewModel)
+            inputAddress?.setAddressData(address, viewModel, cities)
         }
     @ParentPosition
     internal var mParentPosition: Int = 0
@@ -37,7 +44,7 @@ class ChildItem(
     fun onResolved() {
         //        itemNameTxt.setText(childTitleList.get(mParentPosition).get(mChildPosition));
         //        itemIcon.setImageDrawable(mExpandablePlaceHolderView.getResources().getDrawable(R.drawable.signup_expand_btn));
-        inputAddress?.setAddressData(inputAddress, address, viewModel)
+        inputAddress?.setAddressData(address, viewModel, cities)
     }
 
     @Click(R.id.mainView)

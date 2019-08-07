@@ -8,9 +8,6 @@
             name="view"
             type="com.tebet.mojual.view.signup.step2.address.AddressInputView" />
 
-        <variable
-            name="addressData"
-            type="com.tebet.mojual.data.models.Address" />
     </data>
 
     <LinearLayout
@@ -28,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Address"
-                android:text="@={addressData.address}"
+                android:text="@={view.addressData.address}"
                 app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
@@ -43,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Kelurahan"
-                android:text="@={addressData.kelurahan}"
+                android:text="@={view.addressData.kelurahan}"
                 app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
@@ -58,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Kecamatan"
-                android:text="@={addressData.kecamatan}"
+                android:text="@={view.addressData.kecamatan}"
                 app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
@@ -73,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="RT/RW"
-                android:text="@={addressData.rtrw}"
+                android:text="@={view.addressData.rtrw}"
                 app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
@@ -89,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="City"
-                android:text="@={addressData.city}"
+                android:text="@={view.addressData.city}"
                 app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
 
@@ -106,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Postal Code"
                 android:inputType="number"
-                android:text="@={addressData.postalCode}"
+                android:text="@={view.addressData.postalCode}"
                 app:validateTypeAutoDismiss="@{true}"
                 app:validateEmpty="@{true}" />
 
@@ -119,6 +116,6 @@
             android:focusable="false"
             android:hint="Choose on Map"
             android:onClick="@{()-> view.onChooseMapClick()}"
-            android:text="@={addressData.localAddress}" />
+            android:text="@={view.addressData.localAddress}" />
     </LinearLayout>
 </layout>

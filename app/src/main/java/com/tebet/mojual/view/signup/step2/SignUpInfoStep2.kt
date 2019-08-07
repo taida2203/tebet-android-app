@@ -4,10 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
+import com.tebet.mojual.data.models.City
+import com.tebet.mojual.data.models.Region
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep2Binding
 import com.tebet.mojual.view.signup.step.SignUpInfoStep
@@ -38,9 +42,9 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
         viewDataBinding?.expandableView?.let {
             it.addView(ParentItem(it.context, "DOMICILE ADDRESS", true))
             if (viewModel.userProfile.get()?.domicileAddress == null) viewModel.userProfile.get()?.domicileAddress =
-                Address(localTagPos = 0)
+                Address(localTagPos = 0) else viewModel.userProfile.get()?.domicileAddress?.localTagPos = 0
             if (viewModel.userProfile.get()?.pickupAddress == null) viewModel.userProfile.get()?.pickupAddress =
-                Address(localTagPos = 1)
+                Address(localTagPos = 1) else viewModel.userProfile.get()?.pickupAddress?.localTagPos = 1
             addressViews.add(
                 ChildItem(
                     it,
@@ -59,7 +63,13 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
             addressViews[1].address = viewModel.userProfile.get()?.pickupAddress ?: Address(localTagPos = 0)
             it.addView(addressViews[1])
             it.expand(0)
+
+            viewModel.cityLiveData.observe(this, Observer<List<City>> { cities ->
+                addressViews.forEach { addressView -> addressView.cities = cities
+                }
+            })
         }
+        viewModel.loadData()
     }
 
     override fun selectLocation(address: Address?) {

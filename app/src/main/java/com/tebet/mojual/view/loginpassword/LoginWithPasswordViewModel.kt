@@ -4,9 +4,6 @@ import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.AuthPasswordMethod
 import co.sdk.auth.core.LoginConfiguration
-import co.sdk.auth.core.models.ApiCallBack
-import co.sdk.auth.core.models.LoginException
-import co.sdk.auth.core.models.Token
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
@@ -27,8 +24,8 @@ class LoginWithPasswordViewModel(
         }
         navigator.showLoading(true)
         val configuration = LoginConfiguration(false)
-        configuration.username = userInputPhone
-        configuration.password = userInputPassword
+        configuration.username = userInputPhone.trim()
+        configuration.password = userInputPassword.trim()
         navigator.activity()?.let {
             compositeDisposable.add(
                 AuthSdk.instance.login(it, AuthPasswordMethod(), configuration)

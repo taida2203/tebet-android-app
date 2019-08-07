@@ -190,7 +190,7 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
 
     override fun finish() {
         viewModel.selectedLocation?.let {
-            address.latitude = it.latitude
+            address.     latitude = it.latitude
             address.longitude = it.longitude
             address.localAddress = viewModel.selectedAddress
             intent.putExtra(

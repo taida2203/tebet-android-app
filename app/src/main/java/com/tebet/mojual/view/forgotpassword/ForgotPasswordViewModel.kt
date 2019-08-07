@@ -26,7 +26,7 @@ class ForgotPasswordViewModel(
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.updatePassword(
-                UpdatePasswordRequest(userInputPassword)
+                UpdatePasswordRequest(userInputPassword.trim())
             ).concatMap { dataManager.getProfile() }
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
