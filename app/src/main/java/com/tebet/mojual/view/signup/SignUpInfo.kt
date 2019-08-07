@@ -7,13 +7,11 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
-import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import co.common.view.dialog.DateDialog
@@ -113,7 +111,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
     }
 
     private fun refreshScreenStep() {
-        viewDataBinding?.btnBack?.visibility = View.VISIBLE
+        enableBackButton = true
 
         viewDataBinding?.tvTitleStep1?.setTypeface(null, Typeface.NORMAL)
         viewDataBinding?.tvTitleStep2?.setTypeface(null, Typeface.NORMAL)
@@ -126,7 +124,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
             SCREEN_STEP.STEP_1 -> {
                 currentStepFragment = SignUpInfoStep1()
                 openFragment(currentStepFragment as SignUpInfoStep1, R.id.placeHolderChild)
-                viewDataBinding?.btnBack?.visibility = View.GONE
+                enableBackButton = false
                 viewDataBinding?.tvTitleStep1?.setTypeface(null, Typeface.BOLD)
                 viewDataBinding?.tvTitleStep1?.setTextColor(ContextCompat.getColor(this, R.color.green_dark))
             }
