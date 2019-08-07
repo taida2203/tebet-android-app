@@ -16,11 +16,11 @@ class Address(
     var rtrw: String? = null,
     var localTagPos: Int? = null
 ) : Serializable, BaseObservable() {
-    var localAddress: String? = null
+    var mapLocation: String? = null
         @Bindable get() = field
         set(value) {
             field = value
-            notifyPropertyChanged(BR.localAddress)
+            notifyPropertyChanged(BR.mapLocation)
         }
     var city: String? = null
         @Bindable get() = field

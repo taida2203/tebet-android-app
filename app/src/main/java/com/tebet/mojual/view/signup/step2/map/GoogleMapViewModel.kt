@@ -25,9 +25,7 @@ class GoogleMapViewModel(
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getReserveGeoLocation(
-                "${selectedLocation?.latitude},${selectedLocation?.longitude}",
-                ConfigEnv.googleApiKey
-            )
+                "${selectedLocation?.latitude},${selectedLocation?.longitude}")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(400, TimeUnit.MILLISECONDS)

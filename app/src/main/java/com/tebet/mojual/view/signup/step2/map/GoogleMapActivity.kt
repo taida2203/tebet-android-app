@@ -192,7 +192,7 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
         viewModel.selectedLocation?.let {
             address.     latitude = it.latitude
             address.longitude = it.longitude
-            address.localAddress = viewModel.selectedAddress
+            address.mapLocation = viewModel.selectedAddress
             intent.putExtra(
                 "LOCATION",
                 address

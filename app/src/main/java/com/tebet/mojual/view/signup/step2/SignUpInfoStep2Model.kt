@@ -40,6 +40,41 @@ class SignUpInfoStep2Model(
                     }
                 })
         )
+
+//        compositeDisposable.add(
+//            Observable.zip(
+//                dataManager.getCityDB(),
+//                dataManager.getReserveGeoLocation("${userProfile.get()?.domicileAddress?.latitude},${userProfile.get()?.domicileAddress?.longitude}"),
+//                dataManager.getReserveGeoLocation("${userProfile.get()?.pickupAddress?.latitude},${userProfile.get()?.pickupAddress?.longitude}"),
+//                Function3<AuthJson<List<City>>, GeoCodeResponse, GeoCodeResponse, Triple<List<City>, GeoCodeResponse, GeoCodeResponse>>
+//                { cities, reserveGeoDomi, reserveGeoPickup ->
+//                    Triple(cities.data ?: emptyList(), reserveGeoDomi, reserveGeoPickup)
+//                }
+//            )
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeWith(object : DisposableObserver<Triple<List<City>, GeoCodeResponse, GeoCodeResponse>>() {
+//                    override fun onNext(dataResponse: Triple<List<City>, GeoCodeResponse, GeoCodeResponse>) {
+//                        navigator.showLoading(false)
+//                        cityLiveData.value = dataResponse.first
+//                        if (dataResponse.second.status.toLowerCase() == "ok") {
+//                            userProfile.get()?.domicileAddress?.mapLocation = dataResponse.second.results.firstOrNull()?.formatted_address
+//                        }
+//                        if (dataResponse.third.status.toLowerCase() == "ok") {
+//                            userProfile.get()?.pickupAddress?.mapLocation = dataResponse.third.results.firstOrNull()?.formatted_address
+//                        }
+//
+//                    }
+//
+//                    override fun onError(e: Throwable) {
+//                        navigator.showLoading(false)
+//                        handleError(e.message)
+//                    }
+//
+//                    override fun onComplete() {
+//                    }
+//                })
+//        )
     }
 
 

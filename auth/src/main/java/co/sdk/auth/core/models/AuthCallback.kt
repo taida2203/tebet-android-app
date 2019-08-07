@@ -2,6 +2,7 @@ package co.sdk.auth.core.models
 
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.utils.Utility
+import com.google.gson.JsonObject
 import com.tebet.mojual.sdk.auth.R
 import org.json.JSONObject
 import retrofit2.Call
@@ -42,13 +43,14 @@ abstract class AuthCallback<T> : Callback<AuthJson<T>> {
             val exception = AuthException()
             exception.errorCode = response.code()
             val errorBody = response.errorBody()?.string()
-            val jsonObject = JSONObject(errorBody)
+            var jsonObject: JSONObject? = null
             try {
+                jsonObject = JSONObject(errorBody)
                 exception.errorMessage = jsonObject.getString("message")
             } catch (e: Exception) {
-                val userMessages = jsonObject.getJSONArray("messages")
+                val userMessages = jsonObject?.getJSONArray("messages")
                 try {
-                    exception.errorMessages = listOf(userMessages.getString(0))
+                    exception.errorMessages = listOf(userMessages!!.getString(0))
                 } catch (e: Exception) {
                     exception.errorMessage = Utility.instance.getString(R.string.general_message_error)
                 }
