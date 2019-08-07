@@ -29,14 +29,14 @@
                 android:fontFamily="bold"
                 android:gravity="center"
                 android:text="Demographic"
-                android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_12ssp" />
 
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="bold"
                 android:text=">"
-                android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_12ssp" />
 
             <com.tebet.mojual.common.view.AppTextView
                 android:id="@+id/tvTitleStep2"
@@ -46,14 +46,14 @@
                 android:fontFamily="bold"
                 android:gravity="center"
                 android:text="Contact"
-                android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_12ssp" />
 
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="bold"
                 android:text=">"
-                android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_12ssp" />
 
             <com.tebet.mojual.common.view.AppTextView
                 android:id="@+id/tvTitleStep3"
@@ -63,7 +63,7 @@
                 android:fontFamily="bold"
                 android:gravity="center"
                 android:text="Payment"
-                android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_12ssp" />
         </LinearLayout>
 
         <FrameLayout

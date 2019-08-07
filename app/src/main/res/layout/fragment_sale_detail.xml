@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:text="OD-123-456"
-                android:textColor="@color/leaf_green"
+                android:textColor="@color/green_dark"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
         </LinearLayout>

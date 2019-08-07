@@ -118,6 +118,9 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         viewDataBinding?.tvTitleStep1?.setTypeface(null, Typeface.NORMAL)
         viewDataBinding?.tvTitleStep2?.setTypeface(null, Typeface.NORMAL)
         viewDataBinding?.tvTitleStep3?.setTypeface(null, Typeface.NORMAL)
+        viewDataBinding?.tvTitleStep1?.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        viewDataBinding?.tvTitleStep2?.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
         when (screenStep) {
             SCREEN_STEP.STEP_1 -> {
@@ -125,25 +128,25 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                 openFragment(currentStepFragment as SignUpInfoStep1, R.id.placeHolderChild)
                 viewDataBinding?.btnBack?.visibility = View.GONE
                 viewDataBinding?.tvTitleStep1?.setTypeface(null, Typeface.BOLD)
-                viewDataBinding?.tvTitleStep1?.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
+                viewDataBinding?.tvTitleStep1?.setTextColor(ContextCompat.getColor(this, R.color.green_dark))
             }
 
             SCREEN_STEP.STEP_2 -> {
                 currentStepFragment = SignUpInfoStep2()
                 openFragment(currentStepFragment as SignUpInfoStep2, R.id.placeHolderChild)
                 viewDataBinding?.tvTitleStep2?.setTypeface(null, Typeface.BOLD)
-                viewDataBinding?.tvTitleStep2?.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
+                viewDataBinding?.tvTitleStep2?.setTextColor(ContextCompat.getColor(this, R.color.green_dark))
             }
 
             SCREEN_STEP.STEP_3 -> {
                 currentStepFragment = SignUpInfoStep3()
                 openFragment(currentStepFragment as SignUpInfoStep3, R.id.placeHolderChild)
                 viewDataBinding?.tvTitleStep3?.setTypeface(null, Typeface.BOLD)
-                viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
+                viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this, R.color.green_dark))
             }
             else -> {
                 viewDataBinding?.tvTitleStep3?.setTypeface(null, Typeface.BOLD)
-                viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this, R.color.dark_green))
+                viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this, R.color.green_dark))
                 viewModel.updateUserProfile()
             }
         }

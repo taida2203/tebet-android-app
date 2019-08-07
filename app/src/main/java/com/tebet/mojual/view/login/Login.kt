@@ -37,6 +37,7 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         enableBackButton = false
+        viewDataBinding?.btnRegistration?.setBackgroundResource(R.drawable.rounded_bg_button_brown)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

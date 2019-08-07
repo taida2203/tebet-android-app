@@ -10,6 +10,7 @@
     <color name="bgcolor">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="green_dark">#477045</color>
 
     <!--notification-->
     <color name="statusDanger">#f75c75</color>
@@ -33,7 +34,6 @@
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#2C2C2C</color>
     <color name="gray_text">#AFAFAF</color>
     <color name="green_ic">#476f45</color>
-    <color name="leaf_green">#03834A</color>
     <color name="gray_signup">#BCD3DB</color>
     <color name="greycolor">#788f9b</color>
     <color name="back_spinner">#eceef0</color>

@@ -42,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="@{!viewModel.isLoading}"
+                android:background="@drawable/rounded_bg_button_brown"
                 android:onClick="@{() -> viewModel.onRegistrationClick()}"
                 android:text="@string/login_screen_btn_register" />
         </LinearLayout>

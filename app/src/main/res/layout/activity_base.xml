@@ -68,7 +68,7 @@
                         android:gravity="center"
                         android:lines="1"
                         android:visibility="@{!viewModel.enableTopLogo.get() ? View.VISIBLE : View.GONE}"
-                        android:textColor="@color/leaf_green"
+                        android:textColor="@color/green_dark"
                         android:textSize="@dimen/_16ssp"
                         app:font_style="bold" />
 

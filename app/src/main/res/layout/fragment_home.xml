@@ -49,7 +49,7 @@
                               android:textSize="@dimen/_16ssp"
                               android:layout_marginBottom="10dp"
                               android:textStyle="bold"
-                              android:textColor="@color/leaf_green"
+                              android:textColor="@color/green_dark"
                               android:text="Sell now"/>
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
@@ -66,7 +66,7 @@
                               android:layout_height="wrap_content"
                               android:textSize="@dimen/_16ssp"
                               android:textStyle="bold"
-                              android:textColor="@color/leaf_green"
+                              android:textColor="@color/green_dark"
                               android:text="Check Quality"
                               android:layout_marginBottom="10dp"/>
                 </LinearLayout>
@@ -90,7 +90,7 @@
                               android:textSize="@dimen/_16ssp"
                               android:text="Borrow"
                               android:textStyle="bold"
-                              android:textColor="@color/leaf_green"
+                              android:textColor="@color/green_dark"
                               android:layout_marginBottom="10dp"/>
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp"
@@ -109,7 +109,7 @@
                               android:textSize="@dimen/_16ssp"
                               android:text="Tips"
                               android:textStyle="bold"
-                              android:textColor="@color/leaf_green"
+                              android:textColor="@color/green_dark"
                               android:layout_marginBottom="10dp"/>
                 </LinearLayout>
             </LinearLayout>
