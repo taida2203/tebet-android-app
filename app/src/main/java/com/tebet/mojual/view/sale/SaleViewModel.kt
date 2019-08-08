@@ -32,4 +32,12 @@ class SaleViewModel(
                 })
         )
     }
+
+    fun openSelectQuantityScreen() {
+        navigator.showQuantityScreen()
+    }
+
+    fun openSelectDateScreen() {
+        navigator.showDateScreen()
+    }
 }

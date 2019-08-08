@@ -35,6 +35,7 @@
                 android:drawableRight="@drawable/signup_dropdown_btn"
                 android:focusable="false"
                 android:hint="@string/sale_selected_date"
+                android:onClick="@{()->viewModel.openSelectDateScreen()}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}">
 
@@ -56,6 +57,7 @@
                 android:drawableRight="@drawable/signup_dropdown_btn"
                 android:focusable="false"
                 android:hint="@string/sale_quantity"
+                android:onClick="@{()->viewModel.openSelectQuantityScreen()}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}">
 

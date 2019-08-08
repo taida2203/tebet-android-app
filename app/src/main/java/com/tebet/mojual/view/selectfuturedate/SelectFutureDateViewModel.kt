@@ -1,4 +1,4 @@
-package com.tebet.mojual.view.home
+package com.tebet.mojual.view.selectfuturedate
 
 import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.common.util.rx.SchedulerProvider
@@ -9,11 +9,11 @@ import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class HomeViewModel(
+class SelectFutureDateViewModel(
     dataManager: DataManager,
     schedulerProvider: SchedulerProvider
 ) :
-    BaseViewModel<HomeNavigator>(dataManager, schedulerProvider) {
+    BaseViewModel<SelectFutureDateNavigator>(dataManager, schedulerProvider) {
     var profileLiveData = MutableLiveData<UserProfile>()
 
     fun loadData() {
@@ -32,15 +32,4 @@ class HomeViewModel(
         )
     }
 
-    fun onSellClick() {
-        navigator.showSellScreen()
-    }
-
-    fun onSubmitOrderClick() {
-        navigator.showOrderDetailScreen()
-    }
-
-    fun onHomeClick() {
-        navigator.showHomeScreen()
-    }
 }

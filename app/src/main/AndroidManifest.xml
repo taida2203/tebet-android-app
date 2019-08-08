@@ -40,6 +40,8 @@
         <activity android:name=".view.registration.SignUpPassword" />
         <activity android:name=".view.loginpassword.LoginWithPassword" />
         <activity android:name=".view.forgotpassword.ForgotPassword" />
+        <activity android:name=".view.selectquantity.SelectQuantity" />
+        <activity android:name=".view.selectfuturedate.SelectFutureDate" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
