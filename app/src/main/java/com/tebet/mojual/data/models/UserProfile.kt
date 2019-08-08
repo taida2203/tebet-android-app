@@ -45,8 +45,22 @@ data class UserProfile(
     @ColumnInfo(name = "username")
     var username: String? = null
 ) : BaseObservable() {
-    companion object{
+    companion object {
+
     }
+
+    enum class Status(val status: String) {
+        Init("INIT"), InitProfile("INIT_PROFILE"), New("NEW"), Verified("VERIFIED"), Rejected("REJECTED")
+    }
+
+    @Ignore
+    var statusEnum: Status? = null
+        get() = Status.values().firstOrNull { enum -> enum.status == status }
+        set(value) {
+            field = value
+            status = Status.values().firstOrNull { enum -> enum == value }?.status
+        }
+
     var avatarLocal: String? = null
         @Bindable get() = field
         set(value) {

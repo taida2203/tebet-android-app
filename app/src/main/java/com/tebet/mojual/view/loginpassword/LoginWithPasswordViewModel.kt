@@ -34,9 +34,9 @@ class LoginWithPasswordViewModel(
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {
                         override fun onSuccess(dataResponse: UserProfile) {
                             navigator.showLoading(false)
-                            when {
-                                dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
-                                dataResponse.status.equals("INIT_PROFILE") -> navigator.openSignUpInfoScreen()
+                            when (dataResponse.statusEnum) {
+                                UserProfile.Status.Init -> navigator.openRegistrationScreen()
+                                UserProfile.Status.InitProfile -> navigator.openSignUpInfoScreen()
                                 else -> navigator.openHomeScreen()
                             }
                         }
@@ -64,9 +64,9 @@ class LoginWithPasswordViewModel(
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {
                         override fun onSuccess(dataResponse: UserProfile) {
                             navigator.showLoading(false)
-                            when {
-                                dataResponse.status.equals("INIT") -> navigator.openRegistrationScreen()
-                                dataResponse.status.equals("INIT_PROFILE") -> navigator.openSignUpInfoScreen()
+                            when (dataResponse.statusEnum) {
+                                UserProfile.Status.Init -> navigator.openRegistrationScreen()
+                                UserProfile.Status.InitProfile -> navigator.openSignUpInfoScreen()
                                 else -> navigator.openForgotPasswordScreen()
                             }
                         }

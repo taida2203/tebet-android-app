@@ -21,6 +21,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeContentViewModel>(), 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = this
+        viewModel.loadData()
     }
 
     override fun openSellScreen() {

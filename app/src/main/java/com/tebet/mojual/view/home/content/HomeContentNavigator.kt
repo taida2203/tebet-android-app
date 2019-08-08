@@ -1,7 +1,7 @@
 package com.tebet.mojual.view.home.content
 
-import com.tebet.mojual.view.base.BaseNavigator
+import com.tebet.mojual.view.base.BaseActivityNavigator
 
-interface HomeContentNavigator : BaseNavigator {
+interface HomeContentNavigator : BaseActivityNavigator {
     fun openSellScreen()
 }

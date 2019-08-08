@@ -136,10 +136,16 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         return baseActivity
     }
 
-    override fun onBackPressed() {
-    }
-
     override fun finish() {
         activity?.finish()
     }
+
+    override fun show(message: String) {
+        (activity() as BaseActivity<*, *>).show(message)
+    }
+
+    override fun show(messageResId: Int) {
+        (activity() as BaseActivity<*, *>).show(messageResId)
+    }
+
 }

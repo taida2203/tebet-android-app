@@ -15,6 +15,8 @@
     <string name="sign_up_screen_re_password">Retype Password</string>
     <string name="general_btn_next">Next</string>
     <string name="general_btn_back">Back</string>
+    <string name="general_error_feature_disabled">This feature will coming soon !</string>
+    <string name="general_error_feature_permission">You don\'t have permission to access this feature yet</string>
     <string name="login_password_screen_phone">Phone</string>
     <string name="login_screen_btn_forgot_password">Forgot password</string>
     <string name="passwordErrorMessage">Password must at least 6 char</string>
@@ -26,4 +28,5 @@
     <string name="sale_quantity">Quantity</string>
     <string name="sale_selected_date">Select Date</string>
     <string name="sale_select_title">Select date to sell and the quantity</string>
+    <string name="home_verify_warning">Your account is in verify process. MOJUAL team will comtact you soon</string>
 </resources>

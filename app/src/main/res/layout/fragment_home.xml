@@ -1,116 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
-        <variable name="viewModel" type="com.tebet.mojual.view.home.content.HomeContentViewModel"/>
+
+        <import type="android.view.View" />
+
+        <import type="com.tebet.mojual.data.models.UserProfile.Status" />
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.home.content.HomeContentViewModel" />
     </data>
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/_15sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.userProfile.statusEnum != Status.New &amp;&amp; viewModel.userProfile.statusEnum != Status.Rejected? View.VISIBLE : View.GONE}">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BONUS"
+                android:textColor="@color/gray_text"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="RP 1.000.000"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/tvVerifiedWarning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/border_edit_text"
+            android:padding="@dimen/_8sdp"
+            android:visibility="@{viewModel.userProfile.statusEnum == Status.New ? View.VISIBLE : View.GONE}">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_verify_warning"
+                android:textColor="@color/red_btn_dialog"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/white"
-            android:padding="@dimen/_15sdp">
-        <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content"
-                                                  android:text="BONUS"
-                                                  android:layout_height="wrap_content"
-                                                  android:textStyle="bold"
-                                                  android:textColor="@color/gray_text"/>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:gravity="center" android:orientation="horizontal">
-            <com.tebet.mojual.common.view.AppTextView android:layout_width="0dp" android:layout_height="wrap_content"
-                                                      android:layout_weight="1"
-                                                      android:text="RP 1.000.000"
-                                                      android:textStyle="bold"/>
-            <androidx.appcompat.widget.AppCompatRatingBar android:layout_width="wrap_content"
-                                                          android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <com.tebet.mojual.common.view.AppTextView android:layout_width="wrap_content"
-                                                  android:text="Your account is in verify process.\nMOJUAL team will comtact you soon"
-                                                  android:layout_height="wrap_content"/>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                      android:orientation="vertical">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
-                          android:gravity="bottom"
-                          android:layout_marginBottom="5dp">
-                <LinearLayout android:layout_width="0dp"
-                              android:layout_height="wrap_content"
-                              android:layout_weight="1"
-                              android:layout_marginRight="5dp"
-                              android:gravity="center"
-                              android:background="@drawable/border_edit_text"
-                              android:onClick="@{()-> viewModel.onSellClick()}"
-                              android:orientation="vertical">
-                    <ImageView android:layout_width="@dimen/_80sdp"
-                               android:layout_height="@dimen/_80sdp"
-                               android:layout_marginTop="20dp"
-                               android:layout_marginBottom="10dp"
-                               android:src="@drawable/icon_sell"/>
-                    <TextView android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:textSize="@dimen/_16ssp"
-                              android:layout_marginBottom="10dp"
-                              android:textStyle="bold"
-                              android:textColor="@color/green_dark"
-                              android:text="Sell now"/>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:gravity="bottom">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_edit_text"
+                    android:gravity="center"
+                    android:onClick="@{()-> viewModel.onSellClick()}"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/icon_sell" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Sell now"
+                        android:textColor="@color/green_dark"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="bold" />
                 </LinearLayout>
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                              android:gravity="center"
-                              android:layout_marginLeft="5dp"
-                              android:background="@drawable/border_edit_text"
-                              android:orientation="vertical">
-                    <ImageView android:layout_width="@dimen/_80sdp"
-                               android:layout_height="@dimen/_80sdp"
-                               android:layout_marginBottom="10dp"
-                               android:layout_marginTop="20dp"
-                               android:src="@drawable/icon_check"/>
-                    <TextView android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:textSize="@dimen/_16ssp"
-                              android:textStyle="bold"
-                              android:textColor="@color/green_dark"
-                              android:text="Check Quality"
-                              android:layout_marginBottom="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:onClick="@{()-> viewModel.onCheckQualityClick()}"
+                    android:background="@drawable/border_edit_text"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/icon_check" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Check Quality"
+                        android:textColor="@color/green_dark"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
-                          android:gravity="top"
-                          android:layout_marginTop="5dp">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                              android:layout_weight="1"
-                              android:layout_marginRight="5dp"
-                              android:gravity="center"
-                              android:background="@drawable/border_edit_text"
-                              android:orientation="vertical">
-                    <ImageView android:layout_width="@dimen/_80sdp"
-                               android:layout_height="@dimen/_80sdp"
-                               android:layout_marginBottom="10dp"
-                               android:layout_marginTop="20dp"
-                               android:src="@drawable/icon_borrow"/>
-                    <TextView android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:textSize="@dimen/_16ssp"
-                              android:text="Borrow"
-                              android:textStyle="bold"
-                              android:textColor="@color/green_dark"
-                              android:layout_marginBottom="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="top">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_edit_text"
+                    android:gravity="center"
+                    android:onClick="@{()-> viewModel.onBorrowClick()}"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/icon_borrow" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Borrow"
+                        android:textColor="@color/green_dark"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="bold" />
                 </LinearLayout>
-                <LinearLayout android:layout_width="0dp"
-                              android:layout_height="wrap_content" android:layout_weight="1"
-                              android:gravity="center"
-                              android:layout_marginLeft="5dp"
-                              android:background="@drawable/border_edit_text"
-                              android:orientation="vertical">
-                    <ImageView android:layout_width="@dimen/_80sdp"
-                               android:layout_height="@dimen/_80sdp"
-                               android:layout_marginTop="20dp"
-                               android:layout_marginBottom="10dp"
-                               android:src="@drawable/icon_tips"/>
-                    <TextView android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:textSize="@dimen/_16ssp"
-                              android:text="Tips"
-                              android:textStyle="bold"
-                              android:textColor="@color/green_dark"
-                              android:layout_marginBottom="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:onClick="@{()-> viewModel.onTipsClick()}"
+                    android:background="@drawable/border_edit_text"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/icon_tips" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Tips"
+                        android:textColor="@color/green_dark"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
