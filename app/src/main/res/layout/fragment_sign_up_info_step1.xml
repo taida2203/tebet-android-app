@@ -15,7 +15,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_8sdp"
         android:orientation="vertical"
         android:scrollbars="none">
 
@@ -23,21 +22,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="@dimen/_15sdp">
+            android:orientation="vertical">
 
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
                 android:gravity="center"
-                android:text="Your selfie photo, please capture front of your face." />
+                android:text="Your selfie photo, please capture front of your face."
+                android:textSize="@dimen/_11ssp" />
 
             <RelativeLayout
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_18sdp"
                 android:background="@drawable/circle_image_view"
                 android:onClick="@{()-> viewModel.onCaptureAvatar()}"
                 android:src="@drawable/photo_camera">
@@ -61,7 +60,7 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_20sdp">
+                android:layout_marginBottom="@dimen/_12sdp">
 
                 <com.tebet.mojual.common.view.AppEditText
                     android:id="@+id/fullName"
@@ -71,8 +70,8 @@
                     android:imeOptions="actionNext"
                     android:maxLength="50"
                     android:text="@={viewModel.userProfile.fullName}"
-                    app:validateRegexAutoDismiss="@{true}"
                     app:validateRegex='@{"^[a-zA-Z]+(([&apos;,. -][a-zA-Z ])?[a-zA-Z]*)*$"}'
+                    app:validateRegexAutoDismiss="@{true}"
                     app:validateRegexMessage="@{@string/fullNameErrorMessage}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -80,7 +79,7 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_20sdp">
+                android:layout_marginBottom="@dimen/_12sdp">
 
                 <com.tebet.mojual.common.view.AppEditText
                     android:id="@+id/birthday"
@@ -92,15 +91,15 @@
                     android:imeOptions="actionNext"
                     android:onClick="@{()-> viewModel.onSelectDateClick()}"
                     android:text="@={viewModel.userProfile.birthday}"
-                    app:validateTypeAutoDismiss="@{true}"
-                    app:validateEmpty="@{true}" />
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
             <com.tebet.mojual.common.view.AppEditTextLayout
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_20sdp">
+                android:layout_marginBottom="@dimen/_12sdp">
 
                 <com.tebet.mojual.common.view.AppEditText
                     android:id="@+id/ktpNumber"
@@ -111,15 +110,14 @@
                     android:inputType="number"
                     android:maxLength="16"
                     android:text="@={viewModel.userProfile.ktpNumber}"
-                    app:validateTypeAutoDismiss="@{true}"
                     app:validateEmpty="@{true}"
-                    app:validateMinLength="@{16}" />
+                    app:validateMinLength="@{16}"
+                    app:validateTypeAutoDismiss="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/ktpHolder"
@@ -140,7 +138,7 @@
                     <com.tebet.mojual.common.view.AppTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
                         android:gravity="center"
                         android:text="Upload KTP Photo"
                         android:textSize="@dimen/_14ssp"

@@ -18,14 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="@dimen/_15sdp">
+            android:orientation="vertical">
 
             <com.tebet.mojual.common.view.AppEditTextLayout
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp">
+                android:layout_marginBottom="@dimen/_12sdp">
 
                 <com.tebet.mojual.common.view.AppAutoCompleteEditText
                     android:id="@+id/etBankName"
@@ -33,15 +32,15 @@
                     android:layout_height="wrap_content"
                     android:hint="Bank Name"
                     android:text="@={viewModel.userProfile.bankName}"
-                    app:validateTypeAutoDismiss="@{true}"
-                    app:validateEmpty="@{true}" />
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
             <com.tebet.mojual.common.view.AppEditTextLayout
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp">
+                android:layout_marginBottom="@dimen/_12sdp">
 
                 <com.tebet.mojual.common.view.AppEditText
                     android:id="@+id/etBankAccountNumber"
@@ -49,15 +48,15 @@
                     android:layout_height="wrap_content"
                     android:hint="Bank account number"
                     android:text="@={viewModel.userProfile.bankAccountNumber}"
-                    app:validateTypeAutoDismiss="@{true}"
-                    app:validateEmpty="@{true}" />
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
             <com.tebet.mojual.common.view.AppEditTextLayout
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp">
+                android:layout_marginBottom="@dimen/_12sdp">
 
                 <com.tebet.mojual.common.view.AppEditText
                     android:id="@+id/etBankAccountName"
@@ -65,15 +64,15 @@
                     android:layout_height="wrap_content"
                     android:hint="Bank account name"
                     android:text="@={viewModel.userProfile.bankAccountName}"
-                    app:validateTypeAutoDismiss="@{true}"
-                    app:validateEmpty="@{true}" />
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
             <com.tebet.mojual.common.view.AppEditTextLayout
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp">
+                android:layout_marginBottom="@dimen/_12sdp">
 
                 <com.tebet.mojual.common.view.AppAutoCompleteEditText
                     android:id="@+id/etRegionName"
@@ -81,8 +80,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Bank region"
                     android:text="@={viewModel.userProfile.bankRegionName}"
-                    app:validateTypeAutoDismiss="@{true}"
-                    app:validateEmpty="@{true}" />
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
 
             </com.tebet.mojual.common.view.AppEditTextLayout>
         </LinearLayout>

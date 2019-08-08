@@ -6,6 +6,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.tebet.mojual.R
+import com.tebet.mojual.common.util.Utility
 
 open class AppEditText : TextInputEditText {
     constructor(context: Context) : super(context) {
@@ -21,31 +22,13 @@ open class AppEditText : TextInputEditText {
         setFont(attributeSet)
     }
 
-    private fun setFont(attributeSet: AttributeSet?) {
+    open fun setFont(attributeSet: AttributeSet?) {
         this.background = ContextCompat.getDrawable(context, R.drawable.border_edit_text)
-        this.setPadding(20, 20, 20, 20)
+        this.setPadding(Utility.dpToPx(20), Utility.dpToPx(8), Utility.dpToPx(20), Utility.dpToPx(8))
         this.setHintTextColor(ContextCompat.getColor(context, R.color.grey))
         setLines(1)
         if (inputType != 129) {
             setSingleLine(true)
         }
-//        val typeArray = context.theme.obtainStyledAttributes(
-//            attributeSet,
-//            R.styleable.SquTextFont,
-//            0,
-//            0
-//        )
-//
-//        val typefaceType: Int
-//
-//        try {
-//            typefaceType = typeArray.getInteger(R.styleable.SquTextFont_font_style, 1)
-//        } finally {
-//            typeArray.recycle()
-//        }
-//
-//        if (!isInEditMode) typeface = SquTypefaceHandler.getTypeface(typefaceType)
     }
-
-
 }

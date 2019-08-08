@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.signup
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
@@ -182,6 +183,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
     private val REQUEST_TAKE_EKTP = 2
 
     private fun dispatchTakePictureIntent(requestCode: Int) {
+        currentPhotoPath = ""
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(packageManager)?.also {
@@ -215,13 +217,13 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_TAKE_AVATAR -> {
-                if (!TextUtils.isEmpty(currentPhotoPath)) {
+                if (!TextUtils.isEmpty(currentPhotoPath) && resultCode == Activity.RESULT_OK) {
                     viewModel.userProfile.avatarLocal = "file://$currentPhotoPath"
                     viewModel.uploadAvatar(currentPhotoPath)
                 }
             }
             REQUEST_TAKE_EKTP -> {
-                if (!TextUtils.isEmpty(currentPhotoPath)) {
+                if (!TextUtils.isEmpty(currentPhotoPath) && resultCode == Activity.RESULT_OK) {
                     viewModel.userProfile.ktpLocal = "file://$currentPhotoPath"
                     viewModel.uploadEKTP(currentPhotoPath)
                 }

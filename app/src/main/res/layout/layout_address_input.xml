@@ -19,67 +19,67 @@
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:layout_marginBottom="@dimen/_12sdp">
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Address"
                 android:text="@={view.addressData.address}"
-                app:validateTypeAutoDismiss="@{true}"
-                app:validateEmpty="@{true}" />
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
         <com.tebet.mojual.common.view.AppEditTextLayout
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:layout_marginBottom="@dimen/_12sdp">
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Kelurahan"
                 android:text="@={view.addressData.kelurahan}"
-                app:validateTypeAutoDismiss="@{true}"
-                app:validateEmpty="@{true}" />
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
         <com.tebet.mojual.common.view.AppEditTextLayout
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:layout_marginBottom="@dimen/_12sdp">
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Kecamatan"
                 android:text="@={view.addressData.kecamatan}"
-                app:validateTypeAutoDismiss="@{true}"
-                app:validateEmpty="@{true}" />
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
         <com.tebet.mojual.common.view.AppEditTextLayout
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:layout_marginBottom="@dimen/_12sdp">
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="RT/RW"
                 android:text="@={view.addressData.rtrw}"
-                app:validateTypeAutoDismiss="@{true}"
-                app:validateEmpty="@{true}" />
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
         <com.tebet.mojual.common.view.AppEditTextLayout
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:layout_marginBottom="@dimen/_12sdp">
 
             <com.tebet.mojual.common.view.AppAutoCompleteEditText
                 android:id="@+id/etCity"
@@ -87,8 +87,8 @@
                 android:layout_height="wrap_content"
                 android:hint="City"
                 android:text="@={view.addressData.city}"
-                app:validateTypeAutoDismiss="@{true}"
-                app:validateEmpty="@{true}" />
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
 
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
@@ -96,7 +96,7 @@
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:layout_marginBottom="@dimen/_12sdp">
 
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
@@ -104,18 +104,26 @@
                 android:hint="Postal Code"
                 android:inputType="number"
                 android:text="@={view.addressData.postalCode}"
-                app:validateTypeAutoDismiss="@{true}"
-                app:validateEmpty="@{true}" />
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
 
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
-        <com.tebet.mojual.common.view.AppEditText
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:hint="Choose on Map"
-            android:onClick="@{()-> view.onChooseMapClick()}"
-            android:text="@={view.addressData.mapLocation}" />
+            android:layout_height="wrap_content">
+
+            <com.tebet.mojual.common.view.AppLocationEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:hint="Choose on Map"
+                android:onClick="@{()-> view.onChooseMapClick()}"
+                android:text="@={view.addressData.mapLocation}"
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
+        </com.tebet.mojual.common.view.AppEditTextLayout>
     </LinearLayout>
 </layout>

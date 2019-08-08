@@ -23,5 +23,6 @@ open class AppEditTextLayout : TextInputLayout {
     private fun setFont(attributeSet: AttributeSet?) {
         this.background = ContextCompat.getDrawable(context, R.drawable.border_edit_text)
         isHintEnabled = false
+        setPadding(0, 5, 0, 5)
     }
 }
