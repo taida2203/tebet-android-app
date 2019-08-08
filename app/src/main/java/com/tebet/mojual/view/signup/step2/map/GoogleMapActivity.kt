@@ -48,7 +48,7 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
-        title = "Select location on Map"
+        title = getString(R.string.google_map_title)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
@@ -65,6 +65,7 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
         } as Address
         initPermission()
         initMap()
+        viewModel.loadData()
     }
 
     private fun initPermission() {

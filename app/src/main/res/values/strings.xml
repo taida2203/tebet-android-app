@@ -20,4 +20,5 @@
     <string name="passwordErrorMessage">Password must at least 6 char</string>
     <string name="passwordNotEqualErrorMessage">Confirm password not match</string>
     <string name="fullNameErrorMessage">Invalid name</string>
+    <string name="google_map_title">Select location on Map</string>
 </resources>

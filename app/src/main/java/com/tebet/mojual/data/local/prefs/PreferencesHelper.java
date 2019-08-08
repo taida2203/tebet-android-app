@@ -21,4 +21,9 @@ public interface PreferencesHelper {
     String getAccessToken();
 
     void setAccessToken(String accessToken);
+
+
+    Boolean isShowTutorialShowed();
+
+    void isShowTutorialShowed(Boolean isShowTutorialShowed);
 }

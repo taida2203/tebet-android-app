@@ -1,12 +1,10 @@
 package com.tebet.mojual.view.signup.step2.map
 
+import androidx.databinding.ObservableBoolean
 import com.google.android.gms.maps.model.LatLng
-import com.tebet.mojual.common.constant.ConfigEnv
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.models.EmptyResponse
 import com.tebet.mojual.data.models.google_map.GeoCodeResponse
-import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseActivityNavigator
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,11 +19,15 @@ class GoogleMapViewModel(
     BaseViewModel<BaseActivityNavigator>(dataManager, schedulerProvider) {
     var selectedLocation: LatLng? = null
     var selectedAddress: String? = null
+
+    var isShowTutorial = ObservableBoolean(true)
+
     fun getAddress(selectedLocation: LatLng?) {
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getReserveGeoLocation(
-                "${selectedLocation?.latitude},${selectedLocation?.longitude}")
+                "${selectedLocation?.latitude},${selectedLocation?.longitude}"
+            )
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(400, TimeUnit.MILLISECONDS)
@@ -47,5 +49,14 @@ class GoogleMapViewModel(
                     }
                 })
         )
+    }
+
+    fun hideTutorial() {
+        isShowTutorial.set(false)
+        dataManager.isShowTutorialShowed(true)
+    }
+
+    fun loadData() {
+        isShowTutorial.set(!dataManager.isShowTutorialShowed)
     }
 }

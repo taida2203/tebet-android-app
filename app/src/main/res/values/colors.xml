@@ -41,6 +41,7 @@
     <color name="down_grey_color">#56656c</color>
     <color name="bg_blue">#03ACBE</color>
     <color name="grey">#c7c7d5</color>
+    <color name="grey_trans">#68C7C7D5</color>
     <color name="darker_blue_notify">#0075b5</color>
     <color name="grey_text_notify">#d5d5df</color>
     <color name="buttonGreen">#49802D</color>

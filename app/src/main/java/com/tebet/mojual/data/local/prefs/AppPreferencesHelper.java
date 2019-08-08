@@ -25,6 +25,7 @@ import javax.inject.Inject;
 
 public class AppPreferencesHelper implements PreferencesHelper {
     private static final String PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN";
+    private static final String PREF_KEY_IS_MAP_TUTORIAL_SHOWNED = "PREF_KEY_IS_MAP_TUTORIAL_SHOWNED";
     private final SharedPreferences mPrefs;
 
     @Inject
@@ -40,5 +41,15 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public void setAccessToken(String accessToken) {
         mPrefs.edit().putString(PREF_KEY_ACCESS_TOKEN, accessToken).apply();
+    }
+
+    @Override
+    public Boolean isShowTutorialShowed() {
+        return mPrefs.getBoolean(PREF_KEY_IS_MAP_TUTORIAL_SHOWNED, false);
+    }
+
+    @Override
+    public void isShowTutorialShowed(Boolean isShowTutorialShowed) {
+        mPrefs.edit().putBoolean(PREF_KEY_IS_MAP_TUTORIAL_SHOWNED, isShowTutorialShowed).apply();
     }
 }

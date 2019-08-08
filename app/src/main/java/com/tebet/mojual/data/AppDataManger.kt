@@ -27,6 +27,14 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
+    override fun isShowTutorialShowed(isShowTutorialShowed: Boolean?) {
+        return preferences.isShowTutorialShowed(isShowTutorialShowed)
+    }
+
+    override fun isShowTutorialShowed(): Boolean {
+        return preferences.isShowTutorialShowed
+    }
+
     override fun clearAllTables(): Observable<Boolean>? {
         return room.clearAllTables()
     }

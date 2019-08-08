@@ -36,8 +36,12 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
         viewDataBinding?.etBankName?.threshold = 1
         viewDataBinding?.etBankName?.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
-                viewModel.userProfile.get()?.bankName = viewModel.bankNameLiveData.value?.get(position)?.name
-                viewModel.userProfile.get()?.bankCode = viewModel.bankNameLiveData.value?.get(position)?.code
+                var currentItemString = bankAdapter?.getItem(position)
+                var selectedItem =
+                    viewModel.bankNameLiveData.value?.firstOrNull { bank -> bank.name == currentItemString }
+
+                viewModel.userProfile.get()?.bankName = selectedItem?.name
+                viewModel.userProfile.get()?.bankCode = selectedItem?.code
             }
         viewDataBinding?.etBankName?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
@@ -51,8 +55,12 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
         viewDataBinding?.etRegionName?.threshold = 1
         viewDataBinding?.etRegionName?.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
-                viewModel.userProfile.get()?.bankRegionName = viewModel.bankRegionLiveData.value?.get(position)?.name
-                viewModel.userProfile.get()?.bankRegionCode = viewModel.bankRegionLiveData.value?.get(position)?.code
+                var currentItemString = regionAdapter?.getItem(position)
+                var selectedItem =
+                    viewModel.bankRegionLiveData.value?.firstOrNull { region -> region.name == currentItemString }
+
+                viewModel.userProfile.get()?.bankRegionName = selectedItem?.name
+                viewModel.userProfile.get()?.bankRegionCode = selectedItem?.code
             }
         viewDataBinding?.etRegionName?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {

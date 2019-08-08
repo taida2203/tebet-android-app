@@ -75,7 +75,9 @@ class AddressInputView : LinearLayout {
         mBinding?.etCity?.threshold = 1
         mBinding?.etCity?.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
-                addressData.get()?.city = viewModel.cityLiveData.value?.get(position)?.name
+                var currentItemString = cityAdapter?.getItem(position)
+                addressData.get()?.city =
+                    viewModel.cityLiveData.value?.firstOrNull { city -> city.fullName == currentItemString }?.fullName
             }
         mBinding?.etCity?.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
