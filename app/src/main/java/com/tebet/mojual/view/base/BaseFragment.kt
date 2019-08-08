@@ -128,6 +128,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
     }
 
     override fun showLoading(isLoading: Boolean) {
+        viewModel.setIsLoading(isLoading)
         (activity() as BaseActivity<*, *>).showLoading(isLoading)
     }
 
