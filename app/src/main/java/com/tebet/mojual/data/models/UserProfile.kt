@@ -3,14 +3,12 @@ package com.tebet.mojual.data.models
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.room.*
-import com.squareup.moshi.Json
 import com.tebet.mojual.BR
 
 @Entity(
     tableName = "UserProfile"
 )
 data class UserProfile(
-    @Json(name = "status")
     @ColumnInfo(name = "status")
     var status: String? = null,
     var authenticationType: String? = null,
@@ -26,22 +24,17 @@ data class UserProfile(
     var lastName: String? = null,
     var bankAccountNumber: String? = null,
     var bankAccountName: String? = null,
-    @Json(name = "phone")
     @ColumnInfo(name = "phone")
     var phone: String? = null,
 
-    @Json(name = "profileId")
     @ColumnInfo(name = "profileId")
     var profileId: Int? = null,
-    @Json(name = "profileType")
     @ColumnInfo(name = "profileType")
     var profileType: String? = null,
     var token: String? = null,
-    @Json(name = "userId")
     @PrimaryKey
     @ColumnInfo(name = "userId")
     var userId: Int? = null,
-    @Json(name = "username")
     @ColumnInfo(name = "username")
     var username: String? = null
 ) : BaseObservable() {

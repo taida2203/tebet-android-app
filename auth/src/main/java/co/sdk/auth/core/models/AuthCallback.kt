@@ -31,11 +31,11 @@ abstract class AuthCallback<T> : Callback<AuthJson<T>> {
                 e.printStackTrace();
             }*/
             AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
-                override fun onSuccess(code: Int, o: Any?) {
+                override fun onSuccess(code: Int, response: Any?) {
                     onFail(call, AuthException(401, response.message()))
                 }
 
-                override fun onFailed(e: LoginException) {
+                override fun onFailed(exeption: LoginException) {
                     onFail(call, AuthException(401, response.message()))
                 }
             })

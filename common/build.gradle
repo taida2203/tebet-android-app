@@ -4,8 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-//    compileSdkVersion project.compileSdkVersion
-//    buildToolsVersion project.buildToolsVersion
     compileSdkVersion Versions.androidCompileSdk
 //    buildToolsVersion project.buildToolsVersion
     defaultConfig {
@@ -35,14 +33,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-
-    implementation 'com.google.android.material:material:1.0.0'
+    // App dependencies
+    implementation AppDependencies.appcompatAndroidX
+    implementation AppDependencies.recycleViewAndroidX
 
     // kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'pub.devrel:easypermissions:1.2.0'
     implementation AppDependencies.retrofit
     implementation AppDependencies.sdp
     implementation AppDependencies.ssp
@@ -56,13 +51,5 @@ dependencies {
     implementation AppDependencies.rxJava
     implementation AppDependencies.rxKotlin
 
-    implementation 'com.google.android.gms:play-services-analytics:16.0.8'
-    implementation "com.google.android.gms:play-services-auth:$playServicesVersion"
-    implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
-    implementation 'pub.devrel:easypermissions:1.2.0'
-    implementation 'org.greenrobot:eventbus:3.0.0'
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    implementation AppDependencies.googleFireBaseCore
 }

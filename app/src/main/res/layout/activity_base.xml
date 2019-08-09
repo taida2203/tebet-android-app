@@ -110,19 +110,6 @@
                         android:layout_marginRight="@dimen/_3sdp"
                         app:srcCompat="@drawable/ic_notifications" />
 
-                    <TextView
-                        android:id="@+id/tvHomeNotificationCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/_6sdp"
-                        android:background="@drawable/notification_badage"
-                        android:padding="@dimen/_2sdp"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_8ssp"
-                        android:visibility="gone"
-                        app:font_style="bold" />
                 </RelativeLayout>
 
             </RelativeLayout>

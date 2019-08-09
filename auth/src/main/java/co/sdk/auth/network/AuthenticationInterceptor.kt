@@ -26,15 +26,13 @@ internal class AuthenticationInterceptor : Interceptor {
         chainRequest.addHeader("Accept-Language", language)
         chainRequest.addHeader("Content-Type", "application/json;charset=UTF-8")
         if (currentToken != null && !TextUtils.isEmpty(currentToken.accessToken) &&
-                !(chain.request() != null && chain.request().url() != null && chain.request().url().toString().contains("/login"))) {
+                !(chain.request().url().toString().contains("/login"))) {
             chainRequest.addHeader("Authorization", currentToken.appToken)
         } else {
             chainRequest.addHeader("Authorization",
                     "Basic " + String(Base64.encode(String.format("%s:%s", AuthSdk.instance.consumerKey, AuthSdk.instance.consumerSecret).toByteArray(), Base64.NO_WRAP)))
         }
-        if (AuthSdk.instance.deviceId != null) {
-            chainRequest.addHeader("Device-Id", AuthSdk.instance.deviceId)
-        }
+        chainRequest.addHeader("Device-Id", AuthSdk.instance.deviceId)
 
         val request = chainRequest.build()
         return chain.proceed(request)
