@@ -176,8 +176,14 @@ class AppDataManger @Inject constructor(
         return getUserProfileDB()
     }
 
-    override fun updateProfile(updateProfileRequest: UserProfile): Observable<AuthJson<EmptyResponse>> {
+    override fun updateProfile(updateProfileRequest: UserProfile): Observable<AuthJson<UserProfile>> {
+        var userProfileTemp: AuthJson<UserProfile>? = null
         return api.updateProfile(updateProfileRequest)
+            .concatMap { userProfile ->
+                userProfileTemp = userProfile
+                room.insertUserProfile(userProfile.data)
+            }
+            .concatMap { Observable.just(userProfileTemp) }
     }
 
     override fun updatePassword(updateProfileRequest: UpdatePasswordRequest): Observable<AuthJson<EmptyResponse>> {

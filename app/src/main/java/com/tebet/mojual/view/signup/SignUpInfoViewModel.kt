@@ -77,8 +77,8 @@ class SignUpInfoViewModel(
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(400, TimeUnit.MILLISECONDS)
-                .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
-                    override fun onSuccess(dataResponse: EmptyResponse) {
+                .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                    override fun onSuccess(dataResponse: UserProfile) {
                         navigator.showLoading(false)
                         navigator.openHomeScreen()
                     }

@@ -36,7 +36,7 @@ interface ApiHelper {
     fun getRegions(): Observable<AuthJson<List<Region>>>
 
     @PUT("profile/profile")
-    fun updateProfile(@Body updateProfileRequest: UserProfile): Observable<AuthJson<EmptyResponse>>
+    fun updateProfile(@Body updateProfileRequest: UserProfile): Observable<AuthJson<UserProfile>>
 
     @PUT("profile/profile")
     fun updatePassword(@Body updateProfileRequest: UpdatePasswordRequest): Observable<AuthJson<EmptyResponse>>
