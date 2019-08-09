@@ -29,7 +29,7 @@ object ServiceHelper {
 
         httpClient.addInterceptor(AuthenticationInterceptor())
 
-        if (BuildConfig.DEBUG) {
+        if (AuthSdk.instance.getBaseUrl()?.contains("dev.api.mo-jual.com") == true) {
             val logging = HttpLoggingInterceptor()
             logging.level = HttpLoggingInterceptor.Level.BODY
             httpClient.addInterceptor(logging)

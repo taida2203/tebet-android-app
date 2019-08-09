@@ -21,7 +21,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import co.common.network.ApiException
 import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
@@ -240,11 +239,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         super.setTitle("")
         baseBinding.tvBaseTitle.text = title
     }
-
-    protected fun showError(e: ApiException) {
-        Toast.makeText(this, getString(R.string.general_message_error), Toast.LENGTH_SHORT).show()
-    }
-
 
     protected abstract fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int)
 

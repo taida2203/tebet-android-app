@@ -36,7 +36,6 @@ object Versions {
     const val stetho = "1.5.0"
     const val timber = "4.6.1"
     const val pageIndicatorView = "0.2.0"
-    const val moshi = "1.6.0"
     const val lifecycle = "1.1.1"
     const val lifecycleCompiler = "1.1.1"
     const val gander = "2.0.3"
