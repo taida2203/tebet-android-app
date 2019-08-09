@@ -21,12 +21,8 @@ class SelectFutureDate : BaseActivity<ActivitySelectFutureDateBinding, SelectFut
     override val contentLayoutId: Int
         get() = R.layout.activity_select_future_date
 
-    private var topRightViewBinding: ItemHomeIconBinding? = null
-
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
-        topRightViewBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
         baseBinding.viewModel?.enableTopLogo?.set(true)
         title = "Home"
         viewModel.loadData()
