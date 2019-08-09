@@ -9,7 +9,7 @@ stages:
   - build
   - deploy
 
-assembleRelease:
+assembleDevRelease:
   stage: build
   script:
     - apt-get --quiet update --yes
@@ -25,7 +25,7 @@ assembleRelease:
     - set +o pipefail
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
     - set -o pipefail
-    - ./gradlew assembleRelease
+    - ./gradlew assembleDevRelease
   artifacts:
     paths:
     - app/build/outputs/
