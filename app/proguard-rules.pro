@@ -86,3 +86,9 @@
 }
 
 
+
+
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+@com.mindorks.placeholderview.annotations.** <methods>;
+}
