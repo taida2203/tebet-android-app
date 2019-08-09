@@ -1,14 +1,19 @@
 package com.tebet.mojual.view.loginpassword
 
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableList
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.AuthPasswordMethod
 import co.sdk.auth.core.LoginConfiguration
+import com.tebet.mojual.BR
+import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import me.tatarka.bindingcollectionadapter2.ItemBinding
 
 class LoginWithPasswordViewModel(
     dataManager: DataManager,
@@ -17,6 +22,17 @@ class LoginWithPasswordViewModel(
     BaseViewModel<LoginWithPasswordNavigator>(dataManager, schedulerProvider) {
     var userInputPhone: String = ""
     var userInputPassword: String = ""
+    var userInputPhonePrefix: String = ""
+
+    var items: ObservableList<String> = ObservableArrayList()
+    var itemBinding: ItemBinding<String> = ItemBinding.of(BR.item, R.layout.item_flag_dropdown)
+
+    fun loadData() {
+        items.add("84")
+        items.add("85")
+        items.add("86")
+        userInputPhonePrefix = items[0]
+    }
 
     fun doLogin() {
         if (!navigator.dataValid()) {
@@ -24,7 +40,7 @@ class LoginWithPasswordViewModel(
         }
         navigator.showLoading(true)
         val configuration = LoginConfiguration(false)
-        configuration.username = userInputPhone.trim()
+        configuration.username = userInputPhonePrefix + userInputPhone.trim()
         configuration.password = userInputPassword.trim()
         navigator.activity()?.let {
             compositeDisposable.add(

@@ -3,6 +3,8 @@ package com.tebet.mojual.view.loginpassword
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -26,6 +28,7 @@ import com.tebet.mojual.view.signup.SignUpInfo
 
 class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPasswordViewModel>(),
     LoginWithPasswordNavigator {
+
     override val bindingVariable: Int
         get() = BR.viewModel
     override val viewModel: LoginWithPasswordViewModel
@@ -43,7 +46,16 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
         topRightViewBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
         title = "Login with phone number"
-//        navLayout.visibility = View.VISIBLE
+        viewModel.loadData()
+        viewDataBinding?.snCountryFlag?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.userInputPhonePrefix = viewModel.items[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
