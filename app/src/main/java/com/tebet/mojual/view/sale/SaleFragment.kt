@@ -1,7 +1,9 @@
 package com.tebet.mojual.view.sale
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
@@ -36,6 +38,21 @@ class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNav
 
     override fun showDateScreen() {
         startActivityForResult(Intent(context, SelectFutureDate::class.java), 600)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                500 -> {
+                    Toast.makeText(context, data?.getStringExtra("QUANTITY"), Toast.LENGTH_SHORT).show()
+                }
+                600 -> {
+                    Toast.makeText(context, data?.getStringExtra("FUTURE_DATE"), Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
     }
 
 }

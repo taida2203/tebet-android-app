@@ -11,18 +11,16 @@ import co.sdk.auth.AuthSdk
 import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
 import com.tebet.mojual.common.constant.ConfigEnv
-import com.tebet.mojual.common.constant.ConfigVolley
 import com.tebet.mojual.common.util.Utility
 import com.tebet.mojual.di.component.DaggerAppComponent
+import com.tebet.mojual.di.module.AppModule
+import com.tebet.mojual.di.module.NetModule
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import timber.log.Timber
-import com.tebet.mojual.di.module.AppModule
-import com.tebet.mojual.di.module.NetModule
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
-
-import java.util.Locale
+import java.util.*
 import javax.inject.Inject
 
 class App : MultiDexApplication(), HasActivityInjector {
@@ -62,7 +60,6 @@ class App : MultiDexApplication(), HasActivityInjector {
         var uuid: String? = null
         try {
             uuid = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-            PreferenceUtils.saveString(ConfigVolley.DEVICEID, uuid)
         } catch (ignored: Exception) {
             Timber.e(ignored)
         }

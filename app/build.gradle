@@ -107,6 +107,8 @@ dependencies {
     implementation "uk.co.chrisjenx:calligraphy:2.2.0"
     implementation 'com.github.Ilhasoft:data-binding-validator:2.0.0'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:3.1.0'
+    implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:3.1.0'
 
     implementation AppDependencies.androidSupportAnnotations
 

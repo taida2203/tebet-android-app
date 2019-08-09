@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.selectfuturedate
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -9,7 +10,8 @@ import com.tebet.mojual.databinding.ActivitySelectFutureDateBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
 
-class SelectFutureDate : BaseActivity<ActivitySelectFutureDateBinding, SelectFutureDateViewModel>(), SelectFutureDateNavigator {
+class SelectFutureDate : BaseActivity<ActivitySelectFutureDateBinding, SelectFutureDateViewModel>(),
+    SelectFutureDateNavigator {
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -28,6 +30,12 @@ class SelectFutureDate : BaseActivity<ActivitySelectFutureDateBinding, SelectFut
         baseBinding.viewModel?.enableTopLogo?.set(true)
         title = "Home"
         viewModel.loadData()
+    }
+
+    override fun itemSelected(item: String) {
+        intent.putExtra("FUTURE_DATE", item)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 //    override fun showOrderDetailScreen() {
 //        enableBackButton = true

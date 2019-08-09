@@ -29,4 +29,8 @@
     <string name="sale_selected_date">Select Date</string>
     <string name="sale_select_title">Select date to sell and the quantity</string>
     <string name="home_verify_warning">Your account is in verify process. MOJUAL team will contact you soon</string>
+    <string name="sale_select_quantity_title">Tab to select quantity</string>
+    <string name="sale_select_future_date_title">Tab to select date to sell</string>
+    <string name="sale_select_future_date_date">DATE</string>
+    <string name="sale_select_future_date_price">PRICE</string>
 </resources>

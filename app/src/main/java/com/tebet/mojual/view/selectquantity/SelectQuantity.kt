@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.selectquantity
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -28,6 +29,12 @@ class SelectQuantity : BaseActivity<ActivitySelectQuantityBinding, SelectQuantit
         baseBinding.viewModel?.enableTopLogo?.set(true)
         title = "Home"
         viewModel.loadData()
+    }
+
+    override fun itemSelected(item: String) {
+        intent.putExtra("QUANTITY", item)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 //    override fun showOrderDetailScreen() {
 //        enableBackButton = true
