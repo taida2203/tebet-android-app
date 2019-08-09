@@ -31,7 +31,7 @@ abstract class AuthCallback<T> : Callback<AuthJson<T>> {
                 e.printStackTrace();
             }*/
             AuthSdk.instance.logout(true, object : ApiCallBack<Any>() {
-                override fun onSuccess(code: Int, response: Any?) {
+                override fun onSuccess(code: Int, o: Any?) {
                     onFail(call, AuthException(401, response.message()))
                 }
 
