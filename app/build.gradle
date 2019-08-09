@@ -110,6 +110,7 @@ dependencies {
 
     implementation AppDependencies.dagger
     implementation AppDependencies.daggerSupport
+    implementation AppDependencies.daggerAndroid
 
     implementation AppDependencies.glide
     implementation AppDependencies.glideAnnotation

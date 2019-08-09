@@ -19,8 +19,8 @@ import com.tebet.mojual.view.sale.SaleFragment
 import com.tebet.mojual.view.saledetail.SaleDetailFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
+import dagger.android.support.HasSupportFragmentInjector
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector, HomeNavigator {
     @Inject

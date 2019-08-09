@@ -19,7 +19,7 @@ object Versions {
     const val supportAndroidX = "1.0.0"
 
     // App Libraries
-    const val dagger = "2.15"
+    const val dagger = "2.21"
     const val glassfishAnnotation = "10.0-b28"
     const val glide = "4.8.0"
     const val gson = "2.8.1"
@@ -75,9 +75,10 @@ object AppDependencies {
     const val googleFireBaseMessaging = "com.google.firebase:firebase-messaging:19.0.1"
 
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
+    const val daggerAndroid = "com.google.dagger:dagger-android:${Versions.dagger}"
+    const val daggerSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
     const val daggerProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
-    const val daggerSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
 
     const val glassfishAnnotation = "org.glassfish:javax.annotation:${Versions.glassfishAnnotation}"
 
