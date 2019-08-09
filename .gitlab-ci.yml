@@ -9,7 +9,7 @@ stages:
   - build
   - deploy
 
-assembleDebug:
+assembleRelease:
   stage: build
   script:
     - apt-get --quiet update --yes
@@ -25,7 +25,7 @@ assembleDebug:
     - set +o pipefail
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
     - set -o pipefail
-    - ./gradlew assembleDebug
+    - ./gradlew assembleRelease
   artifacts:
     paths:
     - app/build/outputs/
@@ -40,4 +40,4 @@ deploy:
     - ssh-keyscan -H dev.api.mo-jual.com >> ~/.ssh/known_hosts
     - chmod 600 tebet-devops
     - ssh -i tebet-devops docker@dev.api.mo-jual.com "rm -rf cd /var/www/tebet/android/dev/*"
-    - scp -i tebet-devops app/build/outputs/apk/dev/debug/app-dev-debug.apk docker@dev.api.mo-jual.com:/var/www/tebet/android/dev
+    - scp -i tebet-devops app/build/outputs/apk/dev/release/app-dev-release.apk docker@dev.api.mo-jual.com:/var/www/tebet/android/dev
