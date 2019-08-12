@@ -22,15 +22,19 @@ class LoginWithPasswordViewModel(
     BaseViewModel<LoginWithPasswordNavigator>(dataManager, schedulerProvider) {
     var userInputPhone: String = ""
     var userInputPassword: String = ""
-    var userInputPhonePrefix: String = ""
+    var userInputPhonePrefix: String = PHONE_PREFIX_ID
 
     var items: ObservableList<String> = ObservableArrayList()
     var itemBinding: ItemBinding<String> = ItemBinding.of(BR.item, R.layout.item_flag_dropdown)
 
+    companion object {
+        var PHONE_PREFIX_VN = "+84"
+        var PHONE_PREFIX_ID = "+62"
+    }
+
     fun loadData() {
-        items.add("84")
-        items.add("85")
-        items.add("86")
+        items.add(PHONE_PREFIX_VN)
+        items.add(PHONE_PREFIX_ID)
         userInputPhonePrefix = items[0]
     }
 
@@ -38,9 +42,23 @@ class LoginWithPasswordViewModel(
         if (!navigator.dataValid()) {
             return
         }
+        var fullPhoneNumber = userInputPhonePrefix + userInputPhone.trim()
+        if (!when (userInputPhonePrefix) {
+                PHONE_PREFIX_ID -> {
+                    fullPhoneNumber.matches(Regex("(\\+62((\\d{3}([ -]\\d{3,})([- ]\\d{4,})?)|(\\d+)))|(\\(\\d+\\) \\d+)|\\d{3}( \\d+)+|(\\d+[ -]\\d+)|\\d+"))
+                }
+                PHONE_PREFIX_VN -> {
+                    fullPhoneNumber.matches(Regex("(\\+84|0)\\d{9,10}"))
+                }
+                else -> true
+            }
+        ) {
+            navigator.show("Phone number +$fullPhoneNumber is wrong format")
+            return
+        }
         navigator.showLoading(true)
         val configuration = LoginConfiguration(false)
-        configuration.username = userInputPhonePrefix + userInputPhone.trim()
+        configuration.username = fullPhoneNumber.replace("+", "")
         configuration.password = userInputPassword.trim()
         navigator.activity()?.let {
             compositeDisposable.add(
