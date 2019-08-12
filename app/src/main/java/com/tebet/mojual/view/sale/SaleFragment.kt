@@ -3,7 +3,9 @@ package com.tebet.mojual.view.sale
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProviders
+import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentSaleBinding
@@ -22,9 +24,13 @@ class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNav
     override val layoutId: Int
         get() = R.layout.fragment_sale
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private lateinit var validator: Validator
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.navigator = this
+        validator = Validator(viewDataBinding)
+        validator.enableFormValidationMode()
         viewModel.loadData()
     }
 
@@ -40,6 +46,10 @@ class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNav
         startActivityForResult(Intent(context, SelectFutureDate::class.java), 600)
     }
 
+    override fun validate(): Boolean {
+        return validator.validate()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -48,7 +58,5 @@ class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNav
                 600 -> viewModel.selectedFutureDate.set(data?.getStringExtra("FUTURE_DATE")?.toLong())
             }
         }
-
     }
-
 }

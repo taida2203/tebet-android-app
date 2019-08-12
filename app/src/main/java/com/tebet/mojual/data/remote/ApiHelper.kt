@@ -54,5 +54,8 @@ interface ApiHelper {
             value = "limit"
         ) limit: Int? = null
     ): Observable<AuthJson<List<Asset>>>
+
+    @GET("order/price")
+    fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>>
 }
 

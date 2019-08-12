@@ -25,6 +25,10 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
+    override fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>> {
+        return api.getNext7DaysPrice()
+    }
+
     override fun getAssetDB(): Observable<AuthJson<List<Asset>>> {
         return room.asset.concatMap { bankDao ->
             bankDao.queryAsset().subscribeOn(Schedulers.newThread())

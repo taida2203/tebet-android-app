@@ -2,12 +2,11 @@ package com.tebet.mojual.view.selectfuturedate
 
 import android.app.Activity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.databinding.ActivitySelectFutureDateBinding
-import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
 
 class SelectFutureDate : BaseActivity<ActivitySelectFutureDateBinding, SelectFutureDateViewModel>(),
@@ -28,8 +27,8 @@ class SelectFutureDate : BaseActivity<ActivitySelectFutureDateBinding, SelectFut
         viewModel.loadData()
     }
 
-    override fun itemSelected(item: String) {
-        intent.putExtra("FUTURE_DATE", item)
+    override fun itemSelected(item: Price) {
+        intent.putExtra("FUTURE_DATE", item.date.toString())
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

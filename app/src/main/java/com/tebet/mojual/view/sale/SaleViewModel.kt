@@ -1,6 +1,5 @@
 package com.tebet.mojual.view.sale
 
-import android.widget.Toast
 import androidx.databinding.ObservableField
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
@@ -21,11 +20,7 @@ class SaleViewModel(
     var selectedFutureDate: ObservableField<Long> = ObservableField()
 
     fun onSubmitClick() {
-        val currentCal = Calendar.getInstance()
-        selectedFutureDate.set(currentCal.timeInMillis + 1000)
-
-        if (selectedQuantity.get() == null || selectedFutureDate.get() == null) {
-            navigator.show("Please fill all required field !!")
+        if (!navigator.validate()) {
             return
         }
         navigator.showLoading(true)

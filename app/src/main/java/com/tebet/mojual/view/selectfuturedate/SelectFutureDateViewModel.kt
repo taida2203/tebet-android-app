@@ -1,17 +1,13 @@
 package com.tebet.mojual.view.selectfuturedate
 
 import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
-import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 
 class SelectFutureDateViewModel(
@@ -19,23 +15,37 @@ class SelectFutureDateViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<SelectFutureDateNavigator>(dataManager, schedulerProvider) {
-    var items: ObservableList<String> = ObservableArrayList()
-    var itemBinding: ItemBinding<String> =
-        ItemBinding.of<String>(BR.item, R.layout.item_select_future_date)
+    var items: ObservableArrayList<Price> = ObservableArrayList()
+    var itemBinding: ItemBinding<Price> =
+        ItemBinding.of<Price>(BR.item, R.layout.item_select_future_date)
             .bindExtra(BR.listener, object : OnFutureDateClick {
-                override fun onItemClick(item: String) {
+                override fun onItemClick(item: Price) {
                     navigator.itemSelected(item)
                 }
             })
 
     fun loadData() {
-        val quantity = arrayListOf(1, 2, 3, 4, 5, 6, 7)
-        quantity.forEach { item ->
-            items.add(item.toString())
-        }
+        navigator.showLoading(true)
+        compositeDisposable.add(
+            dataManager.getNext7DaysPrice()
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : CallbackWrapper<List<Price>>() {
+                    override fun onSuccess(dataResponse: List<Price>) {
+                        dataResponse.forEach { item ->
+                            items.add(item)
+                        }
+                        navigator.showLoading(false)
+                    }
+
+                    override fun onFailure(error: String?) {
+                        navigator.showLoading(false)
+                        handleError(error)
+                    }
+                })
+        )
     }
 
     interface OnFutureDateClick {
-        fun onItemClick(item: String)
+        fun onItemClick(item: Price)
     }
 }
