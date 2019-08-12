@@ -6,6 +6,8 @@ import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.Asset
+import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import com.tebet.mojual.view.selectfuturedate.SelectFutureDateViewModel
 import me.tatarka.bindingcollectionadapter2.ItemBinding
@@ -24,10 +26,24 @@ class SelectQuantityViewModel(
         })
 
     fun loadData() {
-        val quantity = arrayListOf(1, 2, 3, 4, 5, 6, 7)
-        quantity.forEach { item ->
-            items.add(item.toString())
-        }
+        navigator.showLoading(true)
+        compositeDisposable.add(
+            dataManager.getAssetDB()
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : CallbackWrapper<List<Asset>>() {
+                    override fun onSuccess(dataResponse: List<Asset>) {
+                        navigator.showLoading(false)
+                        for (i in 1..dataResponse.size) {
+                            items.add(i.toString())
+                        }
+                    }
+
+                    override fun onFailure(error: String?) {
+                        navigator.showLoading(false)
+                        handleError(error)
+                    }
+                })
+        )
     }
 
     interface OnQuantityClick {

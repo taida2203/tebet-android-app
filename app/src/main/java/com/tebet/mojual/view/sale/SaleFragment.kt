@@ -3,7 +3,6 @@ package com.tebet.mojual.view.sale
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
@@ -26,6 +25,7 @@ class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNav
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = this
+        viewModel.loadData()
     }
 
     override fun openSaleScreen() {
@@ -44,12 +44,8 @@ class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNav
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                500 -> {
-                    Toast.makeText(context, data?.getStringExtra("QUANTITY"), Toast.LENGTH_SHORT).show()
-                }
-                600 -> {
-                    Toast.makeText(context, data?.getStringExtra("FUTURE_DATE"), Toast.LENGTH_SHORT).show()
-                }
+                500 -> viewModel.selectedQuantity.set(data?.getStringExtra("QUANTITY")?.toInt())
+                600 -> viewModel.selectedFutureDate.set(data?.getStringExtra("FUTURE_DATE")?.toLong())
             }
         }
 

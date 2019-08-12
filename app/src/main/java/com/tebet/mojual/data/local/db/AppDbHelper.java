@@ -16,15 +16,10 @@
 
 package com.tebet.mojual.data.local.db;
 
-import com.tebet.mojual.data.local.db.dao.BankDao;
-import com.tebet.mojual.data.local.db.dao.CityDao;
-import com.tebet.mojual.data.local.db.dao.RegionDao;
-import com.tebet.mojual.data.local.db.dao.UserProfileDao;
-import com.tebet.mojual.data.models.Bank;
-import com.tebet.mojual.data.models.City;
-import com.tebet.mojual.data.models.Region;
-import com.tebet.mojual.data.models.UserProfile;
+import com.tebet.mojual.data.local.db.dao.*;
+import com.tebet.mojual.data.models.*;
 import io.reactivex.Observable;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
@@ -155,6 +150,29 @@ public class AppDbHelper implements DbHelper {
             @Override
             public Boolean call() throws Exception {
                 mAppDatabase.clearAllTables();
+                return true;
+            }
+        });
+    }
+
+    @NotNull
+    @Override
+    public Observable<AssetDao> getAsset() {
+        return Observable.fromCallable(new Callable<AssetDao>() {
+            @Override
+            public AssetDao call() throws Exception {
+                return mAppDatabase.assetDao();
+            }
+        });
+    }
+
+    @NotNull
+    @Override
+    public Observable<Boolean> insertAssets(@NotNull List<Asset> asset) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.assetDao().insertAll(asset);
                 return true;
             }
         });

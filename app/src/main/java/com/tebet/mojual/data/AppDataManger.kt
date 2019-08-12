@@ -6,16 +6,14 @@ import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.App
 import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.data.local.db.DbHelper
-import com.tebet.mojual.data.local.db.dao.BankDao
-import com.tebet.mojual.data.local.db.dao.CityDao
-import com.tebet.mojual.data.local.db.dao.RegionDao
-import com.tebet.mojual.data.local.db.dao.UserProfileDao
+import com.tebet.mojual.data.local.db.dao.*
 import com.tebet.mojual.data.local.prefs.PreferencesHelper
 import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.google_map.GeoCodeResponse
 import com.tebet.mojual.data.remote.ApiGoogleHelper
 import com.tebet.mojual.data.remote.ApiHelper
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -27,6 +25,34 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
+    override fun getAssetDB(): Observable<AuthJson<List<Asset>>> {
+        return room.asset.concatMap { bankDao ->
+            bankDao.queryAsset().subscribeOn(Schedulers.newThread())
+                .doOnError { message -> EmptyResultSetException("") }
+                .toObservable().map { assets -> AuthJson(null, "", assets) }
+        }
+    }
+
+    override val asset: Observable<AssetDao>
+        get() = room.asset
+
+    override fun insertAssets(asset: List<Asset>): Observable<Boolean> {
+        return room.insertAssets(asset)
+    }
+
+    override fun getAsserts(profileId: String, offset: Int?, limit: Int?): Observable<AuthJson<List<Asset>>> {
+        if (App.instance.checkConnectivity()) {
+            var assetsTemp: AuthJson<List<Asset>>? = null
+            return api.getAsserts(profileId, offset, limit).concatMap { assetResponse ->
+                assetsTemp = assetResponse
+                assetResponse.data?.let { room.insertAssets(it) }
+            }.concatMap {
+                Observable.just(assetsTemp)
+            }
+        }
+        return getAssetDB()
+    }
+
     override fun isShowTutorialShowed(isShowTutorialShowed: Boolean?) {
         return preferences.isShowTutorialShowed(isShowTutorialShowed)
     }
@@ -35,27 +61,27 @@ class AppDataManger @Inject constructor(
         return preferences.isShowTutorialShowed
     }
 
-    override fun clearAllTables(): Observable<Boolean>? {
+    override fun clearAllTables(): Observable<Boolean> {
         return room.clearAllTables()
     }
 
     override fun getRegionDB(): Observable<AuthJson<List<Region>>> {
         return room.region.concatMap { bankDao ->
-            bankDao.queryRegion().doOnError { message -> EmptyResultSetException("") }
+            bankDao.queryRegion().subscribeOn(Schedulers.newThread())
+                .doOnError { message -> EmptyResultSetException("") }
                 .toObservable().map { regions -> AuthJson(null, "", regions) }
         }
     }
 
-    override fun getRegion(): Observable<RegionDao> {
-        return room.region
-    }
+    override val region: Observable<RegionDao>
+        get() = room.region
 
     override fun getRegions(): Observable<AuthJson<List<Region>>> {
         if (App.instance.checkConnectivity()) {
             var regionsTemp: AuthJson<List<Region>>? = null
             return api.getRegions().concatMap { regionResponse ->
                 regionsTemp = regionResponse
-                room.insertRegions(regionResponse.data)
+                regionResponse.data?.let { room.insertRegions(it) }
             }.concatMap {
                 Observable.just(regionsTemp)
             }
@@ -63,11 +89,11 @@ class AppDataManger @Inject constructor(
         return getRegionDB()
     }
 
-    override fun insertRegions(regions: MutableList<Region>?): Observable<Boolean> {
+    override fun insertRegions(regions: List<Region>): Observable<Boolean> {
         return room.insertRegions(regions)
     }
 
-    override fun insertCities(cities: MutableList<City>?): Observable<Boolean> {
+    override fun insertCities(cities: List<City>): Observable<Boolean> {
         return room.insertCities(cities)
     }
 
@@ -77,35 +103,33 @@ class AppDataManger @Inject constructor(
 
     override fun getCityDB(): Observable<AuthJson<List<City>>> {
         return room.city.concatMap { cityDao ->
-            cityDao.queryCity().doOnError { message -> EmptyResultSetException("") }
+            cityDao.queryCity().subscribeOn(Schedulers.newThread()).doOnError { message -> EmptyResultSetException("") }
                 .toObservable().map { citys -> AuthJson(null, "", citys) }
         }
     }
 
     override fun getBankDB(): Observable<AuthJson<List<Bank>>> {
         return room.bank.concatMap { bankDao ->
-            bankDao.queryBank().doOnError { message -> EmptyResultSetException("") }
+            bankDao.queryBank().subscribeOn(Schedulers.newThread()).doOnError { message -> EmptyResultSetException("") }
                 .toObservable().map { banks -> AuthJson(null, "", banks) }
         }
     }
 
-    override fun getBank(): Observable<BankDao> {
-        return room.bank
-    }
+    override val bank: Observable<BankDao>
+        get() = room.bank
 
-    override fun insertBank(bank: Bank?): Observable<Boolean> {
+    override fun insertBank(bank: Bank): Observable<Boolean> {
         return room.insertBank(bank)
     }
 
-    override fun insertBanks(banks: MutableList<Bank>?): Observable<Boolean> {
+    override fun insertBanks(banks: List<Bank>): Observable<Boolean> {
         return room.insertBanks(banks)
     }
 
-    override fun getCity(): Observable<CityDao> {
-        return room.city
-    }
+    override val city: Observable<CityDao>
+        get() = room.city
 
-    override fun insertCity(city: City?): Observable<Boolean> {
+    override fun insertCity(city: City): Observable<Boolean> {
         return room.insertCity(city)
     }
 
@@ -114,7 +138,7 @@ class AppDataManger @Inject constructor(
             var banksTemp: AuthJson<List<Bank>>? = null
             return api.getBanks().concatMap { bankResponse ->
                 banksTemp = bankResponse
-                room.insertBanks(bankResponse.data)
+                bankResponse.data?.let { room.insertBanks(it) }
             }.concatMap {
                 Observable.just(banksTemp)
             }
@@ -127,7 +151,7 @@ class AppDataManger @Inject constructor(
             var citiesTemp: AuthJson<List<City>>? = null
             return api.getCities().concatMap { cityResponse ->
                 citiesTemp = cityResponse
-                room.insertCities(cityResponse.data)
+                cityResponse.data?.let { room.insertCities(it) }
             }.concatMap {
                 Observable.just(citiesTemp)
             }
@@ -135,13 +159,12 @@ class AppDataManger @Inject constructor(
         return getCityDB()
     }
 
-    override fun insertUserProfile(userProfile: UserProfile?): Observable<Boolean> {
+    override fun insertUserProfile(userProfile: UserProfile): Observable<Boolean> {
         return room.insertUserProfile(userProfile)
     }
 
-    override fun getUserProfile(): Observable<UserProfileDao> {
-        return room.userProfile
-    }
+    override val userProfile: Observable<UserProfileDao>
+        get() = room.userProfile
 
     override fun getAccessToken(): String {
         return preferences.accessToken
@@ -168,7 +191,7 @@ class AppDataManger @Inject constructor(
             var userProfileTemp: AuthJson<UserProfile>? = null
             return api.getProfile().concatMap { userProfile ->
                 userProfileTemp = userProfile
-                room.insertUserProfile(userProfile.data)
+                userProfile.data?.let { room.insertUserProfile(it) }
             }.concatMap {
                 Observable.just(userProfileTemp)
             }
@@ -181,7 +204,7 @@ class AppDataManger @Inject constructor(
         return api.updateProfile(updateProfileRequest)
             .concatMap { userProfile ->
                 userProfileTemp = userProfile
-                room.insertUserProfile(userProfile.data)
+                userProfile.data?.let { room.insertUserProfile(it) }
             }
             .concatMap { Observable.just(userProfileTemp) }
     }
@@ -199,7 +222,8 @@ class AppDataManger @Inject constructor(
 
     override fun getUserProfileDB(): Observable<AuthJson<UserProfile>> {
         return room.userProfile.concatMap { userProfileDao ->
-            userProfileDao.queryUserProfile().doOnError { message -> EmptyResultSetException("") }
+            userProfileDao.queryUserProfile().subscribeOn(Schedulers.newThread())
+                .doOnError { message -> EmptyResultSetException("") }
                 .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
         }
     }

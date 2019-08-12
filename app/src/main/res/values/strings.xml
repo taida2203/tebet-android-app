@@ -25,7 +25,7 @@
     <string name="google_map_title">Select location on Map</string>
     <string name="sale_button_submit">Submit</string>
     <string name="sale_estimated_price">Estimate Price</string>
-    <string name="sale_quantity">Quantity</string>
+    <string name="sale_quantity">Select Quantity</string>
     <string name="sale_selected_date">Select Date</string>
     <string name="sale_select_title">Select date to sell and the quantity</string>
     <string name="home_verify_warning">Your account is in verify process. MOJUAL team will contact you soon</string>

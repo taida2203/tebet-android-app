@@ -36,6 +36,7 @@
                 android:focusable="false"
                 android:hint="@string/sale_selected_date"
                 android:onClick="@{()->viewModel.openSelectDateScreen()}"
+                android:text="@{viewModel.selectedFutureDate.toString()}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}">
 
@@ -58,6 +59,7 @@
                 android:focusable="false"
                 android:hint="@string/sale_quantity"
                 android:onClick="@{()->viewModel.openSelectQuantityScreen()}"
+                android:text="@{viewModel.selectedQuantity.toString()}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}">
 

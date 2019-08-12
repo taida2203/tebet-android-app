@@ -47,5 +47,12 @@ interface ApiHelper {
 
     @POST("order/order")
     fun createOrder(@Body createOrderRequest: CreateOrderRequest): Observable<AuthJson<EmptyResponse>>
+
+    @GET("order/asset")
+    fun getAsserts(
+        @Query(value = "profileId") profileId: String, @Query(value = "offset") offset: Int? = null, @Query(
+            value = "limit"
+        ) limit: Int? = null
+    ): Observable<AuthJson<List<Asset>>>
 }
 
