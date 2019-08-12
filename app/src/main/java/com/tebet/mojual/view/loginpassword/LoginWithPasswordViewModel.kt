@@ -28,8 +28,8 @@ class LoginWithPasswordViewModel(
     var itemBinding: ItemBinding<String> = ItemBinding.of(BR.item, R.layout.item_flag_dropdown)
 
     companion object {
-        var PHONE_PREFIX_VN = "+84"
-        var PHONE_PREFIX_ID = "+62"
+        const val PHONE_PREFIX_VN = "+84"
+        const val PHONE_PREFIX_ID = "+62"
     }
 
     fun loadData() {
@@ -42,7 +42,7 @@ class LoginWithPasswordViewModel(
         if (!navigator.dataValid()) {
             return
         }
-        var fullPhoneNumber = userInputPhonePrefix + userInputPhone.trim()
+        val fullPhoneNumber = userInputPhonePrefix + userInputPhone.trim()
         if (!when (userInputPhonePrefix) {
                 PHONE_PREFIX_ID -> {
                     fullPhoneNumber.matches(Regex("(\\+62((\\d{3}([ -]\\d{3,})([- ]\\d{4,})?)|(\\d+)))|(\\(\\d+\\) \\d+)|\\d{3}( \\d+)+|(\\d+[ -]\\d+)|\\d+"))
