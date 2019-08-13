@@ -1,7 +1,7 @@
 package com.tebet.mojual.data
 
 import androidx.room.EmptyResultSetException
-import co.sdk.auth.core.LoginConfiguration
+import co.sdk.auth.core.models.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.App
 import com.tebet.mojual.common.util.checkConnectivity

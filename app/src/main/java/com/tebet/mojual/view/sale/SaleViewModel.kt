@@ -1,5 +1,7 @@
 package com.tebet.mojual.view.sale
 
+import androidx.databinding.Observable
+import androidx.databinding.Observable.OnPropertyChangedCallback
 import androidx.databinding.ObservableField
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
@@ -10,6 +12,7 @@ import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 
+
 class SaleViewModel(
     dataManager: DataManager,
     schedulerProvider: SchedulerProvider
@@ -19,6 +22,12 @@ class SaleViewModel(
     var selectedQuantity: ObservableField<Int> = ObservableField()
     var selectedFutureDate: ObservableField<Price> = ObservableField()
     var simulationPrice: ObservableField<Double> = ObservableField()
+    val callback = object : OnPropertyChangedCallback() {
+        override fun onPropertyChanged(sender: Observable, propertyId: Int) =
+            simulationPrice.set(selectedFutureDate.get()?.price?.let {
+                selectedQuantity.get()?.toDouble()?.let { it1 -> it.times(it1) }
+            })
+    }
 
     fun onSubmitClick() {
         if (!navigator.validate()) {
@@ -43,6 +52,9 @@ class SaleViewModel(
     }
 
     fun loadData() {
+        selectedQuantity.addOnPropertyChangedCallback(callback)
+        selectedFutureDate.addOnPropertyChangedCallback(callback)
+
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getUserProfileDB().concatMap { dataManager.getAsserts(it.data?.userId.toString()) }

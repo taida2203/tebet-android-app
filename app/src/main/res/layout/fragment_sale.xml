@@ -5,6 +5,7 @@
     <data>
 
         <import type="com.tebet.mojual.common.util.DateExtKt" />
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
 
         <variable
             name="viewModel"
@@ -85,7 +86,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RP 5.000.000"
+                android:text="@{StringExtKt.toDisplayMoney(viewModel.simulationPrice)}"
                 android:textStyle="bold" />
         </LinearLayout>
 

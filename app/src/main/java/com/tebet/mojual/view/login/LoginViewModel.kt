@@ -2,7 +2,7 @@ package com.tebet.mojual.view.login
 
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.AuthAccountKitMethod
-import co.sdk.auth.core.LoginConfiguration
+import co.sdk.auth.core.models.LoginConfiguration
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile

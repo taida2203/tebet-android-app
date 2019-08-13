@@ -5,6 +5,8 @@
 
         <import type="com.tebet.mojual.common.util.DateExtKt" />
 
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
+
         <variable
             name="listener"
             type="com.tebet.mojual.view.selectfuturedate.SelectFutureDateViewModel.OnFutureDateClick" />
@@ -51,7 +53,7 @@
                 <com.tebet.mojual.common.view.AppTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(item.price)}" />
+                    android:text="@{StringExtKt.toDisplayMoney(item.price)}" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

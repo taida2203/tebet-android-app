@@ -5,11 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import co.sdk.auth.AuthSdk
-import co.sdk.auth.core.AuthAccountKitMethod
-import co.sdk.auth.core.LoginConfiguration
-import co.sdk.auth.core.models.ApiCallBack
-import co.sdk.auth.core.models.LoginException
-import co.sdk.auth.core.models.Token
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivityLoginBinding
@@ -17,7 +12,6 @@ import com.tebet.mojual.view.home.HomeActivity
 import com.tebet.mojual.view.loginpassword.LoginWithPassword
 import com.tebet.mojual.view.registration.SignUpPassword
 import com.tebet.mojual.view.base.BaseActivity
-import com.tebet.mojual.view.forgotpassword.ForgotPassword
 import com.tebet.mojual.view.signup.SignUpInfo
 
 class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigator {

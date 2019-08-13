@@ -5,7 +5,7 @@ import androidx.databinding.ObservableList
 import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.AuthPasswordMethod
-import co.sdk.auth.core.LoginConfiguration
+import co.sdk.auth.core.models.LoginConfiguration
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider

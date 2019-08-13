@@ -5,17 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import co.sdk.auth.AuthSdk
-import co.sdk.auth.core.AuthAccountKitMethod
-import co.sdk.auth.core.AuthPasswordMethod
-import co.sdk.auth.core.LoginConfiguration
-import co.sdk.auth.core.models.ApiCallBack
-import co.sdk.auth.core.models.LoginException
-import co.sdk.auth.core.models.Token
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivityLoginPasswordBinding

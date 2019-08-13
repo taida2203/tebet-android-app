@@ -1,6 +1,6 @@
 package com.tebet.mojual.data.remote
 
-import co.sdk.auth.core.LoginConfiguration
+import co.sdk.auth.core.models.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.data.models.*
 import io.reactivex.Observable
