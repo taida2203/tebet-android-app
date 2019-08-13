@@ -97,14 +97,14 @@
                         android:layout_height="@dimen/_80sdp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/icon_sell" />
+                        android:src="@{viewModel.userProfile.isUserVerified ? @drawable/sell_icon : @drawable/sell_icon_disable}" />
 
-                    <TextView
+                    <com.tebet.mojual.common.view.AppTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:text="Sell now"
-                        android:textColor="@color/green_dark"
+                        android:textColor="@{viewModel.userProfile.isUserVerified ? @color/green_dark : @color/gray_text}"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -114,9 +114,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
-                    android:onClick="@{()-> viewModel.onCheckQualityClick()}"
                     android:background="@drawable/border_edit_text"
                     android:gravity="center"
+                    android:onClick="@{()-> viewModel.onCheckQualityClick()}"
                     android:orientation="vertical">
 
                     <ImageView
@@ -124,14 +124,14 @@
                         android:layout_height="@dimen/_80sdp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/icon_check" />
+                        android:src="@{viewModel.userProfile.isUserVerified ? @drawable/check_quality_icon : @drawable/check_quality_icon_disable}" />
 
-                    <TextView
+                    <com.tebet.mojual.common.view.AppTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:text="Check Quality"
-                        android:textColor="@color/green_dark"
+                        android:textColor="@{viewModel.userProfile.isUserVerified ? @color/green_dark : @color/gray_text}"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -159,14 +159,14 @@
                         android:layout_height="@dimen/_80sdp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/icon_borrow" />
+                        android:src="@{viewModel.userProfile.isUserVerified ? @drawable/borrow_icon : @drawable/borrow_icon_disable}" />
 
-                    <TextView
+                    <com.tebet.mojual.common.view.AppTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:text="Borrow"
-                        android:textColor="@color/green_dark"
+                        android:textColor="@{viewModel.userProfile.isUserVerified ? @color/green_dark : @color/gray_text}"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -176,9 +176,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
-                    android:onClick="@{()-> viewModel.onTipsClick()}"
                     android:background="@drawable/border_edit_text"
                     android:gravity="center"
+                    android:onClick="@{()-> viewModel.onTipsClick()}"
                     android:orientation="vertical">
 
                     <ImageView
@@ -186,14 +186,14 @@
                         android:layout_height="@dimen/_80sdp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/icon_tips" />
+                        android:src="@{viewModel.userProfile.isUserVerified ? @drawable/tips_icon : @drawable/tips_icon_disable}" />
 
-                    <TextView
+                    <com.tebet.mojual.common.view.AppTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:text="Tips"
-                        android:textColor="@color/green_dark"
+                        android:textColor="@{viewModel.userProfile.isUserVerified ? @color/green_dark : @color/gray_text}"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="bold" />
                 </LinearLayout>

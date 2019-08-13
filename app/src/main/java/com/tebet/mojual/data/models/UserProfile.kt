@@ -102,4 +102,8 @@ data class UserProfile(
             field = value
             notifyPropertyChanged(BR.pickupAddress)
         }
+
+    fun isUserVerified(): Boolean {
+        return statusEnum == Status.Verified
+    }
 }
