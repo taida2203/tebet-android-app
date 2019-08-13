@@ -28,7 +28,7 @@ class SelectFutureDate : BaseActivity<ActivitySelectFutureDateBinding, SelectFut
     }
 
     override fun itemSelected(item: Price) {
-        intent.putExtra("FUTURE_DATE", item.date.toString())
+        intent.putExtra("FUTURE_DATE", item)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.databinding.FragmentSaleBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.home.HomeActivity
@@ -55,7 +56,7 @@ class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNav
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 500 -> viewModel.selectedQuantity.set(data?.getStringExtra("QUANTITY")?.toInt())
-                600 -> viewModel.selectedFutureDate.set(data?.getStringExtra("FUTURE_DATE")?.toLong())
+                600 -> viewModel.selectedFutureDate.set(data?.getSerializableExtra("FUTURE_DATE") as Price)
             }
         }
     }

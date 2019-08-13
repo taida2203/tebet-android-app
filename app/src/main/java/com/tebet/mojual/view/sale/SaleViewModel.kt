@@ -6,9 +6,9 @@ import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Asset
 import com.tebet.mojual.data.models.CreateOrderRequest
 import com.tebet.mojual.data.models.EmptyResponse
+import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
-import java.util.*
 
 class SaleViewModel(
     dataManager: DataManager,
@@ -17,7 +17,8 @@ class SaleViewModel(
     BaseViewModel<SaleNavigator>(dataManager, schedulerProvider) {
     private var assets: List<Asset>? = null
     var selectedQuantity: ObservableField<Int> = ObservableField()
-    var selectedFutureDate: ObservableField<Long> = ObservableField()
+    var selectedFutureDate: ObservableField<Price> = ObservableField()
+    var simulationPrice: ObservableField<Double> = ObservableField()
 
     fun onSubmitClick() {
         if (!navigator.validate()) {
@@ -25,7 +26,7 @@ class SaleViewModel(
         }
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.createOrder(CreateOrderRequest(selectedQuantity.get(), selectedFutureDate.get()))
+            dataManager.createOrder(CreateOrderRequest(selectedQuantity.get(), selectedFutureDate.get()?.date))
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
                     override fun onSuccess(dataResponse: EmptyResponse) {
