@@ -18,6 +18,7 @@ import com.facebook.login.LoginResult
 import java.util.Arrays
 
 import co.sdk.auth.core.models.ApiCallBack
+import co.sdk.auth.core.models.LoginConfiguration
 import co.sdk.auth.core.models.LoginException
 
 class AuthFacebookMethod : AuthMethod {

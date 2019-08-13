@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
-import co.common.util.PreferenceUtils
 import co.common.util.PreferenceUtils.*
 import co.sdk.auth.core.*
 import co.sdk.auth.core.models.*

@@ -1,4 +1,4 @@
-package co.sdk.auth.core
+package co.sdk.auth.core.models
 
 class LoginConfiguration(var logoutWhileExpired: Boolean = true, var token: String? = null, var phone: String? = null) {
     var otp: String? = null

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import co.sdk.auth.core.models.ApiCallBack
+import co.sdk.auth.core.models.LoginConfiguration
 import co.sdk.auth.core.models.LoginException
 import com.facebook.accountkit.*
 import com.facebook.accountkit.ui.AccountKitActivity

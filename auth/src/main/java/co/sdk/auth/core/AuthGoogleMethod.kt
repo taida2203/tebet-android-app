@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit
 
 import co.sdk.auth.core.models.ApiCallBack
 import co.sdk.auth.core.models.GoogleTokenAuthResponse
+import co.sdk.auth.core.models.LoginConfiguration
 import co.sdk.auth.core.models.LoginException
 import co.sdk.auth.network.api.ApiService
 import co.sdk.auth.utils.Utility

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 
 import co.sdk.auth.core.models.ApiCallBack
+import co.sdk.auth.core.models.LoginConfiguration
 
 class AuthOTPMethod : AuthMethod {
 
