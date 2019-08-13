@@ -31,9 +31,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ID" />
+                android:text="@string/sale_detail_title_id" />
 
-            <TextView
+            <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -61,7 +61,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Date" />
+                android:text="@string/sale_detail_title_date" />
 
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="0dp"
@@ -90,7 +90,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Price" />
+                android:text="@string/sale_detail_title_price" />
 
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="0dp"
@@ -119,14 +119,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Quantity" />
+                android:text="@string/sale_detail_title_quantity" />
 
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="@{String.valueOf(viewModel.order.quantity)}"
+                android:text="@{@string/sale_detail_container(String.valueOf(viewModel.order.quantity))}"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -148,7 +148,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Total Price" />
+                android:text="@string/sale_detail_title_total_price" />
 
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="0dp"
@@ -166,6 +166,6 @@
             android:layout_marginTop="30dp"
             android:enabled="@{!viewModel.isLoading}"
             android:onClick="@{()->viewModel.onReCreateOrderClick()}"
-            android:text="Create New Order" />
+            android:text="@string/sale_detail_submit" />
     </LinearLayout>
 </layout>
