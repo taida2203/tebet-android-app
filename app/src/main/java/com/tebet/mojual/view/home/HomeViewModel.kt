@@ -3,6 +3,7 @@ package com.tebet.mojual.view.home
 import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
@@ -36,8 +37,8 @@ class HomeViewModel(
         navigator.showSellScreen()
     }
 
-    fun onSubmitOrderClick() {
-        navigator.showOrderDetailScreen()
+    fun onSubmitOrderClick(dataResponse: Order) {
+        navigator.showOrderDetailScreen(dataResponse)
     }
 
     fun onHomeClick() {

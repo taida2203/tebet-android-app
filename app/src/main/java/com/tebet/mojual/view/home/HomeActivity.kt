@@ -1,13 +1,13 @@
 package com.tebet.mojual.view.home
 
 import android.os.Bundle
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.databinding.ItemHomeAvatarBinding
@@ -103,9 +103,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
         openFragment(SaleFragment(), R.id.contentHolder)
     }
 
-    override fun showOrderDetailScreen() {
+    override fun showOrderDetailScreen(dataResponse: Order) {
         enableBackButton = true
-        openFragment(SaleDetailFragment(), R.id.contentHolder)
+        openFragment(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder)
     }
 
     override fun openFragment(fragment: Fragment, placeHolder: Int, tag: String) {

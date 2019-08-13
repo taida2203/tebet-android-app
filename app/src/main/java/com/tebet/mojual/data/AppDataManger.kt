@@ -10,6 +10,8 @@ import com.tebet.mojual.data.local.db.dao.*
 import com.tebet.mojual.data.local.prefs.PreferencesHelper
 import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.google_map.GeoCodeResponse
+import com.tebet.mojual.data.models.request.CreateOrderRequest
+import com.tebet.mojual.data.models.request.UpdatePasswordRequest
 import com.tebet.mojual.data.remote.ApiGoogleHelper
 import com.tebet.mojual.data.remote.ApiHelper
 import io.reactivex.Observable
@@ -232,7 +234,7 @@ class AppDataManger @Inject constructor(
         }
     }
 
-    override fun createOrder(createOrderRequest: CreateOrderRequest): Observable<AuthJson<EmptyResponse>> {
+    override fun createOrder(createOrderRequest: CreateOrderRequest): Observable<AuthJson<Order>> {
         return api.createOrder(createOrderRequest)
     }
 

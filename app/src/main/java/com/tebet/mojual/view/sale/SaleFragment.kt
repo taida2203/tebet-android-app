@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.databinding.FragmentSaleBinding
 import com.tebet.mojual.view.base.BaseFragment
@@ -35,8 +36,8 @@ class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNav
         viewModel.loadData()
     }
 
-    override fun openSaleScreen() {
-        (activity as HomeActivity).viewModel.onSubmitOrderClick()
+    override fun openSaleScreen(dataResponse: Order) {
+        (activity as HomeActivity).viewModel.onSubmitOrderClick(dataResponse)
     }
 
     override fun showQuantityScreen() {

@@ -6,9 +6,9 @@ import androidx.databinding.ObservableField
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Asset
-import com.tebet.mojual.data.models.CreateOrderRequest
-import com.tebet.mojual.data.models.EmptyResponse
+import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Price
+import com.tebet.mojual.data.models.request.CreateOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 
@@ -35,12 +35,17 @@ class SaleViewModel(
         }
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.createOrder(CreateOrderRequest(selectedQuantity.get(), selectedFutureDate.get()?.date))
+            dataManager.createOrder(
+                CreateOrderRequest(
+                    selectedQuantity.get(),
+                    selectedFutureDate.get()?.date
+                )
+            )
                 .observeOn(schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
-                    override fun onSuccess(dataResponse: EmptyResponse) {
+                .subscribeWith(object : CallbackWrapper<Order>() {
+                    override fun onSuccess(dataResponse: Order) {
                         navigator.showLoading(false)
-                        navigator.openSaleScreen()
+                        navigator.openSaleScreen(dataResponse)
                     }
 
                     override fun onFailure(error: String?) {
