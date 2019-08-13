@@ -59,5 +59,8 @@ interface ApiHelper {
 
     @GET("order/price")
     fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>>
+
+    @GET("order/order")
+    fun getOrderDetail(@Query(value = "orderId") orderId: Int): Observable<AuthJson<Order>>
 }
 

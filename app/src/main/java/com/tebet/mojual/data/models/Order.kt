@@ -3,7 +3,7 @@ package com.tebet.mojual.data.models
 import java.io.Serializable
 
 data class Order(
-    var orderId: String,
+    var orderId: Int,
     var orderCode: String,
     var quantity: Int?,
     var planDate: Long?,

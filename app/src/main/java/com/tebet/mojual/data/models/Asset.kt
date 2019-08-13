@@ -32,4 +32,8 @@ class Asset(
     var holder: UserProfile? = null,
     @Ignore
     var assignee: UserProfile? = null
-)
+) {
+    companion object {
+        var quantity: Int = 20
+    }
+}

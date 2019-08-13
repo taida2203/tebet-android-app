@@ -39,6 +39,7 @@ class SaleDetailFragment() : BaseFragment<FragmentSaleDetailBinding, SaleDetailV
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.order.set(order)
+        viewModel.loadData()
     }
 
     override fun openSaleScreen() {

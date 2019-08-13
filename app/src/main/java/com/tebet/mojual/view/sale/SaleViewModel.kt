@@ -25,7 +25,7 @@ class SaleViewModel(
     val callback = object : OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable, propertyId: Int) =
             simulationPrice.set(selectedFutureDate.get()?.price?.let {
-                selectedQuantity.get()?.toDouble()?.let { it1 -> it.times(it1) }
+                selectedQuantity.get()?.toDouble()?.let { it1 -> it.times(it1).times(Asset.quantity) }
             })
     }
 
@@ -44,6 +44,8 @@ class SaleViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Order>() {
                     override fun onSuccess(dataResponse: Order) {
+                        dataResponse.price = selectedFutureDate.get()?.price
+                        dataResponse.totalPrice = simulationPrice.get()
                         navigator.showLoading(false)
                         navigator.openSaleScreen(dataResponse)
                     }

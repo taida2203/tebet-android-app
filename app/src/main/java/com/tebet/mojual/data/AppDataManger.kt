@@ -27,24 +27,20 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
-    override fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>> {
-        return api.getNext7DaysPrice()
-    }
+    override fun getOrderDetail(orderId: Int): Observable<AuthJson<Order>> = api.getOrderDetail(orderId)
 
-    override fun getAssetDB(): Observable<AuthJson<List<Asset>>> {
-        return room.asset.concatMap { bankDao ->
-            bankDao.queryAsset().subscribeOn(Schedulers.newThread())
-                .doOnError { message -> EmptyResultSetException("") }
-                .toObservable().map { assets -> AuthJson(null, "", assets) }
-        }
+    override fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>> = api.getNext7DaysPrice()
+
+    override fun getAssetDB(): Observable<AuthJson<List<Asset>>> = room.asset.concatMap { bankDao ->
+        bankDao.queryAsset().subscribeOn(Schedulers.newThread())
+            .doOnError { message -> EmptyResultSetException("") }
+            .toObservable().map { assets -> AuthJson(null, "", assets) }
     }
 
     override val asset: Observable<AssetDao>
         get() = room.asset
 
-    override fun insertAssets(asset: List<Asset>): Observable<Boolean> {
-        return room.insertAssets(asset)
-    }
+    override fun insertAssets(asset: List<Asset>): Observable<Boolean> = room.insertAssets(asset)
 
     override fun getAsserts(profileId: String, offset: Int?, limit: Int?): Observable<AuthJson<List<Asset>>> {
         if (App.instance.checkConnectivity()) {
@@ -59,24 +55,16 @@ class AppDataManger @Inject constructor(
         return getAssetDB()
     }
 
-    override fun isShowTutorialShowed(isShowTutorialShowed: Boolean?) {
-        return preferences.isShowTutorialShowed(isShowTutorialShowed)
-    }
+    override fun isShowTutorialShowed(isShowTutorialShowed: Boolean?) = preferences.isShowTutorialShowed(isShowTutorialShowed)
 
-    override fun isShowTutorialShowed(): Boolean {
-        return preferences.isShowTutorialShowed
-    }
+    override fun isShowTutorialShowed(): Boolean = preferences.isShowTutorialShowed
 
-    override fun clearAllTables(): Observable<Boolean> {
-        return room.clearAllTables()
-    }
+    override fun clearAllTables(): Observable<Boolean> = room.clearAllTables()
 
-    override fun getRegionDB(): Observable<AuthJson<List<Region>>> {
-        return room.region.concatMap { bankDao ->
-            bankDao.queryRegion().subscribeOn(Schedulers.newThread())
-                .doOnError { message -> EmptyResultSetException("") }
-                .toObservable().map { regions -> AuthJson(null, "", regions) }
-        }
+    override fun getRegionDB(): Observable<AuthJson<List<Region>>> = room.region.concatMap { bankDao ->
+        bankDao.queryRegion().subscribeOn(Schedulers.newThread())
+            .doOnError { message -> EmptyResultSetException("") }
+            .toObservable().map { regions -> AuthJson(null, "", regions) }
     }
 
     override val region: Observable<RegionDao>
@@ -95,49 +83,33 @@ class AppDataManger @Inject constructor(
         return getRegionDB()
     }
 
-    override fun insertRegions(regions: List<Region>): Observable<Boolean> {
-        return room.insertRegions(regions)
+    override fun insertRegions(regions: List<Region>): Observable<Boolean> = room.insertRegions(regions)
+
+    override fun insertCities(cities: List<City>): Observable<Boolean> = room.insertCities(cities)
+
+    override fun getReserveGeoLocation(latlng: String, key: String): Observable<GeoCodeResponse> = apiGoogle.getReserveGeoLocation(latlng, key)
+
+    override fun getCityDB(): Observable<AuthJson<List<City>>> = room.city.concatMap { cityDao ->
+        cityDao.queryCity().subscribeOn(Schedulers.newThread()).doOnError { message -> EmptyResultSetException("") }
+            .toObservable().map { citys -> AuthJson(null, "", citys) }
     }
 
-    override fun insertCities(cities: List<City>): Observable<Boolean> {
-        return room.insertCities(cities)
-    }
-
-    override fun getReserveGeoLocation(latlng: String, key: String): Observable<GeoCodeResponse> {
-        return apiGoogle.getReserveGeoLocation(latlng, key)
-    }
-
-    override fun getCityDB(): Observable<AuthJson<List<City>>> {
-        return room.city.concatMap { cityDao ->
-            cityDao.queryCity().subscribeOn(Schedulers.newThread()).doOnError { message -> EmptyResultSetException("") }
-                .toObservable().map { citys -> AuthJson(null, "", citys) }
-        }
-    }
-
-    override fun getBankDB(): Observable<AuthJson<List<Bank>>> {
-        return room.bank.concatMap { bankDao ->
-            bankDao.queryBank().subscribeOn(Schedulers.newThread()).doOnError { message -> EmptyResultSetException("") }
-                .toObservable().map { banks -> AuthJson(null, "", banks) }
-        }
+    override fun getBankDB(): Observable<AuthJson<List<Bank>>> = room.bank.concatMap { bankDao ->
+        bankDao.queryBank().subscribeOn(Schedulers.newThread()).doOnError { message -> EmptyResultSetException("") }
+            .toObservable().map { banks -> AuthJson(null, "", banks) }
     }
 
     override val bank: Observable<BankDao>
         get() = room.bank
 
-    override fun insertBank(bank: Bank): Observable<Boolean> {
-        return room.insertBank(bank)
-    }
+    override fun insertBank(bank: Bank): Observable<Boolean> = room.insertBank(bank)
 
-    override fun insertBanks(banks: List<Bank>): Observable<Boolean> {
-        return room.insertBanks(banks)
-    }
+    override fun insertBanks(banks: List<Bank>): Observable<Boolean> = room.insertBanks(banks)
 
     override val city: Observable<CityDao>
         get() = room.city
 
-    override fun insertCity(city: City): Observable<Boolean> {
-        return room.insertCity(city)
-    }
+    override fun insertCity(city: City): Observable<Boolean> = room.insertCity(city)
 
     override fun getBanks(): Observable<AuthJson<List<Bank>>> {
         if (App.instance.checkConnectivity()) {
@@ -165,32 +137,22 @@ class AppDataManger @Inject constructor(
         return getCityDB()
     }
 
-    override fun insertUserProfile(userProfile: UserProfile): Observable<Boolean> {
-        return room.insertUserProfile(userProfile)
-    }
+    override fun insertUserProfile(userProfile: UserProfile): Observable<Boolean> = room.insertUserProfile(userProfile)
 
     override val userProfile: Observable<UserProfileDao>
         get() = room.userProfile
 
-    override fun getAccessToken(): String {
-        return preferences.accessToken
-    }
+    override fun getAccessToken(): String = preferences.accessToken
 
     override fun setAccessToken(accessToken: String?) {
         preferences.accessToken = accessToken
     }
 
-    override fun getDataMock(): Call<ResponseBody> {
-        return api.getDataMock()
-    }
+    override fun getDataMock(): Call<ResponseBody> = api.getDataMock()
 
-    override fun getData(): Call<ResponseBody> {
-        return api.getData()
-    }
+    override fun getData(): Call<ResponseBody> = api.getData()
 
-    override fun register(loginConfiguration: LoginConfiguration): Observable<AuthJson<EmptyResponse>> {
-        return api.register(loginConfiguration)
-    }
+    override fun register(loginConfiguration: LoginConfiguration): Observable<AuthJson<EmptyResponse>> = api.register(loginConfiguration)
 
     override fun getProfile(): Observable<AuthJson<UserProfile>> {
         if (App.instance.checkConnectivity()) {
@@ -215,9 +177,7 @@ class AppDataManger @Inject constructor(
             .concatMap { Observable.just(userProfileTemp) }
     }
 
-    override fun updatePassword(updateProfileRequest: UpdatePasswordRequest): Observable<AuthJson<EmptyResponse>> {
-        return api.updatePassword(updateProfileRequest)
-    }
+    override fun updatePassword(updateProfileRequest: UpdatePasswordRequest): Observable<AuthJson<EmptyResponse>> = api.updatePassword(updateProfileRequest)
 
     override fun uploadImage(
         folder: MultipartBody.Part,
@@ -226,17 +186,12 @@ class AppDataManger @Inject constructor(
         return api.uploadImage(folder, file)
     }
 
-    override fun getUserProfileDB(): Observable<AuthJson<UserProfile>> {
-        return room.userProfile.concatMap { userProfileDao ->
-            userProfileDao.queryUserProfile().subscribeOn(Schedulers.newThread())
-                .doOnError { message -> EmptyResultSetException("") }
-                .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
-        }
+    override fun getUserProfileDB(): Observable<AuthJson<UserProfile>> = room.userProfile.concatMap { userProfileDao ->
+        userProfileDao.queryUserProfile().subscribeOn(Schedulers.newThread())
+            .doOnError { message -> EmptyResultSetException("") }
+            .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
     }
 
-    override fun createOrder(createOrderRequest: CreateOrderRequest): Observable<AuthJson<Order>> {
-        return api.createOrder(createOrderRequest)
-    }
-
+    override fun createOrder(createOrderRequest: CreateOrderRequest): Observable<AuthJson<Order>> = api.createOrder(createOrderRequest)
 }
 
