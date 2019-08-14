@@ -11,4 +11,5 @@ interface HomeNavigator {
     fun showSellScreen()
     fun showOrderDetailScreen(dataResponse: Order)
     fun showHomeScreen()
+    fun showHistoryScreen()
 }

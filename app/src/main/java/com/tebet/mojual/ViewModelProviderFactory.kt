@@ -6,6 +6,7 @@ import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.view.base.BaseActivityViewModel
 import com.tebet.mojual.view.forgotpassword.ForgotPasswordViewModel
+import com.tebet.mojual.view.history.HistoryViewModel
 import com.tebet.mojual.view.home.HomeViewModel
 import com.tebet.mojual.view.home.content.HomeContentViewModel
 import com.tebet.mojual.view.profile.ProfileViewModel
@@ -52,6 +53,7 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(SelectQuantityViewModel::class.java) -> SelectQuantityViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SelectFutureDateViewModel::class.java) -> SelectFutureDateViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(QualityViewModel::class.java) -> QualityViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> HistoryViewModel(dataManager, schedulerProvider) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

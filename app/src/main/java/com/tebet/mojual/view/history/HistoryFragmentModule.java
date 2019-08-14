@@ -1,9 +1,9 @@
-package com.tebet.mojual.view.qualitycheck;
+package com.tebet.mojual.view.history;
 
 import dagger.Module;
 
 @Module
-public class QualityFragmentModule {
+public class HistoryFragmentModule {
 
 //    @Provides
 //    HomeFragment provideBlogAdapter() {

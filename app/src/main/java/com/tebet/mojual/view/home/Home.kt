@@ -13,6 +13,7 @@ import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.databinding.ItemHomeAvatarBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
+import com.tebet.mojual.view.history.HistoryFragment
 import com.tebet.mojual.view.home.content.HomeFragment
 import com.tebet.mojual.view.profile.ProfileFragment
 import com.tebet.mojual.view.qualitycheck.QualityFragment
@@ -89,6 +90,12 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         enableBackButton = false
         baseBinding.viewModel?.enableTopLogo?.set(true)
         openFragment(HomeFragment(), R.id.contentHolder)
+    }
+
+    override fun showHistoryScreen() {
+        enableBackButton = false
+        baseBinding.viewModel?.enableTopLogo?.set(true)
+        openFragment(HistoryFragment(), R.id.contentHolder)
     }
 
 
