@@ -33,7 +33,12 @@ class BindingUtils {
                     .placeholder(R.drawable.signup_avatar_blank)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
+                return
             }
+            GlideApp.with(context).load(R.drawable.signup_avatar_blank)
+                .placeholder(R.drawable.signup_avatar_blank)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
         }
     }
 }

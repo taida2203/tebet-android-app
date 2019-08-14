@@ -53,7 +53,7 @@ class GoogleMapViewModel(
 
     fun hideTutorial() {
         isShowTutorial.set(false)
-        dataManager.isShowTutorialShowed(true)
+        dataManager.isShowTutorialShowed = true
     }
 
     fun loadData() {

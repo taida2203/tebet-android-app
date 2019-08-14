@@ -9,6 +9,9 @@ import com.tebet.mojual.BR
     tableName = "UserProfile"
 )
 data class UserProfile(
+    @PrimaryKey
+    @ColumnInfo(name = "userId")
+    var userId: Int? = null,
     @ColumnInfo(name = "status")
     var status: String? = null,
     var authenticationType: String? = null,
@@ -32,9 +35,6 @@ data class UserProfile(
     @ColumnInfo(name = "profileType")
     var profileType: String? = null,
     var token: String? = null,
-    @PrimaryKey
-    @ColumnInfo(name = "userId")
-    var userId: Int? = null,
     @ColumnInfo(name = "username")
     var username: String? = null
 ) : BaseObservable() {

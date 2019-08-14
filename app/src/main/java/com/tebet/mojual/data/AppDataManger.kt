@@ -27,6 +27,17 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
+    override var isShowTutorialShowed: Boolean
+        get() = preferences.isShowTutorialShowed
+        set(value) {
+            preferences.isShowTutorialShowed = value
+        }
+    override var accessToken: String?
+        get() = preferences.accessToken
+        set(value) {
+            preferences.accessToken = value
+        }
+
     override fun getOrderDetail(orderId: Int): Observable<AuthJson<Order>> = api.getOrderDetail(orderId)
 
     override fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>> = api.getNext7DaysPrice()
@@ -55,9 +66,6 @@ class AppDataManger @Inject constructor(
         return getAssetDB()
     }
 
-    override fun isShowTutorialShowed(isShowTutorialShowed: Boolean?) = preferences.isShowTutorialShowed(isShowTutorialShowed)
-
-    override fun isShowTutorialShowed(): Boolean = preferences.isShowTutorialShowed
 
     override fun clearAllTables(): Observable<Boolean> = room.clearAllTables()
 
@@ -141,12 +149,6 @@ class AppDataManger @Inject constructor(
 
     override val userProfile: Observable<UserProfileDao>
         get() = room.userProfile
-
-    override fun getAccessToken(): String = preferences.accessToken
-
-    override fun setAccessToken(accessToken: String?) {
-        preferences.accessToken = accessToken
-    }
 
     override fun getDataMock(): Call<ResponseBody> = api.getDataMock()
 
