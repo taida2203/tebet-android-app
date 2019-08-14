@@ -16,10 +16,14 @@
 
 package com.tebet.mojual.common.util
 
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.tebet.mojual.R
+import com.tebet.mojual.common.view.AppEditText
+
 
 class BindingUtils {
     companion object {
@@ -40,5 +44,26 @@ class BindingUtils {
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
         }
+
+        @BindingAdapter("onOkInSoftKeyboard")
+        @JvmStatic
+        fun setOnOkInSoftKeyboardListener(
+            view: EditText,
+            listener: OnOkInSoftKeyboardListener?
+        ) {
+            if (listener == null) {
+                view.setOnEditorActionListener(null)
+            } else {
+                view.setOnEditorActionListener { v, actionId, event ->
+                    // ... solution to receiving event
+                    listener.onOkInSoftKeyboard()
+                    true
+                }
+            }
+        }
+    }
+
+    abstract class OnOkInSoftKeyboardListener {
+        abstract fun onOkInSoftKeyboard()
     }
 }

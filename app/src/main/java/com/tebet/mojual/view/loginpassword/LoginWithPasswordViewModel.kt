@@ -8,6 +8,7 @@ import co.sdk.auth.core.AuthPasswordMethod
 import co.sdk.auth.core.models.LoginConfiguration
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.common.util.BindingUtils
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
@@ -26,6 +27,12 @@ class LoginWithPasswordViewModel(
 
     var items: ObservableList<String> = ObservableArrayList()
     var itemBinding: ItemBinding<String> = ItemBinding.of(BR.item, R.layout.item_flag_dropdown)
+
+    var onOkEditText: BindingUtils.OnOkInSoftKeyboardListener = object : BindingUtils.OnOkInSoftKeyboardListener() {
+        override fun onOkInSoftKeyboard() {
+            doLogin()
+        }
+    }
 
     companion object {
         const val PHONE_PREFIX_VN = "+84"
