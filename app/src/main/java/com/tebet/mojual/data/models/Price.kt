@@ -5,4 +5,6 @@ import java.io.Serializable
 data class Price(
     var date: Long,
     var price: Double
-) : Serializable
+) : Serializable {
+    var isIncrease: Boolean? = null
+}

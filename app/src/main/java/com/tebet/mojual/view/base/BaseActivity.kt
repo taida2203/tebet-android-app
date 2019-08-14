@@ -144,8 +144,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     private fun performDataBinding() {
         viewDataBinding = DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding.placeHolder, true)
         this.mViewModel = if (mViewModel == null) viewModel else mViewModel
-        viewDataBinding!!.setVariable(bindingVariable, mViewModel)
-        viewDataBinding!!.executePendingBindings()
+        viewDataBinding?.setVariable(bindingVariable, mViewModel)
+        viewDataBinding?.executePendingBindings()
     }
 
     protected lateinit var navLayout: RelativeLayout

@@ -17,6 +17,7 @@
         <com.tebet.mojual.common.view.AppTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
             android:text="@string/sale_select_future_date_title"
             android:textSize="@dimen/_14ssp"
@@ -30,6 +31,7 @@
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_weight="1"
                 android:text="@string/sale_select_future_date_date"
                 android:textStyle="bold" />
@@ -37,6 +39,7 @@
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_16sdp"
                 android:layout_weight="1"
                 android:text="@string/sale_select_future_date_price"
                 android:textStyle="bold" />

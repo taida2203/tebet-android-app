@@ -58,9 +58,9 @@
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:lines="1"
-                        android:visibility="@{!viewModel.enableTopLogo ? View.VISIBLE : View.GONE}"
                         android:textColor="@color/green_dark"
                         android:textSize="@dimen/_16ssp"
+                        android:visibility="@{!viewModel.enableTopLogo ? View.VISIBLE : View.GONE}"
                         app:font_style="bold" />
 
                     <ImageView

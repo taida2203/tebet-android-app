@@ -27,10 +27,12 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginRight="@dimen/_12sdp"
+            android:layout_marginRight="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_8sdp"
-            android:text="@{item}" />
+            android:text="@{item}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_14ssp" />
     </LinearLayout>
 </layout>

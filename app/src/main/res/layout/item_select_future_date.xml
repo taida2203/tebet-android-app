@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="com.tebet.mojual.common.util.DateExtKt" />
 
         <import type="com.tebet.mojual.common.util.StringExtKt" />
@@ -30,31 +32,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginRight="@dimen/_12sdp"
+            android:layout_marginRight="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_8sdp">
 
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{DateExtKt.toDisplayDate(item.date)}" />
+                android:text="@{DateExtKt.toDisplayDateShort(item.date)}"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_14ssp" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
 
                 <com.tebet.mojual.common.view.AppTextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/etPrice"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{StringExtKt.toDisplayMoney(item.price)}" />
-            </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:text="@{StringExtKt.toDisplayMoney(item.price)}"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:src="@{item.isIncrease ? @drawable/price_up : @drawable/price_down}"
+                    android:visibility="@{item.isIncrease != null ? View.VISIBLE : View.GONE}" />
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

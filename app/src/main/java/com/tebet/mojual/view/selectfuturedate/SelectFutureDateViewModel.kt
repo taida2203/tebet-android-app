@@ -31,7 +31,14 @@ class SelectFutureDateViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<List<Price>>() {
                     override fun onSuccess(dataResponse: List<Price>) {
-                        dataResponse.forEach { item ->
+                        dataResponse.map { responsePrice ->
+                            responsePrice.isIncrease = when (dataResponse.minBy { price -> price.date }?.price?.compareTo(responsePrice.price)) {
+                                -1 -> true
+                                1 -> false
+                                else -> null
+                            }
+                            responsePrice
+                        }.forEach { item ->
                             items.add(item)
                         }
                         navigator.showLoading(false)
