@@ -1,38 +1,70 @@
 <resources>
     <string name="app_name">MoJualApp</string>
-    <string name="notification_title_older">Older</string>
-    <string name="activity_noti_title">Notifications</string>
-    <!--Month year Picker-->
-    <string name="month_year_picker_date">Date</string>
-    <string name="month_year_picker_month">Month</string>
-    <string name="month_year_picker_year">Year</string>
-    <string name="month_year_picker_select_btn">SELECT</string>
-    <string name="loading">Loading</string>
-    <string name="login_screen_btn_login">Sign In with Phone Number</string>
-    <string name="login_screen_btn_register">Register</string>
-    <string name="sign_up_screen_input_password">Input your password</string>
-    <string name="sign_up_screen_password">Password</string>
-    <string name="sign_up_screen_re_password">Retype Password</string>
+
     <string name="general_btn_next">Next</string>
-    <string name="general_btn_back">Back</string>
-    <string name="general_error_feature_disabled">This feature will coming soon !</string>
-    <string name="general_error_feature_permission">You don\'t have permission to access this feature yet</string>
-    <string name="login_password_screen_phone">Phone</string>
-    <string name="login_screen_btn_forgot_password">Forgot password</string>
-    <string name="passwordErrorMessage">Password must at least 6 char</string>
-    <string name="passwordNotEqualErrorMessage">Confirm password not match</string>
-    <string name="fullNameErrorMessage">Invalid name</string>
-    <string name="google_map_title">Select location on Map</string>
+    <string name="general_btn_back">back</string>
+    <string name="general_error_feature_disabled">this feature will coming soon !</string>
+    <string name="general_error_feature_permission">you don\'t have permission to access this feature yet</string>
+    <string name="general_error_validation_fill_all_field">Fill all required field !!</string>
+
+    <!--Month year Picker-->
+    <string name="login_btn_login">Sign In with Phone Number</string>
+    <string name="login_btn_register">Register</string>
+    <string name="login_btn_forgot_password">Forgot password</string>
+    <string name="login_password_phone">Phone</string>
+
+    <string name="registration_title">Sign Up</string>
+    <string name="registration_step1_selfie_tutorial">Your selfie photo, please capture front of your face.</string>
+    <string name="registration_step1_full_name">Full Name</string>
+    <string name="registration_step1_date_of_birth">Date of Birth</string>
+    <string name="registration_step1_ktp_number">KTP Number</string>
+    <string name="registration_step1_upload_ktp_photo">Upload KTP Photo</string>
+    <string name="registration_step1_error_name">Invalid name</string>
+    <string name="registration_step2_email_optional">Email (Optional)</string>
+    <string name="registration_step2_address">Address</string>
+    <string name="registration_step2_kelurahan">Kelurahan</string>
+    <string name="registration_step2_kecamatan">Kecamatan</string>
+    <string name="registration_step2_rt_rw">RT/RW</string>
+    <string name="registration_step2_city">City</string>
+    <string name="registration_step2_postal_code">Postal Code</string>
+    <string name="registration_step2_google_map_title">Select location on Map</string>
+    <string name="registration_step2_choose_on_map">Choose on Map</string>
+    <string name="registration_step3_bank_name">Bank Name</string>
+    <string name="registration_step3_bank_account_number">Bank account number</string>
+    <string name="registration_step3_bank_account_name">Bank account name</string>
+    <string name="registration_step3_bank_region">Bank region</string>
+    <string name="login_password_title">Login with phone number</string>
+
+    <string name="sign_up_password_title">Sign Up</string>
+    <string name="forgot_password_title">Input new password</string>
+    <string name="forgot_password_hint">Password</string>
+    <string name="forgot_password_input_password_hint">Input your password</string>
+    <string name="forgot_password_re_password_hint">Retype Password</string>
+
+    <string name="forgot_password_error_length">Password must at least 6 char</string>
+    <string name="forgot_password_error_not_match">Confirm password not match</string>
+
+
+    <string name="home_verify_warning">Your account is in verify process. MOJUAL team will contact you soon</string>
+    <string name="home_navigation_home">Home</string>
+    <string name="home_navigation_inbox">Inbox</string>
+    <string name="home_navigation_history">History</string>
+    <string name="home_menu_sell_now">Sell now</string>
+    <string name="home_menu_check_quality">Check Quality</string>
+    <string name="home_menu_borrow">Borrow</string>
+    <string name="home_menu_tips">Tips</string>
+    <string name="home_bonus">BONUS</string>
+
     <string name="sale_button_submit">SUBMIT</string>
     <string name="sale_estimated_price">Estimate Price</string>
     <string name="sale_quantity">Select Quantity</string>
     <string name="sale_selected_date">Select Date</string>
     <string name="sale_select_title">Select date to sell and the quantity</string>
-    <string name="home_verify_warning">Your account is in verify process. MOJUAL team will contact you soon</string>
     <string name="sale_select_quantity_title">Tab to select quantity</string>
     <string name="sale_select_future_date_title">Tab to select date to sell</string>
     <string name="sale_select_future_date_date">DATE</string>
     <string name="sale_select_future_date_price">PRICE</string>
+
     <string name="sale_detail_title_id">ID</string>
     <string name="sale_detail_title_date">Date</string>
     <string name="sale_detail_title_price">Price</string>
@@ -40,4 +72,10 @@
     <string name="sale_detail_title_total_price">Total Price</string>
     <string name="sale_detail_submit">CREATE NEW ORDER</string>
     <string name="sale_detail_container">%1$s Containers</string>
+
+
+    <string name="month_year_picker_date">Date</string>
+    <string name="month_year_picker_month">Month</string>
+    <string name="month_year_picker_year">Year</string>
+    <string name="month_year_picker_select_btn">SELECT</string>
 </resources>

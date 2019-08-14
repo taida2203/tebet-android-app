@@ -6,7 +6,7 @@ import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentHomeBinding
 import com.tebet.mojual.view.base.BaseFragment
-import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.home.Home
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeContentViewModel>(), HomeContentNavigator {
     override val bindingVariable: Int
@@ -25,6 +25,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeContentViewModel>(), 
     }
 
     override fun openSellScreen() {
-        (activity as HomeActivity).viewModel.onSellClick()
+        (activity as Home).viewModel.onSellClick()
     }
 }

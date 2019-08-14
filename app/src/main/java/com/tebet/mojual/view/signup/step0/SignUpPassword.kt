@@ -1,4 +1,4 @@
-package com.tebet.mojual.view.registration
+package com.tebet.mojual.view.signup.step0
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,7 @@ class SignUpPassword : ForgotPassword() {
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         super.onCreateBase(savedInstanceState, layoutId)
-        title = "Sign Up"
+        title = getString(R.string.sign_up_password_title)
     }
 
     override fun openHomeScreen() {

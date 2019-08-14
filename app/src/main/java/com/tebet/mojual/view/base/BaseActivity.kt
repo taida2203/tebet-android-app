@@ -187,7 +187,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
 //    override fun onResume() {
 //        super.onResume()
-//        if (this is HomeActivity) {
+//        if (this is Home) {
 ////            activity_komentar.setBackgroundResource(R.drawable.bg_choose_course)
 //            base_toolbar.setBackgroundColor(ContextCompat.getColor(this@BaseActivity, android.R.color.transparent))
 //        }
@@ -367,8 +367,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 //                }
 //            }
 //            NotificationFactory.PAGE.HOME, NotificationFactory.PAGE.BOOKING, NotificationFactory.PAGE.PROFILE, NotificationFactory.PAGE.UNKNOWN -> {
-//                if (getActivity() !is HomeActivity) {
-//                    intent = Intent(this@BaseActivity, HomeActivity::class.java)
+//                if (getActivity() !is Home) {
+//                    intent = Intent(this@BaseActivity, Home::class.java)
 //                    intent.putExtra(NotificationEvent.FORCE_NAVIGATE_TO, notificationEvent.eventCode)
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
 //                } else {

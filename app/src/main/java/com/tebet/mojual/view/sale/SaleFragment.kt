@@ -12,7 +12,7 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.databinding.FragmentSaleBinding
 import com.tebet.mojual.view.base.BaseFragment
-import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.selectfuturedate.SelectFutureDate
 import com.tebet.mojual.view.selectquantity.SelectQuantity
 
@@ -37,7 +37,7 @@ class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNav
     }
 
     override fun openSaleScreen(dataResponse: Order) {
-        (activity as HomeActivity).viewModel.onSubmitOrderClick(dataResponse)
+        (activity as Home).viewModel.onSubmitOrderClick(dataResponse)
     }
 
     override fun showQuantityScreen() {

@@ -46,7 +46,7 @@
                 <com.tebet.mojual.common.view.AppTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Home" />
+                    android:text="@string/home_navigation_home" />
             </LinearLayout>
 
             <LinearLayout
@@ -64,7 +64,7 @@
                 <com.tebet.mojual.common.view.AppTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Inbox" />
+                    android:text="@string/home_navigation_inbox" />
             </LinearLayout>
 
             <LinearLayout
@@ -82,7 +82,7 @@
                 <com.tebet.mojual.common.view.AppTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="History" />
+                    android:text="@string/home_navigation_history" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

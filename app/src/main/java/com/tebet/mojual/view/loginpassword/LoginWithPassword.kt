@@ -14,9 +14,9 @@ import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivityLoginPasswordBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.forgotpassword.ForgotPassword
-import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.base.BaseActivity
-import com.tebet.mojual.view.registration.SignUpPassword
+import com.tebet.mojual.view.signup.step0.SignUpPassword
 import com.tebet.mojual.view.signup.SignUpInfo
 
 class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPasswordViewModel>(),
@@ -36,9 +36,10 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         validator = Validator(viewDataBinding)
+        validator.enableFormValidationMode()
         topRightViewBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
-        title = "Login with phone number"
+        title = getString(R.string.login_password_title)
         viewModel.loadData()
         viewDataBinding?.snCountryFlag?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -59,7 +60,7 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
     override fun openHomeScreen() {
         setResult(Activity.RESULT_OK)
         finish()
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, Home::class.java))
     }
 
     override fun openForgotPasswordScreen() {
@@ -79,6 +80,7 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
     }
 
     override fun dataValid(): Boolean {
+        hideKeyboard()
         return validator.validate()
     }
 }

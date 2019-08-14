@@ -22,7 +22,7 @@ import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
-import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.signup.step.SignUpInfoStep
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1Navigator
@@ -69,13 +69,13 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         viewModel.navigator = this
         topRightViewBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
-        title = "Sign Up"
+        title = getString(R.string.registration_title)
         refreshScreenStep()
         viewDataBinding?.btnNext?.setOnClickListener {
             hideKeyboard()
             currentStepFragment?.let {
                 if (!it.validate()) {
-                    Toast.makeText(this@SignUpInfo, "Fill all required field !!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignUpInfo, getString(R.string.general_error_validation_fill_all_field), Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
             }
@@ -210,7 +210,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
 
     override fun openHomeScreen() {
         finish()
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, Home::class.java))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -30,7 +30,7 @@
                     android:id="@+id/etBankName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bank Name"
+                    android:hint="@string/registration_step3_bank_name"
                     android:text="@={viewModel.userProfile.bankName}"
                     app:validateEmpty="@{true}"
                     app:validateTypeAutoDismiss="@{true}" />
@@ -46,7 +46,7 @@
                     android:id="@+id/etBankAccountNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bank account number"
+                    android:hint="@string/registration_step3_bank_account_number"
                     android:text="@={viewModel.userProfile.bankAccountNumber}"
                     app:validateEmpty="@{true}"
                     app:validateTypeAutoDismiss="@{true}" />
@@ -62,7 +62,7 @@
                     android:id="@+id/etBankAccountName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bank account name"
+                    android:hint="@string/registration_step3_bank_account_name"
                     android:text="@={viewModel.userProfile.bankAccountName}"
                     app:validateEmpty="@{true}"
                     app:validateTypeAutoDismiss="@{true}" />
@@ -78,7 +78,7 @@
                     android:id="@+id/etRegionName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bank region"
+                    android:hint="@string/registration_step3_bank_region"
                     android:text="@={viewModel.userProfile.bankRegionName}"
                     app:validateEmpty="@{true}"
                     app:validateTypeAutoDismiss="@{true}" />

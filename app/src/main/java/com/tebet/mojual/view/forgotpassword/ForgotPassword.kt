@@ -9,7 +9,7 @@ import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivitySignUpPasswordBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
-import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.base.BaseActivity
 
 open class ForgotPassword : BaseActivity<ActivitySignUpPasswordBinding, ForgotPasswordViewModel>(),
@@ -30,17 +30,19 @@ open class ForgotPassword : BaseActivity<ActivitySignUpPasswordBinding, ForgotPa
         viewModel.navigator = this
         enableBackButton = false
         validator = Validator(viewDataBinding)
-        title = "Input new password"
+        validator.enableFormValidationMode()
+        title = getString(R.string.forgot_password_title)
         topRightViewBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
     }
 
     override fun openHomeScreen() {
         finish()
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, Home::class.java))
     }
 
     override fun dataValid(): Boolean {
+        hideKeyboard()
         return validator.validate()
     }
 }

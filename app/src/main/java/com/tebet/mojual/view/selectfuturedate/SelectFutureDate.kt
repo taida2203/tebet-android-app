@@ -23,7 +23,6 @@ class SelectFutureDate : BaseActivity<ActivitySelectFutureDateBinding, SelectFut
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         baseBinding.viewModel?.enableTopLogo?.set(true)
-        title = "Home"
         viewModel.loadData()
     }
 

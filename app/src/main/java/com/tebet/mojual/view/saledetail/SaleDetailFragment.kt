@@ -9,7 +9,7 @@ import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.FragmentSaleDetailBinding
 import com.tebet.mojual.view.base.BaseFragment
-import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.home.Home
 
 class SaleDetailFragment() : BaseFragment<FragmentSaleDetailBinding, SaleDetailViewModel>(), SaleDetailNavigator {
     override val bindingVariable: Int
@@ -43,6 +43,6 @@ class SaleDetailFragment() : BaseFragment<FragmentSaleDetailBinding, SaleDetailV
     }
 
     override fun openSaleScreen() {
-        (activity as HomeActivity).viewModel.onSellClick()
+        (activity as Home).viewModel.onSellClick()
     }
 }

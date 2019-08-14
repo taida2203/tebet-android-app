@@ -30,7 +30,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email (Optional)"
+                    android:hint="@string/registration_step2_email_optional"
                     android:text="@={viewModel.userProfile.email}"
                     app:validateType='@{"email"}'
                     app:validateTypeAutoDismiss="@{true}" />

@@ -8,9 +8,9 @@ import co.sdk.auth.AuthSdk
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivityLoginBinding
-import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.loginpassword.LoginWithPassword
-import com.tebet.mojual.view.registration.SignUpPassword
+import com.tebet.mojual.view.signup.step0.SignUpPassword
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.signup.SignUpInfo
 
@@ -57,7 +57,7 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
 
     override fun openHomeScreen() {
         finish()
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, Home::class.java))
     }
 
     override fun openRegistrationScreen() {

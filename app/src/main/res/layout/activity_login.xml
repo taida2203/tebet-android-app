@@ -35,7 +35,7 @@
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:enabled="@{!viewModel.isLoading}"
                 android:onClick="@{() -> viewModel.onLoginClick()}"
-                android:text="@string/login_screen_btn_login" />
+                android:text="@string/login_btn_login" />
 
             <com.tebet.mojual.common.view.AppButtonRounded
                 android:id="@+id/btnRegistration"
@@ -44,7 +44,7 @@
                 android:enabled="@{!viewModel.isLoading}"
                 android:background="@drawable/rounded_bg_button_brown"
                 android:onClick="@{() -> viewModel.onRegistrationClick()}"
-                android:text="@string/login_screen_btn_register" />
+                android:text="@string/login_btn_register" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

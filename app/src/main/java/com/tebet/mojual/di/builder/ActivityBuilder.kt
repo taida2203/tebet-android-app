@@ -17,12 +17,12 @@
 package com.tebet.mojual.di.builder
 
 import com.tebet.mojual.view.forgotpassword.ForgotPassword
-import com.tebet.mojual.view.home.HomeActivity
+import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.home.content.HomeFragmentProvider
 import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.loginpassword.LoginWithPassword
 import com.tebet.mojual.view.profile.ProfileFragmentProvider
-import com.tebet.mojual.view.registration.SignUpPassword
+import com.tebet.mojual.view.signup.step0.SignUpPassword
 import com.tebet.mojual.view.sale.SaleFragmentProvider
 import com.tebet.mojual.view.saledetail.SaleDetailFragmentProvider
 import com.tebet.mojual.view.selectfuturedate.SelectFutureDate
@@ -37,7 +37,7 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [HomeFragmentProvider::class, ProfileFragmentProvider::class, SaleFragmentProvider::class, SaleDetailFragmentProvider::class])
-    abstract fun homeActivity(): HomeActivity
+    abstract fun homeActivity(): Home
 
     @ContributesAndroidInjector
     abstract fun loginActivity(): Login

@@ -22,7 +22,7 @@ import dagger.android.DispatchingAndroidInjector
 import javax.inject.Inject
 import dagger.android.support.HasSupportFragmentInjector
 
-class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector, HomeNavigator {
+class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector, HomeNavigator {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
@@ -55,7 +55,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
         topRightViewBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
         baseBinding.viewModel?.enableTopLogo?.set(true)
-        title = "Home"
         showHomeScreen()
         viewModel.loadData()
         topLeftViewBinding?.avatar?.setOnClickListener { showProfileScreen() }
@@ -66,7 +65,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupp
 //            AuthSdk.instance.logout(false, object : ApiCallBack<Any>() {
 //                override fun onSuccess(responeCode: Int, response: Any?) {
 //                    finish()
-//                    startActivity(Intent(this@HomeActivity, Login::class.java))
+//                    startActivity(Intent(this@Home, Login::class.java))
 //                }
 //
 //                override fun onFailed(exeption: LoginException) {
