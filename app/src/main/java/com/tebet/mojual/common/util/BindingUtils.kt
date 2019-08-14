@@ -61,6 +61,15 @@ class BindingUtils {
                 }
             }
         }
+
+        @BindingAdapter("onOkInSoftKeyboard")
+        @JvmStatic
+        fun setOnOkInSoftKeyboardListener(
+            view: AppEditText,
+            listener: OnOkInSoftKeyboardListener?
+        ) {
+            setOnOkInSoftKeyboardListener(view, listener)
+        }
     }
 
     abstract class OnOkInSoftKeyboardListener {
