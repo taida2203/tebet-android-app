@@ -40,8 +40,8 @@ class LoginWithPasswordViewModel(
     }
 
     fun loadData() {
-        items.add(PHONE_PREFIX_VN)
         items.add(PHONE_PREFIX_ID)
+        items.add(PHONE_PREFIX_VN)
         userInputPhonePrefix = items[0]
     }
 
