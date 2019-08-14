@@ -93,7 +93,7 @@ dependencies {
     implementation AppDependencies.googlePlayServiceLocation
     implementation AppDependencies.googlePlayServiceMap
     implementation AppDependencies.googleFireBaseCore
-    implementation AppDependencies.googlePlayServiceLocation
+    implementation AppDependencies.googleFireBaseMessaging
 
 
     implementation AppDependencies.sdp
@@ -102,7 +102,6 @@ dependencies {
 
     implementation 'org.jsoup:jsoup:1.11.1'
     implementation 'pub.devrel:easypermissions:1.2.0'
-    implementation 'org.greenrobot:eventbus:3.0.0'
     implementation "com.mindorks:placeholderview:0.7.3"
     implementation "uk.co.chrisjenx:calligraphy:2.2.0"
     implementation 'com.github.Ilhasoft:data-binding-validator:2.0.0'
