@@ -3,7 +3,6 @@ package com.tebet.mojual.view.base
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.ActivityManager
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -32,10 +31,6 @@ import javax.inject.Inject
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivity(),
     BaseFragment.Callback, BaseActivityNavigator {
-    // TODO
-    // this can probably depend on isLoading variable of BaseViewModel,
-    // since its going to be common for all the activities
-    private val mProgressDialog: ProgressDialog? = null
     var viewDataBinding: T? = null
         private set
     private var mViewModel: V? = null
@@ -81,11 +76,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     }
 
-    //    @Override
-    //    protected void attachBaseContext(Context newBase) {
-    //        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    //    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         performDependencyInjection()
         super.onCreate(savedInstanceState)
@@ -114,12 +104,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
     }
 
-    fun hideLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing) {
-            mProgressDialog.cancel()
-        }
-    }
-
     //    public boolean isNetworkConnected() {
     //        return NetworkUtils.isNetworkConnected(getApplicationContext());
     //    }
@@ -136,22 +120,12 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
     }
 
-    //    public void showLoading() {
-    //        hideLoading();
-    //        mProgressDialog = CommonUtils.showLoadingDialog(this);
-    //    }
-
     private fun performDataBinding() {
         viewDataBinding = DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding.placeHolder, true)
         this.mViewModel = if (mViewModel == null) viewModel else mViewModel
         viewDataBinding?.setVariable(bindingVariable, mViewModel)
         viewDataBinding?.executePendingBindings()
     }
-
-    protected lateinit var navLayout: RelativeLayout
-    //    protected lateinit var load: Loading
-    private var notifExtra: MutableMap<String, String>? = null
-    private var isActive: Boolean = false
 
     /**
      * @return layout resource id
@@ -182,37 +156,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
     }
 
-    fun showCakapMenu(isShow: Boolean) {
-    }
-
-//    override fun onResume() {
-//        super.onResume()
-//        if (this is Home) {
-////            activity_komentar.setBackgroundResource(R.drawable.bg_choose_course)
-//            base_toolbar.setBackgroundColor(ContextCompat.getColor(this@BaseActivity, android.R.color.transparent))
-//        }
-//    }
-
-//    @Subscribe
-//    fun onForceLogout(event: OnForceLogoutEvent) {
-//        if (getActivity() !is ActivityProfile && getActivity() !is ActivityLogin) {
-//            val intent = Intent(getContext(), ActivityProfile::class.java)
-//            intent.putExtra(ActivityProfile.EXTRA_FORCE_LOGOUT, true)
-//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-//            startActivity(intent)
-//        }
-//    }
-
-
-    fun showpDialog(isShowProgressDialog: Boolean) {
-//        if (load.isShowing && isShowProgressDialog) return
-//        if (isShowProgressDialog) {
-//            load.showpDialog()
-//        } else {
-//            load.hidepDialog()
-//        }
-    }
-
     override fun showLoading(isLoading: Boolean) {
         viewModel.setIsLoading(isLoading)
         baseBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
@@ -241,29 +184,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     protected abstract fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int)
-
-    //    protected void showBackButton(boolean isShow) {
-    //        if (getSupportActionBar() != null) {
-    //            getSupportActionBar().setDisplayHomeAsUpEnabled(isShow);
-    //        }
-    //    }
-
-    override fun onStart() {
-        super.onStart()
-//        EventBus.getDefault().register(this)
-        isActive = true
-    }
-
-    override fun onStop() {
-        super.onStop()
-//        EventBus.getDefault().unregister(this)
-        isActive = false
-    }
-
-    override fun onPause() {
-        super.onPause()
-        isActive = false
-    }
 
     override fun onBackPressed() {
         showLoading(false)
@@ -308,92 +228,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             window.statusBarColor = color
         }
     }
-
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    open fun onNotificationEvent(notificationEvent: NotificationEvent?) {
-//        if (notificationEvent == null)
-//            return
-//
-//        val properties = Bundle().apply {
-//            putString("code", notificationEvent.eventCode)
-//            putString("source", "notification_push")
-//            putString("extraParams", Gson().toJson(notificationEvent.map))
-//        }
-//        AnalyticEngine.action(TrackingEvent.NOTIFICATION_CLICK, properties)
-//        handleNotification(notificationEvent)
-//    }
-
-//    private fun handleNotification(notificationEvent: NotificationEvent?) {
-//        when (notificationEvent?.notyType) {
-//            NotificationEvent.NOTY_TYPE.FORWARD_DIRECTLY -> {
-//                navigateTo(notificationEvent)
-//            }
-//            NotificationEvent.NOTY_TYPE.SHOW_ALERT -> Alerter.create(getActivity())
-//                    .setText(notificationEvent.message)
-//                    .setDuration(4000)
-//                    .setBackgroundColor(NotificationFactory.colorFrom(notificationEvent))
-//                    .setOnClickListener { navigateTo(notificationEvent) }
-//                    .show()
-//            else -> {
-//            }
-//        }
-//    }
-
-//    protected fun navigateTo(notificationEvent: NotificationEvent) {
-//        var intent: Intent? = null
-//        when (NotificationFactory.pageFrom(notificationEvent)) {
-//            NotificationFactory.PAGE.BUY -> {
-////                if (getActivity() !is PrivateClassPaymentActivity) {
-//                    intent = Intent(this, PrivateClassPaymentActivity::class.java)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-////                }
-//            }
-////            NotificationFactory.PAGE.MY_INVOICE -> {
-////                if (getActivity() !is ActivityMyInvoiceKt) {
-////                    intent = Intent(this@BaseActivity, ActivityMyInvoiceKt::class.java)
-////                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-////                }
-////            }
-//            NotificationFactory.PAGE.MY_PACKAGE -> {
-//                if (getActivity() !is ActivityMyPackage) {
-//                    intent = Intent(this@BaseActivity, ActivityMyPackage::class.java)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                }
-//            }
-//            NotificationFactory.PAGE.UPCOMING_CLASS -> {
-//                if (getActivity() !is UpcomingClassActivity) {
-//                    intent = Intent(this@BaseActivity, UpcomingClassActivity::class.java)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                }
-//            }
-//            NotificationFactory.PAGE.HOME, NotificationFactory.PAGE.BOOKING, NotificationFactory.PAGE.PROFILE, NotificationFactory.PAGE.UNKNOWN -> {
-//                if (getActivity() !is Home) {
-//                    intent = Intent(this@BaseActivity, Home::class.java)
-//                    intent.putExtra(NotificationEvent.FORCE_NAVIGATE_TO, notificationEvent.eventCode)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//                } else {
-//                    EventBus.getDefault().post(HomeChangeTabEvent(notificationEvent.eventCode))
-//                }
-//            }
-//            NotificationFactory.PAGE.RTC -> {
-//                // TODO redirect to VIDEO CALL
-//                if (getActivity() as AppCompatActivity !is VideoCallActivity) {
-//                    val courseId: Long? = try {
-//                        (notificationEvent.map?.get("courseId") as Int?)?.toLong()
-//                    } catch (e: Exception) {
-//                        (notificationEvent.map?.get("courseId") as Double?)?.toLong()
-//                    }
-//                    intent = courseId?.let { VideoCallActivity.generateIntent(this, it) }
-//                    intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//                } else {
-//                    EventBus.getDefault().post(HomeChangeTabEvent(notificationEvent.eventCode))
-//                }
-//            }
-//        }
-//        intent?.let {
-//            startActivity(it)
-//        }
-//    }
 
     fun isLowEndDevice(): Boolean {
         val memInfo = ActivityManager.MemoryInfo()

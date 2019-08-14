@@ -22,7 +22,6 @@ class SelectQuantity : BaseActivity<ActivitySelectQuantityBinding, SelectQuantit
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
-        baseBinding.viewModel?.enableTopLogo?.set(true)
         viewModel.loadData()
     }
 

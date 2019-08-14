@@ -25,7 +25,11 @@ class HomeContentViewModel(
     }
 
     fun onCheckQualityClick() {
-        navigator.show(R.string.general_error_feature_disabled)
+        if (userProfile.get()?.isUserVerified() != true) {
+            navigator.show(R.string.general_error_feature_permission)
+            return
+        }
+        navigator.openQualityCheckScreen()
     }
 
     fun onBorrowClick() {

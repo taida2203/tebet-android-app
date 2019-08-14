@@ -14,19 +14,20 @@
  *  limitations under the License
  */
 
-package com.tebet.mojual.view.home.content;
+package com.tebet.mojual.view.qualitycheck;
 
-import com.tebet.mojual.view.qualitycheck.QualityFragment;
-import com.tebet.mojual.view.qualitycheck.QualityFragmentModule;
 import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class HomeFragmentProvider {
+public class QualityFragmentModule {
 
-    @ContributesAndroidInjector(modules = HomeFragmentModule.class)
-    abstract HomeFragment provideHomeFragmentFactory();
+//    @Provides
+//    HomeFragment provideBlogAdapter() {
+//        return new BlogAdapter(new ArrayList<>());
+//    }
 
-    @ContributesAndroidInjector(modules = QualityFragmentModule.class)
-    abstract QualityFragment provideQualityFragmentFactory();
+//    @Provides
+//    LinearLayoutManager provideLinearLayoutManager(BlogFragment fragment) {
+//        return new LinearLayoutManager(fragment.getActivity());
+//    }
 }

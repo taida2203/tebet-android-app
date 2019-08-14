@@ -9,4 +9,6 @@ data class Order(
     var planDate: Long?,
     var price: Double?,
     var totalPrice: Double?
-) : Serializable
+) : Serializable {
+    var isSelected: Boolean = false
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.tebet.mojual.common.util.DateExtKt" />
+
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.qualitycheck.QualityViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingRight="@dimen/_20sdp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:itemBinding="@{viewModel.itemBinding}"
+            app:items="@{viewModel.items}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <com.tebet.mojual.common.view.AppButtonRounded
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="@{!viewModel.isLoading}"
+            android:onClick="@{()-> viewModel.onSubmitClick()}"
+            android:text="@string/sale_button_submit" />
+
+        <com.tebet.mojual.common.view.AppTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dont know how to check?" />
+    </LinearLayout>
+
+</layout>

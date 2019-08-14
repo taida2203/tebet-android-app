@@ -11,6 +11,7 @@ import com.tebet.mojual.data.local.prefs.PreferencesHelper
 import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.google_map.GeoCodeResponse
 import com.tebet.mojual.data.models.request.CreateOrderRequest
+import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.models.request.UpdatePasswordRequest
 import com.tebet.mojual.data.remote.ApiGoogleHelper
 import com.tebet.mojual.data.remote.ApiHelper
@@ -37,6 +38,10 @@ class AppDataManger @Inject constructor(
         set(value) {
             preferences.accessToken = value
         }
+
+    override fun searchOrders(searchOrderRequest: SearchOrderRequest): Observable<AuthJson<Paging<Order>>> {
+        return api.searchOrders(searchOrderRequest)
+    }
 
     override fun getOrderDetail(orderId: Int): Observable<AuthJson<Order>> = api.getOrderDetail(orderId)
 

@@ -11,6 +11,7 @@ import com.tebet.mojual.view.home.content.HomeContentViewModel
 import com.tebet.mojual.view.profile.ProfileViewModel
 import com.tebet.mojual.view.login.LoginViewModel
 import com.tebet.mojual.view.loginpassword.LoginWithPasswordViewModel
+import com.tebet.mojual.view.qualitycheck.QualityViewModel
 import com.tebet.mojual.view.sale.SaleViewModel
 import com.tebet.mojual.view.saledetail.SaleDetailViewModel
 import com.tebet.mojual.view.selectfuturedate.SelectFutureDateViewModel
@@ -50,6 +51,7 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(GoogleMapViewModel::class.java) -> GoogleMapViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SelectQuantityViewModel::class.java) -> SelectQuantityViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SelectFutureDateViewModel::class.java) -> SelectFutureDateViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(QualityViewModel::class.java) -> QualityViewModel(dataManager, schedulerProvider) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

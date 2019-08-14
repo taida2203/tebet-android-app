@@ -27,4 +27,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeContentViewModel>(), 
     override fun openSellScreen() {
         (activity as Home).viewModel.onSellClick()
     }
+
+    override fun openQualityCheckScreen() {
+        (activity as Home).viewModel.onQualityCheckClick()
+    }
+
 }

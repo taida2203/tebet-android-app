@@ -4,6 +4,7 @@ import co.sdk.auth.core.models.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.request.CreateOrderRequest
+import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.models.request.UpdatePasswordRequest
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -62,5 +63,8 @@ interface ApiHelper {
 
     @GET("order/order")
     fun getOrderDetail(@Query(value = "orderId") orderId: Int): Observable<AuthJson<Order>>
+
+    @POST("order/search")
+    fun searchOrders(@Body searchOrderRequest: SearchOrderRequest): Observable<AuthJson<Paging<Order>>>
 }
 

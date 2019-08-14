@@ -44,4 +44,8 @@ class HomeViewModel(
     fun onHomeClick() {
         navigator.showHomeScreen()
     }
+
+    fun onQualityCheckClick() {
+        navigator.showCheckQualityScreen()
+    }
 }

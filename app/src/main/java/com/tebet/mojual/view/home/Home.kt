@@ -15,6 +15,7 @@ import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.content.HomeFragment
 import com.tebet.mojual.view.profile.ProfileFragment
+import com.tebet.mojual.view.qualitycheck.QualityFragment
 import com.tebet.mojual.view.sale.SaleFragment
 import com.tebet.mojual.view.saledetail.SaleDetailFragment
 import dagger.android.AndroidInjector
@@ -50,56 +51,51 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
-        topLeftViewBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_avatar, baseBinding.topLeftHolder, true)
-        topRightViewBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
-        baseBinding.viewModel?.enableTopLogo?.set(true)
+        topLeftViewBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_home_avatar, baseBinding.topLeftHolder, true)
+        topRightViewBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
         showHomeScreen()
         viewModel.loadData()
         topLeftViewBinding?.avatar?.setOnClickListener { showProfileScreen() }
         viewModel.profileLiveData.observe(this, Observer<UserProfile> { topLeftViewBinding?.userProfile = it })
-
-//        getData()
-//        btnLogout.setOnClickListener {
-//            AuthSdk.instance.logout(false, object : ApiCallBack<Any>() {
-//                override fun onSuccess(responeCode: Int, response: Any?) {
-//                    finish()
-//                    startActivity(Intent(this@Home, Login::class.java))
-//                }
-//
-//                override fun onFailed(exeption: LoginException) {
-//                }
-//            })
-//        }
     }
 
-    override fun openCheckQualityScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showCheckQualityScreen() {
+        enableBackButton = true
+        baseBinding.viewModel?.enableTopLogo?.set(false)
+        title = getString(R.string.home_menu_check_quality)
+        openFragment(QualityFragment(), R.id.contentHolder)
     }
 
-    override fun openBorrowScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showBorrowScreen() {
+        enableBackButton = true
+        baseBinding.viewModel?.enableTopLogo?.set(false)
+        title = getString(R.string.home_menu_borrow)
     }
 
-    override fun openTipsScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showTipsScreen() {
+        enableBackButton = true
+        baseBinding.viewModel?.enableTopLogo?.set(false)
+        title = getString(R.string.home_menu_tips)
+    }
+
+    override fun showSellScreen() {
+        enableBackButton = true
+        baseBinding.viewModel?.enableTopLogo?.set(false)
+        title = getString(R.string.home_menu_sell_now)
+        openFragment(SaleFragment(), R.id.contentHolder)
     }
 
     override fun showHomeScreen() {
         enableBackButton = false
+        baseBinding.viewModel?.enableTopLogo?.set(true)
         openFragment(HomeFragment(), R.id.contentHolder)
     }
 
 
     override fun showProfileScreen() {
         enableBackButton = true
+        baseBinding.viewModel?.enableTopLogo?.set(true)
         openFragment(ProfileFragment(), R.id.contentHolder)
-    }
-
-    override fun showSellScreen() {
-        enableBackButton = true
-        openFragment(SaleFragment(), R.id.contentHolder)
     }
 
     override fun showOrderDetailScreen(dataResponse: Order) {
