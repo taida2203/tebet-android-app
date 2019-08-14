@@ -24,6 +24,8 @@ data class UserProfile(
     var gender: String? = null,
     var ktp: String? = null,
     var ktpNumber: String? = null,
+    var rating: String? = "4.5",
+    var bonus: Double? = 0.0,
     var lastName: String? = null,
     var bankAccountNumber: String? = null,
     var bankAccountName: String? = null,

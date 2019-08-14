@@ -22,6 +22,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = this
+        viewModel.loadData()
     }
 
     override fun openLoginScreen() {
