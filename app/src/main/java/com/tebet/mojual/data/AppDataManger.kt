@@ -163,26 +163,22 @@ class AppDataManger @Inject constructor(
 
     override fun getProfile(): Observable<AuthJson<UserProfile>> {
         if (App.instance.checkConnectivity()) {
-            var userProfileTemp: AuthJson<UserProfile>? = null
-            return api.getProfile().concatMap { userProfile ->
-                userProfileTemp = userProfile
-                userProfile.data?.let { room.insertUserProfile(it) }
-            }.concatMap {
-                Observable.just(userProfileTemp)
-            }
+            return api.getProfile().doOnError { getUserProfileDB() }.concatMap { updateProfileDB(it) }
         }
         return getUserProfileDB()
     }
 
     override fun updateProfile(updateProfileRequest: UserProfile): Observable<AuthJson<UserProfile>> {
-        return api.updateProfile(updateProfileRequest)
-            .concatMap { responseProfile ->
-                room.clearAllProfiles()
-                Observable.just(responseProfile)
-            }.concatMap {
-                it.data?.let { it1 -> insertUserProfile(it1) }
-                Observable.just(it)
+        return api.updateProfile(updateProfileRequest).concatMap { updateProfileDB(it) }
+    }
+
+    private fun updateProfileDB(userProfile: AuthJson<UserProfile>?): Observable<AuthJson<UserProfile>?> {
+        return clearAllProfiles()
+            .concatMap {
+                userProfile?.data?.let { it1 -> insertUserProfile(it1) }
+                Observable.just(userProfile)
             }
+            .subscribeOn(Schedulers.newThread())
     }
 
     override fun clearAllProfiles(): Observable<Boolean> {
