@@ -22,6 +22,8 @@
 
 -keep class co.sdk.auth.core.models.** { *; }
 -keep class com.tebet.mojual.data.models.** { *; }
+-keep class com.tebet.mojual.DataBinderMapperImpl { *; }
+-keep class androidx.databinding.DataBinderMapperImpl { *; }
 
 
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
