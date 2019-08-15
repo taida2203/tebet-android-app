@@ -11,4 +11,7 @@ interface UserProfileDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUserProfile(userProfile: UserProfile)
+
+    @Query("DELETE FROM UserProfile")
+    fun nukeTable()
 }

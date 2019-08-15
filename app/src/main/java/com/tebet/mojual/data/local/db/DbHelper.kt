@@ -31,4 +31,6 @@ interface DbHelper {
     fun insertAssets(asset: List<Asset>): Observable<Boolean>
 
     fun clearAllTables(): Observable<Boolean>
+
+    fun clearAllProfiles(): Observable<Boolean>
 }

@@ -74,6 +74,13 @@ constructor(private val mAppDatabase: AppDatabase) : DbHelper {
         }
     }
 
+    override fun clearAllProfiles(): Observable<Boolean> {
+        return Observable.fromCallable {
+            mAppDatabase.userProfileDao().nukeTable()
+            true
+        }
+    }
+
     override fun insertAssets(asset: List<Asset>): Observable<Boolean> {
         return Observable.fromCallable {
             mAppDatabase.assetDao().insertAll(asset)
