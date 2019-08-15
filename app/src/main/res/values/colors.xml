@@ -12,6 +12,8 @@
     <color name="white">#ffffff</color>
     <color name="green_dark">#477045</color>
 
+    <color name="grey_hint">#8a8989</color>
+
     <!--notification-->
     <color name="statusDanger">#f75c75</color>
     <color name="statusWarn">#ffc047</color>

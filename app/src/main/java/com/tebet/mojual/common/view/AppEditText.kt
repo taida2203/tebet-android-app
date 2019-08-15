@@ -25,7 +25,7 @@ open class AppEditText : TextInputEditText {
     open fun setFont(attributeSet: AttributeSet?) {
         this.background = ContextCompat.getDrawable(context, R.drawable.border_edit_text)
         this.setPadding(Utility.dpToPx(20), Utility.dpToPx(8), Utility.dpToPx(20), Utility.dpToPx(8))
-        this.setHintTextColor(ContextCompat.getColor(context, R.color.grey))
+        this.setHintTextColor(ContextCompat.getColor(context, R.color.grey_hint))
         setLines(1)
         if (inputType != 129) {
             setSingleLine(true)

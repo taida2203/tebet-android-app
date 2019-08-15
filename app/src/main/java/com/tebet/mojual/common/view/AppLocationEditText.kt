@@ -18,8 +18,9 @@ open class AppLocationEditText : AppEditText {
         this.setHintTextColor(ContextCompat.getColor(context, R.color.green_dark))
         setSingleLine(false)
         maxLines = 2
-//        val img = ContextCompat.getDrawable(context, R.drawable.ic_select_date)
-//        img?.setBounds( 60, 60, 60, 60 )
-//        setCompoundDrawablesWithIntrinsicBounds(null, null, img, null)
+
+        val img = ContextCompat.getDrawable(context, R.drawable.signup_location)
+        img?.setBounds(60, 60, 60, 60)
+        setCompoundDrawablesWithIntrinsicBounds(null, null, img, null)
     }
 }
