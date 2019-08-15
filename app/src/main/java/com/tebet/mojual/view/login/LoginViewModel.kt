@@ -23,13 +23,14 @@ class LoginViewModel(
         navigator.showLoading(true)
         navigator.activity()?.let {
             compositeDisposable.add(
-                AuthSdk.instance.logout(true).concatMap { _ ->
-                    AuthSdk.instance.login(
-                        it,
-                        AuthAccountKitMethod(),
-                        LoginConfiguration(logoutWhileExpired = false)
-                    ).doOnError { error -> registerNewUser() }
-                }
+                AuthSdk.instance.logout(true)
+                    .concatMap { _ ->
+                        AuthSdk.instance.login(
+                            it,
+                            AuthAccountKitMethod(),
+                            LoginConfiguration(logoutWhileExpired = false)
+                        ).doOnError { error -> registerNewUser() }
+                    }
                     .concatMap { result -> dataManager.getProfile() }
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {
