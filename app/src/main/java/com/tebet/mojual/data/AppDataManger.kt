@@ -28,6 +28,11 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
+    override var userProfilePref: UserProfile
+        get() = preferences.userProfilePref
+        set(value) {
+            preferences.userProfilePref = value
+        }
     override var isShowTutorialShowed: Boolean
         get() = preferences.isShowTutorialShowed
         set(value) {
@@ -173,14 +178,26 @@ class AppDataManger @Inject constructor(
     }
 
     private fun updateProfileDB(userProfile: AuthJson<UserProfile>?): Observable<AuthJson<UserProfile>?> {
-        return clearAllProfiles()
-            .concatMap {
-                userProfile?.data?.let { it1 -> insertUserProfile(it1) }
-                Observable.just(userProfile)
+        return Observable.fromCallable {
+            userProfile?.data?.let {
+                preferences.userProfilePref = it
             }
-            .subscribeOn(Schedulers.newThread())
+        }.concatMap { Observable.just(userProfile) }
+    //        return clearAllProfiles()
+    //            .concatMap {
+    //                userProfile?.data?.let { it1 -> insertUserProfile(it1) }
+    //                Observable.just(userProfile)
+    //            }
+    //            .subscribeOn(Schedulers.newThread())
     }
 
+    override fun getUserProfileDB(): Observable<AuthJson<UserProfile>> = Observable.just(preferences.userProfilePref)
+        .map { userProfile -> AuthJson(null, "", userProfile) }
+    //        room.userProfile.concatMap { userProfileDao ->
+    //        userProfileDao.queryUserProfile().subscribeOn(Schedulers.newThread())
+    //            .doOnError { message -> EmptyResultSetException("") }
+    //            .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
+    //    }
     override fun clearAllProfiles(): Observable<Boolean> {
         return room.clearAllProfiles()
     }
@@ -192,12 +209,6 @@ class AppDataManger @Inject constructor(
         file: MultipartBody.Part
     ): Observable<AuthJson<String>> {
         return api.uploadImage(folder, file)
-    }
-
-    override fun getUserProfileDB(): Observable<AuthJson<UserProfile>> = room.userProfile.concatMap { userProfileDao ->
-        userProfileDao.queryUserProfile().subscribeOn(Schedulers.newThread())
-            .doOnError { message -> EmptyResultSetException("") }
-            .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
     }
 
     override fun createOrder(createOrderRequest: CreateOrderRequest): Observable<AuthJson<Order>> = api.createOrder(createOrderRequest)
