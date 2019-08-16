@@ -22,7 +22,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.splash.Splash">
+        <activity
+            android:name=".view.splash.Splash"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,16 +34,33 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.home.Home" />
-        <activity android:name=".view.login.Login" />
-        <activity android:name=".view.signup.SignUpInfo" />
-        <activity android:name=".view.signup.step2.map.GoogleMapActivity" />
-
-        <activity android:name=".view.loginpassword.LoginWithPassword" />
-        <activity android:name=".view.signup.step0.SignUpPassword" />
-        <activity android:name=".view.forgotpassword.ForgotPassword" />
-        <activity android:name=".view.selectquantity.SelectQuantity" />
-        <activity android:name=".view.selectfuturedate.SelectFutureDate" />
+        <activity
+            android:name=".view.home.Home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.login.Login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.signup.SignUpInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.signup.step2.map.GoogleMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.loginpassword.LoginWithPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.signup.step0.SignUpPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.forgotpassword.ForgotPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.selectquantity.SelectQuantity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.selectfuturedate.SelectFutureDate"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
