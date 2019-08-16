@@ -21,76 +21,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/border_edit_text"
         android:onClick="@{() -> listener.onItemClick(item)}"
-        android:orientation="vertical">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="@color/colorPrimary" />
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingRight="@dimen/_16sdp"
+        android:paddingBottom="@dimen/_8sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginRight="@dimen/_16sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
             android:gravity="center_vertical">
 
-            <ImageView
-                android:layout_width="@dimen/_12sdp"
-                android:layout_height="@dimen/_12sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:src="@{item.isSelected ? @drawable/radio_select_choosed : @drawable/radio_select_non}" />
-
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <com.tebet.mojual.common.view.AppTextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
                     android:text="@{item.orderCode}"
                     android:textColor="@color/green_dark"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_16ssp"
+
                     android:textStyle="bold" />
 
-                <LinearLayout
+                <com.tebet.mojual.common.view.AppTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:text="@{DateExtKt.toDisplayDate(item.planDate)}"
+                    android:textSize="@dimen/_14ssp" />
 
-                    <com.tebet.mojual.common.view.AppTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="@{@string/sale_detail_container(String.valueOf(item.quantity))}"
-                        android:textSize="@dimen/_14ssp"
-                        android:textStyle="bold" />
-
-                    <com.tebet.mojual.common.view.AppTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text=" / "
-                        android:textSize="@dimen/_14ssp"
-                        android:textStyle="bold" />
-
-                    <com.tebet.mojual.common.view.AppTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@{DateExtKt.toDisplayDateShort(item.planDate)}"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/_14ssp" />
-                </LinearLayout>
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp 2.000.000"
+                    android:textSize="@dimen/_14ssp" />
             </LinearLayout>
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:text="FUTURE\nORDER\nREQUESTED"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </layout>
