@@ -21,26 +21,20 @@ class QualityViewModel(
 ) :
     BaseViewModel<QualityNavigator>(dataManager, schedulerProvider) {
     var items: ObservableArrayList<Order> = ObservableArrayList()
-    var itemBinding: ItemBinding<Order> =
-        ItemBinding.of<Order>(BR.item, R.layout.item_quality_check_order)
-            .bindExtra(BR.listener, object : OnFutureDateClick {
-                override fun onItemClick(item: Order) {
-                    navigator.itemSelected(item)
-                }
-            })
     val onItemBind: OnItemBind<Order> =
         OnItemBind { itemBinding, position, item ->
             itemBinding.set(BR.item, if (position == items.size - 1) R.layout.item_quality_check_order_add else R.layout.item_quality_check_order)
             itemBinding.bindExtra(BR.listener, object : OnFutureDateClick {
-                override fun onItemClick(item: Order) {
-                    if (item.orderId >= 0) {
-                        navigator.itemSelected(item)
-                    } else {
-                        navigator.openSellScreen()
-                    }
-                }
+                override fun onItemClick(item: Order) = if (item.orderId >= 0) navigator.itemSelected(item) else navigator.openSellScreen()
             })
         }
+//    var itemBinding: ItemBinding<Order> =
+//        ItemBinding.of<Order>(BR.item, R.layout.item_quality_check_order)
+//            .bindExtra(BR.listener, object : OnFutureDateClick {
+//                override fun onItemClick(item: Order) {
+//                    navigator.itemSelected(item)
+//                }
+//            })
 
     fun loadData() {
         navigator.showLoading(true)
