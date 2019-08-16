@@ -12,6 +12,7 @@ import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import me.tatarka.bindingcollectionadapter2.ItemBinding
+import me.tatarka.bindingcollectionadapter2.OnItemBind
 
 
 class QualityViewModel(
@@ -27,6 +28,19 @@ class QualityViewModel(
                     navigator.itemSelected(item)
                 }
             })
+    val onItemBind: OnItemBind<Order> =
+        OnItemBind { itemBinding, position, item ->
+            itemBinding.set(BR.item, if (position == items.size - 1) R.layout.item_quality_check_order_add else R.layout.item_quality_check_order)
+            itemBinding.bindExtra(BR.listener, object : OnFutureDateClick {
+                override fun onItemClick(item: Order) {
+                    if (item.orderId >= 0) {
+                        navigator.itemSelected(item)
+                    } else {
+                        navigator.openSellScreen()
+                    }
+                }
+            })
+        }
 
     fun loadData() {
         navigator.showLoading(true)
@@ -35,15 +49,17 @@ class QualityViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                     override fun onSuccess(dataResponse: Paging<Order>) {
-                        dataResponse.data.forEach { order ->
-                            items.add(order)
-                        }
+                        items.clear()
+                        items.addAll(dataResponse.data)
+                        items.add(Order(-1, ""))
                         navigator.showLoading(false)
                     }
 
                     override fun onFailure(error: String?) {
                         navigator.showLoading(false)
                         handleError(error)
+                        items.clear()
+                        items.add(Order(-1, ""))
                     }
                 })
         )

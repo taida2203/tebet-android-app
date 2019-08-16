@@ -7,4 +7,5 @@ import com.tebet.mojual.view.base.BaseActivityNavigator
 interface QualityNavigator : BaseActivityNavigator {
     fun validate(): Boolean
     fun itemSelected(item: Order)
+    fun openSellScreen()
 }

@@ -11,6 +11,7 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.databinding.FragmentQualityBinding
 import com.tebet.mojual.view.base.BaseFragment
+import com.tebet.mojual.view.home.Home
 
 class QualityFragment : BaseFragment<FragmentQualityBinding, QualityViewModel>(), QualityNavigator {
     override val bindingVariable: Int
@@ -38,5 +39,9 @@ class QualityFragment : BaseFragment<FragmentQualityBinding, QualityViewModel>()
 
     override fun validate(): Boolean {
         return validator.validate()
+    }
+
+    override fun openSellScreen() {
+        (activity as Home).viewModel.onSellClick()
     }
 }
