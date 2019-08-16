@@ -1,8 +1,8 @@
 package com.tebet.mojual.view.sale
 
-import androidx.databinding.Observable
-import androidx.databinding.Observable.OnPropertyChangedCallback
-import androidx.databinding.ObservableField
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Asset
@@ -19,14 +19,20 @@ class SaleViewModel(
 ) :
     BaseViewModel<SaleNavigator>(dataManager, schedulerProvider) {
     private var assets: List<Asset>? = null
-    var selectedQuantity: ObservableField<Int> = ObservableField()
-    var selectedFutureDate: ObservableField<Price> = ObservableField()
-    var simulationPrice: ObservableField<Double> = ObservableField()
-    val callback = object : OnPropertyChangedCallback() {
-        override fun onPropertyChanged(sender: Observable, propertyId: Int) =
-            simulationPrice.set(selectedFutureDate.get()?.price?.let {
-                selectedQuantity.get()?.toDouble()?.let { it1 -> it.times(it1).times(Asset.quantity) }
-            })
+    var selectedQuantity: MutableLiveData<Int> = MutableLiveData()
+    var selectedFutureDate: MutableLiveData<Price> = MutableLiveData()
+    var simulationPrice: MutableLiveData<Double> = MediatorLiveData<Double>().apply {
+        val calculatePrice = CalculatePrice()
+        addSource(selectedQuantity, calculatePrice)
+        addSource(selectedFutureDate, calculatePrice)
+    }
+
+    private inner class CalculatePrice : Observer<Any> {
+        override fun onChanged(ignored: Any?) {
+            simulationPrice.value = selectedFutureDate.value?.price?.let {
+                selectedQuantity.value?.toDouble()?.let { it1 -> it.times(it1).times(Asset.quantity) }
+            }
+        }
     }
 
     fun onSubmitClick() {
@@ -37,15 +43,15 @@ class SaleViewModel(
         compositeDisposable.add(
             dataManager.createOrder(
                 CreateOrderRequest(
-                    selectedQuantity.get(),
-                    selectedFutureDate.get()?.date
+                    selectedQuantity.value,
+                    selectedFutureDate.value?.date
                 )
             )
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Order>() {
                     override fun onSuccess(dataResponse: Order) {
-                        dataResponse.price = selectedFutureDate.get()?.price
-                        dataResponse.totalPrice = simulationPrice.get()
+                        dataResponse.price = selectedFutureDate.value?.price
+                        dataResponse.totalPrice = simulationPrice.value
                         navigator.showLoading(false)
                         navigator.openSaleScreen(dataResponse)
                     }
@@ -59,9 +65,6 @@ class SaleViewModel(
     }
 
     fun loadData() {
-        selectedQuantity.addOnPropertyChangedCallback(callback)
-        selectedFutureDate.addOnPropertyChangedCallback(callback)
-
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getUserProfileDB().concatMap { dataManager.getAsserts(it.data?.userId.toString()) }

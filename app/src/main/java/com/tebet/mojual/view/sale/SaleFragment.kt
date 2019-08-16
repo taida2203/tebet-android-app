@@ -56,8 +56,8 @@ class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNav
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                500 -> viewModel.selectedQuantity.set(data?.getStringExtra("QUANTITY")?.toInt())
-                600 -> viewModel.selectedFutureDate.set(data?.getSerializableExtra("FUTURE_DATE") as Price)
+                500 -> viewModel.selectedQuantity.value = data?.getStringExtra("QUANTITY")?.toInt()
+                600 -> viewModel.selectedFutureDate.value = data?.getSerializableExtra("FUTURE_DATE") as Price
             }
         }
     }
