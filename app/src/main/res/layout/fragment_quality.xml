@@ -27,6 +27,9 @@
             android:layout_weight="1"
             app:itemBinding="@{viewModel.onItemBind}"
             app:items="@{viewModel.items}"
+            app:resetLoadingState="@{false}"
+            app:visibleThreshold="@{4}"
+            app:onScrolledToBottom="@{(page) -> viewModel.loadData(page)}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <com.tebet.mojual.common.view.AppButtonRounded

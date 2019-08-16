@@ -36,10 +36,10 @@ class QualityViewModel(
 //                }
 //            })
 
-    fun loadData() {
+    fun loadData(page: Int = 0) {
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.searchOrders(SearchOrderRequest())
+            dataManager.searchOrders(SearchOrderRequest(offset = page * 10, limit = 10))
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                     override fun onSuccess(dataResponse: Paging<Order>) {

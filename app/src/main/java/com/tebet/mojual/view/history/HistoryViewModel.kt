@@ -7,7 +7,6 @@ import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Paging
-import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
@@ -28,10 +27,10 @@ class HistoryViewModel(
                 }
             })
 
-    fun loadData() {
+    fun loadData(page: Int = 0) {
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.searchOrders(SearchOrderRequest())
+            dataManager.searchOrders(SearchOrderRequest(offset = page * 10, limit = 10))
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                     override fun onSuccess(dataResponse: Paging<Order>) {

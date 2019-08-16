@@ -3,8 +3,9 @@ package com.tebet.mojual.common.util
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import androidx.recyclerview.widget.RecyclerView
 import com.tebet.mojual.R
+import com.tebet.mojual.common.adapter.scroll.RecyclerViewScrollCallback
 import com.tebet.mojual.common.view.AppEditText
 
 
@@ -52,6 +53,28 @@ class BindingUtils {
             listener: OnOkInSoftKeyboardListener?
         ) {
             setOnOkInSoftKeyboardListener(view, listener)
+        }
+
+        /**
+         * @param recyclerView  RecyclerView to bind to RecyclerViewScrollCallback
+         * @param visibleThreshold  The minimum number of items to have below your current scroll position before loading more.
+         * @param resetLoadingState  Reset endless scroll listener when performing a new search
+         * @param onScrolledListener    OnScrolledListener for RecyclerView scrolled
+         */
+        @BindingAdapter(value = *arrayOf("visibleThreshold", "resetLoadingState", "onScrolledToBottom"), requireAll = false)
+        @JvmStatic
+        fun setRecyclerViewScrollCallback(recyclerView: RecyclerView, visibleThreshold: Int, resetLoadingState: Boolean,
+                                          onScrolledListener: RecyclerViewScrollCallback.OnScrolledListener) {
+
+            val callback = RecyclerViewScrollCallback
+                .Builder(recyclerView.layoutManager!!)
+                .visibleThreshold(visibleThreshold)
+                .onScrolledListener(onScrolledListener)
+                .resetLoadingState(resetLoadingState)
+                .build()
+
+            recyclerView.clearOnScrollListeners()
+            recyclerView.addOnScrollListener(callback)
         }
     }
 
