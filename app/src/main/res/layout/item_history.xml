@@ -26,6 +26,7 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/_16sdp"
         android:paddingTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
         android:paddingRight="@dimen/_16sdp"
         android:paddingBottom="@dimen/_8sdp">
 

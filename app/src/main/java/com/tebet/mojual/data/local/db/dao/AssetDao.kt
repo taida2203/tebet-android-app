@@ -17,4 +17,7 @@ interface AssetDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(assets: List<Asset>)
+
+    @Query("DELETE FROM asset")
+    fun nukeTable()
 }
