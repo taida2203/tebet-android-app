@@ -1,6 +1,8 @@
 package com.tebet.mojual.view.qualitycontainer
 
 import androidx.databinding.ObservableArrayList
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.BindingUtils
@@ -24,6 +26,7 @@ class QualityAddContainerViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<QualityAddContainerNavigator>(dataManager, schedulerProvider) {
+    var order = MutableLiveData<Order>()
     var items: ObservableArrayList<Order> = ObservableArrayList()
     val onItemBind: OnItemBind<Order> = OnItemBind { itemBinding, position, item ->
         itemBinding.set(BR.item, if (position == 0) R.layout.item_quality_add_container_add else R.layout.item_quality_add_container)
@@ -35,6 +38,13 @@ class QualityAddContainerViewModel(
                 }
             }
         })
+    }
+
+    var userInputPassword: String = ""
+    var onOkEditText: BindingUtils.OnOkInSoftKeyboardListener = object : BindingUtils.OnOkInSoftKeyboardListener() {
+        override fun onOkInSoftKeyboard() {
+            onForgotPasswordClick()
+        }
     }
 
     fun loadData(page: Int = 0) {
@@ -59,13 +69,6 @@ class QualityAddContainerViewModel(
                         }
                     })
             )
-        }
-    }
-
-    var userInputPassword: String = ""
-    var onOkEditText: BindingUtils.OnOkInSoftKeyboardListener = object : BindingUtils.OnOkInSoftKeyboardListener() {
-        override fun onOkInSoftKeyboard() {
-            onForgotPasswordClick()
         }
     }
 

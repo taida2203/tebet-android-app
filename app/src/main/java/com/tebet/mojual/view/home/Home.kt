@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -17,8 +18,10 @@ import com.tebet.mojual.view.history.HistoryFragment
 import com.tebet.mojual.view.home.content.HomeFragment
 import com.tebet.mojual.view.profile.ProfileFragment
 import com.tebet.mojual.view.qualitycheck.QualityFragment
+import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
 import com.tebet.mojual.view.sale.SaleFragment
 import com.tebet.mojual.view.saledetail.SaleDetailFragment
+import com.tebet.mojual.view.salenow.SaleNowFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import javax.inject.Inject
@@ -108,6 +111,20 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     override fun showOrderDetailScreen(dataResponse: Order) {
         enableBackButton = true
         openFragment(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder)
+    }
+
+    override fun showSellNowScreen() {
+        enableBackButton = true
+        baseBinding.viewModel?.enableTopLogo?.set(false)
+        title = getString(R.string.home_menu_sell_now)
+        openFragment(SaleNowFragment(), R.id.contentHolder)
+    }
+
+    override fun showAddContainerScreen(dataResponse: Order) {
+        val mIntent = Intent(this, QualityAddContainer::class.java)
+        mIntent.putExtra("EXTRA_ORDER", dataResponse)
+        startActivityForResult( mIntent, 500)
+        showCheckQualityScreen()
     }
 
     override fun openFragment(fragment: Fragment, placeHolder: Int, tag: String) {

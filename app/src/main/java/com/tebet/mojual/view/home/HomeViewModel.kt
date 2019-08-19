@@ -41,6 +41,10 @@ class HomeViewModel(
         navigator.showOrderDetailScreen(dataResponse)
     }
 
+    fun onSubmitOrderNowClick(dataResponse: Order) {
+        navigator.showAddContainerScreen(dataResponse)
+    }
+
     fun onHomeClick() {
         navigator.showHomeScreen()
     }
@@ -51,5 +55,9 @@ class HomeViewModel(
 
     fun onQualityCheckClick() {
         navigator.showCheckQualityScreen()
+    }
+
+    fun onCheckQualityNowClick() {
+        navigator.showSellNowScreen()
     }
 }

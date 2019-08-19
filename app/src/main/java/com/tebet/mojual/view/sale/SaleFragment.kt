@@ -16,7 +16,7 @@ import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.selectfuturedate.SelectFutureDate
 import com.tebet.mojual.view.selectquantity.SelectQuantity
 
-class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNavigator {
+open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNavigator {
     override val bindingVariable: Int
         get() = BR.viewModel
 

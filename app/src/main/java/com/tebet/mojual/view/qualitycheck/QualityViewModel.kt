@@ -75,7 +75,7 @@ class QualityViewModel(
             navigator.show(R.string.quality_check_error_select_order)
             return
         }
-        navigator.openAddContainerScreen()
+        navigator.openAddContainerScreen(selectedItem)
 //        navigator.showLoading(true)
 //        compositeDisposable.add(
 //            dataManager.createOrder(

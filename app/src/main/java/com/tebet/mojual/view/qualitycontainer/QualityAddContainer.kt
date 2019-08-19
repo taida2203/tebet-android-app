@@ -7,13 +7,14 @@ import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.ActivityQualityAddContainerBinding
 import com.tebet.mojual.databinding.ActivitySignUpPasswordBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.base.BaseActivity
 
-open class QualityAddContainer : BaseActivity<ActivityQualityAddContainerBinding, QualityAddContainerViewModel>(),
+class QualityAddContainer : BaseActivity<ActivityQualityAddContainerBinding, QualityAddContainerViewModel>(),
     QualityAddContainerNavigator {
     override val bindingVariable: Int
         get() = BR.viewModel
@@ -35,6 +36,9 @@ open class QualityAddContainer : BaseActivity<ActivityQualityAddContainerBinding
         title = getString(R.string.quality_add_container_title)
         topRightViewBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
+        intent.getSerializableExtra("EXTRA_ORDER")?.let {
+            viewModel.order.value = it as Order
+        }
         viewModel.loadData()
     }
 

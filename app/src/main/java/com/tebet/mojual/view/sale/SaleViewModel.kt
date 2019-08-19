@@ -67,7 +67,7 @@ class SaleViewModel(
     fun loadData() {
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.getUserProfileDB().concatMap { dataManager.getAsserts(it.data?.userId.toString()) }
+            dataManager.getUserProfileDB().concatMap { dataManager.getAsserts(it.data?.profileId.toString()) }
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<List<Asset>>() {
                     override fun onSuccess(dataResponse: List<Asset>) {

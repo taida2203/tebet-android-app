@@ -11,7 +11,7 @@ import com.tebet.mojual.databinding.FragmentSaleDetailBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.home.Home
 
-class SaleDetailFragment() : BaseFragment<FragmentSaleDetailBinding, SaleDetailViewModel>(), SaleDetailNavigator {
+open class SaleDetailFragment : BaseFragment<FragmentSaleDetailBinding, SaleDetailViewModel>(), SaleDetailNavigator {
     override val bindingVariable: Int
         get() = BR.viewModel
 
