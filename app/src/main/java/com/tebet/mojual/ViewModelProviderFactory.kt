@@ -9,21 +9,21 @@ import com.tebet.mojual.view.forgotpassword.ForgotPasswordViewModel
 import com.tebet.mojual.view.history.HistoryViewModel
 import com.tebet.mojual.view.home.HomeViewModel
 import com.tebet.mojual.view.home.content.HomeContentViewModel
-import com.tebet.mojual.view.profile.ProfileViewModel
 import com.tebet.mojual.view.login.LoginViewModel
 import com.tebet.mojual.view.loginpassword.LoginWithPasswordViewModel
+import com.tebet.mojual.view.profile.ProfileViewModel
 import com.tebet.mojual.view.qualitycheck.QualityViewModel
+import com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel
 import com.tebet.mojual.view.sale.SaleViewModel
 import com.tebet.mojual.view.saledetail.SaleDetailViewModel
 import com.tebet.mojual.view.selectfuturedate.SelectFutureDateViewModel
 import com.tebet.mojual.view.selectquantity.SelectQuantityViewModel
 import com.tebet.mojual.view.signup.SignUpInfoViewModel
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1Model
-import com.tebet.mojual.view.signup.step2.map.GoogleMapViewModel
 import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
+import com.tebet.mojual.view.signup.step2.map.GoogleMapViewModel
 import com.tebet.mojual.view.signup.step3.SignUpInfoStep3Model
 import com.tebet.mojual.view.splash.SplashViewModel
-
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -54,6 +54,7 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(SelectFutureDateViewModel::class.java) -> SelectFutureDateViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(QualityViewModel::class.java) -> QualityViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(HistoryViewModel::class.java) -> HistoryViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(QualityAddContainerViewModel::class.java) -> QualityAddContainerViewModel(dataManager, schedulerProvider) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

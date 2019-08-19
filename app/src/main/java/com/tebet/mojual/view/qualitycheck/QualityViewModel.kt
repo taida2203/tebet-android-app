@@ -7,11 +7,9 @@ import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Paging
-import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
-import me.tatarka.bindingcollectionadapter2.ItemBinding
 import me.tatarka.bindingcollectionadapter2.OnItemBind
 
 
@@ -21,13 +19,16 @@ class QualityViewModel(
 ) :
     BaseViewModel<QualityNavigator>(dataManager, schedulerProvider) {
     var items: ObservableArrayList<Order> = ObservableArrayList()
-    val onItemBind: OnItemBind<Order> =
-        OnItemBind { itemBinding, position, item ->
-            itemBinding.set(BR.item, if (position == items.size - 1) R.layout.item_quality_check_order_add else R.layout.item_quality_check_order)
-            itemBinding.bindExtra(BR.listener, object : OnFutureDateClick {
-                override fun onItemClick(item: Order) = if (item.orderId >= 0) navigator.itemSelected(item) else navigator.openSellScreen()
-            })
-        }
+    val onItemBind: OnItemBind<Order> = OnItemBind { itemBinding, position, item ->
+        itemBinding.set(BR.item, if (position == items.size - 1) R.layout.item_quality_check_order_add else R.layout.item_quality_check_order)
+        itemBinding.bindExtra(BR.listener, object : OnFutureDateClick {
+            override fun onItemClick(item: Order) = if (item.orderId >= 0) {
+                item.isSelected = true
+                items.filterNot { adapterItem -> adapterItem.orderId == item.orderId }.forEach { it.isSelected = false }
+                navigator.itemSelected(item)
+            } else navigator.openSellScreen()
+        })
+    }
 //    var itemBinding: ItemBinding<Order> =
 //        ItemBinding.of<Order>(BR.item, R.layout.item_quality_check_order)
 //            .bindExtra(BR.listener, object : OnFutureDateClick {
@@ -37,26 +38,28 @@ class QualityViewModel(
 //            })
 
     fun loadData(page: Int = 0) {
-        navigator.showLoading(true)
-        compositeDisposable.add(
-            dataManager.searchOrders(SearchOrderRequest(offset = page * 10, limit = 10))
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
-                    override fun onSuccess(dataResponse: Paging<Order>) {
-                        items.clear()
-                        items.addAll(dataResponse.data)
-                        items.add(Order(-1, ""))
-                        navigator.showLoading(false)
-                    }
+        val offset = page * 10
+        if (items.size >= offset) {
+            navigator.showLoading(true)
+            compositeDisposable.add(
+                dataManager.searchOrders(SearchOrderRequest(offset = offset, limit = 10))
+                    .observeOn(schedulerProvider.ui())
+                    .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
+                        override fun onSuccess(dataResponse: Paging<Order>) {
+                            items.addAll(dataResponse.data)
+                            items.add(Order(-1, ""))
+                            navigator.showLoading(false)
+                        }
 
-                    override fun onFailure(error: String?) {
-                        navigator.showLoading(false)
-                        handleError(error)
-                        items.clear()
-                        items.add(Order(-1, ""))
-                    }
-                })
-        )
+                        override fun onFailure(error: String?) {
+                            navigator.showLoading(false)
+                            handleError(error)
+                            items.clear()
+                            items.add(Order(-1, ""))
+                        }
+                    })
+            )
+        }
     }
 
     interface OnFutureDateClick {
@@ -67,6 +70,12 @@ class QualityViewModel(
         if (!navigator.validate()) {
             return
         }
+        var selectedItem = items.firstOrNull { item -> item.isSelected }
+        if (selectedItem == null) {
+            navigator.show(R.string.quality_check_error_select_order)
+            return
+        }
+        navigator.openAddContainerScreen()
 //        navigator.showLoading(true)
 //        compositeDisposable.add(
 //            dataManager.createOrder(

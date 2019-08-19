@@ -6,6 +6,7 @@ import com.tebet.mojual.view.home.content.HomeFragmentProvider
 import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.loginpassword.LoginWithPassword
 import com.tebet.mojual.view.profile.ProfileFragmentProvider
+import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
 import com.tebet.mojual.view.signup.step0.SignUpPassword
 import com.tebet.mojual.view.sale.SaleFragmentProvider
 import com.tebet.mojual.view.saledetail.SaleDetailFragmentProvider
@@ -49,5 +50,8 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract fun selectQuantityActivity(): SelectQuantity
+
+    @ContributesAndroidInjector
+    abstract fun qualityAddContainerActivity(): QualityAddContainer
 
 }

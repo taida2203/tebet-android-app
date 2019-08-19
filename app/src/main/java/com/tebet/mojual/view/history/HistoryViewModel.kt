@@ -28,24 +28,27 @@ class HistoryViewModel(
             })
 
     fun loadData(page: Int = 0) {
-        navigator.showLoading(true)
-        compositeDisposable.add(
-            dataManager.searchOrders(SearchOrderRequest(offset = page * 10, limit = 10))
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
-                    override fun onSuccess(dataResponse: Paging<Order>) {
-                        dataResponse.data.forEach { order ->
-                            items.add(order)
+        val offset = page * 10
+        if (items.size >= offset) {
+            navigator.showLoading(true)
+            compositeDisposable.add(
+                dataManager.searchOrders(SearchOrderRequest(offset = page * 10, limit = 10))
+                    .observeOn(schedulerProvider.ui())
+                    .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
+                        override fun onSuccess(dataResponse: Paging<Order>) {
+                            dataResponse.data.forEach { order ->
+                                items.add(order)
+                            }
+                            navigator.showLoading(false)
                         }
-                        navigator.showLoading(false)
-                    }
 
-                    override fun onFailure(error: String?) {
-                        navigator.showLoading(false)
-                        handleError(error)
-                    }
-                })
-        )
+                        override fun onFailure(error: String?) {
+                            navigator.showLoading(false)
+                            handleError(error)
+                        }
+                    })
+            )
+        }
     }
 
     interface OnFutureDateClick {

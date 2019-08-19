@@ -1,5 +1,8 @@
 package com.tebet.mojual.data.models
 
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import com.tebet.mojual.BR
 import java.io.Serializable
 
 data class Order(
@@ -9,6 +12,11 @@ data class Order(
     var planDate: Long? = null,
     var price: Double? = null,
     var totalPrice: Double? = null
-) : Serializable {
+) : Serializable, BaseObservable() {
     var isSelected: Boolean = false
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.selected)
+        }
 }

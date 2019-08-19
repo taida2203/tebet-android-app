@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_20sdp">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:itemBinding="@{viewModel.onItemBind}"
+                app:items="@{viewModel.items}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:onScrolledToBottom="@{(page) -> viewModel.loadData(page)}"
+                app:resetLoadingState="@{false}"
+                app:visibleThreshold="@{4}" />
+        </LinearLayout>
+
+        <com.tebet.mojual.common.view.AppButton
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:enabled="@{!viewModel.isLoading}"
+            android:onClick="@{()-> viewModel.onForgotPasswordClick()}"
+            android:text="@string/general_btn_next" />
+    </RelativeLayout>
+</layout>

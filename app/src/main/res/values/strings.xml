@@ -78,4 +78,6 @@
     <string name="month_year_picker_month">Month</string>
     <string name="month_year_picker_year">Year</string>
     <string name="month_year_picker_select_btn">SELECT</string>
+    <string name="quality_check_error_select_order">You have selected at least 1 order !!</string>
+    <string name="quality_add_container_title">Check Quality</string>
 </resources>
