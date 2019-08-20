@@ -68,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/registration_step1_full_name"
                     android:imeOptions="actionNext"
+                    android:nextFocusDown="@+id/birthday"
                     android:maxLength="50"
                     android:text="@={viewModel.userProfile.fullName}"
                     app:validateRegex='@{"^[a-zA-Z]+(([&apos;,. -][a-zA-Z ])?[a-zA-Z]*)*$"}'
@@ -87,8 +88,9 @@
                     android:layout_height="wrap_content"
                     android:cursorVisible="false"
                     android:focusable="false"
-                    android:hint="@string/registration_step1_date_of_birth"
                     android:imeOptions="actionNext"
+                    android:nextFocusDown="@+id/ktpNumber"
+                    android:hint="@string/registration_step1_date_of_birth"
                     android:onClick="@{()-> viewModel.onSelectDateClick()}"
                     android:text="@={viewModel.userProfile.birthday}"
                     app:validateEmpty="@{true}"

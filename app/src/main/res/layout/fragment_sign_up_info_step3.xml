@@ -31,6 +31,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/registration_step3_bank_name"
+                    android:imeOptions="actionNext"
+                    android:nextFocusDown="@+id/etBankAccountNumber"
                     android:text="@={viewModel.userProfile.bankName}"
                     app:validateEmpty="@{true}"
                     app:validateTypeAutoDismiss="@{true}" />
@@ -80,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/registration_step3_bank_region"
                     android:text="@={viewModel.userProfile.bankRegionName}"
+                    app:onOkInSoftKeyboard="@{viewModel.onOkEditText}"
                     app:validateEmpty="@{true}"
                     app:validateTypeAutoDismiss="@{true}" />
 

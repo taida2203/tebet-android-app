@@ -2,6 +2,7 @@ package com.tebet.mojual.view.signup.step3
 
 import androidx.lifecycle.MutableLiveData
 import co.sdk.auth.core.models.AuthJson
+import com.tebet.mojual.common.util.BindingUtils
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Bank
@@ -18,9 +19,15 @@ class SignUpInfoStep3Model(
     dataManager: DataManager,
     schedulerProvider: SchedulerProvider
 ) :
-    SignUpInfoStepViewModel<BaseActivityNavigator>(dataManager, schedulerProvider) {
+    SignUpInfoStepViewModel<SignUpInfoStep3Navigator>(dataManager, schedulerProvider) {
     var bankNameLiveData = MutableLiveData<List<Bank>>()
     var bankRegionLiveData = MutableLiveData<List<Region>>()
+
+    var onOkEditText: BindingUtils.OnOkInSoftKeyboardListener = object : BindingUtils.OnOkInSoftKeyboardListener() {
+        override fun onOkInSoftKeyboard() {
+            navigator.submit()
+        }
+    }
 
     fun loadData() {
         navigator.showLoading(true)

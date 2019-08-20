@@ -12,9 +12,11 @@ import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Bank
 import com.tebet.mojual.data.models.Region
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep3Binding
+import com.tebet.mojual.view.signup.SignUpInfo
 import com.tebet.mojual.view.signup.step.SignUpInfoStep
 
-class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInfoStep3Model>() {
+class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInfoStep3Model>(), SignUpInfoStep3Navigator {
+
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -24,8 +26,8 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_info_step3
 
-    var bankAdapter: ArrayAdapter<String>? = null
-    var regionAdapter: ArrayAdapter<String>? = null
+    private var bankAdapter: ArrayAdapter<String>? = null
+    private var regionAdapter: ArrayAdapter<String>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,7 +48,7 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
         viewDataBinding?.etBankName?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 validateBankCode()
-                validator.validate()
+                validator.validate(view)
             }
         }
         regionAdapter =
@@ -94,5 +96,12 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
         viewDataBinding?.etBankName?.clearFocus()
         viewDataBinding?.etRegionName?.clearFocus()
         return validator.validate()
+    }
+
+    override fun submit() {
+        try {
+            (activity as SignUpInfo).viewDataBinding?.btnNext?.performClick()
+        } catch (e: Exception) {
+        }
     }
 }

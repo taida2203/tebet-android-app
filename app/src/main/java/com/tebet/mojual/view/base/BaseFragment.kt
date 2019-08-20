@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
@@ -58,6 +59,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         performDependencyInjection()
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         super.onCreate(savedInstanceState)
         mViewModel = viewModel
         mViewModel?.baseErrorHandlerData?.observe(this, Observer<String> {
