@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.home
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
@@ -16,6 +17,12 @@ class HomeViewModel(
 ) :
     BaseViewModel<HomeNavigator>(dataManager, schedulerProvider) {
     var profileLiveData = MutableLiveData<UserProfile>()
+
+    var selectedTab = ObservableField(ScreenTab.Home)
+
+    enum class ScreenTab {
+        Home, Inbox, History
+    }
 
     fun loadData() {
         compositeDisposable.add(
@@ -46,10 +53,12 @@ class HomeViewModel(
     }
 
     fun onHomeClick() {
+        selectedTab.set(ScreenTab.Home)
         navigator.showHomeScreen()
     }
 
     fun onHistoryClick() {
+        selectedTab.set(ScreenTab.History)
         navigator.showHistoryScreen()
     }
 

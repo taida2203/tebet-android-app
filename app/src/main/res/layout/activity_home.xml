@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="com.tebet.mojual.view.home.HomeViewModel.ScreenTab" />
+
         <variable
             name="viewModel"
             type="com.tebet.mojual.view.home.HomeViewModel" />
@@ -41,7 +43,7 @@
                 <ImageView
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/ic_home_slc" />
+                    android:src="@{viewModel.selectedTab == ScreenTab.Home ? @drawable/home_tab_active : @drawable/home_tab_normal}" />
 
                 <com.tebet.mojual.common.view.AppTextView
                     android:layout_width="wrap_content"
@@ -71,14 +73,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{()->viewModel.onHistoryClick()}"
                 android:gravity="center"
+                android:onClick="@{()->viewModel.onHistoryClick()}"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/ic_history" />
+                    android:src="@{viewModel.selectedTab == ScreenTab.History ? @drawable/history_tab_active : @drawable/history_tab_normal}" />
 
                 <com.tebet.mojual.common.view.AppTextView
                     android:layout_width="wrap_content"

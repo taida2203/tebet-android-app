@@ -123,7 +123,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     override fun showAddContainerScreen(dataResponse: Order) {
         val mIntent = Intent(this, QualityAddContainer::class.java)
         mIntent.putExtra("EXTRA_ORDER", dataResponse)
-        startActivityForResult( mIntent, 500)
+        startActivityForResult(mIntent, 500)
         showCheckQualityScreen()
     }
 
