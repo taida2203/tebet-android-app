@@ -16,7 +16,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="@color/lightgrey" />
+            android:background="@android:color/transparent" />
 
         <com.tebet.mojual.common.view.AppTextView
             android:id="@+id/text"
@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp"
             android:text="@{item}"
+            android:textSize="@dimen/_14ssp"
             android:textStyle="bold" />
     </LinearLayout>
 </layout>

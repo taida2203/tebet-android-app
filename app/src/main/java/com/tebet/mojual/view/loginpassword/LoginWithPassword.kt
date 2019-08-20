@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -48,8 +49,16 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-
         }
+        viewDataBinding?.iconContainerPhone?.viewTreeObserver?.addOnGlobalLayoutListener(
+            object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    viewDataBinding?.iconContainerPhone?.viewTreeObserver?.removeOnGlobalLayoutListener(this)
+                    val params = viewDataBinding?.iconContainerPassword?.layoutParams
+                    params?.width = viewDataBinding?.iconContainerPhone?.width
+                    viewDataBinding?.iconContainerPassword?.layoutParams = params
+                }
+            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
