@@ -21,10 +21,13 @@ interface DbHelper {
     fun insertBank(bank: Bank): Observable<Boolean>
 
     fun insertBanks(banks: List<Bank>): Observable<Boolean>
+    fun clearAllBanks(): Observable<Boolean>
 
     fun insertRegions(regions: List<Region>): Observable<Boolean>
+    fun clearAllRegions(): Observable<Boolean>
 
     fun insertCity(city: City): Observable<Boolean>
+    fun clearAllCity(): Observable<Boolean>
 
     fun insertCities(cities: List<City>): Observable<Boolean>
 

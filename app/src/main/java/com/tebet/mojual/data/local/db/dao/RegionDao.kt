@@ -17,4 +17,7 @@ interface RegionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(regions: List<Region>)
+
+    @Query("DELETE FROM region")
+    fun nukeTable()
 }

@@ -18,4 +18,7 @@ interface CityDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(banks: List<City>)
+
+    @Query("DELETE FROM city")
+    fun nukeTable()
 }

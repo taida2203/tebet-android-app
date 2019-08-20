@@ -28,7 +28,6 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
-
     override var userProfilePref: UserProfile
         get() = preferences.userProfilePref
         set(value) {
@@ -92,14 +91,8 @@ class AppDataManger @Inject constructor(
         get() = room.region
 
     override fun getRegions(): Observable<AuthJson<List<Region>>> {
-        if (App.instance.checkConnectivity()) {
-            var regionsTemp: AuthJson<List<Region>>? = null
-            return api.getRegions().concatMap { regionResponse ->
-                regionsTemp = regionResponse
-                regionResponse.data?.let { room.insertRegions(it) }
-            }.concatMap {
-                Observable.just(regionsTemp)
-            }
+        if (App.instance.checkConnectivity()) return api.getRegions().concatMap { regionResponse ->
+            clearAllRegions().concatMap { regionResponse.data?.let { it1 -> room.insertRegions(it1) } }.concatMap { Observable.just(regionResponse) }
         }
         return getRegionDB()
     }
@@ -133,27 +126,15 @@ class AppDataManger @Inject constructor(
     override fun insertCity(city: City): Observable<Boolean> = room.insertCity(city)
 
     override fun getBanks(): Observable<AuthJson<List<Bank>>> {
-        if (App.instance.checkConnectivity()) {
-            var banksTemp: AuthJson<List<Bank>>? = null
-            return api.getBanks().concatMap { bankResponse ->
-                banksTemp = bankResponse
-                bankResponse.data?.let { room.insertBanks(it) }
-            }.concatMap {
-                Observable.just(banksTemp)
-            }
+        if (App.instance.checkConnectivity()) return api.getBanks().concatMap { response ->
+            clearAllBanks().concatMap { response.data?.let { it1 -> room.insertBanks(it1) } }.concatMap { Observable.just(response) }
         }
         return getBankDB()
     }
 
     override fun getCities(): Observable<AuthJson<List<City>>> {
-        if (App.instance.checkConnectivity()) {
-            var citiesTemp: AuthJson<List<City>>? = null
-            return api.getCities().concatMap { cityResponse ->
-                citiesTemp = cityResponse
-                cityResponse.data?.let { room.insertCities(it) }
-            }.concatMap {
-                Observable.just(citiesTemp)
-            }
+        if (App.instance.checkConnectivity()) return api.getCities().concatMap { response ->
+            clearAllCity().concatMap { response.data?.let { it1 -> room.insertCities(it1) } }.concatMap { Observable.just(response) }
         }
         return getCityDB()
     }
@@ -193,13 +174,15 @@ class AppDataManger @Inject constructor(
             .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
     }
 
-    override fun clearAllProfiles(): Observable<Boolean> {
-        return room.clearAllProfiles()
-    }
+    override fun clearAllProfiles(): Observable<Boolean> = room.clearAllProfiles()
 
-    override fun clearAllAssets(): Observable<Boolean> {
-        return room.clearAllAssets()
-    }
+    override fun clearAllBanks(): Observable<Boolean> = room.clearAllBanks()
+
+    override fun clearAllRegions(): Observable<Boolean> = room.clearAllRegions()
+
+    override fun clearAllCity(): Observable<Boolean> = room.clearAllCity()
+
+    override fun clearAllAssets(): Observable<Boolean> = room.clearAllAssets()
 
     override fun updatePassword(updateProfileRequest: UpdatePasswordRequest): Observable<AuthJson<EmptyResponse>> = api.updatePassword(updateProfileRequest)
 

@@ -17,4 +17,7 @@ interface BankDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(banks: List<Bank>)
+
+    @Query("DELETE FROM bank")
+    fun nukeTable()
 }

@@ -10,7 +10,6 @@ import javax.inject.Singleton
 @Singleton
 class AppDbHelper @Inject
 constructor(private val mAppDatabase: AppDatabase) : DbHelper {
-
     override val userProfile: Observable<UserProfileDao>
         get() = Observable.fromCallable { mAppDatabase.userProfileDao() }
 
@@ -92,6 +91,27 @@ constructor(private val mAppDatabase: AppDatabase) : DbHelper {
     override fun clearAllAssets(): Observable<Boolean> {
         return Observable.fromCallable {
             mAppDatabase.assetDao().nukeTable()
+            true
+        }
+    }
+
+    override fun clearAllBanks(): Observable<Boolean> {
+        return Observable.fromCallable {
+            mAppDatabase.bankDao().nukeTable()
+            true
+        }
+    }
+
+    override fun clearAllRegions(): Observable<Boolean> {
+        return Observable.fromCallable {
+            mAppDatabase.regionDao().nukeTable()
+            true
+        }
+    }
+
+    override fun clearAllCity(): Observable<Boolean> {
+        return Observable.fromCallable {
+            mAppDatabase.cityDao().nukeTable()
             true
         }
     }
