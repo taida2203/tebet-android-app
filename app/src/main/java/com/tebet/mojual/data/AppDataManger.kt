@@ -67,7 +67,7 @@ class AppDataManger @Inject constructor(
     override fun getAsserts(profileId: String, offset: Int?, limit: Int?): Observable<AuthJson<List<Asset>>> {
         if (App.instance.checkConnectivity()) {
             var assetsTemp: AuthJson<List<Asset>>? = null
-            return api.getAsserts(profileId, offset, limit).concatMap {assetResponse ->
+            return api.getAsserts(profileId, offset, limit).concatMap { assetResponse ->
                 assetsTemp = assetResponse
                 room.clearAllAssets()
             }.concatMap {
@@ -181,27 +181,18 @@ class AppDataManger @Inject constructor(
     }
 
     private fun updateProfileDB(userProfile: AuthJson<UserProfile>?): Observable<AuthJson<UserProfile>?> {
-        return Observable.fromCallable {
-            userProfile?.data?.let {
-                preferences.userProfilePref = it
-            }
-        }.concatMap { Observable.just(userProfile) }
-        //        return clearAllProfiles()
-        //            .concatMap {
-        //                userProfile?.data?.let { it1 -> insertUserProfile(it1) }
-        //                Observable.just(userProfile)
-        //            }
-        //            .subscribeOn(Schedulers.newThread())
+        return clearAllProfiles()
+            .concatMap { userProfile?.data?.let { it1 -> insertUserProfile(it1) } }
+            .concatMap { Observable.just(userProfile) }
+            .subscribeOn(Schedulers.newThread())
     }
 
-    override fun getUserProfileDB(): Observable<AuthJson<UserProfile>> = Observable.just(preferences.userProfilePref)
-        .map { userProfile -> AuthJson(null, "", userProfile) }
+    override fun getUserProfileDB(): Observable<AuthJson<UserProfile>> = room.userProfile.concatMap { userProfileDao ->
+        userProfileDao.queryUserProfile().subscribeOn(Schedulers.newThread())
+            .doOnError { message -> EmptyResultSetException("") }
+            .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
+    }
 
-    //        room.userProfile.concatMap { userProfileDao ->
-    //        userProfileDao.queryUserProfile().subscribeOn(Schedulers.newThread())
-    //            .doOnError { message -> EmptyResultSetException("") }
-    //            .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
-    //    }
     override fun clearAllProfiles(): Observable<Boolean> {
         return room.clearAllProfiles()
     }

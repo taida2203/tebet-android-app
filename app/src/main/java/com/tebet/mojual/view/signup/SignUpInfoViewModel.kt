@@ -74,7 +74,7 @@ class SignUpInfoViewModel(
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.updateProfile(userProfile)
-                .subscribeOn(Schedulers.newThread())
+                .concatMap { dataManager.getProfile() }
                 .observeOn(AndroidSchedulers.mainThread())
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {

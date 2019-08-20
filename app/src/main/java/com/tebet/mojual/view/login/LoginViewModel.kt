@@ -8,6 +8,8 @@ import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 
 class LoginViewModel(
     dataManager: DataManager,
@@ -21,15 +23,15 @@ class LoginViewModel(
 
     fun onRegistrationClick() {
         navigator.showLoading(true)
-        navigator.activity()?.let {
+        navigator.activity()?.let { activity ->
             compositeDisposable.add(
                 AuthSdk.instance.logout(true)
-                    .concatMap { _ ->
-                        AuthSdk.instance.login(
-                            it,
-                            AuthAccountKitMethod(),
-                            LoginConfiguration(logoutWhileExpired = false)
-                        ).doOnError { error -> registerNewUser() }
+                    .concatMap {
+                        AuthSdk.instance.login(activity, AuthAccountKitMethod(), LoginConfiguration(logoutWhileExpired = false))
+                            .doOnError { error ->
+                                navigator.showLoading(false)
+                                registerNewUser()
+                            }
                     }
                     .concatMap { result -> dataManager.getProfile() }
                     .observeOn(schedulerProvider.ui())
@@ -55,14 +57,16 @@ class LoginViewModel(
         navigator.activity()?.let {
             navigator.showLoading(true)
             compositeDisposable.add(
-                dataManager.register(
-                    LoginConfiguration(
-                        logoutWhileExpired = false,
-                        token = AuthSdk.instance.getBrandLoginToken()?.token,
-                        phone = AuthSdk.instance.getBrandLoginToken()?.phone
-                    )
-                )
-                    .concatMap { registerResponse ->
+                Observable.just(true).delay(50, TimeUnit.MILLISECONDS)
+                    .concatMap {
+                        dataManager.register(
+                            LoginConfiguration(
+                                logoutWhileExpired = false,
+                                token = AuthSdk.instance.getBrandLoginToken()?.token,
+                                phone = AuthSdk.instance.getBrandLoginToken()?.phone
+                            )
+                        )
+                    }.concatMap { registerResponse ->
                         AuthSdk.instance.login(
                             it,
                             AuthAccountKitMethod(),
