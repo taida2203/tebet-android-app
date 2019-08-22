@@ -1,8 +1,8 @@
 package com.tebet.mojual.data
 
 import androidx.room.EmptyResultSetException
-import co.sdk.auth.core.models.LoginConfiguration
 import co.sdk.auth.core.models.AuthJson
+import co.sdk.auth.core.models.LoginConfiguration
 import com.tebet.mojual.App
 import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.data.local.db.DbHelper
@@ -48,7 +48,7 @@ class AppDataManger @Inject constructor(
         return api.searchOrders(searchOrderRequest)
     }
 
-    override fun getOrderDetail(orderId: Int): Observable<AuthJson<Order>> = api.getOrderDetail(orderId)
+    override fun getOrderDetail(orderId: Int, loadCustomer: Boolean, loadContainers: Boolean): Observable<AuthJson<Order>> = api.getOrderDetail(orderId)
 
     override fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>> = api.getNext7DaysPrice()
 

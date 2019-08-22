@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="@{StringExtKt.toDisplayMoney(viewModel.order.price)}"
+                android:text="@{@string/sale_select_future_date_price_kg(StringExtKt.toDisplayMoney(viewModel.price))}"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
         </LinearLayout>

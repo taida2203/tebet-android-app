@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.saledetail
 
+import androidx.databinding.ObservableDouble
 import androidx.databinding.ObservableField
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
@@ -15,6 +16,7 @@ class SaleDetailViewModel(
 ) :
     BaseViewModel<SaleDetailNavigator>(dataManager, schedulerProvider) {
     var order: ObservableField<Order> = ObservableField()
+    var price: ObservableDouble = ObservableDouble(0.0)
 
     fun onReCreateOrderClick() {
         navigator.openSaleScreen()
@@ -23,6 +25,7 @@ class SaleDetailViewModel(
     fun loadData() {
         order.get()?.let {
             navigator.showLoading(true)
+            it.price?.let { it1 -> price.set(it1) }
             compositeDisposable.add(
                 dataManager.getOrderDetail(it.orderId)
                     .observeOn(schedulerProvider.ui())

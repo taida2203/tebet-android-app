@@ -11,9 +11,10 @@ data class Order(
     var orderCode: String,
     var quantity: Int? = null,
     var planDate: Long? = null,
-    var price: Double? = null,
     var totalPrice: Double? = null
 ) : Serializable, BaseObservable() {
+    @Ignore
+    var price: Double? = null
     @Ignore
     var isSelected: Boolean = false
         @Bindable get() = field

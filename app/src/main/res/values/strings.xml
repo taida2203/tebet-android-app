@@ -64,7 +64,7 @@
     <string name="sale_select_future_date_title">Tab to select date to sell</string>
     <string name="sale_select_future_date_date">DATE</string>
     <string name="sale_select_future_date_price">PRICE</string>
-    <string name="sale_select_future_date_price_kg">%1$s / KG</string>
+    <string name="sale_select_future_date_price_kg">%1$s / Kg</string>
     <string name="sale_select_future_date_today">Today</string>
 
     <string name="sale_detail_title_id">ID</string>

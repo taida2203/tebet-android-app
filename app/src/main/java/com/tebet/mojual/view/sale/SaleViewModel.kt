@@ -50,7 +50,7 @@ class SaleViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Order>() {
                     override fun onSuccess(dataResponse: Order) {
-                        dataResponse.price = selectedFutureDate.value?.pricePerContainer
+                        dataResponse.price = selectedFutureDate.value?.pricePerKg
                         dataResponse.totalPrice = simulationPrice.value
                         navigator.showLoading(false)
                         navigator.openSaleScreen(dataResponse)

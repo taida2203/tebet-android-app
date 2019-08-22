@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="@dimen/_54sdp"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:orientation="vertical">
 
         <View
@@ -23,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp"
+            android:gravity="right"
             android:text="@{item.code}"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold" />
