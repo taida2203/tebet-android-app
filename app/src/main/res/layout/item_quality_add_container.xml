@@ -2,6 +2,23 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.tebet.mojual.common.util.DateExtKt" />
+
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
+
+        <variable
+            name="listener"
+            type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel.OnFutureDateClick" />
+
+        <variable
+            name="item"
+            type="com.tebet.mojual.data.models.ContainerWrapper" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,20 +51,4 @@
         </LinearLayout>
     </LinearLayout>
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <import type="com.tebet.mojual.common.util.DateExtKt" />
-
-        <import type="com.tebet.mojual.common.util.StringExtKt" />
-
-        <variable
-            name="listener"
-            type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel.OnFutureDateClick" />
-
-        <variable
-            name="item"
-            type="com.tebet.mojual.data.models.ContainerWrapper" />
-    </data>
 </layout>

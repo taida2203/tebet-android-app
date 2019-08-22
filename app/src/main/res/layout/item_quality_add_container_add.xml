@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
-        <import type="com.tebet.mojual.common.util.DateExtKt"/>
+        <import type="com.tebet.mojual.common.util.DateExtKt" />
 
-        <import type="com.tebet.mojual.common.util.StringExtKt"/>
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
 
         <variable
             name="listener"
-            type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel.OnFutureDateClick"/>
+            type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel.OnFutureDateClick" />
 
         <variable
             name="item"
-            type="com.tebet.mojual.data.models.ContainerWrapper"/>
+            type="com.tebet.mojual.data.models.ContainerWrapper" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_64sdp"
@@ -31,7 +33,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_8sdp"
-            android:src="@drawable/add_order_btn"/>
+            android:src="@drawable/add_order_btn" />
 
         <com.tebet.mojual.common.view.AppTextView
             android:layout_width="wrap_content"
@@ -39,7 +41,7 @@
             android:text="CHECK NEXT CONTAINER"
             android:textColor="#565656"
             android:textSize="@dimen/_16sdp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
 
