@@ -51,6 +51,14 @@
             <ImageView
                 android:layout_width="@dimen/_16sdp"
                 android:layout_height="@dimen/_16sdp"
+                android:onClick="@{() -> listener.onItemRemoveClick(item)}"
+                android:src="@drawable/signup_collapse_btn"
+                android:layout_marginRight="@dimen/_6sdp"
+                android:visibility="@{item.checking != CheckStatus.CheckStatusChecking ? View.VISIBLE : View.GONE}" />
+
+            <ImageView
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
                 android:src="@{item.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}"
                 android:visibility="@{item.checking == CheckStatus.CheckStatusDone ? View.VISIBLE : View.GONE}" />
         </LinearLayout>

@@ -35,6 +35,10 @@ class QualityAddContainerViewModel(
             if (position == 0) R.layout.item_quality_add_container_add else R.layout.item_quality_add_container
         )
         itemBinding.bindExtra(BR.listener, object : OnFutureDateClick {
+            override fun onItemRemoveClick(item: ContainerWrapper) {
+                items.remove(item)
+            }
+
             override fun onStartSensorClick(item: ContainerWrapper) {
                 timer?.cancel()
                 item.timeCountDown = null
@@ -147,6 +151,7 @@ class QualityAddContainerViewModel(
 
     interface OnFutureDateClick {
         fun onItemClick(item: ContainerWrapper)
+        fun onItemRemoveClick(item: ContainerWrapper)
         fun onStartSensorClick(item: ContainerWrapper)
     }
 }
