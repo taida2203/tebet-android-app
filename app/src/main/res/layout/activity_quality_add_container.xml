@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:enabled="@{!viewModel.isLoading &amp;&amp; viewModel.items.size()>1}"
-            android:onClick="@{()-> viewModel.onForgotPasswordClick()}"
+            android:onClick="@{()-> viewModel.onSubmitClick()}"
             android:text="@string/general_btn_next" />
     </LinearLayout>
 </layout>

@@ -14,4 +14,5 @@ interface DataManager: ApiHelper, ApiGoogleHelper, DbHelper, PreferencesHelper {
     fun getBankDB() : Observable<AuthJson<List<Bank>>>
     fun getRegionDB() : Observable<AuthJson<List<Region>>>
     fun getAssetDB() : Observable<AuthJson<List<Asset>>>
+    fun getContainerCheckDB() : Observable<List<Quality>>
 }

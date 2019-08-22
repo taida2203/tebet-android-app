@@ -7,35 +7,34 @@ import io.reactivex.Observable
 
 interface DbHelper {
     val userProfile: Observable<UserProfileDao>
+    fun insertUserProfile(userProfile: UserProfile): Observable<Boolean>
+    fun clearAllProfiles(): Observable<Boolean>
 
     val bank: Observable<BankDao>
-
-    val region: Observable<RegionDao>
-
-    val city: Observable<CityDao>
-
-    val asset: Observable<AssetDao>
-
-    fun insertUserProfile(userProfile: UserProfile): Observable<Boolean>
-
     fun insertBank(bank: Bank): Observable<Boolean>
-
     fun insertBanks(banks: List<Bank>): Observable<Boolean>
     fun clearAllBanks(): Observable<Boolean>
 
+    val region: Observable<RegionDao>
     fun insertRegions(regions: List<Region>): Observable<Boolean>
     fun clearAllRegions(): Observable<Boolean>
 
+    val city: Observable<CityDao>
     fun insertCity(city: City): Observable<Boolean>
+    fun insertCities(cities: List<City>): Observable<Boolean>
     fun clearAllCity(): Observable<Boolean>
 
-    fun insertCities(cities: List<City>): Observable<Boolean>
-
+    val asset: Observable<AssetDao>
     fun insertAssets(asset: List<Asset>): Observable<Boolean>
-
     fun clearAllAssets(): Observable<Boolean>
+
+    val quality: Observable<QualityDao>
+    fun insertContainerCheck(quality: Quality): Observable<Boolean>
+    fun insertContainerChecks(qualities: List<Quality>): Observable<Boolean>
+    fun deleteContainerCheck(quality: Quality): Observable<Boolean>
+    fun clearAllContainerCheck(): Observable<Boolean>
 
     fun clearAllTables(): Observable<Boolean>
 
-    fun clearAllProfiles(): Observable<Boolean>
+
 }

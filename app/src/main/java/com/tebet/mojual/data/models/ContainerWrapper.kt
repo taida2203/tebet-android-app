@@ -8,10 +8,11 @@ import java.io.Serializable
 
 data class ContainerWrapper(
     var id: Long = -1,
+    @Ignore
     var assignedContainers: List<Asset> = ArrayList(),
     var weight: Double = 20.0,
-    var time: Long = 30,
-    var customerData: Quality? = Quality()
+    var time: Long = 5,
+    var customerData: Quality = Quality()
 ) : Serializable, BaseObservable() {
     enum class CheckStatus {
         CheckStatusDone,
@@ -23,9 +24,10 @@ data class ContainerWrapper(
         @Bindable get() = field
         set(value) {
             field = value
-            var selectedContainer = assignedContainers[value]
-            customerData?.containerId = selectedContainer.assetId
-            customerData?.containerCode = selectedContainer.code
+            val selectedContainer = assignedContainers[value]
+            customerData.containerId = selectedContainer.assetId
+            customerData.containerCode = selectedContainer.code
+            customerData.tableId = customerData.orderId + selectedContainer.assetId
             notifyPropertyChanged(BR.selectedItem)
         }
 

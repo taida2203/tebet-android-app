@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.tebet.mojual.data.local.db.dao.*
 import com.tebet.mojual.data.models.*
 
-@Database(entities = [UserProfile::class, City::class, Bank::class, Region::class, Asset::class], version = 5)
+@Database(entities = [UserProfile::class, City::class, Bank::class, Region::class, Asset::class, Quality::class], version = 6)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userProfileDao(): UserProfileDao
 
@@ -16,4 +16,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun regionDao(): RegionDao
 
     abstract fun assetDao(): AssetDao
+
+    abstract fun containerCheckDao(): QualityDao
 }

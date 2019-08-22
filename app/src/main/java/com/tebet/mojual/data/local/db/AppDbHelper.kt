@@ -10,6 +10,37 @@ import javax.inject.Singleton
 @Singleton
 class AppDbHelper @Inject
 constructor(private val mAppDatabase: AppDatabase) : DbHelper {
+    override val quality: Observable<QualityDao>
+        get() = Observable.fromCallable { mAppDatabase.containerCheckDao() }
+
+    override fun insertContainerChecks(qualities: List<Quality>): Observable<Boolean> {
+        return Observable.fromCallable {
+            mAppDatabase.containerCheckDao().insertAll(qualities)
+            true
+        }
+    }
+
+    override fun insertContainerCheck(quality: Quality): Observable<Boolean> {
+        return Observable.fromCallable {
+            mAppDatabase.containerCheckDao().insertContainerCheck(quality)
+            true
+        }
+    }
+
+    override fun clearAllContainerCheck(): Observable<Boolean> {
+        return Observable.fromCallable {
+            mAppDatabase.containerCheckDao().nukeTable()
+            true
+        }
+    }
+
+    override fun deleteContainerCheck(quality: Quality): Observable<Boolean> {
+        return Observable.fromCallable {
+            mAppDatabase.containerCheckDao().delete(quality)
+            true
+        }
+    }
+
     override val userProfile: Observable<UserProfileDao>
         get() = Observable.fromCallable { mAppDatabase.userProfileDao() }
 

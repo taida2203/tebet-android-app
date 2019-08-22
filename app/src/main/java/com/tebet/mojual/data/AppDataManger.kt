@@ -174,6 +174,20 @@ class AppDataManger @Inject constructor(
             .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
     }
 
+    override fun getContainerCheckDB(): Observable<List<Quality>> = room.quality.concatMap { containerDao ->
+        containerDao.queryContainerChecks().subscribeOn(Schedulers.newThread())
+            .doOnError { message -> EmptyResultSetException("") }
+            .toObservable()
+    }
+
+    override val quality: Observable<QualityDao> get() = room.quality
+
+    override fun insertContainerChecks(qualities: List<Quality>): Observable<Boolean> = room.insertContainerChecks(qualities)
+
+    override fun insertContainerCheck(quality: Quality): Observable<Boolean> = room.insertContainerCheck(quality)
+
+    override fun clearAllContainerCheck(): Observable<Boolean> = room.clearAllContainerCheck()
+
     override fun clearAllProfiles(): Observable<Boolean> = room.clearAllProfiles()
 
     override fun clearAllBanks(): Observable<Boolean> = room.clearAllBanks()
@@ -194,5 +208,7 @@ class AppDataManger @Inject constructor(
     }
 
     override fun createOrder(createOrderRequest: CreateOrderRequest): Observable<AuthJson<Order>> = api.createOrder(createOrderRequest)
+
+    override fun deleteContainerCheck(quality: Quality): Observable<Boolean> = room.deleteContainerCheck(quality)
 }
 

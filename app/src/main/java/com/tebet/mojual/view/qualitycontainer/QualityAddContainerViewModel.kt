@@ -3,22 +3,20 @@ package com.tebet.mojual.view.qualitycontainer
 import android.os.CountDownTimer
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
+import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.models.Asset
-import com.tebet.mojual.data.models.ContainerWrapper
-import com.tebet.mojual.data.models.Order
-import com.tebet.mojual.data.models.UserProfile
-import com.tebet.mojual.data.models.request.UpdatePasswordRequest
+import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.BiFunction
+import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import me.tatarka.bindingcollectionadapter2.OnItemBind
-import java.util.concurrent.TimeUnit
 
 class QualityAddContainerViewModel(
     dataManager: DataManager,
@@ -37,7 +35,7 @@ class QualityAddContainerViewModel(
         )
         itemBinding.bindExtra(BR.listener, object : OnFutureDateClick {
             override fun onItemRemoveClick(item: ContainerWrapper) {
-                items.remove(item)
+                removeContainerDB(item)
             }
 
             override fun onStartSensorClick(item: ContainerWrapper) {
@@ -53,13 +51,14 @@ class QualityAddContainerViewModel(
                             override fun onFinish() {
                                 item.timeCountDown = null
                                 item.checking = ContainerWrapper.CheckStatus.CheckStatusDone
+                                saveCheckedContainerDB(item)
                             }
                         }
                         timer?.start()
                         ContainerWrapper.CheckStatus.CheckStatusChecking
                     }
                     ContainerWrapper.CheckStatus.CheckStatusChecking -> {
-                        items.remove(item)
+                        removeContainerDB(item)
                         ContainerWrapper.CheckStatus.CheckStatusCheck
                     }
                     else -> ContainerWrapper.CheckStatus.CheckStatusCheck
@@ -74,19 +73,33 @@ class QualityAddContainerViewModel(
                 }
                 if (!allCheckingComplete()) return
                 val containersLeft =
-                    assignedContainers.toSet() - items.filter { it.id >= 0 }.map { it.assignedContainers[it.selectedItem] }.toSet()
+                    assignedContainers.filterNot { exeptItem ->
+                        items.filter { it != headerItem }.map { it.customerData }.firstOrNull { it.containerCode == exeptItem.code } != null
+                    }
                 if (containersLeft.isEmpty()) {
                     navigator.show("You don't have any available containers !!")
                     return
                 }
+                items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck && it != headerItem }
+                    ?.let {
+                        saveCheckedContainerDB(it)
+                    }
                 items.forEach {
+
                     it.checking = ContainerWrapper.CheckStatus.CheckStatusDone
                     it.expanded = false
                 }
-                val newItem = ContainerWrapper(items.size.toLong(), containersLeft.toList())
+                val newItem = ContainerWrapper(
+                    items.size.toLong(),
+                    containersLeft.toList(),
+                    customerData = Quality(
+                        orderId = order.get()?.orderId?.toLong() ?: -1,
+                        orderCode = order.get()?.orderCode ?: ""
+                    )
+                )
                 newItem.selectedItem = 0
                 val newItems = arrayListOf(headerItem, newItem)
-                newItems.addAll(items.filter { it.id >= 0 }.toList())
+                newItems.addAll(items.filter { it != headerItem }.toList())
                 items.clear()
                 items.addAll(newItems)
 //                Collections.sort(items) { item1, item2 ->
@@ -96,6 +109,34 @@ class QualityAddContainerViewModel(
 //                }
             }
         })
+    }
+
+    private fun saveCheckedContainerDB(item: ContainerWrapper) {
+        compositeDisposable.add(
+            dataManager.insertContainerCheck(item.customerData)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(schedulerProvider.ui()).subscribe()
+        )
+    }
+
+    private fun removeContainerDB(item: ContainerWrapper) {
+        compositeDisposable.add(
+            dataManager.deleteContainerCheck(item.customerData)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(schedulerProvider.ui()).subscribeWith(object :
+                    DisposableObserver<Boolean>() {
+                    override fun onComplete() {
+                    }
+
+                    override fun onNext(t: Boolean) {
+                        items.remove(item)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        items.remove(item)
+                    }
+                })
+        )
     }
 
     private fun allCheckingComplete(): Boolean {
@@ -109,37 +150,54 @@ class QualityAddContainerViewModel(
     fun loadData() {
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.getUserProfileDB().concatMap { dataManager.getAsserts(it.data?.profileId.toString()) }
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<List<Asset>>() {
-                    override fun onSuccess(dataResponse: List<Asset>) {
-                        assignedContainers.addAll(dataResponse)
+            Observable.zip(
+                dataManager.getContainerCheckDB(),
+                dataManager.getUserProfileDB().concatMap { dataManager.getAsserts(it.data?.profileId.toString()) },
+                BiFunction<List<Quality>, AuthJson<List<Asset>>, Pair<List<Quality>, List<Asset>>>
+                { qualities, assets -> Pair(qualities, assets.data ?: emptyList()) }
+            )
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableObserver<Pair<List<Quality>, List<Asset>>>() {
+                    override fun onComplete() {
+                    }
+
+                    override fun onNext(response: Pair<List<Quality>, List<Asset>>) {
+                        assignedContainers.addAll(response.second)
                         items.add(headerItem)
+                        order.get()?.let { order ->
+                            items.addAll(response.first.filter { it.orderCode == order.orderCode }.map {
+                                val savedContainer = ContainerWrapper(
+                                    id = items.size.toLong(),
+                                    customerData = it
+                                )
+                                savedContainer.checking =
+                                    ContainerWrapper.CheckStatus.CheckStatusDone
+                                savedContainer
+                            })
+                        }
                         navigator.showLoading(false)
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onError(e: Throwable) {
+                        handleError(e.toString())
                         navigator.showLoading(false)
-                        handleError(error)
                     }
+
                 })
         )
     }
 
-    fun onForgotPasswordClick() {
+    fun onSubmitClick() {
         if (!allCheckingComplete()) return
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.updatePassword(
-                UpdatePasswordRequest("")
-            ).concatMap { dataManager.getProfile() }
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .debounce(400, TimeUnit.MILLISECONDS)
-                .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                    override fun onSuccess(dataResponse: UserProfile) {
+            dataManager.getContainerCheckDB()
+                .concatMap { dataManager.getAsserts("33") }
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : CallbackWrapper<List<Asset>>() {
+                    override fun onSuccess(dataResponse: List<Asset>) {
                         navigator.showLoading(false)
-                        navigator.openHomeScreen()
                     }
 
                     override fun onFailure(error: String?) {

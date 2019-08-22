@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey
 class Asset(
     @PrimaryKey
     @ColumnInfo(name = "assetId")
-    var assetId: Long? = null,
-    var code: String? = null,
+    var assetId: Long = -1,
+    var code: String = "",
     var combinedCode: String? = null,
     var note: String? = null,
     var volumn: Double? = null,
