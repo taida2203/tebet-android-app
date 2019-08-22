@@ -8,6 +8,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.tebet.mojual.data.models.ContainerWrapper.CheckStatus" />
+
         <variable
             name="view"
             type="com.tebet.mojual.view.qualitycontainer.container.ContainerInputView" />
@@ -37,10 +39,18 @@
                 android:gravity="right"
                 android:selectedItemPosition="@={view.data.selectedItem}"
                 android:textSize="@dimen/_14ssp"
+                android:visibility="@{view.data.checking != CheckStatus.CheckStatusDone ? View.VISIBLE : View.GONE}"
                 app:itemBinding="@{view.itemBinding}"
                 app:itemDropDownLayout="@{R.layout.item_container_dropdown}"
                 app:items="@{view.items}" />
 
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@{view.data.customerData.containerCode}"
+                android:textSize="@dimen/_14ssp"
+                android:visibility="@{view.data.checking == CheckStatus.CheckStatusDone ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,15 +91,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="@{String.valueOf(view.data.time)}"
+                android:text="@{view.data.timeCountDown == null ? String.valueOf(view.data.time) : String.valueOf(view.data.timeCountDown)}"
                 android:textSize="@dimen/_14ssp" />
         </LinearLayout>
-
-        <com.tebet.mojual.common.view.AppButtonRounded
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Start"
-            android:visibility="@{view.data.checking ? View.VISIBLE : View.GONE}" />
     </LinearLayout>
 
 

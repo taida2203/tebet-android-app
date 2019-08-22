@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.qualitycontainer
 
+import android.os.CountDownTimer
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.BR
@@ -23,23 +24,81 @@ class QualityAddContainerViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<QualityAddContainerNavigator>(dataManager, schedulerProvider) {
+    val headerItem = ContainerWrapper(-1)
+    var timer: CountDownTimer? = null
     var assignedContainers: ArrayList<Asset> = ArrayList()
     var order = MutableLiveData<Order>()
     var items: ObservableArrayList<ContainerWrapper> = ObservableArrayList()
     val onItemBind: OnItemBind<ContainerWrapper> = OnItemBind { itemBinding, position, item ->
-        itemBinding.set(BR.item, if (position == 0) R.layout.item_quality_add_container_add else R.layout.item_quality_add_container)
+        itemBinding.set(
+            BR.item,
+            if (position == 0) R.layout.item_quality_add_container_add else R.layout.item_quality_add_container
+        )
         itemBinding.bindExtra(BR.listener, object : OnFutureDateClick {
-            override fun onItemClick(item: ContainerWrapper) {
-                items.filter { it.id >=0 }.map { it.assignedContainers[it.selectedItem] }.toTypedArray().distinctBy {  }
-                if (assignedContainers.size <= 0) {
-                    navigator.show("You have 0 container left !!")
+            override fun onStartSensorClick(item: ContainerWrapper) {
+                timer?.cancel()
+                item.timeCountDown = null
+                item.checking = when (item.checking) {
+                    ContainerWrapper.CheckStatus.CheckStatusCheck -> {
+                        timer = object : CountDownTimer(item.time * 1000, 1000) {
+                            override fun onTick(millisUntilFinished: Long) {
+                                item.timeCountDown = millisUntilFinished / 1000
+                            }
+
+                            override fun onFinish() {
+                                item.timeCountDown = null
+                                item.checking = ContainerWrapper.CheckStatus.CheckStatusDone
+                            }
+                        }
+                        timer?.start()
+                        ContainerWrapper.CheckStatus.CheckStatusChecking
+                    }
+                    ContainerWrapper.CheckStatus.CheckStatusChecking -> {
+                        items.remove(item)
+                        ContainerWrapper.CheckStatus.CheckStatusCheck
+                    }
+                    else -> ContainerWrapper.CheckStatus.CheckStatusCheck
                 }
-                items.forEach { it.checking = false }
-                val newItem = ContainerWrapper(items.size.toLong(), assignedContainers)
-                newItem.checking = true
-                items.add(newItem)
+            }
+
+            override fun onItemClick(item: ContainerWrapper) {
+                if (item != headerItem) {
+                    if (item.checking == ContainerWrapper.CheckStatus.CheckStatusDone) item.expanded =
+                        !item.expanded
+                    return
+                }
+                if (!allCheckingComplete()) return
+                val containersLeft =
+                    assignedContainers.toSet() - items.filter { it.id >= 0 }.map { it.assignedContainers[it.selectedItem] }.toSet()
+                if (containersLeft.isEmpty()) {
+                    navigator.show("You don't have any available containers !!")
+                    return
+                }
+                items.forEach {
+                    it.checking = ContainerWrapper.CheckStatus.CheckStatusDone
+                    it.expanded = false
+                }
+                val newItem = ContainerWrapper(items.size.toLong(), containersLeft.toList())
+                newItem.selectedItem = 0
+                val newItems = arrayListOf(headerItem, newItem)
+                newItems.addAll(items.filter { it.id >= 0 }.toList())
+                items.clear()
+                items.addAll(newItems)
+//                Collections.sort(items) { item1, item2 ->
+//                    if (item1.id < 0) return@sort 1
+//                    if (item2.id < 0) return@sort 1
+//                    return@sort item2.id.compareTo(item1.id)
+//                }
             }
         })
+    }
+
+    private fun allCheckingComplete(): Boolean {
+        if (items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusChecking } != null) {
+            navigator.show("Please wait checking complete or cancel current checking to add more !!")
+            return false
+        }
+        return true
     }
 
     fun loadData() {
@@ -50,7 +109,7 @@ class QualityAddContainerViewModel(
                 .subscribeWith(object : CallbackWrapper<List<Asset>>() {
                     override fun onSuccess(dataResponse: List<Asset>) {
                         assignedContainers.addAll(dataResponse)
-                        items.add(ContainerWrapper(-1))
+                        items.add(headerItem)
                         navigator.showLoading(false)
                     }
 
@@ -63,9 +122,7 @@ class QualityAddContainerViewModel(
     }
 
     fun onForgotPasswordClick() {
-        if (!navigator.dataValid()) {
-            return
-        }
+        if (!allCheckingComplete()) return
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.updatePassword(
@@ -90,5 +147,6 @@ class QualityAddContainerViewModel(
 
     interface OnFutureDateClick {
         fun onItemClick(item: ContainerWrapper)
+        fun onStartSensorClick(item: ContainerWrapper)
     }
 }

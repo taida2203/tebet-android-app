@@ -20,15 +20,20 @@ class QualityViewModel(
     BaseViewModel<QualityNavigator>(dataManager, schedulerProvider) {
     var items: ObservableArrayList<Order> = ObservableArrayList()
     val onItemBind: OnItemBind<Order> = OnItemBind { itemBinding, position, item ->
-        itemBinding.set(BR.item, if (position == items.size - 1) R.layout.item_quality_check_order_add else R.layout.item_quality_check_order)
+        itemBinding.set(
+            BR.item,
+            if (position == items.size - 1) R.layout.item_quality_check_order_add else R.layout.item_quality_check_order
+        )
         itemBinding.bindExtra(BR.listener, object : OnFutureDateClick {
             override fun onItemClick(item: Order) = if (item.orderId >= 0) {
                 item.isSelected = true
-                items.filterNot { adapterItem -> adapterItem.orderId == item.orderId }.forEach { it.isSelected = false }
+                items.filterNot { adapterItem -> adapterItem.orderId == item.orderId }
+                    .forEach { it.isSelected = false }
                 navigator.itemSelected(item)
             } else navigator.openSellScreen()
         })
     }
+    var footerItem = Order(-1, "")
 //    var itemBinding: ItemBinding<Order> =
 //        ItemBinding.of<Order>(BR.item, R.layout.item_quality_check_order)
 //            .bindExtra(BR.listener, object : OnFutureDateClick {
@@ -47,18 +52,18 @@ class QualityViewModel(
                     .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                         override fun onSuccess(dataResponse: Paging<Order>) {
                             items.addAll(dataResponse.data)
-                            items.add(Order(-1, ""))
                             navigator.showLoading(false)
                         }
 
                         override fun onFailure(error: String?) {
                             navigator.showLoading(false)
                             handleError(error)
-                            items.clear()
-                            items.add(Order(-1, ""))
+                            if (!items.contains(footerItem)) items.add(footerItem)
                         }
                     })
             )
+        } else {
+            if (!items.contains(footerItem)) items.add(footerItem)
         }
     }
 

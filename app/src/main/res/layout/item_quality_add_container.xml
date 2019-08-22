@@ -10,6 +10,8 @@
 
         <import type="com.tebet.mojual.common.util.StringExtKt" />
 
+        <import type="com.tebet.mojual.data.models.ContainerWrapper.CheckStatus" />
+
         <variable
             name="listener"
             type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel.OnFutureDateClick" />
@@ -34,21 +36,37 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(item.id)}"
+                android:layout_weight="1"
+                android:text="@{@string/check_quality_add_container_title(String.valueOf(item.id))}"
                 android:textColor="@color/green_dark"
                 android:textSize="@dimen/_16ssp"
                 android:textStyle="bold" />
 
-            <com.tebet.mojual.view.qualitycontainer.container.ContainerInputView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:data="@{item}" />
+            <ImageView
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:src="@{item.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}"
+                android:visibility="@{item.checking == CheckStatus.CheckStatusDone ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
+
+        <com.tebet.mojual.view.qualitycontainer.container.ContainerInputView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{item.expanded ? View.VISIBLE : View.GONE}"
+            app:data="@{item}" />
+
+        <com.tebet.mojual.common.view.AppButtonRounded
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> listener.onStartSensorClick(item)}"
+            android:text="@{item.checking == CheckStatus.CheckStatusCheck ? @string/check_quality_add_container_btn_check : @string/check_quality_add_container_btn_cancel}"
+            android:visibility="@{item.checking != CheckStatus.CheckStatusDone ? View.VISIBLE : View.GONE}" />
     </LinearLayout>
 
 </layout>
