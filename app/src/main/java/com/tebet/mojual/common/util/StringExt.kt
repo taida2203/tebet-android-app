@@ -7,6 +7,6 @@ fun Double.toDisplayMoney(): String {
         return "Rp 0"
     }
     val formatter = DecimalFormat("#,###")
-    val formattedNumber = formatter.format(this)
-    return "Rp $formattedNumber"
+    val formattedNumber = formatter.format(this).replace(",", ".")
+    return "Rp. $formattedNumber"
 }

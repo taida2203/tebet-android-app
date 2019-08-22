@@ -29,8 +29,8 @@ class SaleViewModel(
 
     private inner class CalculatePrice : Observer<Any> {
         override fun onChanged(ignored: Any?) {
-            simulationPrice.value = selectedFutureDate.value?.price?.let {
-                selectedQuantity.value?.toDouble()?.let { it1 -> it.times(it1).times(Asset.quantity) }
+            simulationPrice.value = selectedFutureDate.value?.pricePerContainer?.let {
+                selectedQuantity.value?.toDouble()?.let { it1 -> it.times(it1) }
             }
         }
     }
@@ -50,7 +50,7 @@ class SaleViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Order>() {
                     override fun onSuccess(dataResponse: Order) {
-                        dataResponse.price = selectedFutureDate.value?.price
+                        dataResponse.price = selectedFutureDate.value?.pricePerContainer
                         dataResponse.totalPrice = simulationPrice.value
                         navigator.showLoading(false)
                         navigator.openSaleScreen(dataResponse)

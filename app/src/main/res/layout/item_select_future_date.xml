@@ -41,7 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{DateExtKt.toDisplayDateShort(item.date)}"
+                android:text="@{item.isToday ? @string/sale_select_future_date_today : DateExtKt.toDisplayDateShort(item.date)}"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/_14ssp" />
 
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/_16sdp"
-                    android:text="@{StringExtKt.toDisplayMoney(item.price)}"
+                    android:text="@{@string/sale_select_future_date_price_kg(StringExtKt.toDisplayMoney(item.pricePerKg))}"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold" />

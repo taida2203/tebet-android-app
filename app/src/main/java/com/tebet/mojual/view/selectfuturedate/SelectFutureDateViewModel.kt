@@ -31,8 +31,11 @@ class SelectFutureDateViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<List<Price>>() {
                     override fun onSuccess(dataResponse: List<Price>) {
+                        navigator.showLoading(false)
+                        if (dataResponse.isEmpty()) return
+                        dataResponse[0].isToday = true
                         dataResponse.map { responsePrice ->
-                            responsePrice.isIncrease = when (dataResponse.minBy { price -> price.date }?.price?.compareTo(responsePrice.price)) {
+                            responsePrice.isIncrease = when (dataResponse.minBy { price -> price.date }?.pricePerContainer?.compareTo(responsePrice.pricePerContainer)) {
                                 -1 -> true
                                 1 -> false
                                 else -> null
@@ -41,7 +44,6 @@ class SelectFutureDateViewModel(
                         }.forEach { item ->
                             items.add(item)
                         }
-                        navigator.showLoading(false)
                     }
 
                     override fun onFailure(error: String?) {
