@@ -29,6 +29,7 @@ class QualityViewModel(
             } else navigator.openSellScreen()
         })
     }
+    var footerItem = Order(-1, "")
 //    var itemBinding: ItemBinding<Order> =
 //        ItemBinding.of<Order>(BR.item, R.layout.item_quality_check_order)
 //            .bindExtra(BR.listener, object : OnFutureDateClick {
@@ -46,8 +47,9 @@ class QualityViewModel(
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                         override fun onSuccess(dataResponse: Paging<Order>) {
+                            items.remove(footerItem)
                             items.addAll(dataResponse.data)
-                            items.add(Order(-1, ""))
+                            items.add(footerItem)
                             navigator.showLoading(false)
                         }
 

@@ -9,6 +9,8 @@
 
         <import type="com.tebet.mojual.common.util.StringExtKt" />
 
+        <import type="com.tebet.mojual.data.models.ContainerWrapper.CheckStatus" />
+
         <variable
             name="listener"
             type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel.OnFutureDateClick" />
@@ -25,8 +27,7 @@
         android:background="@drawable/border_add_item"
         android:gravity="center_vertical"
         android:onClick="@{() -> listener.onItemClick(item)}"
-        android:orientation="horizontal"
-        android:visibility="@{item.checking ? View.GONE : View.VISIBLE}">
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="CHECK NEXT CONTAINER"
             android:textColor="#565656"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="@dimen/_15sdp"
             android:textStyle="bold" />
     </LinearLayout>
 

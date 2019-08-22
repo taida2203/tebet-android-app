@@ -26,7 +26,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding
 class ContainerInputView : LinearLayout {
     private lateinit var viewModel: SignUpInfoStep2Model
     private var mBinding: LayoutContainerInputBinding? = null
-    var data: ObservableField<ContainerWrapper> = ObservableField(ContainerWrapper(-1))
+    var data: ObservableField<ContainerWrapper> = ObservableField()
 
     var items: ObservableList<Asset> = ObservableArrayList()
     var itemBinding: ItemBinding<Asset> = ItemBinding.of(BR.item, R.layout.item_container_dropdown)

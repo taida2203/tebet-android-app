@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel"/>
+            type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel" />
     </data>
 
     <LinearLayout
@@ -23,15 +23,15 @@
             android:layout_weight="1"
             app:itemBinding="@{viewModel.onItemBind}"
             app:items="@{viewModel.items}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <com.tebet.mojual.common.view.AppButton
             android:id="@+id/btnNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:enabled="@{!viewModel.isLoading}"
+            android:enabled="@{!viewModel.isLoading &amp;&amp; viewModel.items.size()>1}"
             android:onClick="@{()-> viewModel.onForgotPasswordClick()}"
-            android:text="@string/general_btn_next"/>
+            android:text="@string/general_btn_next" />
     </LinearLayout>
 </layout>
