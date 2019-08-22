@@ -20,6 +20,8 @@ data class ContainerWrapper(
         CheckStatusCheck
     }
 
+    var weightList: List<Int> = (20..30).toList()
+
     var selectedItem: Int = -1
         @Bindable get() = field
         set(value) {
@@ -29,6 +31,14 @@ data class ContainerWrapper(
             customerData.containerCode = selectedContainer.code
             customerData.tableId = customerData.orderId + selectedContainer.assetId
             notifyPropertyChanged(BR.selectedItem)
+        }
+
+    var selectedWeight: Int = -1
+        @Bindable get() = field
+        set(value) {
+            field = value
+            customerData.weight = weightList[value].toDouble()
+            notifyPropertyChanged(BR.selectedWeight)
         }
 
     @Ignore

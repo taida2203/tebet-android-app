@@ -29,7 +29,9 @@ class ContainerInputView : LinearLayout {
     var data: ObservableField<ContainerWrapper> = ObservableField()
 
     var items: ObservableList<Asset> = ObservableArrayList()
+    var itemWeights: ObservableList<Int> = ObservableArrayList()
     var itemBinding: ItemBinding<Asset> = ItemBinding.of(BR.item, R.layout.item_container_dropdown)
+    var itemWeightBinding: ItemBinding<Int> = ItemBinding.of(BR.item, R.layout.item_container_weight_dropdown)
 
     lateinit var validator: Validator
     //    public String getFilterValue() {
@@ -79,6 +81,10 @@ class ContainerInputView : LinearLayout {
             containerWrapper?.assignedContainers?.let {
                 view.items.clear()
                 view.items.addAll(it)
+            }
+            containerWrapper?.weightList?.let {
+                view.itemWeights.clear()
+                view.itemWeights.addAll(it)
             }
 //        mBinding?.setVariable(BR.addressData, addressData.get())
 //        if (viewModel != null) {
