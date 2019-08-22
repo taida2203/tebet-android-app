@@ -30,14 +30,14 @@ class QualityAddContainer : BaseActivity<ActivityQualityAddContainerBinding, Qua
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
-        enableBackButton = false
+        enableBackButton = true
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
         title = getString(R.string.quality_add_container_title)
         topRightViewBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
         intent.getSerializableExtra("EXTRA_ORDER")?.let {
-            viewModel.order.value = it as Order
+            viewModel.order.set(it as Order)
         }
         viewModel.loadData()
     }

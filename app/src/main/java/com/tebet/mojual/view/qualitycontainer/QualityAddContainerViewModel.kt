@@ -2,6 +2,7 @@ package com.tebet.mojual.view.qualitycontainer
 
 import android.os.CountDownTimer
 import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
@@ -24,10 +25,10 @@ class QualityAddContainerViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<QualityAddContainerNavigator>(dataManager, schedulerProvider) {
+    var order = ObservableField<Order>()
     val headerItem = ContainerWrapper(-1)
     var timer: CountDownTimer? = null
     var assignedContainers: ArrayList<Asset> = ArrayList()
-    var order = MutableLiveData<Order>()
     var items: ObservableArrayList<ContainerWrapper> = ObservableArrayList()
     val onItemBind: OnItemBind<ContainerWrapper> = OnItemBind { itemBinding, position, item ->
         itemBinding.set(

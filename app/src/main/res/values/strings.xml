@@ -83,6 +83,7 @@
 
 
     <string name="check_quality_add_container_title">Container #%1$s</string>
+    <string name="check_quality_add_container_order">Order %1$s</string>
     <string name="check_quality_add_container_btn_check">Start checking</string>
     <string name="check_quality_add_container_btn_cancel">Cancel checking</string>
 </resources>
