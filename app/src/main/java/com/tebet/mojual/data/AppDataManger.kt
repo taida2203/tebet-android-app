@@ -15,6 +15,7 @@ import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.models.request.UpdatePasswordRequest
 import com.tebet.mojual.data.remote.ApiGoogleHelper
 import com.tebet.mojual.data.remote.ApiHelper
+import com.tebet.mojual.data.remote.ApiSensorHelper
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
@@ -25,6 +26,7 @@ import javax.inject.Inject
 class AppDataManger @Inject constructor(
     private var api: ApiHelper,
     private var apiGoogle: ApiGoogleHelper,
+    private var apiSensor: ApiSensorHelper,
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
@@ -144,9 +146,9 @@ class AppDataManger @Inject constructor(
     override val userProfile: Observable<UserProfileDao>
         get() = room.userProfile
 
-    override fun getDataMock(): Call<ResponseBody> = api.getDataMock()
+    override fun scanSensorDataMock(): Observable<ResponseBody> = apiSensor.scanSensorDataMock()
 
-    override fun getData(): Call<ResponseBody> = api.getData()
+    override fun scanSensorData(): Observable<ResponseBody> = apiSensor.scanSensorData()
 
     override fun register(loginConfiguration: LoginConfiguration): Observable<AuthJson<EmptyResponse>> = api.register(loginConfiguration)
 

@@ -7,6 +7,7 @@ import com.tebet.mojual.common.constant.ConfigEnv
 import com.tebet.mojual.common.network.AuthenticationV2Interceptor
 import com.tebet.mojual.data.remote.ApiGoogleHelper
 import com.tebet.mojual.data.remote.ApiHelper
+import com.tebet.mojual.data.remote.ApiSensorHelper
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -75,5 +76,16 @@ class NetModule(private val baseUrl: String) {
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build().create(ApiGoogleHelper::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesApiSensorInterface(okHttpClient: OkHttpClient): ApiSensorHelper {
+        return Builder().client(okHttpClient)
+//            .baseUrl("http://192.168.4.1/iSpindel?")
+            .baseUrl("http://private-2087f-taidao.apiary-mock.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .build().create(ApiSensorHelper::class.java)
     }
 }
