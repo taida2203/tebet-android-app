@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -28,11 +29,13 @@ import dagger.android.DispatchingAndroidInjector
 import javax.inject.Inject
 import dagger.android.support.HasSupportFragmentInjector
 
-class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector, HomeNavigator {
+class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector,
+    HomeNavigator {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> =
+        fragmentDispatchingAndroidInjector
 
     override val bindingVariable: Int
         get() = BR.viewModel
@@ -56,12 +59,24 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
-        topLeftViewBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_home_avatar, baseBinding.topLeftHolder, true)
-        topRightViewBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
+        topLeftViewBinding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.item_home_avatar,
+            baseBinding.topLeftHolder,
+            true
+        )
+        topRightViewBinding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.item_home_icon,
+            baseBinding.topRightHolder,
+            true
+        )
         showHomeScreen()
         viewModel.loadData()
         topLeftViewBinding?.avatar?.setOnClickListener { showProfileScreen() }
-        viewModel.profileLiveData.observe(this, Observer<UserProfile> { topLeftViewBinding?.userProfile = it })
+        viewModel.profileLiveData.observe(
+            this,
+            Observer<UserProfile> { topLeftViewBinding?.userProfile = it })
     }
 
     override fun showCheckQualityScreen() {
@@ -112,7 +127,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     override fun showOrderCompleteScreen(dataResponse: Order) {
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
-        title = String.format(getString(R.string.check_quality_add_container_order), dataResponse.orderCode)
+        title = String.format(
+            getString(R.string.check_quality_add_container_order),
+            dataResponse.orderCode
+        )
         openFragment(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder)
     }
 
@@ -126,7 +144,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     override fun showOrderDetailScreen(dataResponse: Order) {
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
-        title = String.format(getString(R.string.check_quality_add_container_order), dataResponse.orderCode)
+        title = String.format(
+            getString(R.string.check_quality_add_container_order),
+            dataResponse.orderCode
+        )
         openFragment(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder)
     }
 
@@ -148,5 +169,16 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             return
         }
         super.onBackPressed()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 500) {
+            if (resultCode == Activity.RESULT_OK) {
+                intent.getSerializableExtra("EXTRA_ORDER")?.let {
+                    showOrderDetailScreen(it as Order)
+                }
+            }
+        }
     }
 }

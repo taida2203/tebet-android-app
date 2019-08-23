@@ -57,16 +57,6 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
         return validator.validate()
     }
 
-    override fun openSellScreen() {
-        (activity as Home).viewModel.onCheckQualityNowClick()
-    }
-
-    override fun openAddContainerScreen(selectedItem: IOrder) {
-        val mIntent = Intent(context, QualityAddContainer::class.java)
-        mIntent.putExtra("EXTRA_ORDER", selectedItem as Order)
-        startActivityForResult(mIntent, 500)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {

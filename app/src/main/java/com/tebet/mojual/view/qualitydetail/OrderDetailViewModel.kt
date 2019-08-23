@@ -70,6 +70,5 @@ class OrderDetailViewModel(
             navigator.show(R.string.quality_check_error_select_order)
             return
         }
-        order.get()?.let { navigator.openAddContainerScreen(it) }
     }
 }

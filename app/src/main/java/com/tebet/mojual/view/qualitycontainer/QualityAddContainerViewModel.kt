@@ -247,6 +247,7 @@ class QualityAddContainerViewModel(
                 .subscribeWith(object : CallbackWrapper<List<Asset>>() {
                     override fun onSuccess(dataResponse: List<Asset>) {
                         navigator.showLoading(false)
+                        navigator.openConfirmScreen()
                     }
 
                     override fun onFailure(error: String?) {

@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.qualitycontainer
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -43,9 +44,9 @@ class QualityAddContainer : BaseActivity<ActivityQualityAddContainerBinding, Qua
         viewModel.loadData()
     }
 
-    override fun openHomeScreen() {
+    override fun openConfirmScreen() {
+        setResult(Activity.RESULT_OK, intent)
         finish()
-        startActivity(Intent(this, Home::class.java))
     }
 
     override fun dataValid(): Boolean {

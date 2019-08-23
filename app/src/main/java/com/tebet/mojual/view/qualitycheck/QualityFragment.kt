@@ -46,9 +46,7 @@ class QualityFragment : BaseFragment<FragmentQualityBinding, QualityViewModel>()
     }
 
     override fun openAddContainerScreen(selectedItem: Order) {
-        val mIntent = Intent(context, QualityAddContainer::class.java)
-        mIntent.putExtra("EXTRA_ORDER", selectedItem)
-        startActivityForResult(mIntent, 500)
+        (activity as Home).viewModel.onOrderDetailClick(selectedItem)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
