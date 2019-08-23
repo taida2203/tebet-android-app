@@ -35,7 +35,7 @@ class QualityAddContainerViewModel(
         )
         itemBinding.bindExtra(BR.listener, object : OnFutureDateClick {
             override fun onItemRemoveClick(item: ContainerWrapper) {
-                removeContainerDB(item)
+                removeContainerDB(item.customerData)
             }
 
             override fun onStartSensorClick(item: ContainerWrapper) {
@@ -58,7 +58,7 @@ class QualityAddContainerViewModel(
                         ContainerWrapper.CheckStatus.CheckStatusChecking
                     }
                     ContainerWrapper.CheckStatus.CheckStatusChecking -> {
-                        removeContainerDB(item)
+                        removeContainerDB(item.customerData)
                         ContainerWrapper.CheckStatus.CheckStatusCheck
                     }
                     else -> ContainerWrapper.CheckStatus.CheckStatusCheck
@@ -120,9 +120,9 @@ class QualityAddContainerViewModel(
         )
     }
 
-    private fun removeContainerDB(item: ContainerWrapper) {
+    private fun removeContainerDB(item: Quality) {
         compositeDisposable.add(
-            dataManager.deleteContainerCheck(item.customerData)
+            dataManager.deleteContainerCheck(item)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(schedulerProvider.ui()).subscribeWith(object :
                     DisposableObserver<Boolean>() {
@@ -130,11 +130,11 @@ class QualityAddContainerViewModel(
                     }
 
                     override fun onNext(t: Boolean) {
-                        items.remove(item)
+                        items.remove(items.firstOrNull{it.customerData == item})
                     }
 
                     override fun onError(e: Throwable) {
-                        items.remove(item)
+                        items.remove(items.firstOrNull{it.customerData == item})
                     }
                 })
         )
@@ -149,6 +149,7 @@ class QualityAddContainerViewModel(
     }
 
     fun loadData() {
+        items.add(headerItem)
         navigator.showLoading(true)
         compositeDisposable.add(
             Observable.zip(
@@ -165,9 +166,15 @@ class QualityAddContainerViewModel(
 
                     override fun onNext(response: Pair<List<Quality>, List<Asset>>) {
                         assignedContainers.addAll(response.second)
-                        items.add(headerItem)
                         order.get()?.let { order ->
-                            items.addAll(response.first.filter { it.orderCode == order.orderCode }.map {
+                            val cachedItemByOrder =response.first.filter { it.orderCode == order.orderCode }
+                            val unAvailableCachedItem = cachedItemByOrder.filter { cachedContainer -> assignedContainers
+                                .firstOrNull { cachedContainer.containerCode == it.code } == null }
+
+                            // remove item that contain un available container
+                            unAvailableCachedItem.forEach(this@QualityAddContainerViewModel::removeContainerDB)
+
+                            items.addAll((cachedItemByOrder - unAvailableCachedItem).map {
                                 val savedContainer = ContainerWrapper(
                                     id = items.size.toLong(),
                                     customerData = it
