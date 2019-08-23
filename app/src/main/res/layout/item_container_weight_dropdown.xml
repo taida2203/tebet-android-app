@@ -9,7 +9,7 @@
     </data>
 
     <LinearLayout
-        android:layout_width="@dimen/_54sdp"
+        android:layout_width="@dimen/_36sdp"
         android:gravity="right"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -23,7 +23,7 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_8sdp"
+            android:padding="@dimen/_4sdp"
             android:gravity="right"
             android:text="@{String.valueOf(item)}"
             android:textSize="@dimen/_14ssp"

@@ -23,7 +23,7 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_8sdp"
+            android:padding="@dimen/_4sdp"
             android:gravity="right"
             android:text="@{item.code}"
             android:textSize="@dimen/_14ssp"

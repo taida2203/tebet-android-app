@@ -98,6 +98,7 @@ class QualityAddContainerViewModel(
                     )
                 )
                 newItem.selectedItem = 0
+                newItem.selectedWeight = 0
                 val newItems = arrayListOf(headerItem, newItem)
                 newItems.addAll(items.filter { it != headerItem }.toList())
                 items.clear()

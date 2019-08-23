@@ -71,6 +71,7 @@
 
         <com.tebet.mojual.common.view.AppButtonRounded
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_4sdp"
             android:layout_height="wrap_content"
             android:onClick="@{() -> listener.onStartSensorClick(item)}"
             android:text="@{item.checking == CheckStatus.CheckStatusCheck ? @string/check_quality_add_container_btn_check : @string/check_quality_add_container_btn_cancel}"

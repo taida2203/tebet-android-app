@@ -10,3 +10,7 @@ fun Double.toDisplayMoney(): String {
     val formattedNumber = formatter.format(this).replace(",", ".")
     return "Rp. $formattedNumber"
 }
+
+fun Double.toDisplayWeight(): String {
+    return this.toInt().toString()
+}

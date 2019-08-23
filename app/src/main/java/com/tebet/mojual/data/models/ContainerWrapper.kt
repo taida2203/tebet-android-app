@@ -11,7 +11,7 @@ data class ContainerWrapper(
     @Ignore
     var assignedContainers: List<Asset> = ArrayList(),
     var weight: Double = 20.0,
-    var time: Long = 5,
+    var time: Long = 30,
     var customerData: Quality = Quality()
 ) : Serializable, BaseObservable() {
     enum class CheckStatus {
