@@ -30,7 +30,7 @@ class SelectQuantity : BaseActivity<ActivitySelectQuantityBinding, SelectQuantit
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
-//    override fun showOrderDetailScreen() {
+//    override fun showOrderCompleteScreen() {
 //        enableBackButton = true
 //        openFragment(SaleDetailFragment(), R.id.contentHolder)
 //    }

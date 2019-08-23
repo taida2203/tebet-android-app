@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
+import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.databinding.FragmentSaleDetailBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.home.Home
 
-open class SaleDetailFragment : BaseFragment<FragmentSaleDetailBinding, SaleDetailViewModel>(), SaleDetailNavigator {
+open class SaleDetailFragment : BaseFragment<FragmentSaleDetailBinding, SaleDetailViewModel>(),
+    SaleDetailNavigator {
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -38,7 +40,7 @@ open class SaleDetailFragment : BaseFragment<FragmentSaleDetailBinding, SaleDeta
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.order.set(order)
+        viewModel.order.set(order?.let { OrderDetail(it) })
         viewModel.loadData()
     }
 

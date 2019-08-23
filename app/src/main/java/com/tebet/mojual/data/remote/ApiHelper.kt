@@ -54,7 +54,7 @@ interface ApiHelper {
     fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>>
 
     @GET("order/order")
-    fun getOrderDetail(@Query(value = "orderId") orderId: Int, @Query(value = "loadCustomer") loadCustomer: Boolean = false, @Query(value = "loadContainers") loadContainers: Boolean = false): Observable<AuthJson<Order>>
+    fun getOrderDetail(@Query(value = "orderId") orderId: Int, @Query(value = "loadCustomer") loadCustomer: Boolean? = null, @Query(value = "loadContainers") loadContainers: Boolean? = null): Observable<AuthJson<OrderDetail>>
 
     @POST("order/search")
     fun searchOrders(@Body searchOrderRequest: SearchOrderRequest): Observable<AuthJson<Paging<Order>>>

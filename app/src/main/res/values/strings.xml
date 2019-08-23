@@ -49,7 +49,7 @@
     <string name="home_navigation_home">Home</string>
     <string name="home_navigation_inbox">Inbox</string>
     <string name="home_navigation_history">History</string>
-    <string name="home_menu_sell_now">Sell now</string>
+    <string name="home_menu_sell_now">Sell</string>
     <string name="home_menu_check_quality">Check Quality</string>
     <string name="home_menu_borrow">Borrow</string>
     <string name="home_menu_tips">Tips</string>

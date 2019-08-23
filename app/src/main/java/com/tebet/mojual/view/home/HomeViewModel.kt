@@ -8,8 +8,6 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel(
     dataManager: DataManager,
@@ -45,7 +43,7 @@ class HomeViewModel(
     }
 
     fun onSubmitOrderClick(dataResponse: Order) {
-        navigator.showOrderDetailScreen(dataResponse)
+        navigator.showOrderCompleteScreen(dataResponse)
     }
 
     fun onSubmitOrderNowClick(dataResponse: Order) {
@@ -68,5 +66,9 @@ class HomeViewModel(
 
     fun onCheckQualityNowClick() {
         navigator.showSellNowScreen()
+    }
+
+    fun onOrderDetailClick(item: Order) {
+        navigator.showOrderDetailScreen(item)
     }
 }

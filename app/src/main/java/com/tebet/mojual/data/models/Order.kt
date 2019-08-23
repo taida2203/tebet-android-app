@@ -7,12 +7,12 @@ import com.tebet.mojual.BR
 import java.io.Serializable
 
 data class Order(
-    var orderId: Int,
-    var orderCode: String,
+    override var orderId: Int,
+    override var orderCode: String,
     var quantity: Int? = null,
     var planDate: Long? = null,
     var totalPrice: Double? = null
-) : Serializable, BaseObservable() {
+) : Serializable, IOrder, BaseObservable() {
     @Ignore
     var price: Double? = null
     @Ignore

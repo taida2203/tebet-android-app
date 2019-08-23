@@ -4,6 +4,9 @@ import com.tebet.mojual.view.history.HistoryFragment;
 import com.tebet.mojual.view.history.HistoryFragmentModule;
 import com.tebet.mojual.view.qualitycheck.QualityFragment;
 import com.tebet.mojual.view.qualitycheck.QualityFragmentModule;
+import com.tebet.mojual.view.qualitydetail.OrderDetailFragment;
+import com.tebet.mojual.view.qualitydetail.OrderDetailFragmentModule;
+
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
@@ -18,4 +21,7 @@ public abstract class HomeFragmentProvider {
 
     @ContributesAndroidInjector(modules = HistoryFragmentModule.class)
     abstract HistoryFragment provideHistoryFragmentFactory();
+
+    @ContributesAndroidInjector(modules = OrderDetailFragmentModule.class)
+    abstract OrderDetailFragment provideOrderDetailFragmentFactory();
 }

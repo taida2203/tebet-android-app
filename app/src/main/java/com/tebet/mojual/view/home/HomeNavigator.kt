@@ -9,6 +9,7 @@ interface HomeNavigator {
     fun onBackPressed()
     fun showProfileScreen()
     fun showSellScreen()
+    fun showOrderCompleteScreen(dataResponse: Order)
     fun showOrderDetailScreen(dataResponse: Order)
     fun showHomeScreen()
     fun showHistoryScreen()

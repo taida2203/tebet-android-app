@@ -10,6 +10,7 @@ import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.FragmentHistoryBinding
 import com.tebet.mojual.view.base.BaseFragment
+import com.tebet.mojual.view.home.Home
 
 class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>(), HistoryNavigator {
     override val bindingVariable: Int
@@ -32,7 +33,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
     }
 
     override fun itemSelected(item: Order) {
-        Toast.makeText(context, item.toString(), Toast.LENGTH_SHORT).show()
+        (activity as Home).viewModel.onOrderDetailClick(item)
     }
 
     override fun validate(): Boolean {

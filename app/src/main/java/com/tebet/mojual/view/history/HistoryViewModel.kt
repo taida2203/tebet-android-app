@@ -59,28 +59,5 @@ class HistoryViewModel(
         if (!navigator.validate()) {
             return
         }
-//        navigator.showLoading(true)
-//        compositeDisposable.add(
-//            dataManager.createOrder(
-//                CreateOrderRequest(
-//                    selectedQuantity.get(),
-//                    selectedFutureDate.get()?.date
-//                )
-//            )
-//                .observeOn(schedulerProvider.ui())
-//                .subscribeWith(object : CallbackWrapper<Order>() {
-//                    override fun onSuccess(dataResponse: Order) {
-//                        dataResponse.price = selectedFutureDate.get()?.price
-//                        dataResponse.totalPrice = simulationPrice.get()
-//                        navigator.showLoading(false)
-//                        navigator.openSaleScreen(dataResponse)
-//                    }
-//
-//                    override fun onFailure(error: String?) {
-//                        navigator.showLoading(false)
-//                        handleError(error)
-//                    }
-//                })
-//        )
     }
 }

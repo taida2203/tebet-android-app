@@ -50,7 +50,7 @@ class AppDataManger @Inject constructor(
         return api.searchOrders(searchOrderRequest)
     }
 
-    override fun getOrderDetail(orderId: Int, loadCustomer: Boolean, loadContainers: Boolean): Observable<AuthJson<Order>> = api.getOrderDetail(orderId)
+    override fun getOrderDetail(orderId: Int, loadCustomer: Boolean?, loadContainers: Boolean?): Observable<AuthJson<OrderDetail>> = api.getOrderDetail(orderId, loadCustomer, loadContainers)
 
     override fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>> = api.getNext7DaysPrice()
 

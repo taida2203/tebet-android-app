@@ -30,7 +30,7 @@ class SelectFutureDate : BaseActivity<ActivitySelectFutureDateBinding, SelectFut
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
-//    override fun showOrderDetailScreen() {
+//    override fun showOrderCompleteScreen() {
 //        enableBackButton = true
 //        openFragment(SaleDetailFragment(), R.id.contentHolder)
 //    }

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.tebet.mojual.common.util.DateExtKt" />
+
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
+
+        <variable
+            name="listener"
+            type="com.tebet.mojual.view.qualitydetail.OrderDetailViewModel.OnFutureDateClick" />
+
+        <variable
+            name="item"
+            type="com.tebet.mojual.data.models.OrderContainer" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="@drawable/border_edit_text"
+        android:onClick="@{() -> listener.onItemClick(item)}"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingRight="@dimen/_16sdp"
+        android:paddingBottom="@dimen/_8sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:src="@{item.isSelected ? @drawable/selecte_box_checked : @drawable/selecte_box_uncheck}" />
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{@string/check_quality_add_container_title(item.orderCode)}"
+                android:textColor="@color/green_dark"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:onClick="@{() -> listener.onItemExpandClick(item)}"
+                android:src="@{item.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{item.expanded ? View.VISIBLE : View.GONE}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ID" />
+
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:padding="@dimen/_4sdp"
+                    android:text="@{item.assetCode}"
+                    android:textSize="@dimen/_14ssp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Weight" />
+
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:padding="@dimen/_4sdp"
+                    android:text="@{StringExtKt.toDisplayWeight(item.weightCs)}"
+                    android:textSize="@dimen/_14ssp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

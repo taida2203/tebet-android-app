@@ -34,13 +34,6 @@ class QualityViewModel(
         })
     }
     var footerItem = Order(-1, "")
-//    var itemBinding: ItemBinding<Order> =
-//        ItemBinding.of<Order>(BR.item, R.layout.item_quality_check_order)
-//            .bindExtra(BR.listener, object : OnFutureDateClick {
-//                override fun onItemClick(item: Order) {
-//                    navigator.itemSelected(item)
-//                }
-//            })
 
     fun loadData(page: Int = 0) {
         val offset = page * 10

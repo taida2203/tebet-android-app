@@ -19,6 +19,7 @@ import com.tebet.mojual.view.home.content.HomeFragment
 import com.tebet.mojual.view.profile.ProfileFragment
 import com.tebet.mojual.view.qualitycheck.QualityFragment
 import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
+import com.tebet.mojual.view.qualitydetail.OrderDetailFragment
 import com.tebet.mojual.view.sale.SaleFragment
 import com.tebet.mojual.view.saledetail.SaleDetailFragment
 import com.tebet.mojual.view.salenow.SaleNowFragment
@@ -108,8 +109,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         openFragment(ProfileFragment(), R.id.contentHolder)
     }
 
-    override fun showOrderDetailScreen(dataResponse: Order) {
+    override fun showOrderCompleteScreen(dataResponse: Order) {
         enableBackButton = true
+        baseBinding.viewModel?.enableTopLogo?.set(false)
+        title = String.format(getString(R.string.check_quality_add_container_order), dataResponse.orderCode)
         openFragment(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder)
     }
 
@@ -118,6 +121,13 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         baseBinding.viewModel?.enableTopLogo?.set(false)
         title = getString(R.string.home_menu_sell_now)
         openFragment(SaleNowFragment(), R.id.contentHolder)
+    }
+
+    override fun showOrderDetailScreen(dataResponse: Order) {
+        enableBackButton = true
+        baseBinding.viewModel?.enableTopLogo?.set(false)
+        title = String.format(getString(R.string.check_quality_add_container_order), dataResponse.orderCode)
+        openFragment(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder)
     }
 
     override fun showAddContainerScreen(dataResponse: Order) {
@@ -138,33 +148,5 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             return
         }
         super.onBackPressed()
-    }
-
-    private fun getData() {
-//        Handler().postDelayed({
-//            ServiceHelper.createService(ApiHelper::class.java).scanSensorData().enqueue(object : retrofit2.Callback<ResponseBody> {
-//                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-//                }
-//
-//                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-//                    val resultString = response.body()?.string()
-//                    val document = Jsoup.parse(resultString).select("tr")
-//                    val sensorData = SensorData()
-//                    document.forEach { info ->
-//                        when {
-//                            info.select("td")[0].html().toLowerCase().contains("tilt") -> sensorData.tilt = info.select("td")[1].html()
-//                            info.select("td")[0].html().toLowerCase().contains("temp") -> sensorData.temperature = info.select("td")[1].html()
-//                            info.select("td")[0].html().toLowerCase().contains("battery") -> sensorData.battery = info.select("td")[1].html()
-//                            info.select("td")[0].html().toLowerCase().contains("gravity") -> sensorData.gravity = info.select("td")[1].html()
-//                        }
-//                    }
-//                    tvTilt.text = sensorData.tilt
-//                    tvTemp.text = sensorData.temperature
-//                    tvBattery.text = sensorData.battery
-//                    tvGravity.text = sensorData.gravity
-//                }
-//            })
-//            scanSensorData()
-//        }, 5000)
     }
 }
