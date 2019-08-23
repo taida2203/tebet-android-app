@@ -28,7 +28,6 @@ class ContainerInputView : LinearLayout {
     private var mBinding: LayoutContainerInputBinding? = null
     var data: ObservableField<ContainerWrapper> = ObservableField()
 
-    var items: ObservableList<Asset> = ObservableArrayList()
     var itemWeights: ObservableList<Int> = ObservableArrayList()
     var itemBinding: ItemBinding<Asset> = ItemBinding.of(BR.item, R.layout.item_container_dropdown)
     var itemWeightBinding: ItemBinding<Int> = ItemBinding.of(BR.item, R.layout.item_container_weight_dropdown)
@@ -78,10 +77,6 @@ class ContainerInputView : LinearLayout {
         @JvmStatic
         fun setAddressData(view: ContainerInputView, containerWrapper: ContainerWrapper?) {
             view.data.set(containerWrapper)
-            containerWrapper?.assignedContainers?.let {
-                view.items.clear()
-                view.items.addAll(it)
-            }
             containerWrapper?.weightList?.let {
                 view.itemWeights.clear()
                 view.itemWeights.addAll(it)

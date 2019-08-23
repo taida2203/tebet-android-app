@@ -2,14 +2,14 @@ package com.tebet.mojual.data.models
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableList
 import androidx.room.Ignore
 import com.tebet.mojual.BR
 import java.io.Serializable
 
 data class ContainerWrapper(
     var id: Long = -1,
-    @Ignore
-    var assignedContainers: List<Asset> = ArrayList(),
     var weight: Double = 20.0,
     var time: Long = 30,
     var customerData: Quality = Quality()
@@ -21,6 +21,8 @@ data class ContainerWrapper(
     }
 
     var weightList: List<Int> = (20..30).toList()
+
+    var assignedContainers: ObservableList<Asset> = ObservableArrayList()
 
     var selectedItem: Int = -1
         @Bindable get() = field

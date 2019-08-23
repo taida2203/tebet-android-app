@@ -65,31 +65,29 @@ class QualityAddContainerViewModel(
                     return
                 }
                 if (!allCheckingComplete()) return
-                val containersLeft =
-                    assignedContainers.filterNot { exeptItem ->
-                        items.filter { it != headerItem }.map { it.customerData }.firstOrNull { it.containerCode == exeptItem.code } != null
-                    }
-                if (containersLeft.isEmpty()) {
-                    navigator.show("You don't have any available containers !!")
-                    return
-                }
                 items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck && it != headerItem }
                     ?.let {
                         saveCheckedContainerDB(it)
                     }
                 items.forEach {
-
                     it.checking = ContainerWrapper.CheckStatus.CheckStatusDone
                     it.expanded = false
                 }
+
+                val containersLeft = getAvailableContainer()
+                if (containersLeft.isEmpty()) {
+                    navigator.show("You don't have any available containers !!")
+                    return
+                }
                 val newItem = ContainerWrapper(
                     items.size.toLong(),
-                    containersLeft.toList(),
                     customerData = Quality(
                         orderId = order.get()?.orderId?.toLong() ?: -1,
                         orderCode = order.get()?.orderCode ?: ""
                     )
                 )
+                newItem.assignedContainers.clear()
+                newItem.assignedContainers.addAll(containersLeft.toList())
                 newItem.selectedItem = 0
                 newItem.selectedWeight = 0
                 val newItems = arrayListOf(headerItem, newItem)
@@ -103,6 +101,13 @@ class QualityAddContainerViewModel(
 //                }
             }
         })
+    }
+
+    private fun getAvailableContainer(): List<Asset> {
+        return assignedContainers.filterNot { exeptItem ->
+                items.filter { it != headerItem && it.checking == ContainerWrapper.CheckStatus.CheckStatusDone }
+                    .map { it.customerData }.firstOrNull { it.containerCode == exeptItem.code } != null
+            }
     }
 
     private fun countDownChecking(item: ContainerWrapper) {
@@ -154,9 +159,14 @@ class QualityAddContainerViewModel(
         compositeDisposable.add(
             dataManager.deleteContainerCheck(item)
                 .subscribeOn(schedulerProvider.io())
-                .concatMap {
+                .concatMap {_->
                     Observable.fromCallable {
                         items.remove(items.firstOrNull { it.customerData == item })
+                        items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck }?.let{
+                            it.assignedContainers.clear()
+                            it.assignedContainers.addAll(getAvailableContainer())
+                            it.selectedItem = 0
+                        }
                         true
                     }.subscribeOn(schedulerProvider.ui())
                 }

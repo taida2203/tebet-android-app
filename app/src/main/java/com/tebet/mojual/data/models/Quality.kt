@@ -17,9 +17,15 @@ data class Quality(
     var orderId: Long = -1,
     var orderCode: String = "",
     var containerId: Long? = null,
-    var containerCode: String = "",
     var data: String? = null
 ) : Serializable, BaseObservable() {
+    var containerCode: String = ""
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.containerCode)
+        }
+
     var weight: Double = 20.0
         @Bindable get() = field
         set(value) {
