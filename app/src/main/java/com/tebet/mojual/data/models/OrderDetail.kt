@@ -29,10 +29,14 @@ data class OrderDetail(
     var containers: List<OrderContainer>? = null
 ) : Serializable, IOrder {
     constructor(order: IOrder) : this(order.orderId, order.orderCode) {
-//        this.quantity = order.quantity
-//        this.planDate = order.planDate
-//        this.totalPrice = order.totalPrice
+        if (order is Order) {
+            price = order.price
+            quantity = order.quantity
+            planDate = order.planDate
+            totalPrice = order.totalPrice
+        }
     }
+
     @Ignore
     var price: Double? = null
 }
