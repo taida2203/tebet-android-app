@@ -140,6 +140,15 @@
                 android:padding="@dimen/_4sdp"
                 android:text="@{view.data.timeCountDown == null ? String.valueOf(view.data.time) : String.valueOf(view.data.timeCountDown)}"
                 android:textSize="@dimen/_14ssp" />
+
+            <ImageView
+                android:layout_width="@dimen/_8sdp"
+                android:layout_height="@dimen/_8sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:src="@drawable/signup_dropdown_btn"
+                android:visibility="@{view.data.checking == CheckStatus.CheckStatusCheck ? View.INVISIBLE : View.GONE}" />
         </LinearLayout>
     </LinearLayout>
 

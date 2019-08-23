@@ -38,6 +38,7 @@ class QualityAddContainer : BaseActivity<ActivityQualityAddContainerBinding, Qua
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
         intent.getSerializableExtra("EXTRA_ORDER")?.let {
             viewModel.order.set(it as Order)
+            title = String.format(getString(R.string.check_quality_add_container_order), viewModel.order.get()?.orderCode)
         }
         viewModel.loadData()
     }
