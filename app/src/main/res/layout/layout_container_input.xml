@@ -38,18 +38,27 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right">
+                android:gravity="right"
+                android:visibility="@{view.data.checking == CheckStatus.CheckStatusCheck ? View.VISIBLE : View.GONE}">
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:background="@android:color/transparent"
                     android:gravity="right"
                     android:selectedItemPosition="@={view.data.selectedItem}"
-                    android:visibility="@{view.data.checking != CheckStatus.CheckStatusDone ? View.VISIBLE : View.GONE}"
                     app:itemBinding="@{view.itemBinding}"
                     app:itemDropDownLayout="@{R.layout.item_container_dropdown}"
                     app:items="@{view.items}" />
+
+                <ImageView
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:src="@drawable/signup_dropdown_btn" />
             </LinearLayout>
 
             <com.tebet.mojual.common.view.AppTextView
@@ -59,7 +68,7 @@
                 android:padding="@dimen/_4sdp"
                 android:text="@{view.data.customerData.containerCode}"
                 android:textSize="@dimen/_14ssp"
-                android:visibility="@{view.data.checking == CheckStatus.CheckStatusDone ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{view.data.checking != CheckStatus.CheckStatusCheck ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,18 +87,27 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right">
+                android:gravity="right"
+                android:visibility="@{view.data.checking == CheckStatus.CheckStatusCheck ? View.VISIBLE : View.GONE}">
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:background="@android:color/transparent"
                     android:gravity="right"
                     android:selectedItemPosition="@={view.data.selectedWeight}"
-                    android:visibility="@{view.data.checking != CheckStatus.CheckStatusDone ? View.VISIBLE : View.GONE}"
                     app:itemBinding="@{view.itemWeightBinding}"
                     app:itemDropDownLayout="@{R.layout.item_container_weight_dropdown}"
                     app:items="@{view.itemWeights}" />
+
+                <ImageView
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:src="@drawable/signup_dropdown_btn" />
             </LinearLayout>
 
             <com.tebet.mojual.common.view.AppTextView
@@ -99,7 +117,7 @@
                 android:padding="@dimen/_4sdp"
                 android:text="@{StringExtKt.toDisplayWeight(view.data.customerData.weight)}"
                 android:textSize="@dimen/_14ssp"
-                android:visibility="@{view.data.checking == CheckStatus.CheckStatusDone ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{view.data.checking != CheckStatus.CheckStatusCheck ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
 
         <LinearLayout
