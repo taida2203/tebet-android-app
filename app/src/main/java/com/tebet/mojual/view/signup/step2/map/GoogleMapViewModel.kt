@@ -28,8 +28,8 @@ class GoogleMapViewModel(
             dataManager.getReserveGeoLocation(
                 "${selectedLocation?.latitude},${selectedLocation?.longitude}"
             )
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .subscribeWith(object : DisposableObserver<GeoCodeResponse>() {
                     override fun onComplete() {

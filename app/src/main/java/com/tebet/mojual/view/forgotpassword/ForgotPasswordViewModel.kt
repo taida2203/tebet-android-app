@@ -32,8 +32,8 @@ class ForgotPasswordViewModel(
             dataManager.updatePassword(
                 UpdatePasswordRequest(userInputPassword.trim())
             ).concatMap { dataManager.getProfile() }
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onSuccess(dataResponse: UserProfile) {

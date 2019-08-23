@@ -42,8 +42,8 @@ class ProfileViewModel(
     fun loadData() {
         compositeDisposable.add(
             dataManager.getUserProfileDB()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onFailure(error: String?) {
                     }

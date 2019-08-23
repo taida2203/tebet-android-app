@@ -142,7 +142,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     private fun getData() {
 //        Handler().postDelayed({
-//            ServiceHelper.createService(ApiHelper::class.java).getData().enqueue(object : retrofit2.Callback<ResponseBody> {
+//            ServiceHelper.createService(ApiHelper::class.java).scanSensorData().enqueue(object : retrofit2.Callback<ResponseBody> {
 //                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
 //                }
 //
@@ -164,7 +164,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 //                    tvGravity.text = sensorData.gravity
 //                }
 //            })
-//            getData()
+//            scanSensorData()
 //        }, 5000)
     }
 }

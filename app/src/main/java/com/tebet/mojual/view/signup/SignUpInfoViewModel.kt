@@ -65,8 +65,8 @@ class SignUpInfoViewModel(
             file.name,
             RequestBody.create(MediaType.parse("image/png"), file)
         )
-        return dataManager.uploadImage(uploadText, uploadData).subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
+        return dataManager.uploadImage(uploadText, uploadData).subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
             .debounce(400, TimeUnit.MILLISECONDS)
     }
 
@@ -75,7 +75,7 @@ class SignUpInfoViewModel(
         compositeDisposable.add(
             dataManager.updateProfile(userProfile)
                 .concatMap { dataManager.getProfile() }
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(schedulerProvider.ui())
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onSuccess(dataResponse: UserProfile) {
@@ -98,8 +98,8 @@ class SignUpInfoViewModel(
                 dataManager.getCities(), dataManager.getRegions(), dataManager.getBanks(), dataManager.getUserProfileDB(),
                 Function4<AuthJson<List<City>>, AuthJson<List<Region>>, AuthJson<List<Bank>>, AuthJson<UserProfile>, AuthJson<UserProfile>>
                 { cities, regions, banks, profile -> profile })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onFailure(error: String?) {
                         navigator.showLoading(false)

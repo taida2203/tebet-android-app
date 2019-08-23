@@ -44,7 +44,7 @@ class HomeContentViewModel(
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getUserProfileDB()
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onFailure(error: String?) {
                         navigator.showLoading(false)

@@ -39,8 +39,8 @@ class SignUpInfoStep3Model(
                 { regions, banks ->
                     Pair(regions.data, banks.data)
                 })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : DisposableObserver<Pair<List<Region>?, List<Bank>?>>() {
 
                     override fun onNext(t: Pair<List<Region>?, List<Bank>?>) {

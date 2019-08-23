@@ -26,7 +26,7 @@ class SignUpInfoStep2Model(
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getCityDB()
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(schedulerProvider.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : CallbackWrapper<List<City>>() {
                     override fun onSuccess(dataResponse: List<City>) {
@@ -51,7 +51,7 @@ class SignUpInfoStep2Model(
 //                    Triple(cities.data ?: emptyList(), reserveGeoDomi, reserveGeoPickup)
 //                }
 //            )
-//                .subscribeOn(Schedulers.newThread())
+//                .subscribeOn(schedulerProvider.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribeWith(object : DisposableObserver<Triple<List<City>, GeoCodeResponse, GeoCodeResponse>>() {
 //                    override fun onNext(dataResponse: Triple<List<City>, GeoCodeResponse, GeoCodeResponse>) {
