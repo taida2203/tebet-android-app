@@ -29,7 +29,7 @@ data class OrderContainer(
     var modifiedBy: String? = null,
     var modifiedDate: Long? = null
 ) : BaseObservable() {
-    var isSelected: Boolean = false
+    var isSelected: Boolean = true
         @Bindable get() = field
         set(value) {
             field = value

@@ -40,7 +40,7 @@ class SaleViewModel(
             return
         }
         if (selectedFutureDate.value?.isToday == true) {
-            navigator.openAddContainerScreen(Order(-1, "", selectedQuantity.value, selectedFutureDate.value?.date))
+            navigator.openAddContainerScreen(Order(-2, "", selectedQuantity.value, selectedFutureDate.value?.date))
             return
         }
         navigator.showLoading(true)

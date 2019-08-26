@@ -41,7 +41,8 @@ class QualityAddContainer : BaseActivity<ActivityQualityAddContainerBinding, Qua
         viewModel.loadData()
     }
 
-    override fun openConfirmScreen() {
+    override fun openConfirmScreen(dataResponse: Order) {
+        intent.putExtra("EXTRA_ORDER", dataResponse)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

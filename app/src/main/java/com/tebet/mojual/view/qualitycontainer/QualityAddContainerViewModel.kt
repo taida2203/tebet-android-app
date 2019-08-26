@@ -14,6 +14,7 @@ import com.tebet.mojual.data.models.Asset
 import com.tebet.mojual.data.models.ContainerWrapper
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Quality
+import com.tebet.mojual.data.models.request.CreateOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
@@ -82,8 +83,8 @@ class QualityAddContainerViewModel(
                 val newItem = ContainerWrapper(
                     items.size.toLong(),
                     customerData = Quality(
-                        orderId = order.get()?.orderId?.toLong() ?: -1,
-                        orderCode = order.get()?.orderCode ?: ""
+                        orderId = order.get()!!.orderId.toLong(),
+                        orderCode = order.get()!!.orderCode
                     )
                 )
                 newItem.assignedContainers.clear()
@@ -105,9 +106,9 @@ class QualityAddContainerViewModel(
 
     private fun getAvailableContainer(): List<Asset> {
         return assignedContainers.filterNot { exeptItem ->
-                items.filter { it != headerItem && it.checking == ContainerWrapper.CheckStatus.CheckStatusDone }
-                    .map { it.customerData }.firstOrNull { it.containerCode == exeptItem.code } != null
-            }
+            items.filter { it != headerItem && it.checking == ContainerWrapper.CheckStatus.CheckStatusDone }
+                .map { it.customerData }.firstOrNull { it.containerCode == exeptItem.code } != null
+        }
     }
 
     private fun countDownChecking(item: ContainerWrapper) {
@@ -159,14 +160,15 @@ class QualityAddContainerViewModel(
         compositeDisposable.add(
             dataManager.deleteContainerCheck(item)
                 .subscribeOn(schedulerProvider.io())
-                .concatMap {_->
+                .concatMap { _ ->
                     Observable.fromCallable {
                         items.remove(items.firstOrNull { it.customerData == item })
-                        items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck }?.let{
-                            it.assignedContainers.clear()
-                            it.assignedContainers.addAll(getAvailableContainer())
-                            it.selectedItem = 0
-                        }
+                        items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck }
+                            ?.let {
+                                it.assignedContainers.clear()
+                                it.assignedContainers.addAll(getAvailableContainer())
+                                it.selectedItem = 0
+                            }
                         true
                     }.subscribeOn(schedulerProvider.ui())
                 }
@@ -238,16 +240,18 @@ class QualityAddContainerViewModel(
         if (!allCheckingComplete()) return
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.scanSensorDataMock()
+            Observable.just(order.get()!!)
                 .concatMap {
-                    var sensor = it.string().toSensor()
-                    dataManager.getAsserts("33")
+                    when {
+                        it.orderId < 0 -> dataManager.createOrder(CreateOrderRequest(it.quantity, it.planDate))
+                        else -> Observable.just(AuthJson(null, "", it))
+                    }
                 }
                 .observeOn(schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<List<Asset>>() {
-                    override fun onSuccess(dataResponse: List<Asset>) {
+                .subscribeWith(object : CallbackWrapper<Order>() {
+                    override fun onSuccess(dataResponse: Order) {
                         navigator.showLoading(false)
-                        navigator.openConfirmScreen()
+                        navigator.openConfirmScreen(dataResponse)
                     }
 
                     override fun onFailure(error: String?) {
