@@ -28,7 +28,6 @@ class QualityFragment : BaseFragment<FragmentQualityBinding, QualityViewModel>()
         viewModel.navigator = this
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
-        viewModel.loadData()
     }
 
     override fun itemSelected(item: Order) {

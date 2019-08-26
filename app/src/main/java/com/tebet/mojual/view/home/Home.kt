@@ -23,7 +23,6 @@ import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
 import com.tebet.mojual.view.qualitydetail.OrderDetailFragment
 import com.tebet.mojual.view.sale.SaleFragment
 import com.tebet.mojual.view.saledetail.SaleDetailFragment
-import com.tebet.mojual.view.salenow.SaleNowFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import javax.inject.Inject
@@ -132,13 +131,6 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             dataResponse.orderCode
         )
         openFragment(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder)
-    }
-
-    override fun showSellNowScreen() {
-        enableBackButton = true
-        baseBinding.viewModel?.enableTopLogo?.set(false)
-        title = getString(R.string.home_menu_sell_now)
-        openFragment(SaleNowFragment(), R.id.contentHolder)
     }
 
     override fun showOrderDetailScreen(dataResponse: Order) {

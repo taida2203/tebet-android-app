@@ -37,11 +37,11 @@ open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), Sa
     }
 
     override fun openSaleDetailScreen(dataResponse: Order) {
-        (activity as Home).viewModel.onSubmitOrderClick(dataResponse)
-    }
-
-    override fun openAddContainerScreen(order: Order) {
-        (activity as Home).viewModel.onQualityCheckOrderSelected(order)
+        if (viewModel.selectedFutureDate.value?.isToday == true) {
+            (activity as Home).viewModel.onSubmitOrderNowClick(dataResponse)
+        } else {
+            (activity as Home).viewModel.onSubmitOrderClick(dataResponse)
+        }
     }
 
     override fun showQuantityScreen() {

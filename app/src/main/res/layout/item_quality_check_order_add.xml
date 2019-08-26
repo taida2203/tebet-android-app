@@ -11,11 +11,11 @@
 
         <variable
             name="listener"
-            type="com.tebet.mojual.view.qualitycheck.QualityViewModel.OnFutureDateClick" />
+            type="com.tebet.mojual.view.qualitycheck.QualityViewModel.OnListItemClick" />
 
         <variable
             name="item"
-            type="com.tebet.mojual.data.models.Order" />
+            type="String" />
     </data>
 
     <LinearLayout
@@ -24,6 +24,7 @@
         android:background="@drawable/border_add_item"
         android:gravity="center_vertical"
         android:onClick="@{() -> listener.onItemClick(item)}"
+        android:layout_marginBottom="@dimen/_6sdp"
         android:orientation="horizontal">
 
         <ImageView

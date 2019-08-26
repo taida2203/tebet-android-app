@@ -65,7 +65,7 @@ class HomeViewModel(
     }
 
     fun onCheckQualityNowClick() {
-        navigator.showSellNowScreen()
+        navigator.showSellScreen()
     }
 
     fun onQualityCheckOrderSelected(selectedItem: Order) {

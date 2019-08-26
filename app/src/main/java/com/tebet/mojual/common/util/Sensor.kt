@@ -13,11 +13,11 @@ fun String.toSensor(): SensorData {
     document.forEach { info ->
         when {
             info.select("td")[0].html().toLowerCase().contains("tilt") -> sensorData.tilt =
-                info.select("td")[1].html()
+                info.select("td")[1].html().replace("°", "")
             info.select("td")[0].html().toLowerCase().contains("temp") -> sensorData.temperature =
-                info.select("td")[1].html()
+                info.select("td")[1].html().replace("°C", "")
             info.select("td")[0].html().toLowerCase().contains("battery") -> sensorData.battery =
-                info.select("td")[1].html()
+                info.select("td")[1].html().replace("V", "")
             info.select("td")[0].html().toLowerCase().contains("gravity") -> sensorData.gravity =
                 info.select("td")[1].html()
         }

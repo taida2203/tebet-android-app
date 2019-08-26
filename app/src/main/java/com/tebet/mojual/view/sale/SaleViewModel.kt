@@ -3,6 +3,7 @@ package com.tebet.mojual.view.sale
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Asset
@@ -11,6 +12,8 @@ import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.data.models.request.CreateOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import io.reactivex.Observable
+import java.util.*
 
 
 class SaleViewModel(
@@ -39,18 +42,25 @@ class SaleViewModel(
         if (!navigator.validate()) {
             return
         }
-        if (selectedFutureDate.value?.isToday == true) {
-            navigator.openAddContainerScreen(Order(-2, "", selectedQuantity.value, selectedFutureDate.value?.date))
-            return
-        }
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.createOrder(
-                CreateOrderRequest(
-                    selectedQuantity.value,
-                    selectedFutureDate.value?.date
-                )
-            )
+            Observable.just(Object()).concatMap {
+                when {
+                    selectedFutureDate.value?.isToday == true -> Observable.just(
+                        AuthJson(
+                            null,
+                            "",
+                            Order(-2, "", selectedQuantity.value, selectedFutureDate.value?.date)
+                        )
+                    )
+                    else -> dataManager.createOrder(
+                        CreateOrderRequest(
+                            selectedQuantity.value,
+                            selectedFutureDate.value?.date
+                        )
+                    )
+                }
+            }
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Order>() {
                     override fun onSuccess(dataResponse: Order) {

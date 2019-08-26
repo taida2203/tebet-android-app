@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.tebet.mojual.view.qualitycheck.QualityViewModel.OnFutureDateClick" />
+            type="com.tebet.mojual.view.qualitycheck.QualityViewModel.OnListItemClick" />
 
         <variable
             name="item"

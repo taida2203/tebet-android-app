@@ -10,7 +10,8 @@ import com.tebet.mojual.data.models.Paging
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
-import me.tatarka.bindingcollectionadapter2.OnItemBind
+import me.tatarka.bindingcollectionadapter2.collections.MergeObservableList
+import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 
 
 class QualityViewModel(
@@ -19,83 +20,66 @@ class QualityViewModel(
 ) :
     BaseViewModel<QualityNavigator>(dataManager, schedulerProvider) {
     var items: ObservableArrayList<Order> = ObservableArrayList()
-    val onItemBind: OnItemBind<Order> = OnItemBind { itemBinding, position, item ->
-        itemBinding.set(
-            BR.item,
-            if (position == items.size - 1) R.layout.item_quality_check_order_add else R.layout.item_quality_check_order
-        )
-        itemBinding.bindExtra(BR.listener, object : OnFutureDateClick {
-            override fun onItemClick(item: Order) = if (item.orderId >= 0) {
-                item.isSelected = true
-                items.filterNot { adapterItem -> adapterItem.orderId == item.orderId }
-                    .forEach { it.isSelected = false }
-                navigator.itemSelected(item)
-            } else navigator.openSellScreen()
-        })
-    }
-    var footerItem = Order(-1, "")
+
+    /**
+     * Items merged with a header on top
+     */
+    var headerFooterItems: MergeObservableList<Any> = MergeObservableList<Any>()
+        .insertItem("Header")
+        .insertList(items)
+
+    val multipleItems: OnItemBindClass<Any> = OnItemBindClass<Any>()
+        .map(String::class.java) { itemBinding, position, item ->
+            itemBinding.set(BR.item, R.layout.item_quality_check_order_add)
+            itemBinding.bindExtra(BR.listener, object : OnListItemClick<String> {
+                override fun onItemClick(item: String) = navigator.openSellScreen()
+            })
+        }
+        .map(Order::class.java) { itemBinding, position, item ->
+            itemBinding.set(BR.item, R.layout.item_quality_check_order)
+            itemBinding.bindExtra(BR.listener, object : OnListItemClick<Order> {
+                override fun onItemClick(item: Order) {
+                    item.isSelected = true
+                    items.filterNot { adapterItem -> adapterItem.orderId == item.orderId }
+                        .forEach { it.isSelected = false }
+                    item.let { navigator.itemSelected(it) }
+                }
+            })
+        }
 
     fun loadData(page: Int = 0) {
         val offset = page * 10
-        if (items.size >= offset) {
-            navigator.showLoading(true)
-            compositeDisposable.add(
-                dataManager.searchOrders(SearchOrderRequest(offset = offset, limit = 10))
-                    .observeOn(schedulerProvider.ui())
-                    .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
-                        override fun onSuccess(dataResponse: Paging<Order>) {
-                            items.addAll(dataResponse.data)
-                            navigator.showLoading(false)
-                        }
+        navigator.showLoading(true)
+        compositeDisposable.add(
+            dataManager.searchOrders(SearchOrderRequest(offset = offset, limit = 10))
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
+                    override fun onSuccess(dataResponse: Paging<Order>) {
+                        items.addAll(dataResponse.data)
+                        navigator.showLoading(false)
+                    }
 
-                        override fun onFailure(error: String?) {
-                            navigator.showLoading(false)
-                            handleError(error)
-                            if (!items.contains(footerItem)) items.add(footerItem)
-                        }
-                    })
-            )
-        } else {
-            if (!items.contains(footerItem)) items.add(footerItem)
-        }
+                    override fun onFailure(error: String?) {
+                        navigator.showLoading(false)
+                        handleError(error)
+                    }
+                })
+        )
     }
 
-    interface OnFutureDateClick {
-        fun onItemClick(item: Order)
+    interface OnListItemClick<T> {
+        fun onItemClick(item: T)
     }
 
     fun onSubmitClick() {
         if (!navigator.validate()) {
             return
         }
-        var selectedItem = items.firstOrNull { item -> item.isSelected }
+        val selectedItem = items.firstOrNull { item -> item.isSelected }
         if (selectedItem == null) {
             navigator.show(R.string.quality_check_error_select_order)
             return
         }
         navigator.openAddContainerScreen(selectedItem)
-//        navigator.showLoading(true)
-//        compositeDisposable.add(
-//            dataManager.createOrder(
-//                CreateOrderRequest(
-//                    selectedQuantity.get(),
-//                    selectedFutureDate.get()?.date
-//                )
-//            )
-//                .observeOn(schedulerProvider.ui())
-//                .subscribeWith(object : CallbackWrapper<Order>() {
-//                    override fun onSuccess(dataResponse: Order) {
-//                        dataResponse.price = selectedFutureDate.get()?.price
-//                        dataResponse.totalPrice = simulationPrice.get()
-//                        navigator.showLoading(false)
-//                        navigator.openSaleDetailScreen(dataResponse)
-//                    }
-//
-//                    override fun onFailure(error: String?) {
-//                        navigator.showLoading(false)
-//                        handleError(error)
-//                    }
-//                })
-//        )
     }
 }
