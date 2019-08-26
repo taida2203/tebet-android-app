@@ -37,7 +37,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 app:itemBinding="@{viewModel.onItemBind}"
-                app:items="@{viewModel.items}"
+                app:items="@{viewModel.headerFooterItems}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <com.tebet.mojual.common.view.AppTextView

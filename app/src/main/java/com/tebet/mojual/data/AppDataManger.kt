@@ -211,7 +211,7 @@ class AppDataManger @Inject constructor(
 
     override fun createOrder(createOrderRequest: CreateOrderRequest): Observable<AuthJson<Order>> = api.createOrder(createOrderRequest)
 
-    override fun updateOrderQuality(  orderId: Long, createOrderRequest: UpdateOrderQualityRequest): Observable<AuthJson<Order>> = api.updateOrderQuality(orderId, createOrderRequest)
+    override fun updateOrderQuality(  orderId: Long, qualityList: List<Quality>): Observable<AuthJson<Order>> = api.updateOrderQuality(orderId, qualityList)
 
     override fun deleteContainerCheck(quality: Quality): Observable<Boolean> = room.deleteContainerCheck(quality)
 }

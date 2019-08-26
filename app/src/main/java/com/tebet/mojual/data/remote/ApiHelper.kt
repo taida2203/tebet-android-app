@@ -44,8 +44,8 @@ interface ApiHelper {
     @POST("order/order")
     fun createOrder(@Body createOrderRequest: CreateOrderRequest): Observable<AuthJson<Order>>
 
-    @PUT("order/order/{orderId}")
-    fun updateOrderQuality(@Path(value = "orderId") orderId: Long, @Body createOrderRequest: UpdateOrderQualityRequest): Observable<AuthJson<Order>>
+    @PUT("order/quality/{orderId}")
+    fun updateOrderQuality(@Path(value = "orderId") orderId: Long, @Body qualityList: List<Quality>): Observable<AuthJson<Order>>
 
     @GET("order/asset")
     fun getAsserts(

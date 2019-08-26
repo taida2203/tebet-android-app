@@ -3,6 +3,7 @@ package com.tebet.mojual.view.qualitycheck
 import androidx.databinding.ObservableArrayList
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.common.adapter.OnListItemClick
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
@@ -28,7 +29,7 @@ class QualityViewModel(
         .insertItem("Header")
         .insertList(items)
 
-    val multipleItems: OnItemBindClass<Any> = OnItemBindClass<Any>()
+    val multipleItemsBind: OnItemBindClass<Any> = OnItemBindClass<Any>()
         .map(String::class.java) { itemBinding, position, item ->
             itemBinding.set(BR.item, R.layout.item_quality_check_order_add)
             itemBinding.bindExtra(BR.listener, object : OnListItemClick<String> {
@@ -65,10 +66,6 @@ class QualityViewModel(
                     }
                 })
         )
-    }
-
-    interface OnListItemClick<T> {
-        fun onItemClick(item: T)
     }
 
     fun onSubmitClick() {
