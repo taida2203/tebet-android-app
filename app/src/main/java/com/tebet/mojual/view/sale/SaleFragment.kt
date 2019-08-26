@@ -36,8 +36,12 @@ open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), Sa
         viewModel.loadData()
     }
 
-    override fun openSaleScreen(dataResponse: Order) {
+    override fun openSaleDetailScreen(dataResponse: Order) {
         (activity as Home).viewModel.onSubmitOrderClick(dataResponse)
+    }
+
+    override fun openAddContainerScreen(order: Order) {
+        (activity as Home).viewModel.onQualityCheckOrderSelected(order)
     }
 
     override fun showQuantityScreen() {

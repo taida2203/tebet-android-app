@@ -5,7 +5,7 @@ import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.sale.SaleFragment
 
 class SaleNowFragment : SaleFragment() {
-    override fun openSaleScreen(dataResponse: Order) {
+    override fun openSaleDetailScreen(dataResponse: Order) {
         (activity as Home).viewModel.onSubmitOrderNowClick(dataResponse)
     }
 }

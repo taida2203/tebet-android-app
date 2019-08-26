@@ -88,7 +88,7 @@ class QualityViewModel(
 //                        dataResponse.price = selectedFutureDate.get()?.price
 //                        dataResponse.totalPrice = simulationPrice.get()
 //                        navigator.showLoading(false)
-//                        navigator.openSaleScreen(dataResponse)
+//                        navigator.openSaleDetailScreen(dataResponse)
 //                    }
 //
 //                    override fun onFailure(error: String?) {

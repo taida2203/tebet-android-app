@@ -57,14 +57,7 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
         return validator.validate()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            500 -> {
-                if (resultCode == Activity.RESULT_OK) {
-
-                }
-            }
-        }
+    override fun openHomeScreen() {
+        (activity as Home).viewModel.onHomeClick()
     }
 }

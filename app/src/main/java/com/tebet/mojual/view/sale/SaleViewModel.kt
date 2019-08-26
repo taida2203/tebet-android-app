@@ -39,6 +39,10 @@ class SaleViewModel(
         if (!navigator.validate()) {
             return
         }
+        if (selectedFutureDate.value?.isToday == true) {
+            navigator.openAddContainerScreen(Order(-1, "", selectedQuantity.value, selectedFutureDate.value?.date))
+            return
+        }
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.createOrder(
@@ -53,7 +57,7 @@ class SaleViewModel(
                         dataResponse.price = selectedFutureDate.value?.pricePerKg
                         dataResponse.totalPrice = simulationPrice.value
                         navigator.showLoading(false)
-                        navigator.openSaleScreen(dataResponse)
+                        navigator.openSaleDetailScreen(dataResponse)
                     }
 
                     override fun onFailure(error: String?) {

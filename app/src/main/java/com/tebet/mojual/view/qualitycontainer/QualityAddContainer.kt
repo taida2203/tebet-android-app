@@ -1,7 +1,6 @@
 package com.tebet.mojual.view.qualitycontainer
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -10,9 +9,7 @@ import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.ActivityQualityAddContainerBinding
-import com.tebet.mojual.databinding.ActivitySignUpPasswordBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
-import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.base.BaseActivity
 
 class QualityAddContainer : BaseActivity<ActivityQualityAddContainerBinding, QualityAddContainerViewModel>(),

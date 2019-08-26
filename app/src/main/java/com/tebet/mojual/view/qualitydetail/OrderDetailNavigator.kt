@@ -6,4 +6,5 @@ import com.tebet.mojual.view.base.BaseActivityNavigator
 interface OrderDetailNavigator : BaseActivityNavigator {
     fun validate(): Boolean
     fun itemSelected(item: OrderContainer)
+    fun openHomeScreen()
 }
