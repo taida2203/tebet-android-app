@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:padding="@dimen/_4sdp"
-                android:text="@{view.data.customerData.containerCode}"
+                android:text="@{view.data.customerData.assetCode}"
                 android:textSize="@dimen/_14ssp"
                 android:visibility="@{view.data.checking != CheckStatus.CheckStatusCheck ? View.VISIBLE : View.GONE}" />
         </LinearLayout>

@@ -15,6 +15,7 @@ import com.tebet.mojual.data.models.ContainerWrapper
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Quality
 import com.tebet.mojual.data.models.request.CreateOrderRequest
+import com.tebet.mojual.data.models.request.UpdateOrderQualityRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
@@ -107,7 +108,7 @@ class QualityAddContainerViewModel(
     private fun getAvailableContainer(): List<Asset> {
         return assignedContainers.filterNot { exeptItem ->
             items.filter { it != headerItem && it.checking == ContainerWrapper.CheckStatus.CheckStatusDone }
-                .map { it.customerData }.firstOrNull { it.containerCode == exeptItem.code } != null
+                .map { it.customerData }.firstOrNull { it.assetCode == exeptItem.code } != null
         }
     }
 
@@ -139,9 +140,9 @@ class QualityAddContainerViewModel(
                 .concatMap { sensorData ->
                     Observable.fromCallable {
                         val scannedData = sensorData.string().toSensor()
-                        val savedData = item.customerData.data?.toSensors() ?: arrayListOf()
+                        val savedData = item.customerData.sensorData?.toSensors() ?: arrayListOf()
                         savedData.add(scannedData)
-                        item.customerData.data = savedData.toJson()
+                        item.customerData.sensorData = savedData.toJson()
                         true
                     }
                 }.subscribe()
@@ -208,7 +209,7 @@ class QualityAddContainerViewModel(
                             val unAvailableCachedItem =
                                 cachedItemByOrder.filter { cachedContainer ->
                                     assignedContainers
-                                        .firstOrNull { cachedContainer.containerCode == it.code } == null
+                                        .firstOrNull { cachedContainer.assetCode == it.code } == null
                                 }
 
                             // remove item that contain un available container
@@ -243,9 +244,23 @@ class QualityAddContainerViewModel(
             Observable.just(order.get()!!)
                 .concatMap {
                     when {
-                        it.orderId < 0 -> dataManager.createOrder(CreateOrderRequest(it.quantity, it.planDate))
-                        else -> Observable.just(AuthJson(null, "", it))
+                        it.orderId < 0 -> dataManager.createOrder(
+                            CreateOrderRequest(
+                                it.quantity,
+                                it.planDate,
+                                items.map { item -> item.customerData })
+                        )
+                        else -> dataManager.updateOrderQuality(
+                            it.orderId,
+                            UpdateOrderQualityRequest(items.map { item -> item.customerData })
+                        )
                     }
+                }
+                .concatMap { apiResponse ->
+                    Observable.fromCallable {
+                        items.map { wrapper -> wrapper.customerData }.forEach(this@QualityAddContainerViewModel::removeContainerDB)
+                        true
+                    }.concatMap { Observable.just(apiResponse) }
                 }
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Order>() {

@@ -65,7 +65,7 @@
     <string name="sale_select_future_date_date">DATE</string>
     <string name="sale_select_future_date_price">PRICE</string>
     <string name="sale_select_future_date_price_kg">%1$s / Kg</string>
-    <string name="sale_select_future_date_today">Today</string>
+    <string name="sale_select_future_date_today">Now</string>
 
     <string name="sale_detail_title_id">ID</string>
     <string name="sale_detail_title_date">Date</string>
@@ -88,4 +88,7 @@
     <string name="check_quality_add_container_order">Order %1$s</string>
     <string name="check_quality_add_container_btn_check">Start checking</string>
     <string name="check_quality_add_container_btn_cancel">Cancel checking</string>
+
+    <string name="order_detail_button_submit">SUBMIT</string>
+    <string name="order_detail_button_reject">REJECT</string>
 </resources>

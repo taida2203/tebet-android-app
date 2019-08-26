@@ -7,8 +7,8 @@ import com.tebet.mojual.BR
 import java.io.Serializable
 
 data class Order(
-    override var orderId: Int,
-    override var orderCode: String,
+    override var orderId: Long = -1,
+    override var orderCode: String = "",
     var quantity: Int? = null,
     var planDate: Long? = null,
     var totalPrice: Double? = null

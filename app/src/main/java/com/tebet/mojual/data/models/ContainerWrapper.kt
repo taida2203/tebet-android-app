@@ -29,8 +29,8 @@ data class ContainerWrapper(
         set(value) {
             field = value
             val selectedContainer = assignedContainers[value]
-            customerData.containerId = selectedContainer.assetId
-            customerData.containerCode = selectedContainer.code
+            customerData.assetId = selectedContainer.assetId
+            customerData.assetCode = selectedContainer.code
             customerData.tableId = customerData.orderId + selectedContainer.assetId
             notifyPropertyChanged(BR.selectedItem)
         }

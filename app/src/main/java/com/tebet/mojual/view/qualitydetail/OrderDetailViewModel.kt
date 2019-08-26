@@ -61,11 +61,18 @@ class OrderDetailViewModel(
         fun onItemExpandClick(item: OrderContainer)
     }
 
+    fun onRejectClick() {
+        if (!navigator.validate()) {
+            return
+        }
+        navigator.openHomeScreen()
+    }
+
     fun onSubmitClick() {
         if (!navigator.validate()) {
             return
         }
-        var selectedItem = items.firstOrNull { item -> item.isSelected }
+        val selectedItem = items.firstOrNull { item -> item.isSelected }
         if (selectedItem == null) {
             navigator.show(R.string.quality_check_error_select_order)
             return

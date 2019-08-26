@@ -95,8 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:enabled="@{!viewModel.isLoading}"
-                android:onClick="@{()-> viewModel.onSubmitClick()}"
-                android:text="@string/sale_button_submit" />
+                android:onClick="@{()-> viewModel.onRejectClick()}"
+                android:text="@string/order_detail_button_reject" />
 
             <com.tebet.mojual.common.view.AppButtonRounded
                 android:layout_width="0dp"

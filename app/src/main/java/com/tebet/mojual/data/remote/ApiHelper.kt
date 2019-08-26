@@ -5,6 +5,7 @@ import co.sdk.auth.core.models.LoginConfiguration
 import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.request.CreateOrderRequest
 import com.tebet.mojual.data.models.request.SearchOrderRequest
+import com.tebet.mojual.data.models.request.UpdateOrderQualityRequest
 import com.tebet.mojual.data.models.request.UpdatePasswordRequest
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -43,6 +44,9 @@ interface ApiHelper {
     @POST("order/order")
     fun createOrder(@Body createOrderRequest: CreateOrderRequest): Observable<AuthJson<Order>>
 
+    @PUT("order/order/{orderId}")
+    fun updateOrderQuality(@Path(value = "orderId") orderId: Long, @Body createOrderRequest: UpdateOrderQualityRequest): Observable<AuthJson<Order>>
+
     @GET("order/asset")
     fun getAsserts(
         @Query(value = "profileId") profileId: String, @Query(value = "offset") offset: Int? = null, @Query(
@@ -54,7 +58,7 @@ interface ApiHelper {
     fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>>
 
     @GET("order/order")
-    fun getOrderDetail(@Query(value = "orderId") orderId: Int, @Query(value = "loadCustomer") loadCustomer: Boolean? = null, @Query(value = "loadContainers") loadContainers: Boolean? = null): Observable<AuthJson<OrderDetail>>
+    fun getOrderDetail(@Query(value = "orderId") orderId: Long, @Query(value = "loadCustomer") loadCustomer: Boolean? = null, @Query(value = "loadContainers") loadContainers: Boolean? = null): Observable<AuthJson<OrderDetail>>
 
     @POST("order/search")
     fun searchOrders(@Body searchOrderRequest: SearchOrderRequest): Observable<AuthJson<Paging<Order>>>

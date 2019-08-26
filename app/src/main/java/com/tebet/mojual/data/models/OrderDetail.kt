@@ -4,7 +4,7 @@ import androidx.room.Ignore
 import java.io.Serializable
 
 data class OrderDetail(
-    override var orderId: Int,
+    override var orderId: Long,
     override var orderCode: String,
     var quantity: Int? = null,
     var planDate: Long? = null,
