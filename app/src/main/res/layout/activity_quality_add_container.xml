@@ -52,7 +52,7 @@
             android:id="@+id/btnNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="@{!viewModel.isLoading &amp;&amp; viewModel.items.size()>1}"
+            android:enabled="@{!viewModel.isLoading &amp;&amp; viewModel.items.size()>0}"
             android:onClick="@{()-> viewModel.onSubmitClick()}"
             android:text="@string/general_btn_next" />
     </LinearLayout>
