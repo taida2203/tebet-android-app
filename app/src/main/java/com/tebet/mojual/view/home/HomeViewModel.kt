@@ -68,6 +68,10 @@ class HomeViewModel(
         navigator.showSellNowScreen()
     }
 
+    fun onQualityCheckOrderSelected(selectedItem: Order) {
+        navigator.showAddContainerScreen(selectedItem)
+    }
+
     fun onOrderDetailClick(item: Order) {
         navigator.showOrderDetailScreen(item)
     }

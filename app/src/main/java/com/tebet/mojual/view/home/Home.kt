@@ -175,7 +175,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 500) {
             if (resultCode == Activity.RESULT_OK) {
-                intent.getSerializableExtra("EXTRA_ORDER")?.let {
+                data?.getSerializableExtra("EXTRA_ORDER")?.let {
                     showOrderDetailScreen(it as Order)
                 }
             }

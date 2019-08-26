@@ -1,7 +1,5 @@
 package com.tebet.mojual.view.qualitycheck
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
@@ -12,7 +10,6 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.FragmentQualityBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.home.Home
-import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
 
 class QualityFragment : BaseFragment<FragmentQualityBinding, QualityViewModel>(), QualityNavigator {
     override val bindingVariable: Int
@@ -46,17 +43,6 @@ class QualityFragment : BaseFragment<FragmentQualityBinding, QualityViewModel>()
     }
 
     override fun openAddContainerScreen(selectedItem: Order) {
-        (activity as Home).viewModel.onOrderDetailClick(selectedItem)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            500 -> {
-                if (resultCode == Activity.RESULT_OK) {
-
-                }
-            }
-        }
+        (activity as Home).viewModel.onQualityCheckOrderSelected(selectedItem)
     }
 }
