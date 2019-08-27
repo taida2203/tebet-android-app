@@ -120,7 +120,8 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun showProfileScreen() {
         enableBackButton = true
-        baseBinding.viewModel?.enableTopLogo?.set(true)
+        baseBinding.viewModel?.enableTopLogo?.set(false)
+        title = viewModel.profileLiveData.value?.fullName
         openFragment(ProfileFragment(), R.id.contentHolder)
     }
 
