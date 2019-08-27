@@ -4,6 +4,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import co.sdk.auth.core.models.AuthJson
+import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Asset
@@ -99,7 +100,7 @@ class SaleViewModel(
 
     fun openSelectQuantityScreen() {
         if (assets.isNullOrEmpty()) {
-            navigator.show("Can't find list asset!!, try later")
+            navigator.show(R.string.sale_asset_empty)
             loadData()
             return
         }

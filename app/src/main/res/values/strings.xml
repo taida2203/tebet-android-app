@@ -58,6 +58,7 @@
     <string name="sale_button_submit">SUBMIT</string>
     <string name="sale_estimated_price">Estimate Price</string>
     <string name="sale_quantity">Select Quantity</string>
+    <string name="sale_asset_empty">Can\'t find list asset!!, try later</string>
     <string name="sale_selected_date">Select Date</string>
     <string name="sale_select_title">Select date to sell and the quantity</string>
     <string name="sale_select_quantity_title">Tab to select quantity</string>
