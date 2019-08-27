@@ -82,8 +82,8 @@ class NetModule(private val baseUrl: String) {
     @Singleton
     fun providesApiSensorInterface(okHttpClient: OkHttpClient): ApiSensorHelper {
         return Builder().client(okHttpClient)
-//            .baseUrl("http://192.168.4.1/iSpindel?")
-            .baseUrl("http://private-2087f-taidao.apiary-mock.com/")
+            .baseUrl("http://192.168.4.1/")
+//            .baseUrl("http://private-2087f-taidao.apiary-mock.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build().create(ApiSensorHelper::class.java)

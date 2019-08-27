@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.tebet.mojual.R
+import com.tebet.mojual.common.util.Sensor
 import com.tebet.mojual.common.util.rx.AppSchedulerProvider
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.AppDataManger
@@ -95,6 +96,12 @@ class AppModule(private val app: Application) {
     @Singleton
     internal fun providePreferencesHelper(appPreferencesHelper: AppPreferencesHelper): PreferencesHelper {
         return appPreferencesHelper
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideSensorHelper(appContext: Context): Sensor {
+        return Sensor(appContext)
     }
 
 //  @Provides

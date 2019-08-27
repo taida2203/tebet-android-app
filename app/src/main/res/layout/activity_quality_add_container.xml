@@ -7,6 +7,10 @@
         <variable
             name="viewModel"
             type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel" />
+
+        <variable
+            name="sensor"
+            type="com.tebet.mojual.common.util.Sensor" />
     </data>
 
     <LinearLayout
@@ -28,7 +32,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_8sdp"
                 android:gravity="center"
-                android:text="@string/check_quality_iot_connected"
+                android:textStyle="bold"
+                android:textColor="@{sensor.connected ? @color/green_dark : @color/red_btn_dialog}"
+                android:text="@{sensor.isConnected ? @string/check_quality_iot_connected : @string/check_quality_iot_not_connect}"
                 android:textSize="@dimen/_16ssp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -57,8 +63,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_4sdp"
-                    android:text="@string/check_quality_tip2"
                     android:onClick="@{()-> viewModel.onTipsClick()}"
+                    android:text="@string/check_quality_tip2"
                     android:textColor="@color/dark_green"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold" />

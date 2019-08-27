@@ -1,18 +1,15 @@
 package com.tebet.mojual.data.models
 
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
+import androidx.databinding.*
 import androidx.room.Ignore
 import com.tebet.mojual.BR
 import java.io.Serializable
 
 data class ContainerWrapper(
-    var id: Long = -1,
     var weight: Double = 20.0,
     var time: Long = 30,
-    var customerData: Quality = Quality()
+    var customerData: Quality = Quality(),
+    var sensorConnected: Boolean = false
 ) : Serializable, BaseObservable() {
     enum class CheckStatus {
         CheckStatusDone,

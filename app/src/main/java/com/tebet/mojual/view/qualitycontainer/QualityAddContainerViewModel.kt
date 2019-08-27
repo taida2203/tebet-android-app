@@ -1,16 +1,14 @@
 package com.tebet.mojual.view.qualitycontainer
 
+import android.os.Handler
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.adapter.OnListItemClick
-import com.tebet.mojual.common.util.Utility
+import com.tebet.mojual.common.util.*
 import com.tebet.mojual.common.util.rx.SchedulerProvider
-import com.tebet.mojual.common.util.toJson
-import com.tebet.mojual.common.util.toSensor
-import com.tebet.mojual.common.util.toSensors
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Asset
 import com.tebet.mojual.data.models.ContainerWrapper
@@ -32,10 +30,18 @@ class QualityAddContainerViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<QualityAddContainerNavigator>(dataManager, schedulerProvider) {
+    constructor(
+        dataManager: DataManager,
+        schedulerProvider: SchedulerProvider,
+        sensorManager: Sensor
+    ) : this(dataManager, schedulerProvider) {
+        this.sensorManager = sensorManager
+    }
+
     var order = ObservableField<Order>()
     var assignedContainers: ArrayList<Asset> = ArrayList()
     var items: ObservableArrayList<ContainerWrapper> = ObservableArrayList()
-
+    private lateinit var sensorManager: Sensor
     /**
      * Items merged with a header on top
      */
@@ -45,68 +51,70 @@ class QualityAddContainerViewModel(
 
     val onItemBind: OnItemBindClass<Any> = OnItemBindClass<Any>()
         .map(String::class.java) { itemBinding, position, item ->
-            itemBinding.set(BR.item, R.layout.item_quality_add).bindExtra(BR.listener, object : OnListItemClick<String> {
-                override fun onItemClick(item: String) {
-                    if (!allCheckingComplete()) return
-                    items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck }
-                        ?.let {
-                            saveCheckedContainerDB(it)
+            itemBinding.set(BR.item, R.layout.item_quality_add)
+                .bindExtra(BR.listener, object : OnListItemClick<String> {
+                    override fun onItemClick(item: String) {
+                        if (!allCheckingComplete()) return
+                        sensorManager.checkSensorStatus()
+                        saveUnFinishItem()
+                        val containersLeft = getAvailableContainer()
+                        if (containersLeft.isEmpty()) {
+                            navigator.show(R.string.check_quality_add_container_no_available_container)
+                            return
                         }
-                    items.forEach {
-                        it.checking = ContainerWrapper.CheckStatus.CheckStatusDone
-                        it.expanded = false
-                    }
-
-                    val containersLeft = getAvailableContainer()
-                    if (containersLeft.isEmpty()) {
-                        navigator.show("You don't have any available containers !!")
-                        return
-                    }
-                    val newItem = ContainerWrapper(
-                        items.size.toLong(),
-                        customerData = Quality(
-                            orderId = order.get()!!.orderId.toLong(),
-                            orderCode = order.get()!!.orderCode
+                        val newItem = ContainerWrapper(
+                            customerData = Quality(
+                                orderId = order.get()!!.orderId,
+                                orderCode = order.get()!!.orderCode
+                            )
                         )
-                    )
-                    newItem.assignedContainers.clear()
-                    newItem.assignedContainers.addAll(containersLeft.toList())
-                    newItem.selectedItem = 0
-                    newItem.selectedWeight = 0
-                    val newItems = arrayListOf(newItem) + items
-                    items.clear()
-                    items.addAll(newItems)
-                }
-            })
+                        newItem.assignedContainers.clear()
+                        newItem.assignedContainers.addAll(containersLeft.toList())
+                        newItem.selectedItem = 0
+                        newItem.selectedWeight = 0
+                        val newItems = arrayListOf(newItem) + items
+                        items.clear()
+                        items.addAll(newItems)
+                    }
+                })
         }
         .map(ContainerWrapper::class.java) { itemBinding, position, item ->
-            itemBinding.set(BR.item, R.layout.item_quality_add_container).bindExtra(BR.listener, object : OnFutureDateClick {
-                override fun onItemRemoveClick(item: ContainerWrapper) {
-                    removeContainerDB(item.customerData)
-                }
-
-                override fun onStartSensorClick(item: ContainerWrapper) {
-                    compositeDisposable.clear()
-                    item.timeCountDown = null
-                    item.checking = when (item.checking) {
-                        ContainerWrapper.CheckStatus.CheckStatusCheck -> {
-                            countDownChecking(item)
-                            ContainerWrapper.CheckStatus.CheckStatusChecking
-                        }
-                        ContainerWrapper.CheckStatus.CheckStatusChecking -> {
-                            removeContainerDB(item.customerData)
-                            ContainerWrapper.CheckStatus.CheckStatusCheck
-                        }
-                        else -> ContainerWrapper.CheckStatus.CheckStatusCheck
+            itemBinding.set(BR.item, R.layout.item_quality_add_container)
+                .bindExtra(BR.listener, object : OnFutureDateClick {
+                    override fun onItemRemoveClick(item: ContainerWrapper) {
+                        removeContainerDB(item.customerData)
                     }
-                }
 
-                override fun onItemClick(item: ContainerWrapper) {
-                    if (item.checking == ContainerWrapper.CheckStatus.CheckStatusDone) item.expanded =
-                        !item.expanded
-                }
-            })
+                    override fun onStartSensorClick(item: ContainerWrapper) {
+                        compositeDisposable.clear()
+                        item.timeCountDown = null
+                        item.checking = when (item.checking) {
+                            ContainerWrapper.CheckStatus.CheckStatusCheck -> {
+                                countDownChecking(item)
+                                ContainerWrapper.CheckStatus.CheckStatusChecking
+                            }
+                            ContainerWrapper.CheckStatus.CheckStatusChecking -> {
+                                removeContainerDB(item.customerData)
+                                ContainerWrapper.CheckStatus.CheckStatusCheck
+                            }
+                            else -> ContainerWrapper.CheckStatus.CheckStatusCheck
+                        }
+                    }
+
+                    override fun onItemClick(item: ContainerWrapper) {
+                        if (item.checking == ContainerWrapper.CheckStatus.CheckStatusDone) item.expanded =
+                            !item.expanded
+                    }
+                })
         }
+
+    private fun saveUnFinishItem() {
+        items.filter { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck }.forEach {
+            it.checking = ContainerWrapper.CheckStatus.CheckStatusDone
+            it.expanded = false
+            saveCheckedContainerDB(it)
+        }
+    }
 
     private fun getAvailableContainer(): List<Asset> {
         return assignedContainers.filterNot { exeptItem ->
@@ -139,7 +147,7 @@ class QualityAddContainerViewModel(
 
     private fun collectSensorData(item: ContainerWrapper) {
         compositeDisposable.add(
-            dataManager.scanSensorDataMock()
+            dataManager.scanSensorData()
                 .concatMap { sensorData ->
                     Observable.fromCallable {
                         val scannedData = sensorData.string().toSensor()
@@ -182,13 +190,22 @@ class QualityAddContainerViewModel(
 
     private fun allCheckingComplete(): Boolean {
         if (items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusChecking } != null) {
-            navigator.show("Please wait checking complete or cancel current checking to add more !!")
+            navigator.show(R.string.check_quality_add_container_block_while_checking)
             return false
         }
         return true
     }
 
     fun loadData() {
+        sensorManager.addOnPropertyChangedCallback(object : androidx.databinding.Observable.OnPropertyChangedCallback(){
+            override fun onPropertyChanged(sender: androidx.databinding.Observable?, propertyId: Int) {
+                if (propertyId == BR.connected) {
+                    items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck }?.let {
+                        it.sensorConnected = sensorManager.isConnected
+                    }
+                }
+            }
+        })
         navigator.showLoading(true)
         compositeDisposable.add(
             Observable.zip(
@@ -201,6 +218,7 @@ class QualityAddContainerViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : DisposableObserver<Pair<List<Quality>, List<Asset>>>() {
                     override fun onComplete() {
+                        if (sensorManager.isEnabled) sensorManager.connect() else navigator.reTryConnectIOT()
                     }
 
                     override fun onNext(response: Pair<List<Quality>, List<Asset>>) {
@@ -218,12 +236,8 @@ class QualityAddContainerViewModel(
                             unAvailableCachedItem.forEach(this@QualityAddContainerViewModel::removeContainerDB)
 
                             items.addAll((cachedItemByOrder - unAvailableCachedItem).map {
-                                val savedContainer = ContainerWrapper(
-                                    id = items.size.toLong(),
-                                    customerData = it
-                                )
-                                savedContainer.checking =
-                                    ContainerWrapper.CheckStatus.CheckStatusDone
+                                val savedContainer = ContainerWrapper(customerData = it)
+                                savedContainer.checking = ContainerWrapper.CheckStatus.CheckStatusDone
                                 savedContainer
                             })
                         }
@@ -238,17 +252,31 @@ class QualityAddContainerViewModel(
                 })
         )
     }
+
     fun onTipsClick() {
     }
+
     fun onSubmitClick() {
         if (!allCheckingComplete()) return
+        if (sensorManager.checkSensorStatus().isConnected || sensorManager.checkSensorStatus().isEnabled) {
+            navigator.show(R.string.check_quality_add_container_turn_off_iot)
+            Handler().postDelayed({ navigator.reTryConnectIOT() }, 5000)
+            return
+        }
         navigator.showLoading(true)
         compositeDisposable.add(
             Observable.just(order.get()!!)
                 .concatMap {
                     when {
-                        it.orderId < 0 -> dataManager.createOrder(CreateOrderRequest(it.quantity, it.planDate, items.map { item -> item.customerData }))
-                        else -> dataManager.updateOrderQuality(it.orderId, items.map { item -> item.customerData })
+                        it.orderId < 0 -> dataManager.createOrder(
+                            CreateOrderRequest(
+                                it.quantity,
+                                it.planDate,
+                                items.map { item -> item.customerData })
+                        )
+                        else -> dataManager.updateOrderQuality(
+                            it.orderId,
+                            items.map { item -> item.customerData })
                     }
                 }
                 .concatMap { apiResponse ->
