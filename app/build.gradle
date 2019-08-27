@@ -107,6 +107,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:3.1.0'
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:3.1.0'
+    implementation 'com.tapadoo.android:alerter:1.0.6'
 
     implementation AppDependencies.calligraphy
 

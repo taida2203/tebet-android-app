@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.base
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.ActivityManager
@@ -205,6 +206,21 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
     }
 
+    @SuppressLint("CommitTransaction")
+    open fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag : String? = null) {
+        run {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && !isDestroyed || Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                val manager = supportFragmentManager
+                manager.beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+                    .replace(placeHolder, fragment).commitAllowingStateLoss()
+//                manager.beginTransaction()
+//                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+//                    .replace(placeHolder, fragment).addToBackStack(backStackTag).commitAllowingStateLoss()
+            }
+        }
+    }
+
     open fun addFragment(fragment: Fragment, placeHolder: Int, tag: String = "") {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && !isDestroyed || Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             val manager = supportFragmentManager
@@ -213,18 +229,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                 .commitAllowingStateLoss()
         }
     }
-
-//    @SuppressLint("CommitTransaction")
-//    protected fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag : String? = null) {
-//        run {
-//            val manager = supportFragmentManager
-//            manager.beginTransaction()
-//                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-//                    .replace(placeHolder, fragment).addToBackStack(backStackTag)?.
-//                    commitAllowingStateLoss()
-//        }
-//    }
-
 
     protected fun setActionBarColor(@ColorInt color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

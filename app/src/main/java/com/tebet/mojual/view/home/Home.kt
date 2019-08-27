@@ -83,7 +83,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
         title = getString(R.string.home_menu_check_quality)
-        openFragment(QualityFragment(), R.id.contentHolder)
+        openFragmentSlideRight(QualityFragment(), R.id.contentHolder)
     }
 
     override fun showBorrowScreen() {
@@ -102,19 +102,19 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
         title = getString(R.string.home_menu_sell_now)
-        openFragment(SaleFragment(), R.id.contentHolder)
+        openFragmentSlideRight(SaleFragment(), R.id.contentHolder)
     }
 
     override fun showHomeScreen() {
         enableBackButton = false
         baseBinding.viewModel?.enableTopLogo?.set(true)
-        openFragment(HomeFragment(), R.id.contentHolder)
+        openFragmentSlideRight(HomeFragment(), R.id.contentHolder)
     }
 
     override fun showHistoryScreen() {
         enableBackButton = false
         baseBinding.viewModel?.enableTopLogo?.set(true)
-        openFragment(HistoryFragment(), R.id.contentHolder)
+        openFragmentSlideRight(HistoryFragment(), R.id.contentHolder)
     }
 
 
@@ -122,7 +122,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
         title = viewModel.profileLiveData.value?.fullName
-        openFragment(ProfileFragment(), R.id.contentHolder)
+        openFragmentSlideRight(ProfileFragment(), R.id.contentHolder)
     }
 
     override fun showOrderCompleteScreen(dataResponse: Order) {
@@ -132,7 +132,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             getString(R.string.check_quality_add_container_order),
             dataResponse.orderCode
         )
-        openFragment(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder)
+        openFragmentSlideRight(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder)
     }
 
     override fun showOrderDetailScreen(dataResponse: Order) {
@@ -142,7 +142,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             getString(R.string.check_quality_add_container_order),
             dataResponse.orderCode
         )
-        openFragment(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder)
+        openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder)
     }
 
     override fun showAddContainerScreen(dataResponse: Order) {
@@ -152,9 +152,9 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         showCheckQualityScreen()
     }
 
-    override fun openFragment(fragment: Fragment, placeHolder: Int, tag: String) {
+    override fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag: String?) {
         currentFragment = fragment
-        super.openFragment(fragment, placeHolder, tag)
+        super.openFragmentSlideRight(fragment, placeHolder, backStackTag)
     }
 
     override fun onBackPressed() {
