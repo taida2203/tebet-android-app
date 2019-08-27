@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/check_quality_tip1"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
             <com.tebet.mojual.common.view.AppTextView
@@ -59,7 +59,7 @@
                 android:onClick="@{()-> viewModel.onTipsClick()}"
                 android:text="@string/check_quality_tip2"
                 android:textColor="@color/dark_green"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

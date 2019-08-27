@@ -120,6 +120,8 @@ object AppDependencies {
     const val stetho = "com.facebook.fresco:stetho:${Versions.stetho}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     const val gander = "com.ashokvarma.android:gander:${Versions.gander}"
+
+    const val calligraphy = "uk.co.chrisjenx:calligraphy:2.2.0"
 }
 
 @Suppress("unused")
