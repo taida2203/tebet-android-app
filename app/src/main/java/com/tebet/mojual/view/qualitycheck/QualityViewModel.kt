@@ -9,6 +9,8 @@ import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Paging
+import com.tebet.mojual.data.models.enumeration.ContainerOrderStatus
+import com.tebet.mojual.data.models.enumeration.OrderStatus
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
@@ -55,7 +57,10 @@ class QualityViewModel(
         navigator.showLoading(true)
 //        headerFooterItems.insertItem(R.layout.item_quality_loading)
         compositeDisposable.add(
-            dataManager.searchOrders(SearchOrderRequest(offset = offset, limit = 10))
+            dataManager.searchOrders(SearchOrderRequest(
+                offset = page * 10,
+                limit = 10
+            ))
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                     override fun onSuccess(dataResponse: Paging<Order>) {

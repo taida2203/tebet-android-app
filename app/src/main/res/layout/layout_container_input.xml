@@ -32,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ID" />
+                android:text="@string/check_quality_add_container_item_id" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -81,7 +81,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Weight (KG)" />
+                android:text="@string/check_quality_add_container_weight_title" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -131,7 +131,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Time" />
+                android:text="@string/check_quality_add_container_time_title" />
 
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="0dp"
