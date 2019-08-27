@@ -171,15 +171,11 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     fun handleError(exeption: LoginException?) {
-        if (exeption != null) {
-            Toast.makeText(this, exeption.errorMessage, Toast.LENGTH_SHORT).show()
-        }
+        exeption?.errorMessage?.let { show(it) }
     }
 
     fun handleError(exception: Throwable) {
-        if (exception != null) {
-            Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
-        }
+        exception.let { it.message?.let { it1 -> show(it1) } }
     }
 
     override fun setTitle(titleId: Int) {
@@ -249,8 +245,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         return true
     }
 
-    fun handleError(it: String?) {
-        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+    fun handleError(error: String?) {
+        error?.let { show(it) }
     }
 
     override fun activity(): Activity {
