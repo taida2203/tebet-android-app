@@ -17,6 +17,7 @@ data class Quality(
     var orderId: Long = -1,
     var orderCode: String = "",
     var assetId: Long? = null,
+    var combinedCode: String? = "",
     var sensorData: String? = null
 ) : Serializable, BaseObservable() {
     var assetCode: String = ""

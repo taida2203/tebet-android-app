@@ -4,6 +4,7 @@ import androidx.databinding.ObservableArrayList
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.adapter.OnListItemClick
+import com.tebet.mojual.common.util.Utility
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
@@ -26,16 +27,17 @@ class QualityViewModel(
      * Items merged with a header on top
      */
     var headerFooterItems: MergeObservableList<Any> = MergeObservableList<Any>()
-        .insertItem("Header")
+        .insertItem(Utility.getInstance().getString(R.string.check_quality_add_new_order))
         .insertList(items)
 
     val multipleItemsBind: OnItemBindClass<Any> = OnItemBindClass<Any>()
         .map(String::class.java) { itemBinding, position, item ->
-            itemBinding.set(BR.item, R.layout.item_quality_check_order_add)
+            itemBinding.set(BR.item, R.layout.item_quality_add)
             itemBinding.bindExtra(BR.listener, object : OnListItemClick<String> {
                 override fun onItemClick(item: String) = navigator.openSellScreen()
             })
         }
+        .map(Integer::class.java, BR.item, R.layout.item_quality_loading)
         .map(Order::class.java) { itemBinding, position, item ->
             itemBinding.set(BR.item, R.layout.item_quality_check_order)
             itemBinding.bindExtra(BR.listener, object : OnListItemClick<Order> {
@@ -51,6 +53,7 @@ class QualityViewModel(
     fun loadData(page: Int = 0) {
         val offset = page * 10
         navigator.showLoading(true)
+//        headerFooterItems.insertItem(R.layout.item_quality_loading)
         compositeDisposable.add(
             dataManager.searchOrders(SearchOrderRequest(offset = offset, limit = 10))
                 .observeOn(schedulerProvider.ui())
@@ -58,10 +61,12 @@ class QualityViewModel(
                     override fun onSuccess(dataResponse: Paging<Order>) {
                         items.addAll(dataResponse.data)
                         navigator.showLoading(false)
+//                        headerFooterItems.removeItem(R.layout.item_quality_loading)
                     }
 
                     override fun onFailure(error: String?) {
                         navigator.showLoading(false)
+//                        headerFooterItems.removeItem(R.layout.item_quality_loading)
                         handleError(error)
                     }
                 })
@@ -78,5 +83,9 @@ class QualityViewModel(
             return
         }
         navigator.openAddContainerScreen(selectedItem)
+    }
+
+    fun onTipsClick() {
+
     }
 }

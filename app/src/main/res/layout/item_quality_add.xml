@@ -5,10 +5,6 @@
 
         <import type="android.view.View" />
 
-        <import type="com.tebet.mojual.common.util.DateExtKt" />
-
-        <import type="com.tebet.mojual.common.util.StringExtKt" />
-
         <variable
             name="listener"
             type="com.tebet.mojual.common.adapter.OnListItemClick" />
@@ -21,10 +17,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_64sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
         android:background="@drawable/border_add_item"
         android:gravity="center_vertical"
         android:onClick="@{() -> listener.onItemClick(item)}"
-        android:layout_marginBottom="@dimen/_6sdp"
         android:orientation="horizontal">
 
         <ImageView
@@ -37,9 +33,9 @@
         <com.tebet.mojual.common.view.AppTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CREATE MORE ORDER"
+            android:text="@{item}"
             android:textColor="#565656"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="@dimen/_14sdp"
             android:textStyle="bold" />
     </LinearLayout>
 </layout>

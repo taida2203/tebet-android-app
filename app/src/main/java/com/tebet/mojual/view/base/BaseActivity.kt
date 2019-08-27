@@ -20,6 +20,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import co.common.view.dialog.RoundedDialog
+import co.common.view.dialog.RoundedOkDialog
 import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
@@ -80,7 +82,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         performDependencyInjection()
         super.onCreate(savedInstanceState)
         baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base)
-        baseBinding.viewModel = ViewModelProviders.of(this, factory).get(BaseActivityViewModel::class.java)
+        baseBinding.viewModel =
+            ViewModelProviders.of(this, factory).get(BaseActivityViewModel::class.java)
         baseBinding.viewModel?.navigator = this
         performDataBinding()
         mViewModel?.baseErrorHandlerData?.observe(this, Observer<String> {
@@ -121,7 +124,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     private fun performDataBinding() {
-        viewDataBinding = DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding.placeHolder, true)
+        viewDataBinding =
+            DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding.placeHolder, true)
         this.mViewModel = if (mViewModel == null) viewModel else mViewModel
         viewDataBinding?.setVariable(bindingVariable, mViewModel)
         viewDataBinding?.executePendingBindings()
@@ -136,9 +140,14 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     fun fullScreenChildHolder(isFullScreen: Boolean) {
         if (isFullScreen) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).removeRule(RelativeLayout.BELOW)
+                (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).removeRule(
+                    RelativeLayout.BELOW
+                )
             } else {
-                (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.BELOW, 0)
+                (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(
+                    RelativeLayout.BELOW,
+                    0
+                )
             }
         } else {
             (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(
@@ -257,11 +266,11 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     override fun show(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        RoundedOkDialog(message).show(supportFragmentManager, message)
     }
 
     override fun show(messageResId: Int) {
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
+        RoundedOkDialog(getString(messageResId)).show(supportFragmentManager, getString(messageResId))
     }
 }
 

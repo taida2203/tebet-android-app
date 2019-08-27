@@ -83,12 +83,18 @@
     <string name="quality_check_error_select_order">You have selected at least 1 order !!</string>
     <string name="quality_add_container_title">Check Quality</string>
 
+    <string name="check_quality_add_new_order">CREATE MORE ORDER</string>
 
-    <string name="check_quality_add_container_title">Container #%1$s</string>
+    <string name="check_quality_add_container_title">#%1$s</string>
     <string name="check_quality_add_container_order">Order %1$s</string>
     <string name="check_quality_add_container_btn_check">Start checking</string>
     <string name="check_quality_add_container_btn_cancel">Cancel checking</string>
+    <string name="check_quality_add_container_add_new_container">CHECK NEXT CONTAINER</string>
 
     <string name="order_detail_button_submit">SUBMIT</string>
     <string name="order_detail_button_reject">REJECT</string>
+    <string name="check_quality_add_container_turn_off_iot">Please turn of IoT device first to save Device battery</string>
+    <string name="check_quality_tip1">Dont know how to check?</string>
+    <string name="check_quality_tip2">See Tips</string>
+    <string name="check_quality_iot_connected">Connected to IOT device</string>
 </resources>

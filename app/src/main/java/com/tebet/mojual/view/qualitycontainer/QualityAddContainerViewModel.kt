@@ -6,6 +6,7 @@ import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.adapter.OnListItemClick
+import com.tebet.mojual.common.util.Utility
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.common.util.toJson
 import com.tebet.mojual.common.util.toSensor
@@ -16,7 +17,6 @@ import com.tebet.mojual.data.models.ContainerWrapper
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Quality
 import com.tebet.mojual.data.models.request.CreateOrderRequest
-import com.tebet.mojual.data.models.request.UpdateOrderQualityRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
@@ -40,12 +40,12 @@ class QualityAddContainerViewModel(
      * Items merged with a header on top
      */
     var headerFooterItems: MergeObservableList<Any> = MergeObservableList<Any>()
-        .insertItem("Header")
+        .insertItem(Utility.getInstance().getString(R.string.check_quality_add_container_add_new_container))
         .insertList(items)
 
     val onItemBind: OnItemBindClass<Any> = OnItemBindClass<Any>()
         .map(String::class.java) { itemBinding, position, item ->
-            itemBinding.set(BR.item, R.layout.item_quality_add_container_add).bindExtra(BR.listener, object : OnListItemClick<String> {
+            itemBinding.set(BR.item, R.layout.item_quality_add).bindExtra(BR.listener, object : OnListItemClick<String> {
                 override fun onItemClick(item: String) {
                     if (!allCheckingComplete()) return
                     items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck }
@@ -73,8 +73,7 @@ class QualityAddContainerViewModel(
                     newItem.assignedContainers.addAll(containersLeft.toList())
                     newItem.selectedItem = 0
                     newItem.selectedWeight = 0
-                    val newItems = arrayListOf(newItem)
-                    newItems.addAll(items.toList())
+                    val newItems = arrayListOf(newItem) + items
                     items.clear()
                     items.addAll(newItems)
                 }
@@ -239,7 +238,8 @@ class QualityAddContainerViewModel(
                 })
         )
     }
-
+    fun onTipsClick() {
+    }
     fun onSubmitClick() {
         if (!allCheckingComplete()) return
         navigator.showLoading(true)

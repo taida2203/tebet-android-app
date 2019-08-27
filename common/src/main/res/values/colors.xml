@@ -21,4 +21,6 @@
     <color name="dividerLighterGray">#e5e5e5</color>
     <color name="dark_green">#49802D</color>
 
+    <color name="grey">#c7c7d5</color>
+    <color name="green_dark">#477045</color>
 </resources>

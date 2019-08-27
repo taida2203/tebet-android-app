@@ -27,19 +27,6 @@
                     android:id="@+id/placeHolder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-
-                <RelativeLayout
-                    android:id="@+id/dialogTopClose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
-
-                    <ImageView
-                        android:layout_width="@dimen/_10sdp"
-                        android:layout_height="@dimen/_10sdp"
-                        android:layout_margin="@dimen/_8sdp"
-                        android:src="@drawable/ic_quit" />
-                </RelativeLayout>
             </RelativeLayout>
 
             <View
@@ -61,7 +48,7 @@
                     android:id="@+id/btn_single"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:background="@drawable/rounded_btn_green">
+                    android:background="@drawable/rounded_bg_button">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -77,14 +64,12 @@
                             android:id="@+id/tv_single"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
                             android:layout_gravity="center"
                             android:text="Close"
+                            android:textAlignment="center"
                             android:textColor="@color/dialogColorBaseWhite"
                             app:font_style="bold" />
-
                     </LinearLayout>
-
                 </RelativeLayout>
 
                 <FrameLayout
@@ -111,13 +96,14 @@
                     android:layout_height="35dp"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_btn_red">
+
                     <FrameLayout
                         android:id="@+id/flImageIconLeft"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="-10dp"
-                        android:layout_toLeftOf="@+id/tv_multiple_left"/>
+                        android:layout_toLeftOf="@+id/tv_multiple_left" />
 
                     <TextView
                         android:id="@+id/tv_multiple_left"
@@ -125,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="@string/general_button_cancel"
-                        android:textColor="@color/dialogColorBaseWhite"
+                        android:textColor="@color/grey"
                         android:textSize="@dimen/_10ssp"
                         app:font_style="bold" />
                 </RelativeLayout>
@@ -140,11 +126,13 @@
                     android:layout_height="35dp"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_btn_grey">
+
                     <FrameLayout
                         android:id="@+id/flImageIconRight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/tv_multiple_right"/>
+                        android:layout_toLeftOf="@+id/tv_multiple_right" />
+
                     <TextView
                         android:id="@+id/tv_multiple_right"
                         android:layout_width="wrap_content"

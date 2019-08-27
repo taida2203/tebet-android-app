@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
+import co.common.view.dialog.RoundedDialog
+import co.common.view.dialog.RoundedOkDialog
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
@@ -44,7 +46,15 @@ class QualityAddContainer : BaseActivity<ActivityQualityAddContainerBinding, Qua
     override fun openConfirmScreen(dataResponse: Order) {
         intent.putExtra("EXTRA_ORDER", dataResponse)
         setResult(Activity.RESULT_OK, intent)
-        finish()
+        RoundedOkDialog(getString(R.string.check_quality_add_container_turn_off_iot)).setRoundedDialogCallback(
+            object : RoundedDialog.RoundedDialogCallback {
+                override fun onFirstButtonClicked(selectedValue: Any?) {
+                    finish()
+                }
+
+                override fun onSecondButtonClicked(selectedValue: Any?) {
+                }
+            }).show(supportFragmentManager, "")
     }
 
     override fun dataValid(): Boolean {

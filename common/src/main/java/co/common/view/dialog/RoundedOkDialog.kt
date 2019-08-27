@@ -23,7 +23,7 @@ open class RoundedOkDialog : RoundedDialog, View.OnClickListener {
         addFirstButton(
             RoundedDialogButton(
                 resources.getString(R.string.general_button_ok),
-                R.color.dialogColorOK
+                R.drawable.rounded_bg_button
             )
         )
         return v

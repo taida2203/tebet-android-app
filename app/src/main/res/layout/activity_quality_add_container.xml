@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_8sdp"
                 android:gravity="center"
-                android:text="Connected to IOT device"
+                android:text="@string/check_quality_iot_connected"
                 android:textSize="@dimen/_16sdp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -40,11 +40,30 @@
                 app:items="@{viewModel.headerFooterItems}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_6sdp"
-                android:text="Dont know how to check?" />
+                android:gravity="center_horizontal"
+                android:padding="@dimen/_6sdp">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/check_quality_tip1"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:text="@string/check_quality_tip2"
+                    android:onClick="@{()-> viewModel.onTipsClick()}"
+                    android:textColor="@color/dark_green"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
 
         </LinearLayout>
 

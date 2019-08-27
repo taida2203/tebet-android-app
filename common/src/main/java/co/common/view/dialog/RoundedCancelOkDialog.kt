@@ -23,13 +23,13 @@ class RoundedCancelOkDialog : RoundedOkDialog, View.OnClickListener {
         addFirstButton(
             RoundedDialogButton(
                 resources.getString(R.string.general_button_cancel),
-                R.color.dialogColorCancel
+                R.drawable.rounded_bg_button_cancel
             )
         )
         addSecondButton(
             RoundedDialogButton(
                 resources.getString(R.string.general_button_ok),
-                R.color.dialogColorOK
+                R.drawable.rounded_bg_button
             )
         )
         return v
