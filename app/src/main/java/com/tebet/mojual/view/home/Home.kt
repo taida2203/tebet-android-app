@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableArrayList
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,6 +12,8 @@ import co.common.view.dialog.RoundedCancelOkDialog
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
+import com.tebet.mojual.data.models.OrderContainer
+import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.databinding.ItemHomeAvatarBinding
@@ -150,6 +153,9 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         mIntent.putExtra("EXTRA_ORDER", dataResponse)
         startActivityForResult(mIntent, 500)
         showCheckQualityScreen()
+    }
+
+    override fun showRejectReasonScreen(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>) {
     }
 
     override fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag: String?) {

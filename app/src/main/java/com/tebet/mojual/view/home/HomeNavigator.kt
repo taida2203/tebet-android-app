@@ -1,6 +1,9 @@
 package com.tebet.mojual.view.home
 
+import androidx.databinding.ObservableArrayList
 import com.tebet.mojual.data.models.Order
+import com.tebet.mojual.data.models.OrderContainer
+import com.tebet.mojual.data.models.OrderDetail
 
 interface HomeNavigator {
     fun showCheckQualityScreen()
@@ -14,4 +17,5 @@ interface HomeNavigator {
     fun showHomeScreen()
     fun showHistoryScreen()
     fun showAddContainerScreen(dataResponse: Order)
+    fun showRejectReasonScreen(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>)
 }

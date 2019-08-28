@@ -1,10 +1,13 @@
 package com.tebet.mojual.view.home
 
+import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
+import com.tebet.mojual.data.models.OrderContainer
+import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
@@ -74,5 +77,9 @@ class HomeViewModel(
 
     fun onOrderDetailClick(item: Order) {
         navigator.showOrderDetailScreen(item)
+    }
+
+    fun onReasonClick(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>) {
+        navigator.showRejectReasonScreen(order, selectedItems)
     }
 }

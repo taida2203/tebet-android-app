@@ -1,25 +1,24 @@
 package com.tebet.mojual.view.qualitydetail
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.ObservableArrayList
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
-import com.tebet.mojual.data.models.IOrder
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.databinding.FragmentOrderDetailBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.home.Home
-import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
 
 class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetailViewModel>(),
     OrderDetailNavigator {
+
+
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -59,5 +58,9 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
 
     override fun openHomeScreen() {
         (activity as Home).viewModel.onHomeClick()
+    }
+
+    override fun openRejectReasonScreen(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>) {
+        (activity as Home).viewModel.onReasonClick(order, selectedItems)
     }
 }
