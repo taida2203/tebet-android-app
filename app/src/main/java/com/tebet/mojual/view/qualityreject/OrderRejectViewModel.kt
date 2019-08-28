@@ -2,7 +2,6 @@ package com.tebet.mojual.view.qualityreject
 
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
-import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
@@ -19,6 +18,8 @@ class OrderRejectViewModel(
     BaseViewModel<OrderRejectNavigator>(dataManager, schedulerProvider) {
     var order: ObservableField<OrderDetail> = ObservableField()
     var items: ObservableArrayList<OrderContainer> = ObservableArrayList()
+    var rejectMessage1: ObservableField<String> = ObservableField()
+    var rejectMessage2: ObservableField<String> = ObservableField()
 
     fun loadData() {
         order.get()?.let {
@@ -46,19 +47,14 @@ class OrderRejectViewModel(
         if (!navigator.validate()) {
             return
         }
-        val selectedItems = items.filter { item -> item.isSelected }
-        if (selectedItems.isEmpty()) {
-            navigator.show(R.string.quality_check_error_select_order)
-            return
-        }
-        submitOrder(selectedItems)
-    }
-
-    private fun submitOrder(selectedItems: List<OrderContainer>) {
-        order.get()?.let {
+        order.get()?.let { od ->
             navigator.showLoading(true)
             compositeDisposable.add(
-                dataManager.confirmOrder(it.orderId, selectedItems)
+                dataManager.confirmOrder(od.orderId, items.map {
+                    it.rejectMessage1 = rejectMessage1.get()
+                    it.rejectMessage2 = rejectMessage2.get()
+                    it
+                })
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Order>() {
                         override fun onSuccess(dataResponse: Order) {
@@ -74,4 +70,5 @@ class OrderRejectViewModel(
             )
         }
     }
+
 }

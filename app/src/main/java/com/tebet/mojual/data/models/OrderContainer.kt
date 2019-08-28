@@ -29,7 +29,9 @@ data class OrderContainer(
     var createdBy: String? = null,
     var createdDate: Long? = null,
     var modifiedBy: String? = null,
-    var modifiedDate: Long? = null
+    var modifiedDate: Long? = null,
+    var rejectMessage1: String? = null,
+    var rejectMessage2: String? = null
 ) : BaseObservable() {
     var isSelected: Boolean = true
         @Bindable get() = field

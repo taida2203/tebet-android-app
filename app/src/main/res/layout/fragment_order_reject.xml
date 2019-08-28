@@ -35,6 +35,7 @@
         <com.tebet.mojual.common.view.AppEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.rejectMessage1}"
             android:hint="Your answer" />
 
 
@@ -46,6 +47,7 @@
         <com.tebet.mojual.common.view.AppEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.rejectMessage2}"
             android:hint="Your answer" />
 
         <LinearLayout

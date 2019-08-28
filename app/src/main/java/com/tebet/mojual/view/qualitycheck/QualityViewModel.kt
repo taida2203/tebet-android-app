@@ -60,7 +60,7 @@ class QualityViewModel(
             dataManager.searchOrders(SearchOrderRequest(
                 hasNoContainer = true,
                 status = OrderStatus.OPEN.name,
-                offset = page * 10,
+                offset = (page - 1) * 10,
                 limit = 10
             ))
                 .observeOn(schedulerProvider.ui())
