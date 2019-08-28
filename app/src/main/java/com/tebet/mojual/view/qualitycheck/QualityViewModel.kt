@@ -58,6 +58,8 @@ class QualityViewModel(
 //        headerFooterItems.insertItem(R.layout.item_quality_loading)
         compositeDisposable.add(
             dataManager.searchOrders(SearchOrderRequest(
+                hasNoContainer = true,
+                status = OrderStatus.OPEN.name,
                 offset = page * 10,
                 limit = 10
             ))

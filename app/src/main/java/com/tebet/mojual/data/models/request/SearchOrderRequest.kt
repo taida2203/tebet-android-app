@@ -9,6 +9,7 @@ data class SearchOrderRequest(
     var containerStatusList: String? = null,
     var loadCustomer: Boolean? = null,
     var loadContainers: Boolean? = null,
+    var hasNoContainer: Boolean? = null,
     var orders: Map<String, String>? = null,
     var limit: Int? = null,
     var offset: Int? = null

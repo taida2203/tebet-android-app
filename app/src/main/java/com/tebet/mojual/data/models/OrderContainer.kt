@@ -10,6 +10,7 @@ data class OrderContainer(
     var assetCode: String? = null,
     var orderId: Long? = null,
     var orderCode: String? = null,
+    var combinedCode: String? = null,
     var basePrice: Double? = null,
     var firstFinalizedPrice: Double? = null,
     var secondFinalizedPrice: Double? = null,

@@ -35,7 +35,6 @@ class OrderDetailViewModel(
 
     fun loadData() {
         order.get()?.let {
-            it.orderId = 303 // hard code for show data
             navigator.showLoading(true)
             compositeDisposable.add(
                 dataManager.getOrderDetail(it.orderId, loadContainers = true, loadCustomer = true)
