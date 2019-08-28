@@ -213,10 +213,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                 val manager = supportFragmentManager
                 manager.beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-                    .replace(placeHolder, fragment).commitAllowingStateLoss()
-//                manager.beginTransaction()
-//                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-//                    .replace(placeHolder, fragment).addToBackStack(backStackTag).commitAllowingStateLoss()
+                    .replace(placeHolder, fragment, backStackTag).addToBackStack(backStackTag).commitAllowingStateLoss()
             }
         }
     }

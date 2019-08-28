@@ -1,6 +1,6 @@
 package com.tebet.mojual.view.qualitycheck
 
-import androidx.databinding.ObservableArrayList
+import androidx.recyclerview.widget.DiffUtil
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.adapter.OnListItemClick
@@ -9,11 +9,11 @@ import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Paging
-import com.tebet.mojual.data.models.enumeration.ContainerOrderStatus
 import com.tebet.mojual.data.models.enumeration.OrderStatus
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import me.tatarka.bindingcollectionadapter2.collections.AsyncDiffObservableList
 import me.tatarka.bindingcollectionadapter2.collections.MergeObservableList
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 
@@ -23,7 +23,16 @@ class QualityViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<QualityNavigator>(dataManager, schedulerProvider) {
-    var items: ObservableArrayList<Order> = ObservableArrayList()
+    var items: AsyncDiffObservableList<Order> =
+        AsyncDiffObservableList(object : DiffUtil.ItemCallback<Order>() {
+            override fun areItemsTheSame(oldItem: Order, newItem: Order): Boolean {
+                return oldItem.orderId.equals(newItem.orderId)
+            }
+
+            override fun areContentsTheSame(oldItem: Order, newItem: Order): Boolean {
+                return oldItem.isSelected.equals(newItem.isSelected)
+            }
+        })
 
     /**
      * Items merged with a header on top
@@ -66,7 +75,9 @@ class QualityViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                     override fun onSuccess(dataResponse: Paging<Order>) {
-                        items.addAll(dataResponse.data)
+                        if (dataResponse.data.isNotEmpty()) {
+                            items.update(dataResponse.data)
+                        }
                         navigator.showLoading(false)
 //                        headerFooterItems.removeItem(R.layout.item_quality_loading)
                     }

@@ -69,7 +69,7 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
     override fun showConfirmDialog(selectedItems: List<OrderContainer>) {
         activity?.supportFragmentManager?.let {
             RoundedDialog("Are you sure to sell your selected container?")
-                .addFirstButton(RoundedDialogButton("NO"))
+                .addFirstButton(RoundedDialogButton("NO", R.drawable.rounded_bg_button_trans))
                 .addSecondButton(RoundedDialogButton("YES"))
                 .setRoundedDialogCallback(
                 object : RoundedDialog.RoundedDialogCallback {

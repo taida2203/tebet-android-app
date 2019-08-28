@@ -39,7 +39,6 @@
             app:visibleThreshold="@{4}"
             app:onScrolledToBottom="@{(page) -> viewModel.loadData(page)}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
     </LinearLayout>
 
 </layout>

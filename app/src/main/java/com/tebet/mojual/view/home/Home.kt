@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
@@ -29,6 +30,7 @@ import com.tebet.mojual.view.saledetail.SaleDetailFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import timber.log.Timber
 import javax.inject.Inject
 
 class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector,
@@ -47,8 +49,6 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override val contentLayoutId: Int
         get() = R.layout.activity_home
-
-    private var currentFragment: Fragment? = null
 
     private var topLeftViewBinding: ItemHomeAvatarBinding? = null
     private var topRightViewBinding: ItemHomeIconBinding? = null
@@ -85,7 +85,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
         title = getString(R.string.home_menu_check_quality)
-        openFragmentSlideRight(QualityFragment(), R.id.contentHolder)
+        openFragmentSlideRight(QualityFragment(), R.id.contentHolder, QualityFragment::class.java.simpleName)
     }
 
     override fun showBorrowScreen() {
@@ -104,19 +104,19 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
         title = getString(R.string.home_menu_sell_now)
-        openFragmentSlideRight(SaleFragment(), R.id.contentHolder)
+        openFragmentSlideRight(SaleFragment(), R.id.contentHolder, SaleFragment::class.java.simpleName)
     }
 
     override fun showHomeScreen() {
         enableBackButton = false
         baseBinding.viewModel?.enableTopLogo?.set(true)
-        openFragmentSlideRight(HomeFragment(), R.id.contentHolder)
+        openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
     }
 
     override fun showHistoryScreen() {
         enableBackButton = false
         baseBinding.viewModel?.enableTopLogo?.set(true)
-        openFragmentSlideRight(HistoryFragment(), R.id.contentHolder)
+        openFragmentSlideRight(HistoryFragment(), R.id.contentHolder, HistoryFragment::class.java.simpleName)
     }
 
 
@@ -124,7 +124,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
         title = viewModel.profileLiveData.value?.fullName
-        openFragmentSlideRight(ProfileFragment(), R.id.contentHolder)
+        openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
     }
 
     override fun showOrderCompleteScreen(dataResponse: Order) {
@@ -134,7 +134,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             getString(R.string.check_quality_add_container_order),
             dataResponse.orderCode
         )
-        openFragmentSlideRight(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder)
+        openFragmentSlideRight(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder, SaleDetailFragment::class.java.simpleName)
     }
 
     override fun showOrderDetailScreen(dataResponse: Order) {
@@ -144,7 +144,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             getString(R.string.check_quality_add_container_order),
             dataResponse.orderCode
         )
-        openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder)
+        openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName)
     }
 
     override fun showAddContainerScreen(dataResponse: Order) {
@@ -158,20 +158,31 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
         title = getString(R.string.home_reject_title)
-        openFragmentSlideRight(OrderRejectFragment.newInstance(order, selectedItems), R.id.contentHolder)
+        openFragmentSlideRight(OrderRejectFragment.newInstance(order, selectedItems), R.id.contentHolder, OrderRejectFragment::class.java.simpleName)
     }
 
     override fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag: String?) {
-        currentFragment = fragment
+        currentFragment()?.let {
+            if (it::class == fragment::class) return
+        }
+        if (fragment is HomeFragment) if (currentFragment() !is HomeFragment) supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         super.openFragmentSlideRight(fragment, placeHolder, backStackTag)
     }
 
     override fun onBackPressed() {
-        if (currentFragment != null && currentFragment !is HomeFragment) {
-            showHomeScreen()
-            return
-        }
+        if (currentFragment() == null || currentFragment() is HomeFragment) finish()
         super.onBackPressed()
+    }
+
+    private fun currentFragment(): Fragment? {
+        supportFragmentManager?.let {
+            try {
+                return it.findFragmentByTag(it.getBackStackEntryAt(it.backStackEntryCount - 1).name)
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+        }
+        return null
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
