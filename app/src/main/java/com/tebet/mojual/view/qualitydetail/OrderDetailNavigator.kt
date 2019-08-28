@@ -10,4 +10,5 @@ interface OrderDetailNavigator : BaseActivityNavigator {
     fun itemSelected(item: OrderContainer)
     fun openHomeScreen()
     fun openRejectReasonScreen(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>)
+    fun showConfirmDialog(selectedItems: List<OrderContainer>)
 }

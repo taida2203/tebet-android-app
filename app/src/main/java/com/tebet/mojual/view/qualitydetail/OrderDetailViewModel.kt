@@ -79,10 +79,10 @@ class OrderDetailViewModel(
             navigator.show(R.string.quality_check_error_select_order)
             return
         }
-        submitOrder(selectedItems)
+        navigator.showConfirmDialog(selectedItems)
     }
 
-    private fun submitOrder(selectedItems : List<OrderContainer>){
+    fun submitOrder(selectedItems : List<OrderContainer>){
         order.get()?.let {
             navigator.showLoading(true)
             compositeDisposable.add(

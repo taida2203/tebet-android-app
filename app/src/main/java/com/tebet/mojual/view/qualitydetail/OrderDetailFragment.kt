@@ -6,6 +6,8 @@ import androidx.databinding.ObservableArrayList
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
+import co.common.view.dialog.RoundedDialog
+import co.common.view.dialog.RoundedDialogButton
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
@@ -17,6 +19,7 @@ import com.tebet.mojual.view.home.Home
 
 class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetailViewModel>(),
     OrderDetailNavigator {
+
 
 
     override val bindingVariable: Int
@@ -62,5 +65,21 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
 
     override fun openRejectReasonScreen(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>) {
         (activity as Home).viewModel.onReasonClick(order, selectedItems)
+    }
+    override fun showConfirmDialog(selectedItems: List<OrderContainer>) {
+        activity?.supportFragmentManager?.let {
+            RoundedDialog("Are you sure to sell your selected container?")
+                .addFirstButton(RoundedDialogButton("NO"))
+                .addSecondButton(RoundedDialogButton("YES"))
+                .setRoundedDialogCallback(
+                object : RoundedDialog.RoundedDialogCallback {
+                    override fun onFirstButtonClicked(selectedValue: Any?) {
+                    }
+
+                    override fun onSecondButtonClicked(selectedValue: Any?) {
+                        viewModel.submitOrder(selectedItems)
+                    }
+                }).show(it, "")
+        }
     }
 }
