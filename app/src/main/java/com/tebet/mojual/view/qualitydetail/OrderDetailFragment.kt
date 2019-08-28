@@ -63,7 +63,7 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
         (activity as Home).viewModel.onHomeClick()
     }
 
-    override fun openRejectReasonScreen(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>) {
+    override fun openRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>) {
         (activity as Home).viewModel.onReasonClick(order, selectedItems)
     }
     override fun showConfirmDialog(selectedItems: List<OrderContainer>) {

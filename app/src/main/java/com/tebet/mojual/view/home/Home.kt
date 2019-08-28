@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableArrayList
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -29,8 +28,8 @@ import com.tebet.mojual.view.sale.SaleFragment
 import com.tebet.mojual.view.saledetail.SaleDetailFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import javax.inject.Inject
 import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
 class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector,
     HomeNavigator {
@@ -155,7 +154,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         showCheckQualityScreen()
     }
 
-    override fun showRejectReasonScreen(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>) {
+    override fun showRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>) {
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
         title = getString(R.string.home_reject_title)

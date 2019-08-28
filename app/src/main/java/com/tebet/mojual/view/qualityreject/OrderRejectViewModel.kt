@@ -21,28 +21,6 @@ class OrderRejectViewModel(
     var rejectMessage1: ObservableField<String> = ObservableField()
     var rejectMessage2: ObservableField<String> = ObservableField()
 
-    fun loadData() {
-        order.get()?.let {
-            navigator.showLoading(true)
-            compositeDisposable.add(
-                dataManager.getOrderDetail(it.orderId, loadContainers = true, loadCustomer = true)
-                    .observeOn(schedulerProvider.ui())
-                    .subscribeWith(object : CallbackWrapper<OrderDetail>() {
-                        override fun onSuccess(dataResponse: OrderDetail) {
-                            order.set(dataResponse)
-                            dataResponse.containers?.let { it1 -> items.addAll(it1) }
-                            navigator.showLoading(false)
-                        }
-
-                        override fun onFailure(error: String?) {
-                            navigator.showLoading(false)
-                            handleError(error)
-                        }
-                    })
-            )
-        }
-    }
-
     fun onSubmitClick() {
         if (!navigator.validate()) {
             return

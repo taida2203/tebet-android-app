@@ -30,14 +30,16 @@ class OrderRejectFragment : BaseFragment<FragmentOrderRejectBinding, OrderReject
     private lateinit var validator: Validator
 
     var order: OrderDetail? = null
+    var selectedItems: List<OrderContainer>? = null
 
     companion object {
         fun newInstance(
             dataResponse: OrderDetail,
-            selectedItems: ObservableArrayList<OrderContainer>
+            selectedItems: List<OrderContainer>
         ): Fragment {
             val fragment = OrderRejectFragment()
             fragment.order = dataResponse
+            fragment.selectedItems = selectedItems
             return fragment
         }
     }
@@ -48,7 +50,7 @@ class OrderRejectFragment : BaseFragment<FragmentOrderRejectBinding, OrderReject
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
         viewModel.order.set(order?.let { OrderDetail(it) })
-        viewModel.loadData()
+        selectedItems?.let { viewModel.items.addAll(it) }
     }
 
     override fun validate(): Boolean {

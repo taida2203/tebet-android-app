@@ -9,6 +9,7 @@ import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
+import com.tebet.mojual.data.models.enumeration.AssetAction
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import me.tatarka.bindingcollectionadapter2.ItemBinding
@@ -65,8 +66,11 @@ class OrderDetailViewModel(
         if (!navigator.validate()) {
             return
         }
-        order.get()?.let {
-            navigator.openRejectReasonScreen(it, items)
+        order.get()?.let { od ->
+            navigator.openRejectReasonScreen(od, items.toList().map {
+                it.action = AssetAction.REJECT.name
+                it
+            })
         }
     }
 
@@ -79,10 +83,13 @@ class OrderDetailViewModel(
             navigator.show(R.string.quality_check_error_select_order)
             return
         }
-        navigator.showConfirmDialog(selectedItems)
+        navigator.showConfirmDialog(selectedItems.map {
+            it.action = AssetAction.APPROVE.name
+            it
+        })
     }
 
-    fun submitOrder(selectedItems : List<OrderContainer>){
+    fun submitOrder(selectedItems: List<OrderContainer>) {
         order.get()?.let {
             navigator.showLoading(true)
             compositeDisposable.add(

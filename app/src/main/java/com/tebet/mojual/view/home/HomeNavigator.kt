@@ -17,5 +17,5 @@ interface HomeNavigator {
     fun showHomeScreen()
     fun showHistoryScreen()
     fun showAddContainerScreen(dataResponse: Order)
-    fun showRejectReasonScreen(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>)
+    fun showRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
 }

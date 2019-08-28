@@ -79,7 +79,7 @@ class HomeViewModel(
         navigator.showOrderDetailScreen(item)
     }
 
-    fun onReasonClick(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>) {
+    fun onReasonClick(order: OrderDetail, selectedItems: List<OrderContainer>) {
         navigator.showRejectReasonScreen(order, selectedItems)
     }
 }

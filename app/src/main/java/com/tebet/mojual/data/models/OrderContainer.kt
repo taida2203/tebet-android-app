@@ -4,6 +4,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.room.Ignore
 import com.tebet.mojual.BR
+import com.tebet.mojual.data.models.enumeration.AssetAction
 
 data class OrderContainer(
     var assetId: Long? = null,
@@ -30,6 +31,7 @@ data class OrderContainer(
     var createdDate: Long? = null,
     var modifiedBy: String? = null,
     var modifiedDate: Long? = null,
+    var action: String? = null,
     var rejectMessage1: String? = null,
     var rejectMessage2: String? = null
 ) : BaseObservable() {
@@ -37,6 +39,7 @@ data class OrderContainer(
         @Bindable get() = field
         set(value) {
             field = value
+            action = if(value) AssetAction.APPROVE.name else AssetAction.REJECT.name
             notifyPropertyChanged(BR.selected)
         }
     @Ignore
