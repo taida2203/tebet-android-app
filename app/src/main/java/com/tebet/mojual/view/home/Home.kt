@@ -8,7 +8,6 @@ import androidx.databinding.ObservableArrayList
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import co.common.view.dialog.RoundedCancelOkDialog
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
@@ -25,6 +24,7 @@ import com.tebet.mojual.view.profile.ProfileFragment
 import com.tebet.mojual.view.qualitycheck.QualityFragment
 import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
 import com.tebet.mojual.view.qualitydetail.OrderDetailFragment
+import com.tebet.mojual.view.qualityreject.OrderRejectFragment
 import com.tebet.mojual.view.sale.SaleFragment
 import com.tebet.mojual.view.saledetail.SaleDetailFragment
 import dagger.android.AndroidInjector
@@ -156,6 +156,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     }
 
     override fun showRejectReasonScreen(order: OrderDetail, selectedItems: ObservableArrayList<OrderContainer>) {
+        enableBackButton = true
+        baseBinding.viewModel?.enableTopLogo?.set(false)
+        title = getString(R.string.home_reject_title)
+        openFragmentSlideRight(OrderRejectFragment.newInstance(order, selectedItems), R.id.contentHolder)
     }
 
     override fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag: String?) {

@@ -104,4 +104,5 @@
     <string name="check_quality_add_container_item_id">ID</string>
     <string name="check_quality_add_container_weight_title">Weight (KG)</string>
     <string name="check_quality_add_container_time_title">Time</string>
+    <string name="home_reject_title">LET US KNOW</string>
 </resources>

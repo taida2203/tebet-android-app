@@ -6,6 +6,8 @@ import com.tebet.mojual.view.qualitycheck.QualityFragment;
 import com.tebet.mojual.view.qualitycheck.QualityFragmentModule;
 import com.tebet.mojual.view.qualitydetail.OrderDetailFragment;
 import com.tebet.mojual.view.qualitydetail.OrderDetailFragmentModule;
+import com.tebet.mojual.view.qualityreject.OrderRejectFragment;
+import com.tebet.mojual.view.qualityreject.OrderRejectFragmentModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -24,4 +26,7 @@ public abstract class HomeFragmentProvider {
 
     @ContributesAndroidInjector(modules = OrderDetailFragmentModule.class)
     abstract OrderDetailFragment provideOrderDetailFragmentFactory();
+
+    @ContributesAndroidInjector(modules = OrderRejectFragmentModule.class)
+    abstract OrderRejectFragment provideOrderRejectFragmentFactory();
 }
