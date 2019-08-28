@@ -23,6 +23,7 @@ data class OrderContainer(
     var densityIot: Double? = null,
     var temperatureIot: Double? = null,
     var eugenolIot: Double? = null,
+    var initialPrice: Double? = null,
     var pricePerKg: Double? = null,
     var status: String? = null,
     var createdBy: String? = null,
