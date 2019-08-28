@@ -81,13 +81,6 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             Observer<UserProfile> { topLeftViewBinding?.userProfile = it })
     }
 
-    override fun showCheckQualityScreen() {
-        enableBackButton = true
-        baseBinding.viewModel?.enableTopLogo?.set(false)
-        title = getString(R.string.home_menu_check_quality)
-        openFragmentSlideRight(QualityFragment(), R.id.contentHolder, QualityFragment::class.java.simpleName)
-    }
-
     override fun showBorrowScreen() {
         enableBackButton = true
         baseBinding.viewModel?.enableTopLogo?.set(false)
@@ -100,52 +93,21 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         title = getString(R.string.home_menu_tips)
     }
 
-    override fun showSellScreen() {
-        enableBackButton = true
-        baseBinding.viewModel?.enableTopLogo?.set(false)
-        title = getString(R.string.home_menu_sell_now)
-        openFragmentSlideRight(SaleFragment(), R.id.contentHolder, SaleFragment::class.java.simpleName)
-    }
+    override fun showSellScreen() = openFragmentSlideRight(SaleFragment(), R.id.contentHolder, SaleFragment::class.java.simpleName)
 
-    override fun showHomeScreen() {
-        enableBackButton = false
-        baseBinding.viewModel?.enableTopLogo?.set(true)
-        openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
-    }
+    override fun showHomeScreen() = openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
 
-    override fun showHistoryScreen() {
-        enableBackButton = false
-        baseBinding.viewModel?.enableTopLogo?.set(true)
-        openFragmentSlideRight(HistoryFragment(), R.id.contentHolder, HistoryFragment::class.java.simpleName)
-    }
+    override fun showHistoryScreen() = openFragmentSlideRight(HistoryFragment(), R.id.contentHolder, HistoryFragment::class.java.simpleName)
 
+    override fun showProfileScreen() = openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
 
-    override fun showProfileScreen() {
-        enableBackButton = true
-        baseBinding.viewModel?.enableTopLogo?.set(false)
-        title = viewModel.profileLiveData.value?.fullName
-        openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
-    }
+    override fun showOrderCompleteScreen(dataResponse: Order) = openFragmentSlideRight(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder, SaleDetailFragment::class.java.simpleName, dataResponse.orderCode)
 
-    override fun showOrderCompleteScreen(dataResponse: Order) {
-        enableBackButton = true
-        baseBinding.viewModel?.enableTopLogo?.set(false)
-        title = String.format(
-            getString(R.string.check_quality_add_container_order),
-            dataResponse.orderCode
-        )
-        openFragmentSlideRight(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder, SaleDetailFragment::class.java.simpleName)
-    }
+    override fun showOrderDetailScreen(dataResponse: Order) = openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName, dataResponse.orderCode)
 
-    override fun showOrderDetailScreen(dataResponse: Order) {
-        enableBackButton = true
-        baseBinding.viewModel?.enableTopLogo?.set(false)
-        title = String.format(
-            getString(R.string.check_quality_add_container_order),
-            dataResponse.orderCode
-        )
-        openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName)
-    }
+    override fun showCheckQualityScreen() = openFragmentSlideRight(QualityFragment(), R.id.contentHolder, QualityFragment::class.java.simpleName)
+
+    override fun showRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>) = openFragmentSlideRight(OrderRejectFragment.newInstance(order, selectedItems), R.id.contentHolder, OrderRejectFragment::class.java.simpleName, order.orderCode)
 
     override fun showAddContainerScreen(dataResponse: Order) {
         val mIntent = Intent(this, QualityAddContainer::class.java)
@@ -154,17 +116,17 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         showCheckQualityScreen()
     }
 
-    override fun showRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>) {
-        enableBackButton = true
-        baseBinding.viewModel?.enableTopLogo?.set(false)
-        title = getString(R.string.home_reject_title)
-        openFragmentSlideRight(OrderRejectFragment.newInstance(order, selectedItems), R.id.contentHolder, OrderRejectFragment::class.java.simpleName)
+
+    private fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag: String?, title: String?) {
+        this.openFragmentSlideRight(fragment, placeHolder, backStackTag)
+        updateTitleAction(fragment, title)
     }
 
     override fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag: String?) {
         currentFragment()?.let {
             if (it::class == fragment::class) return
         }
+        updateTitleAction(fragment)
         if (fragment is HomeFragment) if (currentFragment() !is HomeFragment) supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         super.openFragmentSlideRight(fragment, placeHolder, backStackTag)
     }
@@ -172,6 +134,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     override fun onBackPressed() {
         if (currentFragment() == null || currentFragment() is HomeFragment) finish()
         super.onBackPressed()
+        updateTitleAction(currentFragment())
     }
 
     private fun currentFragment(): Fragment? {
@@ -183,6 +146,57 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             }
         }
         return null
+    }
+
+    private fun updateTitleAction(fragment: Fragment?, titleString: String? = null) {
+        when (fragment) {
+            is HomeFragment -> {
+                enableBackButton = false
+                baseBinding.viewModel?.enableTopLogo?.set(true)
+                viewModel.selectedTab.set(HomeViewModel.ScreenTab.Home)
+            }
+            is HistoryFragment -> {
+                enableBackButton = false
+                baseBinding.viewModel?.enableTopLogo?.set(true)
+                viewModel.selectedTab.set(HomeViewModel.ScreenTab.History)
+            }
+            is ProfileFragment -> {
+                enableBackButton = true
+                baseBinding.viewModel?.enableTopLogo?.set(false)
+                title = viewModel.profileLiveData.value?.fullName
+            }
+            is OrderRejectFragment -> {
+                enableBackButton = true
+                baseBinding.viewModel?.enableTopLogo?.set(false)
+                title = getString(R.string.home_reject_title)
+            }
+            is SaleFragment -> {
+                enableBackButton = true
+                baseBinding.viewModel?.enableTopLogo?.set(false)
+                title = getString(R.string.home_menu_sell_now)
+            }
+            is SaleDetailFragment -> {
+                enableBackButton = true
+                baseBinding.viewModel?.enableTopLogo?.set(false)
+                title = String.format(
+                    getString(R.string.check_quality_add_container_order),
+                    titleString
+                )
+            }
+            is OrderDetailFragment -> {
+                enableBackButton = true
+                baseBinding.viewModel?.enableTopLogo?.set(false)
+                title = String.format(
+                    getString(R.string.check_quality_add_container_order),
+                    titleString
+                )
+            }
+            is QualityFragment -> {
+                enableBackButton = true
+                baseBinding.viewModel?.enableTopLogo?.set(false)
+                title = getString(R.string.home_menu_check_quality)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
