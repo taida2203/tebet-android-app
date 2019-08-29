@@ -49,4 +49,11 @@ data class OrderContainer(
             field = value
             notifyPropertyChanged(BR.expanded)
         }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is OrderContainer) {
+            return assetId == other.assetId && orderId == other.orderId
+        }
+        return super.equals(other)
+    }
 }

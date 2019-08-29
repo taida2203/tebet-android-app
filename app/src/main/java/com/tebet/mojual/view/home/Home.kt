@@ -212,6 +212,9 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         if (requestCode == 500) {
             if (resultCode == Activity.RESULT_OK) {
                 data?.getSerializableExtra("EXTRA_ORDER")?.let {
+                    if (currentFragment() is QualityFragment) {
+                        (currentFragment() as QualityFragment).viewModel.items.remove(it)
+                    }
                     showOrderDetailScreen(it as Order)
                 }
             }

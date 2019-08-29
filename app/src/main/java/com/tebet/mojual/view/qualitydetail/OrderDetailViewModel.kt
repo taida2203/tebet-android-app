@@ -44,7 +44,9 @@ class OrderDetailViewModel(
                     .subscribeWith(object : CallbackWrapper<OrderDetail>() {
                         override fun onSuccess(dataResponse: OrderDetail) {
                             order.set(dataResponse)
-                            dataResponse.containers?.let { it1 -> items.addAll(it1) }
+                            dataResponse.containers?.forEach { container ->
+                                if (!items.contains(container)) items.add(container)
+                            }
                             navigator.showLoading(false)
                         }
 

@@ -22,4 +22,11 @@ data class Order(
             field = value
             notifyPropertyChanged(BR.selected)
         }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is Order) {
+            return orderId == other.orderId
+        }
+        return super.equals(other)
+    }
 }
