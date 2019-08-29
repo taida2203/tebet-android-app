@@ -4,19 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
-import com.tebet.mojual.data.models.City
-import com.tebet.mojual.data.models.Region
-import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep2Binding
 import com.tebet.mojual.view.signup.step.SignUpInfoStep
-import com.tebet.mojual.view.signup.step2.address.ChildItem
-import com.tebet.mojual.view.signup.step2.address.ParentItem
 import com.tebet.mojual.view.signup.step2.map.GoogleMapActivity
 
 class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInfoStep2Model>(),
@@ -30,8 +23,6 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_info_step2
 
-    var addressViews = ArrayList<ChildItem>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = this
@@ -39,36 +30,6 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewDataBinding?.expandableView?.let {
-            it.addView(ParentItem(it.context, "DOMICILE ADDRESS", true))
-            if (viewModel.userProfile.get()?.domicileAddress == null) viewModel.userProfile.get()?.domicileAddress =
-                Address(localTagPos = 0) else viewModel.userProfile.get()?.domicileAddress?.localTagPos = 0
-            if (viewModel.userProfile.get()?.pickupAddress == null) viewModel.userProfile.get()?.pickupAddress =
-                Address(localTagPos = 1) else viewModel.userProfile.get()?.pickupAddress?.localTagPos = 1
-            addressViews.add(
-                ChildItem(
-                    it,
-                    viewModel
-                )
-            )
-            addressViews[0].address = viewModel.userProfile.get()?.domicileAddress ?: Address(localTagPos = 0)
-            it.addView(addressViews[0])
-            it.addView(ParentItem(it.context, "PICKUP ADDRESS"))
-            addressViews.add(
-                ChildItem(
-                    it,
-                    viewModel
-                )
-            )
-            addressViews[1].address = viewModel.userProfile.get()?.pickupAddress ?: Address(localTagPos = 0)
-            it.addView(addressViews[1])
-            it.expand(0)
-
-            viewModel.cityLiveData.observe(this, Observer<List<City>> { cities ->
-                addressViews.forEach { addressView -> addressView.cities = cities
-                }
-            })
-        }
         viewModel.loadData()
     }
 
@@ -87,19 +48,9 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
                         data?.getSerializableExtra("LOCATION") as Address
                     } catch (e: Exception) {
                     } as Address
-                    when (dataReturn?.localTagPos) {
-                        0 -> {
-                            viewModel.userProfile.get()?.domicileAddress = dataReturn
-                            viewModel.userProfile.get()?.domicileAddress?.let {
-                                addressViews[0].address = it
-                            }
-                        }
-                        1 -> {
-                            viewModel.userProfile.get()?.pickupAddress = dataReturn
-                            viewModel.userProfile.get()?.pickupAddress?.let {
-                                addressViews[1].address = it
-                            }
-                        }
+                    when (dataReturn?.type) {
+                        Address.DOMICILE_ADDRESS -> viewModel.userProfile.get()?.domicileAddress = dataReturn
+                        Address.PICK_UP_ADDRESS -> viewModel.userProfile.get()?.pickupAddress = dataReturn
                     }
                 }
             }
@@ -108,6 +59,7 @@ class SignUpInfoStep2 : SignUpInfoStep<FragmentSignUpInfoStep2Binding, SignUpInf
 
     override fun validate(): Boolean {
         return (if (!viewModel.userProfile.get()?.email.isNullOrBlank()) validator.validate() else true)
-                && addressViews.firstOrNull { address -> !address.validate() }?.validate() ?: true
+                && viewDataBinding?.llDomicileAddress?.validate() ?: true
+                && viewDataBinding?.llPickupAddress?.validate() ?: true
     }
 }

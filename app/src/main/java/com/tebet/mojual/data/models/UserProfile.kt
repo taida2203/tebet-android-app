@@ -90,7 +90,7 @@ data class UserProfile(
         }
 
     @Embedded(prefix = "add1_")
-    var domicileAddress: Address? = null
+    var domicileAddress: Address? = Address(type = Address.DOMICILE_ADDRESS)
         @Bindable get() = field
         set(value) {
             field = value
@@ -98,7 +98,7 @@ data class UserProfile(
         }
 
     @Embedded(prefix = "add2_")
-    var pickupAddress: Address? = null
+    var pickupAddress: Address? = Address(type = Address.PICK_UP_ADDRESS)
         @Bindable get() = field
         set(value) {
             field = value

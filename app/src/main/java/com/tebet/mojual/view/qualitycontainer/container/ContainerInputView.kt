@@ -24,7 +24,6 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding
     )]
 )
 class ContainerInputView : LinearLayout {
-    private lateinit var viewModel: SignUpInfoStep2Model
     private var mBinding: LayoutContainerInputBinding? = null
     var data: ObservableField<ContainerWrapper> = ObservableField()
 
@@ -64,7 +63,7 @@ class ContainerInputView : LinearLayout {
 
     private fun init(context: Context) {
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_container_input, this, true)
-//        mBinding?.setVariable(BR.addressData, addressData.get())
+//        mBinding?.setVariable(BR.data, data.get())
         mBinding?.setVariable(BR.view, this)
         validator = Validator(mBinding)
         validator.enableFormValidationMode()
@@ -81,7 +80,7 @@ class ContainerInputView : LinearLayout {
                 view.itemWeights.clear()
                 view.itemWeights.addAll(it)
             }
-//        mBinding?.setVariable(BR.addressData, addressData.get())
+//        mBinding?.setVariable(BR.data, data.get())
 //        if (viewModel != null) {
 //            this.viewModel = viewModel
 //        }

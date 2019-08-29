@@ -109,6 +109,8 @@ class SignUpInfoViewModel(
                     override fun onSuccess(dataResponse: UserProfile) {
                         navigator.showLoading(false)
                         userProfile = dataResponse
+                        userProfile.domicileAddress?.expanded = true
+                        userProfile.pickupAddress?.expanded = false
                         userProfileLiveData.value = userProfile
                     }
                 })

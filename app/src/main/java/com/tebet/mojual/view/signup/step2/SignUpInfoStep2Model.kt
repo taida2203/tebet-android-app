@@ -47,4 +47,18 @@ class SignUpInfoStep2Model(
         this.address = address
         navigator.selectLocation(address.get())
     }
+
+    fun onDomicileClick() {
+        userProfile.get()?.domicileAddress?.let {
+            it.expanded = !it.expanded
+            userProfile.get()?.pickupAddress?.expanded = !it.expanded
+        }
+    }
+
+    fun onPickupClick() {
+        userProfile.get()?.pickupAddress?.let {
+            it.expanded = !it.expanded
+            userProfile.get()?.domicileAddress?.expanded = !it.expanded
+        }
+    }
 }

@@ -7,6 +7,8 @@
         <variable
             name="viewModel"
             type="com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model" />
+
+        <import type="android.view.View" />
     </data>
 
     <ScrollView
@@ -36,11 +38,65 @@
                     app:validateTypeAutoDismiss="@{true}" />
             </com.tebet.mojual.common.view.AppEditTextLayout>
 
-            <com.mindorks.placeholderview.ExpandablePlaceHolderView
-                android:id="@+id/expandableView"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:onClick="@{()->viewModel.onDomicileClick()}"
+                android:orientation="horizontal">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="DOMICILE ADDRESS"
+                    android:textSize="@dimen/_14ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@{viewModel.userProfile.domicileAddress.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}" />
+            </LinearLayout>
+
+            <com.tebet.mojual.view.signup.step2.address.AddressInputView
+                android:id="@+id/llDomicileAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="horizontal" />
+                android:visibility="@{viewModel.userProfile.domicileAddress.expanded ? View.VISIBLE : View.GONE}"
+                app:cities="@{viewModel.cityLiveData}"
+                app:data="@{viewModel.userProfile.domicileAddress}"
+                app:viewModel="@{viewModel}" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:onClick="@{()->viewModel.onPickupClick()}"
+                android:orientation="horizontal">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="PICKUP ADDRESS"
+                    android:textSize="@dimen/_14ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@{viewModel.userProfile.pickupAddress.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}" />
+            </LinearLayout>
+
+            <com.tebet.mojual.view.signup.step2.address.AddressInputView
+                android:id="@+id/llPickupAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.userProfile.pickupAddress.expanded ? View.VISIBLE : View.GONE}"
+                app:cities="@{viewModel.cityLiveData}"
+                app:data="@{viewModel.userProfile.pickupAddress}"
+                app:viewModel="@{viewModel}" />
         </LinearLayout>
     </ScrollView>
 </layout>

@@ -2,6 +2,7 @@ package com.tebet.mojual.data.models
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import androidx.room.Ignore
 import com.tebet.mojual.BR
 import java.io.Serializable
 
@@ -14,8 +15,12 @@ class Address(
     var longitude: Double? = null,
     var postalCode: String? = null,
     var rtrw: String? = null,
-    var localTagPos: Int? = null
+    var type: String? = null
 ) : Serializable, BaseObservable() {
+    companion object {
+        const val DOMICILE_ADDRESS = "DOMICILE_ADDRESS"
+        const val PICK_UP_ADDRESS = "PICK_UP_ADDRESS"
+    }
     var mapLocation: String? = null
         @Bindable get() = field
         set(value) {
@@ -27,5 +32,13 @@ class Address(
         set(value) {
             field = value
             notifyPropertyChanged(BR.city)
+        }
+
+    @Ignore
+    var expanded: Boolean = true
+        @Bindable get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.expanded)
         }
 }

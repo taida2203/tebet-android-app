@@ -102,7 +102,6 @@ dependencies {
 
     implementation 'org.jsoup:jsoup:1.11.1'
     implementation 'pub.devrel:easypermissions:3.0.0'
-    implementation "com.mindorks:placeholderview:0.7.3"
     implementation 'com.github.Ilhasoft:data-binding-validator:2.0.0'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:3.1.0'

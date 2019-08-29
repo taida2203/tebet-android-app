@@ -2,10 +2,8 @@ package com.tebet.mojual.view.signup.step2.address
 
 import android.content.Context
 import android.os.Build
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
@@ -22,23 +20,18 @@ import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
 @InverseBindingMethods(
     value = [InverseBindingMethod(
         type = AddressInputView::class,
-        attribute = "bind:addressData",
-        method = "getAddressValue"
+        attribute = "bind:data",
+        method = "getValue"
     )]
 )
 class AddressInputView : LinearLayout {
-    private lateinit var viewModel: SignUpInfoStep2Model
+    private var viewModel: SignUpInfoStep2Model? = null
     private var mBinding: LayoutAddressInputBinding? = null
-    var addressData: ObservableField<Address> = ObservableField(Address())
+    var data: ObservableField<Address> = ObservableField()
+    var cities: ObservableList<City> = ObservableArrayList()
     lateinit var validator: Validator
-    //    public String getFilterValue() {
-    ////        return mBinding.filterPositionValue.getText().toString();
-    //    }
 
     var cityAdapter: ArrayAdapter<String>? = null
-
-    val addressValue: Address
-        get() = addressData.get()!!
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -64,7 +57,7 @@ class AddressInputView : LinearLayout {
 
     private fun init(context: Context) {
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_address_input, this, true)
-//        mBinding?.setVariable(BR.addressData, addressData.get())
+//        mBinding?.setVariable(BR.data, data.get())
         mBinding?.setVariable(BR.view, this)
         validator = Validator(mBinding)
         validator.enableFormValidationMode()
@@ -76,35 +69,37 @@ class AddressInputView : LinearLayout {
         mBinding?.etCity?.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 var currentItemString = cityAdapter?.getItem(position)
-                addressData.get()?.city =
-                    viewModel.cityLiveData.value?.firstOrNull { city -> city.fullName == currentItemString }?.fullName
+                data.get()?.city =
+                    viewModel?.cityLiveData?.value?.firstOrNull { city -> city.fullName == currentItemString }?.fullName
             }
         mBinding?.etCity?.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
-                if (viewModel.cityLiveData.value?.firstOrNull { city -> city.fullName == addressData.get()?.city } == null) {
-                    addressData.get()?.city = ""
+                if (viewModel?.cityLiveData?.value?.firstOrNull { city -> city.fullName == data.get()?.city } == null) {
+                    data.get()?.city = ""
                 }
             }
         }
-        orientation = LinearLayout.HORIZONTAL
+        orientation = HORIZONTAL
     }
 
-    //    @BindingAdapter(value = ["bind:addressData"], requireAll = false)
-    fun setAddressData(
-        address: Address?,
-        viewModel: SignUpInfoStep2Model,
-        cities: List<City>?
-    ) {
-        addressData.set(address)
-//        mBinding?.setVariable(BR.addressData, addressData.get())
-
-        cityAdapter?.clear()
-        cityAdapter?.addAll(cities?.map { city -> city.fullName } ?: arrayListOf())
-        this.viewModel = viewModel
+    companion object {
+        @BindingAdapter(value = ["bind:data", "bind:cities", "bind:viewModel"], requireAll = false)
+        @JvmStatic
+        fun setAddressData(view: AddressInputView, address: Address?, cities: List<City>?, viewModel: SignUpInfoStep2Model?) {
+            view.data.set(address)
+            view.viewModel = viewModel
+            cities?.let { view.cities.addAll(it) }
+            view.cityAdapter?.clear()
+            view.cityAdapter?.addAll(cities?.map { city -> city.fullName } ?: arrayListOf())
+//        mBinding?.setVariable(BR.data, data.get())
+//        if (viewModel != null) {
+//            this.viewModel = viewModel
+//        }
+        }
     }
 
     fun onChooseMapClick() {
-        viewModel.onChooseMapClick(addressData)
+        viewModel?.onChooseMapClick(data)
     }
 
     fun validate(): Boolean {

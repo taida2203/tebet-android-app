@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/registration_step2_address"
-                android:text="@={view.addressData.address}"
+                android:text="@={view.data.address}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/registration_step2_kelurahan"
-                android:text="@={view.addressData.kelurahan}"
+                android:text="@={view.data.kelurahan}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/registration_step2_kecamatan"
-                android:text="@={view.addressData.kecamatan}"
+                android:text="@={view.data.kecamatan}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/registration_step2_rt_rw"
-                android:text="@={view.addressData.rtrw}"
+                android:text="@={view.data.rtrw}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
@@ -88,7 +88,7 @@
                 android:hint="@string/registration_step2_city"
                 android:imeOptions="actionNext"
                 android:nextFocusDown="@+id/postal_code"
-                android:text="@={view.addressData.city}"
+                android:text="@={view.data.city}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
 
@@ -107,7 +107,7 @@
                 android:hint="@string/registration_step2_postal_code"
                 android:imeOptions="actionNext"
                 android:inputType="number"
-                android:text="@={view.addressData.postalCode}"
+                android:text="@={view.data.postalCode}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
 
@@ -127,7 +127,7 @@
                 android:hint="@string/registration_step2_choose_on_map"
                 android:imeOptions="actionNext"
                 android:onClick="@{()-> view.onChooseMapClick()}"
-                android:text="@={view.addressData.mapLocation}"
+                android:text="@={view.data.mapLocation}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
