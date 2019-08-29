@@ -93,7 +93,12 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         title = getString(R.string.home_menu_tips)
     }
 
-    override fun showSellScreen() = openFragmentSlideRight(SaleFragment(), R.id.contentHolder, SaleFragment::class.java.simpleName)
+    override fun showSellScreen() {
+        if (currentFragment() is SaleDetailFragment) {
+            supportFragmentManager.popBackStack()
+        }
+        openFragmentSlideRight(SaleFragment(), R.id.contentHolder, SaleFragment::class.java.simpleName)
+    }
 
     override fun showHomeScreen() = openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
 
@@ -101,7 +106,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun showProfileScreen() = openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
 
-    override fun showOrderCompleteScreen(dataResponse: Order) = openFragmentSlideRight(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder, SaleDetailFragment::class.java.simpleName, dataResponse.orderCode)
+    override fun showOrderCompleteScreen(dataResponse: Order) {
+        supportFragmentManager.popBackStack()
+        openFragmentSlideRight(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder, SaleDetailFragment::class.java.simpleName, dataResponse.orderCode)
+    }
 
     override fun showOrderDetailScreen(dataResponse: Order) = openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName, dataResponse.orderCode)
 
