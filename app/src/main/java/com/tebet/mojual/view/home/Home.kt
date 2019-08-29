@@ -188,7 +188,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                 baseBinding.viewModel?.enableTopLogo?.set(false)
                 title = String.format(
                     getString(R.string.check_quality_add_container_order),
-                    titleString
+                    titleString ?: fragment.order?.orderCode
                 )
             }
             is OrderDetailFragment -> {
@@ -196,7 +196,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                 baseBinding.viewModel?.enableTopLogo?.set(false)
                 title = String.format(
                     getString(R.string.check_quality_add_container_order),
-                    titleString
+                    titleString ?: fragment.order?.orderCode
                 )
             }
             is QualityFragment -> {
