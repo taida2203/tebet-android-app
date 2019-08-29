@@ -11,6 +11,8 @@ stages:
 
 assembleDevRelease:
   stage: build
+  tags:
+    - dev
   script:
     - apt-get --quiet update --yes
     - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
@@ -32,6 +34,8 @@ assembleDevRelease:
 
 deploy:
   stage: deploy
+  tags:
+    - dev
   script:
     - apt update
     - apt install openssh-client
