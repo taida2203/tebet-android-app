@@ -7,4 +7,5 @@ interface QualityAddContainerNavigator: BaseActivityNavigator {
     fun openConfirmScreen(dataResponse: Order)
     fun dataValid(): Boolean
     fun reTryConnectIOT()
+    fun requestLocationAndConnectIOT()
 }

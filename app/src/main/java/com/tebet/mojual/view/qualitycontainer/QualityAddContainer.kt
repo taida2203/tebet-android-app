@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -18,7 +17,11 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.ActivityQualityAddContainerBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
+import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.annotation.SuppressLint
+import pub.devrel.easypermissions.AfterPermissionGranted
 
 
 class QualityAddContainer :
@@ -38,6 +41,10 @@ class QualityAddContainer :
 
     @Inject
     lateinit var sensor: Sensor
+
+    companion object {
+        private const val RC_CAMERA_AND_LOCATION = 300
+    }
 
     lateinit var mWifiManager: WifiManager
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
@@ -64,6 +71,12 @@ class QualityAddContainer :
         viewModel.loadData()
         mWifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         registerReceiver(mWifiScanReceiver, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            // only for gingerbread and newer versions
+            requestLocationAndConnectIOT()
+        } else {
+            connectIOT()
+        }
     }
 
     override fun onDestroy() {
@@ -109,5 +122,31 @@ class QualityAddContainer :
     override fun dataValid(): Boolean {
         hideKeyboard()
         return validator.validate()
+    }
+
+    @SuppressLint("MissingPermission")
+    @AfterPermissionGranted(RC_CAMERA_AND_LOCATION)
+    override fun requestLocationAndConnectIOT() {
+        val perms = arrayOf(ACCESS_FINE_LOCATION)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+           connectIOT()
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, "Require permission", RC_CAMERA_AND_LOCATION, ACCESS_FINE_LOCATION)
+        }
+    }
+
+    private fun connectIOT() {
+        if (!sensor.isEnabled) {
+            reTryConnectIOT()
+        } else if (!sensor.isConnected) {
+            sensor.connect()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

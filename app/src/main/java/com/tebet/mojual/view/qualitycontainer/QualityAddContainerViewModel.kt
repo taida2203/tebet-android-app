@@ -72,6 +72,7 @@ class QualityAddContainerViewModel(
                         newItem.assignedContainers.addAll(containersLeft.toList())
                         newItem.selectedItem = 0
                         newItem.selectedWeight = 0
+                        newItem.sensorConnected = sensorManager.isConnected
                         val newItems = arrayListOf(newItem) + items
                         items.clear()
                         items.addAll(newItems)
@@ -218,7 +219,7 @@ class QualityAddContainerViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : DisposableObserver<Pair<List<Quality>, List<Asset>>>() {
                     override fun onComplete() {
-                        if (sensorManager.isEnabled) sensorManager.connect() else navigator.reTryConnectIOT()
+                        navigator.requestLocationAndConnectIOT()
                     }
 
                     override fun onNext(response: Pair<List<Quality>, List<Asset>>) {
