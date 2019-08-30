@@ -9,7 +9,7 @@ data class ContainerWrapper(
     var weight: Double = 20.0,
     var time: Long = 30,
     var customerData: Quality = Quality(),
-    var sensorConnected: Boolean = false
+    var sensorConnected: Boolean = true
 ) : Serializable, BaseObservable() {
     enum class CheckStatus {
         CheckStatusDone,

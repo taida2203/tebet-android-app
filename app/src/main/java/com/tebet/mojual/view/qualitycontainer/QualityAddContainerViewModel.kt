@@ -56,7 +56,6 @@ class QualityAddContainerViewModel(
                     override fun onItemClick(item: String) {
                         if (!allCheckingComplete()) return
                         sensorManager.checkSensorStatus()
-                        saveUnFinishItem()
                         val containersLeft = getAvailableContainer()
                         if (containersLeft.isEmpty()) {
                             navigator.show(R.string.check_quality_add_container_no_available_container)
@@ -72,7 +71,7 @@ class QualityAddContainerViewModel(
                         newItem.assignedContainers.addAll(containersLeft.toList())
                         newItem.selectedItem = 0
                         newItem.selectedWeight = 0
-                        newItem.sensorConnected = sensorManager.isConnected
+//                        newItem.sensorConnected = sensorManager.isConnected
                         val newItems = arrayListOf(newItem) + items
                         items.clear()
                         items.addAll(newItems)
@@ -147,6 +146,7 @@ class QualityAddContainerViewModel(
     }
 
     private fun collectSensorData(item: ContainerWrapper) {
+        if (!sensorManager.isConnected) return
         compositeDisposable.add(
             dataManager.scanSensorData()
                 .concatMap { sensorData ->
@@ -190,7 +190,7 @@ class QualityAddContainerViewModel(
     }
 
     private fun allCheckingComplete(): Boolean {
-        if (items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusChecking } != null) {
+        if (items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusChecking || it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck } != null) {
             navigator.show(R.string.check_quality_add_container_block_while_checking)
             return false
         }
@@ -201,9 +201,9 @@ class QualityAddContainerViewModel(
         sensorManager.addOnPropertyChangedCallback(object : androidx.databinding.Observable.OnPropertyChangedCallback(){
             override fun onPropertyChanged(sender: androidx.databinding.Observable?, propertyId: Int) {
                 if (propertyId == BR.connected) {
-                    items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck }?.let {
-                        it.sensorConnected = sensorManager.isConnected
-                    }
+//                    items.firstOrNull { it.checking == ContainerWrapper.CheckStatus.CheckStatusCheck }?.let {
+//                        it.sensorConnected = sensorManager.isConnected
+//                    }
                 }
             }
         })
