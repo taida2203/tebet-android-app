@@ -91,9 +91,6 @@
     <string name="check_quality_add_container_btn_check">Start checking</string>
     <string name="check_quality_add_container_btn_cancel">Cancel checking</string>
     <string name="check_quality_add_container_add_new_container">CHECK NEXT CONTAINER</string>
-
-    <string name="order_detail_button_submit">SUBMIT</string>
-    <string name="order_detail_button_reject">REJECT</string>
     <string name="check_quality_add_container_turn_off_iot">Please turn of IoT device first to save Device battery</string>
     <string name="check_quality_tip1">Dont know how to check?</string>
     <string name="check_quality_tip2">See Tips</string>
@@ -104,5 +101,25 @@
     <string name="check_quality_add_container_item_id">ID</string>
     <string name="check_quality_add_container_weight_title">Weight (KG)</string>
     <string name="check_quality_add_container_time_title">Time</string>
+
+    <string name="order_detail_hint">Your order are checked. Please choose what container to sell.</string>
+    <string name="order_detail_button_submit">SUBMIT</string>
+    <string name="order_detail_button_reject">REJECT</string>
+    <string name="order_detail_total_amount">Total Amount</string>
+    <string name="order_detail_delivery_bonus">Delivery Bonus</string>
+    <string name="order_detail_volume_bonus">Volume Bonus</string>
+    <string name="order_reject_detail">Why do you reject? let us know by answer some questions below</string>
+    <string name="order_reject_quest_1">Content of question 1 here</string>
+    <string name="order_reject_quest_2">Content of question 2 here</string>
+    <string name="order_reject_buttom_confirm">CONFIRM TO REJECT</string>
+
+
     <string name="home_reject_title">LET US KNOW</string>
+
+    <string name="order_detail_weight">Weight</string>
+    <string name="order_detail_price">Price</string>
+    <string name="order_detail_amount">Amount</string>
+    <string name="order_detail_content">Eugenol Content</string>
+    <string name="history_filter">FILTER BY</string>
+
 </resources>

@@ -23,8 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_6sdp"
-        android:background="@drawable/border_edit_text"
-        android:onClick="@{() -> listener.onItemClick(item)}"
+        android:background="@drawable/border_history"
+        android:onClick="@{() -> listener.onItemExpandClick(item)}"
         android:orientation="vertical"
         android:paddingLeft="@dimen/_16sdp"
         android:paddingTop="@dimen/_8sdp"
@@ -45,6 +45,7 @@
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:text="@{@string/check_quality_add_container_title(item.combinedCode)}"
                 android:textColor="@color/green_dark"
@@ -54,7 +55,7 @@
             <ImageView
                 android:layout_width="@dimen/_16sdp"
                 android:layout_height="@dimen/_16sdp"
-                android:onClick="@{() -> listener.onItemExpandClick(item)}"
+                android:onClick="@{() -> listener.onItemClick(item)}"
                 android:src="@{item.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}" />
         </LinearLayout>
 
@@ -80,7 +81,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Weight" />
+                        android:text="@string/order_detail_weight"
+                        android:textColor="@color/black" />
 
 
                     <com.tebet.mojual.common.view.AppTextView
@@ -90,7 +92,9 @@
                         android:gravity="right"
                         android:padding="@dimen/_4sdp"
                         android:text="@{StringExtKt.toDisplayWeight(item.weightCs)}"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -103,7 +107,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Price" />
+                        android:text="@string/order_detail_price"
+                        android:textColor="@color/black" />
 
 
                     <com.tebet.mojual.common.view.AppTextView
@@ -112,7 +117,9 @@
                         android:gravity="right"
                         android:padding="@dimen/_4sdp"
                         android:text="@{@string/sale_select_future_date_price_kg(StringExtKt.toDisplayMoney(item.pricePerKg))}"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </TableRow>
 
@@ -132,7 +139,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Eugenol Content" />
+                        android:text="@string/order_detail_content"
+                        android:textColor="@color/black" />
 
 
                     <com.tebet.mojual.common.view.AppTextView
@@ -142,7 +150,9 @@
                         android:gravity="right"
                         android:padding="@dimen/_4sdp"
                         android:text="@{StringExtKt.toDisplayPercent(item.eugenolIot)}"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -155,7 +165,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Amount" />
+                        android:text="@string/order_detail_amount"
+                        android:textColor="@color/black" />
 
 
                     <com.tebet.mojual.common.view.AppTextView
@@ -164,7 +175,9 @@
                         android:gravity="right"
                         android:padding="@dimen/_4sdp"
                         android:text="@{StringExtKt.toDisplayMoney(item.initialPrice)}"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </TableRow>
         </TableLayout>
