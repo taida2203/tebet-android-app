@@ -109,8 +109,8 @@
     <string name="order_detail_delivery_bonus">Delivery Bonus</string>
     <string name="order_detail_volume_bonus">Volume Bonus</string>
     <string name="order_reject_detail">Why do you reject? let us know by answer some questions below</string>
-    <string name="order_reject_quest_1">Content of question 1 here</string>
-    <string name="order_reject_quest_2">Content of question 2 here</string>
+    <string name="order_reject_quest_1">Price of raw material (leafs)?</string>
+    <string name="order_reject_quest_2">How much is your production yield?</string>
     <string name="order_reject_buttom_confirm">CONFIRM TO REJECT</string>
 
 
