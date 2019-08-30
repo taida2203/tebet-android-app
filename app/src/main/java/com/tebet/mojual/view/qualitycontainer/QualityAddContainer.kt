@@ -63,10 +63,7 @@ class QualityAddContainer :
             )
         intent.getSerializableExtra("EXTRA_ORDER")?.let {
             viewModel.order.set(it as Order)
-            title = String.format(
-                getString(R.string.check_quality_add_container_order),
-                viewModel.order.get()?.orderCode
-            )
+            if (!viewModel.order.get()?.orderCode.isNullOrBlank()) title = String.format(getString(R.string.check_quality_add_container_order), viewModel.order.get()?.orderCode)
         }
         viewModel.loadData()
         mWifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager

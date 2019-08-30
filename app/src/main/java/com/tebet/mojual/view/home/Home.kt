@@ -121,7 +121,6 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         val mIntent = Intent(this, QualityAddContainer::class.java)
         mIntent.putExtra("EXTRA_ORDER", dataResponse)
         startActivityForResult(mIntent, 500)
-        showCheckQualityScreen()
     }
 
 
@@ -214,6 +213,8 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                 data?.getSerializableExtra("EXTRA_ORDER")?.let {
                     if (currentFragment() is QualityFragment) {
                         (currentFragment() as QualityFragment).viewModel.items.remove(it)
+                    } else if (currentFragment() is SaleFragment) {
+                        supportFragmentManager.popBackStack()
                     }
                     showOrderDetailScreen(it as Order)
                 }
