@@ -100,7 +100,7 @@
     <string name="check_quality_add_container_block_while_checking">Please wait checking complete or cancel current checking to add more !!</string>
     <string name="check_quality_add_container_item_id">ID</string>
     <string name="check_quality_add_container_weight_title">Weight (KG)</string>
-    <string name="check_quality_add_container_time_title">Timer (Second)</string>
+    <string name="check_quality_add_container_time_title">Timer (Seconds)</string>
 
     <string name="order_detail_hint">Your order are checked. Please choose what container to sell.</string>
     <string name="order_detail_button_submit">SUBMIT</string>
