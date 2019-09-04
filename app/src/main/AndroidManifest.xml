@@ -92,11 +92,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAbE4DCT93WIQ59-IF2EJnFnArGFlTmYEA" />
 
-        <!--<service android:name=".notification.MyFireBaseMessagingService">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="com.google.firebase.MESSAGING_EVENT" />-->
-        <!--</intent-filter>-->
-        <!--</service>-->
+        <service android:name=".common.services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
     </application>
 

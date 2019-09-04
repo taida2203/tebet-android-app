@@ -2,6 +2,7 @@ package com.tebet.mojual.di.component
 
 import com.tebet.mojual.App
 import com.tebet.mojual.di.builder.ActivityBuilder
+import com.tebet.mojual.di.builder.ServiceBuilder
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import com.tebet.mojual.di.module.AppModule
@@ -15,8 +16,8 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(
-    modules = [(AndroidInjectionModule::class), (ActivityBuilder::class), (AppModule::class), (NetModule::class)]
+    modules = [AndroidInjectionModule::class, ActivityBuilder::class, ServiceBuilder::class, AppModule::class, NetModule::class]
 )
 interface AppComponent {
-  fun inject(app: App)
+    fun inject(app: App)
 }

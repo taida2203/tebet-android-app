@@ -30,7 +30,6 @@ import com.tebet.mojual.view.saledetail.SaleDetailFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import timber.log.Timber
 import javax.inject.Inject
 
 class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector,
@@ -149,7 +148,6 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             try {
                 return it.findFragmentByTag(it.getBackStackEntryAt(it.backStackEntryCount - 1).name)
             } catch (e: Exception) {
-                Timber.e(e)
             }
         }
         return null

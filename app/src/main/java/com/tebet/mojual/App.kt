@@ -1,14 +1,17 @@
 package com.tebet.mojual
 
 import android.app.Activity
+import android.app.Service
 import android.content.Context
 import android.provider.Settings
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.multidex.MultiDexApplication
 import co.common.util.LanguageUtil
 import co.common.util.PreferenceUtils
 import co.sdk.auth.AuthSdk
 import com.facebook.stetho.Stetho
+import com.google.firebase.messaging.RemoteMessage
 import com.squareup.leakcanary.LeakCanary
 import com.tebet.mojual.common.constant.ConfigEnv
 import com.tebet.mojual.common.util.Utility
@@ -18,18 +21,24 @@ import com.tebet.mojual.di.module.NetModule
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import dagger.android.HasServiceInjector
 import timber.log.Timber
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import java.util.*
 import javax.inject.Inject
 
-class App : MultiDexApplication(), HasActivityInjector {
+class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector {
     val context: Context
         get() = this
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>
     @Inject
+    lateinit var serviceInjector: DispatchingAndroidInjector<Service>
+    @Inject
     lateinit var mCalligraphyConfig: CalligraphyConfig
+
+    var notificationHandlerData: MutableLiveData<RemoteMessage> = MutableLiveData()
+        private set
 
     override fun onCreate() {
         super.onCreate()
@@ -90,6 +99,9 @@ class App : MultiDexApplication(), HasActivityInjector {
     }
 
     /**
+     *
+     *
+     *
      * A tree which logs important information for crash reporting.
      */
     private class CrashReportingTree : Timber.Tree() {
@@ -107,5 +119,7 @@ class App : MultiDexApplication(), HasActivityInjector {
     }
 
     override fun activityInjector(): AndroidInjector<Activity> = activityInjector
+
+    override fun serviceInjector(): AndroidInjector<Service> = serviceInjector
 }
 

@@ -3,10 +3,7 @@ package com.tebet.mojual.data.remote
 import co.sdk.auth.core.models.AuthJson
 import co.sdk.auth.core.models.LoginConfiguration
 import com.tebet.mojual.data.models.*
-import com.tebet.mojual.data.models.request.CreateOrderRequest
-import com.tebet.mojual.data.models.request.SearchOrderRequest
-import com.tebet.mojual.data.models.request.UpdateOrderQualityRequest
-import com.tebet.mojual.data.models.request.UpdatePasswordRequest
+import com.tebet.mojual.data.models.request.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import retrofit2.http.*
@@ -65,5 +62,11 @@ interface ApiHelper {
 
     @POST("order/search")
     fun searchOrders(@Body searchOrderRequest: SearchOrderRequest): Observable<AuthJson<Paging<Order>>>
+
+    @POST("communication/device/register")
+    fun registerDevice(@Body deviceRegisterRequest: DeviceRegisterRequest): Observable<AuthJson<EmptyResponse>>
+
+    @POST("communication/device/unregister")
+    fun unRegisterDevice(@Body deviceRegisterRequest: DeviceRegisterRequest): Observable<AuthJson<EmptyResponse>>
 }
 

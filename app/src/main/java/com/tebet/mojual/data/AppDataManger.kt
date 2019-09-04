@@ -3,6 +3,7 @@ package com.tebet.mojual.data
 import androidx.room.EmptyResultSetException
 import co.sdk.auth.core.models.AuthJson
 import co.sdk.auth.core.models.LoginConfiguration
+import com.google.firebase.iid.FirebaseInstanceId
 import com.tebet.mojual.App
 import com.tebet.mojual.common.util.checkConnectivity
 import com.tebet.mojual.data.local.db.DbHelper
@@ -11,8 +12,8 @@ import com.tebet.mojual.data.local.prefs.PreferencesHelper
 import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.google_map.GeoCodeResponse
 import com.tebet.mojual.data.models.request.CreateOrderRequest
+import com.tebet.mojual.data.models.request.DeviceRegisterRequest
 import com.tebet.mojual.data.models.request.SearchOrderRequest
-import com.tebet.mojual.data.models.request.UpdateOrderQualityRequest
 import com.tebet.mojual.data.models.request.UpdatePasswordRequest
 import com.tebet.mojual.data.remote.ApiGoogleHelper
 import com.tebet.mojual.data.remote.ApiHelper
@@ -21,7 +22,9 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
+import timber.log.Timber
 import javax.inject.Inject
+
 
 class AppDataManger @Inject constructor(
     private var api: ApiHelper,
@@ -154,7 +157,16 @@ class AppDataManger @Inject constructor(
 
     override fun getProfile(): Observable<AuthJson<UserProfile>> {
         if (App.instance.checkConnectivity()) {
-            return api.getProfile().doOnError { getUserProfileDB() }.concatMap { updateProfileDB(it) }
+            return api.getProfile().doOnNext { profile ->
+                Observable.create<String> { emitter ->
+                    FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+                        emitter.onNext(it.token)
+                    }.addOnFailureListener {
+                        emitter.onError(it)
+                    }.addOnCanceledListener { emitter.onError(Throwable()) }
+                }.concatMap { registerDevice(DeviceRegisterRequest(it)) }
+                    .concatMap { Observable.just(profile) }.subscribe({}, {})
+            }.doOnError { getUserProfileDB() }.concatMap { updateProfileDB(it) }
         }
         return getUserProfileDB()
     }
@@ -216,5 +228,8 @@ class AppDataManger @Inject constructor(
     override fun updateOrderQuality(  orderId: Long, qualityList: List<Quality>): Observable<AuthJson<Order>> = api.updateOrderQuality(orderId, qualityList)
 
     override fun deleteContainerCheck(quality: Quality): Observable<Boolean> = room.deleteContainerCheck(quality)
+
+    override fun registerDevice(deviceRegisterRequest: DeviceRegisterRequest): Observable<AuthJson<EmptyResponse>> = api.registerDevice(deviceRegisterRequest)
+    override fun unRegisterDevice(deviceRegisterRequest: DeviceRegisterRequest): Observable<AuthJson<EmptyResponse>> = api.unRegisterDevice(deviceRegisterRequest)
 }
 

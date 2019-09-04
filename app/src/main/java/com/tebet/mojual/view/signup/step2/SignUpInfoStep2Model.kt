@@ -2,16 +2,12 @@ package com.tebet.mojual.view.signup.step2
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.models.*
+import com.tebet.mojual.data.models.Address
+import com.tebet.mojual.data.models.City
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.signup.step.SignUpInfoStepViewModel
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
 
 class SignUpInfoStep2Model(
     dataManager: DataManager,
@@ -27,7 +23,7 @@ class SignUpInfoStep2Model(
         compositeDisposable.add(
             dataManager.getCityDB()
                 .subscribeOn(schedulerProvider.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<List<City>>() {
                     override fun onSuccess(dataResponse: List<City>) {
                         navigator.showLoading(false)

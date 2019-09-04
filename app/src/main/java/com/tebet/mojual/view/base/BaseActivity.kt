@@ -24,6 +24,9 @@ import androidx.lifecycle.ViewModelProviders
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedOkDialog
 import co.sdk.auth.core.models.LoginException
+import com.google.firebase.messaging.RemoteMessage
+import com.tapadoo.alerter.Alerter
+import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.databinding.ActivityBaseBinding
@@ -92,6 +95,14 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         })
         setSupportActionBar(baseBinding.baseToolbar)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        (application as App).notificationHandlerData.observe(this, Observer<RemoteMessage> {remoteMessage ->
+            remoteMessage.data?.let {
+                Alerter.create(this)
+                    .setTitle(it["code"].toString())
+                    .setText(it["message"].toString())
+                    .show()
+            }
+        })
         onCreateBase(savedInstanceState, contentLayoutId)
     }
 
