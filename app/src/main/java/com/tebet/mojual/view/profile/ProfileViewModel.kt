@@ -65,4 +65,25 @@ class ProfileViewModel(
                 })
         )
     }
+
+    fun onBasicInfoClick() {
+        userProfile.get()?.basicInfo = userProfile.get()?.basicInfo!!
+    }
+
+
+    fun onBankAccountClick() {
+        userProfile.get()?.bankAccount = userProfile.get()?.bankAccount!!
+    }
+
+    fun onDomicileClick() {
+        userProfile.get()?.domicileAddress?.let {
+            it.expanded = !it.expanded
+        }
+    }
+
+    fun onPickupClick() {
+        userProfile.get()?.pickupAddress?.let {
+            it.expanded = !it.expanded
+        }
+    }
 }

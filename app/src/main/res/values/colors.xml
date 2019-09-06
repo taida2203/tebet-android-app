@@ -35,6 +35,7 @@
 
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#2C2C2C</color>
     <color name="gray_text">#AFAFAF</color>
+    <color name="star_active">#ffd700</color>
     <color name="green_ic">#476f45</color>
     <color name="gray_signup">#BCD3DB</color>
     <color name="greycolor">#788f9b</color>

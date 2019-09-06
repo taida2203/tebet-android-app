@@ -105,6 +105,21 @@ data class UserProfile(
             notifyPropertyChanged(BR.pickupAddress)
         }
 
+    @Ignore
+    var basicInfo: Boolean = true
+        @Bindable get() = field
+        set(value) {
+            field = !value
+            notifyPropertyChanged(BR.basicInfo)
+        }
+
+    @Ignore
+    var bankAccount: Boolean = true
+        @Bindable get() = field
+        set(value) {
+            field = !value
+            notifyPropertyChanged(BR.bankAccount)
+        }
     fun isUserVerified(): Boolean {
         return statusEnum == Status.Verified
     }
