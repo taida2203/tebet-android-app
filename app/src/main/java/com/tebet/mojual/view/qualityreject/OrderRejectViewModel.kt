@@ -37,7 +37,9 @@ class OrderRejectViewModel(
                     .subscribeWith(object : CallbackWrapper<Order>() {
                         override fun onSuccess(dataResponse: Order) {
                             navigator.showLoading(false)
-                            navigator.openHomeScreen()
+                            order.get()?.let {
+                                navigator.openOrderDetailScreen(it)
+                            }
                         }
 
                         override fun onFailure(error: String?) {

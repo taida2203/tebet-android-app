@@ -13,6 +13,15 @@ data class Order(
     var planDate: Long? = null,
     var totalPrice: Double? = null
 ) : Serializable, IOrder, BaseObservable() {
+    constructor(order: IOrder) : this(order.orderId, order.orderCode) {
+        if (order is OrderDetail) {
+            price = order.price
+            quantity = order.quantity
+            planDate = order.planDate
+            totalPrice = order.totalPrice
+        }
+    }
+
     @Ignore
     var price: Double? = null
     @Ignore

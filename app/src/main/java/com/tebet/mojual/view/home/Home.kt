@@ -110,7 +110,18 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         openFragmentSlideRight(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder, SaleDetailFragment::class.java.simpleName, dataResponse.orderCode)
     }
 
-    override fun showOrderDetailScreen(dataResponse: Order) = openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName, dataResponse.orderCode)
+    override fun showOrderDetailScreen(dataResponse: Order) {
+        if (currentFragment() !is OrderDetailFragment) {
+            if (currentFragment() is OrderRejectFragment) {
+                supportFragmentManager.popBackStack()
+            } else {
+                openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName, dataResponse.orderCode)
+            }
+        } else {
+            (currentFragment() as OrderDetailFragment).viewModel.order.set(OrderDetail(dataResponse))
+            (currentFragment() as OrderDetailFragment).viewModel.loadData()
+        }
+    }
 
     override fun showCheckQualityScreen() = openFragmentSlideRight(QualityFragment(), R.id.contentHolder, QualityFragment::class.java.simpleName)
 
@@ -191,10 +202,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             is OrderDetailFragment -> {
                 enableBackButton = true
                 baseBinding.viewModel?.enableTopLogo?.set(false)
-                title = String.format(
-                    getString(R.string.check_quality_add_container_order),
-                    titleString ?: fragment.order?.orderCode
-                )
+                title = getString(R.string.order_detail_title)
             }
             is QualityFragment -> {
                 enableBackButton = true

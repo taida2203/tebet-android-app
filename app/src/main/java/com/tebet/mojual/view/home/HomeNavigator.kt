@@ -1,6 +1,5 @@
 package com.tebet.mojual.view.home
 
-import androidx.databinding.ObservableArrayList
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail

@@ -2,7 +2,6 @@ package com.tebet.mojual.view.qualitydetail
 
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.ObservableArrayList
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
@@ -59,18 +58,31 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
         return validator.validate()
     }
 
-    override fun openHomeScreen() {
-        (activity as Home).viewModel.onHomeClick()
+    override fun openOrderDetailScreen(it: OrderDetail) {
+        (activity as Home).viewModel.onOrderDetailClick(Order(it))
     }
 
     override fun openRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>) {
-        (activity as Home).viewModel.onReasonClick(order, selectedItems)
+        activity?.supportFragmentManager?.let {
+            RoundedDialog(getString(R.string.order_detail_dialog_reject))
+                .addFirstButton(RoundedDialogButton(getString(R.string.general_btn_no), R.drawable.rounded_bg_button_trans))
+                .addSecondButton(RoundedDialogButton(getString(R.string.general_btn_yes)))
+                .setRoundedDialogCallback(
+                    object : RoundedDialog.RoundedDialogCallback {
+                        override fun onFirstButtonClicked(selectedValue: Any?) {
+                        }
+
+                        override fun onSecondButtonClicked(selectedValue: Any?) {
+                            (activity as Home).viewModel.onReasonClick(order, selectedItems)
+                        }
+                    }).show(it, "")
+        }
     }
     override fun showConfirmDialog(selectedItems: List<OrderContainer>) {
         activity?.supportFragmentManager?.let {
-            RoundedDialog("Are you sure to sell your selected container?")
-                .addFirstButton(RoundedDialogButton("NO", R.drawable.rounded_bg_button_trans))
-                .addSecondButton(RoundedDialogButton("YES"))
+            RoundedDialog(getString(R.string.order_detail_dialog_confirm))
+                .addFirstButton(RoundedDialogButton(getString(R.string.general_btn_no), R.drawable.rounded_bg_button_trans))
+                .addSecondButton(RoundedDialogButton(getString(R.string.general_btn_yes)))
                 .setRoundedDialogCallback(
                 object : RoundedDialog.RoundedDialogCallback {
                     override fun onFirstButtonClicked(selectedValue: Any?) {

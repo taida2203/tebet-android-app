@@ -2,12 +2,12 @@ package com.tebet.mojual.view.qualityreject
 
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.ObservableArrayList
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.databinding.FragmentOrderRejectBinding
@@ -57,7 +57,7 @@ class OrderRejectFragment : BaseFragment<FragmentOrderRejectBinding, OrderReject
         return validator.validate()
     }
 
-    override fun openHomeScreen() {
-        (activity as Home).viewModel.onHomeClick()
+    override fun openOrderDetailScreen(order: OrderDetail) {
+        (activity as Home).viewModel.onOrderDetailClick(Order(order))
     }
 }

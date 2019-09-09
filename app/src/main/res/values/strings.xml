@@ -3,6 +3,8 @@
 
     <string name="general_btn_next">Next</string>
     <string name="general_btn_back">back</string>
+    <string name="general_btn_no">NO</string>
+    <string name="general_btn_yes">YES</string>
     <string name="general_error_feature_disabled">this feature will coming soon !</string>
     <string name="general_error_feature_permission">you don\'t have permission to access this feature yet</string>
     <string name="general_error_validation_fill_all_field">Fill all required field !!</string>
@@ -102,6 +104,7 @@
     <string name="check_quality_add_container_weight_title">Weight (KG)</string>
     <string name="check_quality_add_container_time_title">Timer (Seconds)</string>
 
+    <string name="order_detail_title">Confirmation</string>
     <string name="order_detail_hint">Your order are checked. Please choose what container to sell.</string>
     <string name="order_detail_button_submit">SUBMIT</string>
     <string name="order_detail_button_reject">REJECT</string>
@@ -121,5 +124,7 @@
     <string name="order_detail_amount">Amount</string>
     <string name="order_detail_content">Eugenol Content</string>
     <string name="history_filter">FILTER BY</string>
+    <string name="order_detail_dialog_reject">Are you sure to reject all container?</string>
+    <string name="order_detail_dialog_confirm">Are you sure to sell your selected container?</string>
 
 </resources>
