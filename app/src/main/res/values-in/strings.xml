@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">MoJualApp</string>
+
+    <string name="general_btn_next">Lanjut</string>
+    <string name="general_btn_back">Kembali</string>
+    <string name="general_btn_no">NO</string>
+    <string name="general_btn_yes">YES</string>
+    <string name="general_error_feature_disabled">Fitur in belum tersedia</string>
+    <string name="general_error_feature_permission">Fitur in belum tersedia untuk anda</string>
+    <string name="general_error_validation_fill_all_field">Isi pertanyaan yang masih kosong</string>
+
+    <!--Month year Picker-->
+    <string name="login_btn_login">Masukan nomor telepon anda</string>
+    <string name="login_btn_register">Daftar</string>
+    <string name="login_btn_forgot_password">Lupa password</string>
+    <string name="login_password_phone">Telepon</string>
+
+    <string name="registration_title">Daftar baru</string>
+    <string name="registration_step1_selfie_tutorial">Ambil foto wajah anda</string>
+    <string name="registration_step1_full_name">Nama lengkap</string>
+    <string name="registration_step1_date_of_birth">Tanggal lahir</string>
+    <string name="registration_step1_ktp_number">Nomor KTP</string>
+    <string name="registration_step1_upload_ktp_photo">Ambil foto KTP anda</string>
+    <string name="registration_step1_error_name">Dilarang memakai karakter khusus</string>
+    <string name="registration_step2_email_optional">Email (pilihan)</string>
+    <string name="registration_step2_address">Alamat</string>
+    <string name="registration_step2_kelurahan">Kelurahan</string>
+    <string name="registration_step2_kecamatan">Kecamatan</string>
+    <string name="registration_step2_rt_rw">RT/RW</string>
+    <string name="registration_step2_city">Kota/Kabupaten</string>
+    <string name="registration_step2_postal_code">Kode pos</string>
+    <string name="registration_step2_google_map_title">Kirim lokasi anda saat ini</string>
+    <string name="registration_step2_choose_on_map">Tandai di peta</string>
+    <string name="registration_step3_bank_name">Nama bank</string>
+    <string name="registration_step3_bank_account_number">Nomor rekening bank</string>
+    <string name="registration_step3_bank_account_name">Nama sesuai rekening bank</string>
+    <string name="registration_step3_bank_region">Kantor cabang</string>
+    <string name="login_password_title">Masuk dengan nomor telepon anda</string>
+
+    <string name="sign_up_password_title">Sign Up</string>
+    <string name="forgot_password_title">Masukan password baru</string>
+    <string name="forgot_password_hint">Password</string>
+    <string name="forgot_password_input_password_hint">Masukan password</string>
+    <string name="forgot_password_re_password_hint">Ketik ulang password</string>
+
+    <string name="forgot_password_error_length">Password minimal 6 karakter (huruf dan angka)</string>
+    <string name="forgot_password_error_not_match">Password tidak sama</string>
+
+
+    <string name="home_verify_warning">Akun anda sedang diverifikasi. Team Mo-Jual akan menghubungi anda secepatnya.</string>
+    <string name="home_navigation_home">Beranda</string>
+    <string name="home_navigation_inbox">Inbox</string>
+    <string name="home_navigation_history">History</string>
+    <string name="home_menu_sell_now">Jual sekarang</string>
+    <string name="home_menu_check_quality">Cek kualitas</string>
+    <string name="home_menu_borrow">Pinjam</string>
+    <string name="home_menu_tips">Tips</string>
+    <string name="home_bonus">Bonus</string>
+
+    <string name="sale_button_submit">SUBMIT</string>
+    <string name="sale_estimated_price">Harga estimasi</string>
+    <string name="sale_quantity">Pilih jumlah</string>
+    <string name="sale_selected_date">Pilih tanggal pengiriman</string>
+    <string name="sale_select_title">Pilih jumlah barang dan tanggal pengiriman</string>
+</resources>
