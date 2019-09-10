@@ -2,12 +2,12 @@ package com.tebet.mojual.view.history
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
+import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.databinding.FragmentHistoryBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.home.Home
@@ -38,5 +38,9 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
 
     override fun validate(): Boolean {
         return validator.validate()
+    }
+
+    override fun openSearchAdvancedScreen(searchOrderRequest: SearchOrderRequest) {
+        (activity as Home).viewModel.onSearchAdvancedClick(searchOrderRequest)
     }
 }

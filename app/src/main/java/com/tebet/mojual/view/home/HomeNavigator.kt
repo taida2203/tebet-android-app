@@ -3,6 +3,7 @@ package com.tebet.mojual.view.home
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
+import com.tebet.mojual.data.models.request.SearchOrderRequest
 
 interface HomeNavigator {
     fun showCheckQualityScreen()
@@ -18,4 +19,5 @@ interface HomeNavigator {
     fun showAddContainerScreen(dataResponse: Order)
     fun showRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
     fun showInboxScreen()
+    fun showHistorySearchScreen(searchOrderRequest: SearchOrderRequest)
 }

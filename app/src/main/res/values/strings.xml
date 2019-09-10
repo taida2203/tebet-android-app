@@ -128,5 +128,7 @@
     <string name="history_title">HISTORY</string>
     <string name="history_filter">FILTER BY</string>
 
+    <string name="history_search_title">ADVANCED SEARCH</string>
+
     <string name="message_title">NOTIFICATION</string>
 </resources>

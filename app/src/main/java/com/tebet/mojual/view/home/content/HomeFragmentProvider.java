@@ -2,6 +2,8 @@ package com.tebet.mojual.view.home.content;
 
 import com.tebet.mojual.view.history.HistoryFragment;
 import com.tebet.mojual.view.history.HistoryFragmentModule;
+import com.tebet.mojual.view.historysearch.HistorySearchFragmentModule;
+import com.tebet.mojual.view.historysearch.HistorySearchFragment;
 import com.tebet.mojual.view.message.MessageFragment;
 import com.tebet.mojual.view.message.MessageFragmentModule;
 import com.tebet.mojual.view.qualitycheck.QualityFragment;
@@ -34,4 +36,7 @@ public abstract class HomeFragmentProvider {
 
     @ContributesAndroidInjector(modules = MessageFragmentModule.class)
     abstract MessageFragment provideMessageFragmentFactory();
+
+    @ContributesAndroidInjector(modules = HistorySearchFragmentModule.class)
+    abstract HistorySearchFragment provideHistorySearchFragmentFactory();
 }

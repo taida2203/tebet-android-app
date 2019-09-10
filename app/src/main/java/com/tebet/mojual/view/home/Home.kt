@@ -14,13 +14,14 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.databinding.ItemHomeAvatarBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.history.HistoryFragment
 import com.tebet.mojual.view.home.content.HomeFragment
-import com.tebet.mojual.view.message.MessageFragment
+import com.tebet.mojual.view.historysearch.HistorySearchFragment
 import com.tebet.mojual.view.profile.ProfileFragment
 import com.tebet.mojual.view.qualitycheck.QualityFragment
 import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
@@ -104,7 +105,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun showHistoryScreen() = openFragmentSlideRight(HistoryFragment(), R.id.contentHolder, HistoryFragment::class.java.simpleName)
 
-    override fun showInboxScreen() = openFragmentSlideRight(MessageFragment(), R.id.contentHolder, MessageFragment::class.java.simpleName)
+    override fun showHistorySearchScreen(searchOrderRequest: SearchOrderRequest) = openFragmentSlideRight(HistorySearchFragment(), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
+
+
+    override fun showInboxScreen() = openFragmentSlideRight(HistorySearchFragment(), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
 
     override fun showProfileScreen() = openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
 
@@ -180,9 +184,9 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                 viewModel.selectedTab.set(HomeViewModel.ScreenTab.History)
                 title = getString(R.string.history_title)
             }
-            is MessageFragment -> {
+            is HistorySearchFragment -> {
                 viewModel.selectedTab.set(HomeViewModel.ScreenTab.Message)
-                title = getString(R.string.message_title)
+                title = getString(R.string.history_search_title)
             }
             is ProfileFragment -> title = viewModel.profileLiveData.value?.fullName
             is OrderRejectFragment -> title = getString(R.string.order_reject_title)

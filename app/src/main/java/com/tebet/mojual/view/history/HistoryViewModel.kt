@@ -61,4 +61,8 @@ class HistoryViewModel(
             return
         }
     }
+
+    fun onSearchAdvancedClick() {
+        navigator.openSearchAdvancedScreen(SearchOrderRequest())
+    }
 }

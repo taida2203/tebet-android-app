@@ -8,6 +8,7 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 
@@ -85,5 +86,9 @@ class HomeViewModel(
 
     fun onReasonClick(order: OrderDetail, selectedItems: List<OrderContainer>) {
         navigator.showRejectReasonScreen(order, selectedItems)
+    }
+
+    fun onSearchAdvancedClick(searchOrderRequest: SearchOrderRequest) {
+        navigator.showHistorySearchScreen(searchOrderRequest)
     }
 }

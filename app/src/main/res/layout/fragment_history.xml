@@ -25,6 +25,7 @@
         <com.tebet.mojual.common.view.AppEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onSearchAdvancedClick()}"
             android:layout_marginBottom="@dimen/_16sdp"
             android:text="@string/history_filter" />
 
