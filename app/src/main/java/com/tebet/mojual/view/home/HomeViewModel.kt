@@ -1,6 +1,5 @@
 package com.tebet.mojual.view.home
 
-import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.common.util.rx.SchedulerProvider
@@ -22,7 +21,7 @@ class HomeViewModel(
     var selectedTab = ObservableField(ScreenTab.Home)
 
     enum class ScreenTab {
-        Home, Inbox, History
+        Home, Message, History
     }
 
     fun loadData() {
@@ -61,6 +60,11 @@ class HomeViewModel(
     fun onHistoryClick() {
         selectedTab.set(ScreenTab.History)
         navigator.showHistoryScreen()
+    }
+
+    fun onMessageClick() {
+        selectedTab.set(ScreenTab.Message)
+        navigator.showInboxScreen()
     }
 
     fun onQualityCheckClick() {

@@ -11,10 +11,7 @@ import com.tebet.mojual.data.local.db.dao.*
 import com.tebet.mojual.data.local.prefs.PreferencesHelper
 import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.google_map.GeoCodeResponse
-import com.tebet.mojual.data.models.request.CreateOrderRequest
-import com.tebet.mojual.data.models.request.DeviceRegisterRequest
-import com.tebet.mojual.data.models.request.SearchOrderRequest
-import com.tebet.mojual.data.models.request.UpdatePasswordRequest
+import com.tebet.mojual.data.models.request.*
 import com.tebet.mojual.data.remote.ApiGoogleHelper
 import com.tebet.mojual.data.remote.ApiHelper
 import com.tebet.mojual.data.remote.ApiSensorHelper
@@ -22,7 +19,6 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -230,6 +226,10 @@ class AppDataManger @Inject constructor(
     override fun deleteContainerCheck(quality: Quality): Observable<Boolean> = room.deleteContainerCheck(quality)
 
     override fun registerDevice(deviceRegisterRequest: DeviceRegisterRequest): Observable<AuthJson<EmptyResponse>> = api.registerDevice(deviceRegisterRequest)
+
     override fun unRegisterDevice(deviceRegisterRequest: DeviceRegisterRequest): Observable<AuthJson<EmptyResponse>> = api.unRegisterDevice(deviceRegisterRequest)
+
+    override fun getMessages(messageRequest: MessageRequest): Observable<AuthJson<Paging<Message>>> = api.getMessages(messageRequest)
+
 }
 

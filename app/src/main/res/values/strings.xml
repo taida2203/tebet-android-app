@@ -125,7 +125,8 @@
     <string name="order_reject_quest_2">How much is your production yield?</string>
     <string name="order_reject_buttom_confirm">CONFIRM TO REJECT</string>
 
-
-
+    <string name="history_title">HISTORY</string>
     <string name="history_filter">FILTER BY</string>
+
+    <string name="message_title">NOTIFICATION</string>
 </resources>

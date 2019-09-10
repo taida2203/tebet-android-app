@@ -12,6 +12,7 @@ import com.tebet.mojual.view.home.HomeViewModel
 import com.tebet.mojual.view.home.content.HomeContentViewModel
 import com.tebet.mojual.view.login.LoginViewModel
 import com.tebet.mojual.view.loginpassword.LoginWithPasswordViewModel
+import com.tebet.mojual.view.message.MessageViewModel
 import com.tebet.mojual.view.profile.ProfileViewModel
 import com.tebet.mojual.view.qualitycheck.QualityViewModel
 import com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel
@@ -61,6 +62,7 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(QualityAddContainerViewModel::class.java) -> QualityAddContainerViewModel(dataManager, schedulerProvider, sensorManager) as T
             modelClass.isAssignableFrom(OrderDetailViewModel::class.java) -> OrderDetailViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(OrderRejectViewModel::class.java) -> OrderRejectViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(MessageViewModel::class.java) -> MessageViewModel(dataManager, schedulerProvider) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

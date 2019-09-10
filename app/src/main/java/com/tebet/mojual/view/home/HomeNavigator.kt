@@ -17,4 +17,5 @@ interface HomeNavigator {
     fun showHistoryScreen()
     fun showAddContainerScreen(dataResponse: Order)
     fun showRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
+    fun showInboxScreen()
 }

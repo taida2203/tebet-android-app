@@ -20,6 +20,7 @@ import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.history.HistoryFragment
 import com.tebet.mojual.view.home.content.HomeFragment
+import com.tebet.mojual.view.message.MessageFragment
 import com.tebet.mojual.view.profile.ProfileFragment
 import com.tebet.mojual.view.qualitycheck.QualityFragment
 import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
@@ -103,6 +104,8 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun showHistoryScreen() = openFragmentSlideRight(HistoryFragment(), R.id.contentHolder, HistoryFragment::class.java.simpleName)
 
+    override fun showInboxScreen() = openFragmentSlideRight(MessageFragment(), R.id.contentHolder, MessageFragment::class.java.simpleName)
+
     override fun showProfileScreen() = openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
 
     override fun showOrderCompleteScreen(dataResponse: Order) {
@@ -165,6 +168,8 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     }
 
     private fun updateTitleAction(fragment: Fragment?, titleString: String? = null) {
+        baseBinding.viewModel?.enableTopLogo?.set(false)
+        enableBackButton = true
         when (fragment) {
             is HomeFragment -> {
                 enableBackButton = false
@@ -172,43 +177,19 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                 viewModel.selectedTab.set(HomeViewModel.ScreenTab.Home)
             }
             is HistoryFragment -> {
-                enableBackButton = false
-                baseBinding.viewModel?.enableTopLogo?.set(true)
                 viewModel.selectedTab.set(HomeViewModel.ScreenTab.History)
+                title = getString(R.string.history_title)
             }
-            is ProfileFragment -> {
-                enableBackButton = true
-                baseBinding.viewModel?.enableTopLogo?.set(false)
-                title = viewModel.profileLiveData.value?.fullName
+            is MessageFragment -> {
+                viewModel.selectedTab.set(HomeViewModel.ScreenTab.Message)
+                title = getString(R.string.message_title)
             }
-            is OrderRejectFragment -> {
-                enableBackButton = true
-                baseBinding.viewModel?.enableTopLogo?.set(false)
-                title = getString(R.string.order_reject_title)
-            }
-            is SaleFragment -> {
-                enableBackButton = true
-                baseBinding.viewModel?.enableTopLogo?.set(false)
-                title = getString(R.string.home_menu_sell_now)
-            }
-            is SaleDetailFragment -> {
-                enableBackButton = true
-                baseBinding.viewModel?.enableTopLogo?.set(false)
-                title = String.format(
-                    getString(R.string.check_quality_add_container_order),
-                    titleString ?: fragment.order?.orderCode
-                )
-            }
-            is OrderDetailFragment -> {
-                enableBackButton = true
-                baseBinding.viewModel?.enableTopLogo?.set(false)
-                title = getString(R.string.order_detail_title)
-            }
-            is QualityFragment -> {
-                enableBackButton = true
-                baseBinding.viewModel?.enableTopLogo?.set(false)
-                title = getString(R.string.home_menu_check_quality)
-            }
+            is ProfileFragment -> title = viewModel.profileLiveData.value?.fullName
+            is OrderRejectFragment -> title = getString(R.string.order_reject_title)
+            is SaleFragment -> title = getString(R.string.home_menu_sell_now)
+            is SaleDetailFragment -> title = String.format(getString(R.string.check_quality_add_container_order), titleString ?: fragment.order?.orderCode)
+            is OrderDetailFragment -> title = getString(R.string.order_detail_title)
+            is QualityFragment -> title = getString(R.string.home_menu_check_quality)
         }
     }
 

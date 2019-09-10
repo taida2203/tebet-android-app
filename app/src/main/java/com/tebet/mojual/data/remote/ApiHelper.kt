@@ -62,11 +62,13 @@ interface ApiHelper {
 
     @POST("order/search")
     fun searchOrders(@Body searchOrderRequest: SearchOrderRequest): Observable<AuthJson<Paging<Order>>>
-
     @POST("communication/device/register")
     fun registerDevice(@Body deviceRegisterRequest: DeviceRegisterRequest): Observable<AuthJson<EmptyResponse>>
 
     @POST("communication/device/unregister")
     fun unRegisterDevice(@Body deviceRegisterRequest: DeviceRegisterRequest): Observable<AuthJson<EmptyResponse>>
+
+    @POST("communication/notification/history")
+    fun getMessages(@Body getMessageRequest: MessageRequest): Observable<AuthJson<Paging<Message>>>
 }
 
