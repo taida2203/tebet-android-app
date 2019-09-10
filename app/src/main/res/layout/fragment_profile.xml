@@ -158,8 +158,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.phone}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -191,8 +191,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.ktpNumber}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -224,8 +224,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{StringExtKt.toDisplayMoney(viewModel.userProfile.bonus)}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -292,8 +292,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.fullName}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -325,8 +325,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.phone}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -358,8 +358,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.ktpNumber}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -391,8 +391,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{StringExtKt.toDisplayMoney(viewModel.userProfile.bonus)}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -459,8 +459,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.fullName}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -492,8 +492,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.phone}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -525,8 +525,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.ktpNumber}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -558,8 +558,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{StringExtKt.toDisplayMoney(viewModel.userProfile.bonus)}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -612,6 +612,7 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/tvBankName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Bank Name"
@@ -621,15 +622,16 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.tebet.mojual.common.view.AppTextView
-                            android:id="@+id/tvBankName"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.bankName}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            android:gravity="end"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/tvBankName"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <View
@@ -659,8 +661,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.bankAccountNumber}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -692,8 +694,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.bankAccountName}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -725,8 +727,8 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.userProfile.bankRegionName}"
                             android:textColor="@color/colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
