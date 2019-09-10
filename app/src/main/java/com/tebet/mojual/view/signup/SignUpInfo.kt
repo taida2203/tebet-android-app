@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import co.common.view.dialog.DateDialog
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding

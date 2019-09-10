@@ -16,7 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
 import com.tebet.mojual.databinding.ActivitySignUpGoogleMapBinding

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
@@ -184,7 +184,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             is OrderRejectFragment -> {
                 enableBackButton = true
                 baseBinding.viewModel?.enableTopLogo?.set(false)
-                title = getString(R.string.home_reject_title)
+                title = getString(R.string.order_reject_title)
             }
             is SaleFragment -> {
                 enableBackButton = true

@@ -11,7 +11,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivitySplashScreenBinding
 import com.tebet.mojual.view.home.Home

@@ -2,7 +2,7 @@ package com.tebet.mojual.view.selectquantity
 
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager

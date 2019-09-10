@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import co.sdk.auth.AuthSdk
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivityLoginPasswordBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding

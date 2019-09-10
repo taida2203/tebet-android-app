@@ -2,8 +2,8 @@ package com.tebet.mojual.data.models
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import androidx.databinding.library.baseAdapters.BR
 import androidx.room.Ignore
-import com.tebet.mojual.BR
 import java.io.Serializable
 
 data class Order(

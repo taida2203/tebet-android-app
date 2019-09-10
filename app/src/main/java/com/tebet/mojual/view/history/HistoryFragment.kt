@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.FragmentHistoryBinding

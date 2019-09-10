@@ -3,7 +3,7 @@ package com.tebet.mojual.view.profile
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentProfileBinding
 import com.tebet.mojual.view.base.BaseFragment

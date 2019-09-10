@@ -5,7 +5,7 @@ import androidx.databinding.Bindable
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import java.io.Serializable
 
 @Entity(

@@ -111,20 +111,21 @@
     <string name="order_detail_total_amount">Total Amount</string>
     <string name="order_detail_delivery_bonus">Delivery Bonus</string>
     <string name="order_detail_volume_bonus">Volume Bonus</string>
+    <string name="order_detail_order_id">Order ID</string>
+    <string name="order_detail_weight">Weight</string>
+    <string name="order_detail_price">Price</string>
+    <string name="order_detail_amount">Amount</string>
+    <string name="order_detail_content">Eugenol Content</string>
+    <string name="order_detail_dialog_reject">Are you sure to reject all container?</string>
+    <string name="order_detail_dialog_confirm">Are you sure to sell your selected container?</string>
+
+    <string name="order_reject_title">LET US KNOW</string>
     <string name="order_reject_detail">Why do you reject? let us know by answer some questions below</string>
     <string name="order_reject_quest_1">Price of raw material (leafs)?</string>
     <string name="order_reject_quest_2">How much is your production yield?</string>
     <string name="order_reject_buttom_confirm">CONFIRM TO REJECT</string>
 
 
-    <string name="home_reject_title">LET US KNOW</string>
 
-    <string name="order_detail_weight">Weight</string>
-    <string name="order_detail_price">Price</string>
-    <string name="order_detail_amount">Amount</string>
-    <string name="order_detail_content">Eugenol Content</string>
     <string name="history_filter">FILTER BY</string>
-    <string name="order_detail_dialog_reject">Are you sure to reject all container?</string>
-    <string name="order_detail_dialog_confirm">Are you sure to sell your selected container?</string>
-
 </resources>

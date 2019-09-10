@@ -5,7 +5,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.lifecycle.ViewModelProviders
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentSignUpInfoStep1Binding
 import com.tebet.mojual.view.signup.SignUpInfo

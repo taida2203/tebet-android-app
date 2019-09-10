@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedDialogButton
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer

@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import co.sdk.auth.AuthSdk
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivityLoginBinding
 import com.tebet.mojual.view.home.Home

@@ -7,7 +7,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.data.models.SensorData
 import org.jsoup.Jsoup
 import timber.log.Timber

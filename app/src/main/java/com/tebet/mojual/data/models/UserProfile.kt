@@ -3,7 +3,7 @@ package com.tebet.mojual.data.models
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.room.*
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 
 @Entity(
     tableName = "UserProfile"

@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.databinding.*
 import br.com.ilhasoft.support.validation.Validator
-import com.tebet.mojual.BR
+import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Address
 import com.tebet.mojual.data.models.City
