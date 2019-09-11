@@ -1,5 +1,6 @@
 package com.tebet.mojual.common.util
 
+import com.tebet.mojual.data.models.enumeration.ContainerOrderState
 import java.text.DecimalFormat
 
 fun Double.toDisplayMoney(): String {
@@ -17,4 +18,8 @@ fun Double.toDisplayWeight(): String {
 
 fun Double.toDisplayPercent(): String {
     return this.toInt().toString() + "%"
+}
+
+fun ContainerOrderState.toDisplayContainerStatus(): String {
+    return this.name.replace("_", " ").toLowerCase().capitalize()
 }

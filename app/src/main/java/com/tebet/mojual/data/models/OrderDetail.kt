@@ -1,6 +1,7 @@
 package com.tebet.mojual.data.models
 
 import androidx.room.Ignore
+import com.tebet.mojual.data.models.enumeration.ContainerOrderState
 import com.tebet.mojual.data.models.enumeration.ContainerOrderStatus
 import com.tebet.mojual.data.models.enumeration.OrderStatus
 import java.io.Serializable
@@ -38,7 +39,6 @@ data class OrderDetail(
             totalPrice = order.totalPrice
         }
     }
-
     val isRejected: Boolean
         get() {
             when (status) {

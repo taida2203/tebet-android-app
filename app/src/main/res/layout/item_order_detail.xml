@@ -81,21 +81,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="ACCEPTED"
-                    android:textColor="@color/green_change_course"
+                    android:text="@{StringExtKt.toDisplayContainerStatus(item.state)}"
+                    android:textColor="@{!item.isRejected ? @color/green_change_course : @color/red_btn_dialog}"
                     android:textSize="@dimen/_10ssp"
-                    android:textStyle="bold"
-                    android:visibility="@{item.isAccepted ? View.VISIBLE : View.GONE}" />
-
-                <com.tebet.mojual.common.view.AppTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="REJECTED"
-                    android:textColor="@color/red_btn_dialog"
-                    android:textSize="@dimen/_10ssp"
-                    android:textStyle="bold"
-                    android:visibility="@{item.isRejected ? View.VISIBLE : View.GONE}" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
