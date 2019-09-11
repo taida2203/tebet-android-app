@@ -32,13 +32,15 @@ class HistoryViewModel(
         if (items.size >= offset) {
             navigator.showLoading(true)
             compositeDisposable.add(
-                dataManager.searchOrders(SearchOrderRequest(offset = page * 10, limit = 10))
+                dataManager.searchOrders(SearchOrderRequest(offset = page * 10, limit = 10, hasNoContainer = false))
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                         override fun onSuccess(dataResponse: Paging<Order>) {
                             dataResponse.data.forEach { order ->
-                                if (!items.contains(order)) items.add(order)
-                                else items[items.indexOf(order)] = order
+                                when {
+                                    items.contains(order) -> items[items.indexOf(order)] = order
+                                    else -> items.add(order)
+                                }
                             }
                             navigator.showLoading(false)
                         }

@@ -46,6 +46,7 @@ class OrderDetailViewModel(
                             order.set(dataResponse)
                             dataResponse.containers?.forEach { container ->
                                 if (!items.contains(container)) items.add(container)
+                                else items[items.indexOf(container)] = container
                             }
                             navigator.showLoading(false)
                         }

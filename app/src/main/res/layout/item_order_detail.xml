@@ -37,25 +37,71 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="@dimen/_16sdp"
                 android:layout_height="@dimen/_16sdp"
-                android:onClick="@{() -> listener.onItemClick(item)}"
-                android:src="@{item.isSelected ? @drawable/selecte_box_checked : @drawable/selecte_box_uncheck}" />
+                android:layout_gravity="center_vertical">
 
-            <com.tebet.mojual.common.view.AppTextView
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:onClick="@{() -> listener.onItemClick(item)}"
+                    android:src="@{item.isSelected ? @drawable/selecte_box_checked : @drawable/selecte_box_uncheck}"
+                    android:visibility="@{item.canAction ? View.VISIBLE : View.GONE}" />
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/_3sdp"
                 android:layout_weight="1"
-                android:text="@{@string/check_quality_add_container_title(item.combinedCode)}"
-                android:textColor="@color/green_dark"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@{@string/check_quality_add_container_title(item.combinedCode)}"
+                    android:textColor="@color/green_dark"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text=" - "
+                    android:textColor="@color/green_dark"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="@{item.canAction ? View.GONE : View.VISIBLE}" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="ACCEPTED"
+                    android:textColor="@color/green_change_course"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="@{item.isAccepted ? View.VISIBLE : View.GONE}" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="REJECTED"
+                    android:textColor="@color/red_btn_dialog"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="@{item.isRejected ? View.VISIBLE : View.GONE}" />
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="@dimen/_16sdp"
                 android:layout_height="@dimen/_16sdp"
+                android:layout_gravity="center_vertical"
                 android:src="@{item.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}" />
         </LinearLayout>
 
@@ -116,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:padding="@dimen/_4sdp"
-                        android:text="@{@string/sale_select_future_date_price_kg(StringExtKt.toDisplayMoney(item.pricePerKg))}"
+                        android:text="@{@string/sale_select_future_date_price_kg(StringExtKt.toDisplayMoney(item.pricePerKgDisplay))}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />
@@ -174,7 +220,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:padding="@dimen/_4sdp"
-                        android:text="@{StringExtKt.toDisplayMoney(item.initialPrice)}"
+                        android:text="@{StringExtKt.toDisplayMoney(item.priceTotalDisplay)}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />

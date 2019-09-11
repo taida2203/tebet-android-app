@@ -119,16 +119,16 @@
     <string name="order_detail_dialog_reject">Are you sure to reject all container?</string>
     <string name="order_detail_dialog_confirm">Are you sure to sell your selected container?</string>
 
-    <string name="order_reject_title">LET US KNOW</string>
+    <string name="order_reject_title">Let Us Know</string>
     <string name="order_reject_detail">Why do you reject? let us know by answer some questions below</string>
     <string name="order_reject_quest_1">Price of raw material (leafs)?</string>
     <string name="order_reject_quest_2">How much is your production yield?</string>
     <string name="order_reject_buttom_confirm">CONFIRM TO REJECT</string>
 
-    <string name="history_title">HISTORY</string>
+    <string name="history_title">History</string>
     <string name="history_filter">FILTER BY</string>
 
-    <string name="history_search_title">ADVANCED SEARCH</string>
+    <string name="history_search_title">Advanced Search</string>
 
-    <string name="message_title">NOTIFICATION</string>
+    <string name="message_title">Notification</string>
 </resources>
