@@ -123,7 +123,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     open fun showOrderDetailScreen(dataResponse: Order) {}
 
     protected fun openFromNotification(extras: Map<String, String?>): Boolean {
-        extras.get("orderId")?.let {
+        extras["orderId"]?.let {
             showOrderDetailScreen(Order(orderId = it.toLong()))
             return true
         }
