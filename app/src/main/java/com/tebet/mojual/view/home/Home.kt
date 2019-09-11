@@ -33,7 +33,6 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
-import androidx.core.content.ContextCompat.getSystemService
 import com.tebet.mojual.view.message.MessageFragment
 
 
@@ -126,7 +125,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     override fun showHistorySearchScreen(searchOrderRequest: SearchOrderRequest) = openFragmentSlideRight(HistorySearchFragment(), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
 
 
-    override fun showInboxScreen() = openFragmentSlideRight(MessageFragment(), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
+    override fun showInboxScreen() = openFragmentSlideRight(MessageFragment(), R.id.contentHolder, MessageFragment::class.java.simpleName)
 
     override fun showProfileScreen() = openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
 
