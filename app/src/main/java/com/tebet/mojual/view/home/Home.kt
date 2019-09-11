@@ -34,7 +34,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 import androidx.core.content.ContextCompat.getSystemService
-
+import com.tebet.mojual.view.message.MessageFragment
 
 
 class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector,
@@ -126,7 +126,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     override fun showHistorySearchScreen(searchOrderRequest: SearchOrderRequest) = openFragmentSlideRight(HistorySearchFragment(), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
 
 
-    override fun showInboxScreen() = openFragmentSlideRight(HistorySearchFragment(), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
+    override fun showInboxScreen() = openFragmentSlideRight(MessageFragment(), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
 
     override fun showProfileScreen() = openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
 
@@ -202,9 +202,9 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                 viewModel.selectedTab.set(HomeViewModel.ScreenTab.History)
                 title = getString(R.string.history_title)
             }
-            is HistorySearchFragment -> {
+            is MessageFragment -> {
                 viewModel.selectedTab.set(HomeViewModel.ScreenTab.Message)
-                title = getString(R.string.history_search_title)
+                title = getString(R.string.message_title)
             }
             is ProfileFragment -> title = viewModel.profileLiveData.value?.fullName
             is OrderRejectFragment -> title = getString(R.string.order_reject_title)
@@ -212,6 +212,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             is SaleDetailFragment -> title = String.format(getString(R.string.check_quality_add_container_order), titleString ?: fragment.order?.orderCode)
             is OrderDetailFragment -> title = getString(R.string.order_detail_title)
             is QualityFragment -> title = getString(R.string.home_menu_check_quality)
+            is HistorySearchFragment -> title = getString(R.string.history_search_title)
         }
     }
 
