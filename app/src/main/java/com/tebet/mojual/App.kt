@@ -37,7 +37,7 @@ class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector {
     @Inject
     lateinit var mCalligraphyConfig: CalligraphyConfig
 
-    var notificationHandlerData: MutableLiveData<RemoteMessage> = MutableLiveData()
+    var notificationHandlerData: MutableLiveData<Pair<RemoteMessage.Notification, Map<String, String>?>> = MutableLiveData()
         private set
 
     override fun onCreate() {

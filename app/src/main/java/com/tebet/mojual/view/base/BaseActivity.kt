@@ -12,7 +12,6 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedOkDialog
 import co.sdk.auth.core.models.LoginException
 import com.google.firebase.messaging.RemoteMessage
@@ -29,6 +27,7 @@ import com.tapadoo.alerter.Alerter
 import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
+import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.ActivityBaseBinding
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_base.*
@@ -95,15 +94,40 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         })
         setSupportActionBar(baseBinding.baseToolbar)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        (application as App).notificationHandlerData.observe(this, Observer<RemoteMessage> {remoteMessage ->
-            remoteMessage.data?.let {
-                Alerter.create(this)
-                    .setTitle(it["code"].toString())
-                    .setText(it["message"].toString())
-                    .show()
+        (application as App).notificationHandlerData.observe(this, Observer<Pair<RemoteMessage.Notification, Map<String, String>?>> {remoteMessage ->
+            remoteMessage.first.let {
+                var alert = Alerter.create(this)
+                    .setIcon(R.drawable.logosmall)
+                    .setBackgroundColorRes(R.color.green_dark) // or setBackgroundColorInt(Color.CYAN)
+                    .setText(it.body.toString())
+                    .setTextAppearance(android.R.style.TextAppearance_Large_Inverse)
+                    .setDuration(5000)
+                    .enableSwipeToDismiss()
+
+                remoteMessage.second?.let { extraData ->
+                    extraData["orderId"]?.let { orderId ->
+                        alert.addButton("View", R.style.AlertButton, View.OnClickListener {
+                            openFromNotification(extraData)
+                        }).setOnClickListener(View.OnClickListener {
+                            openFromNotification(extraData)
+                        })
+                    }
+                }
+                alert.show()
+
             }
         })
         onCreateBase(savedInstanceState, contentLayoutId)
+    }
+
+    open fun showOrderDetailScreen(dataResponse: Order) {}
+
+    protected fun openFromNotification(extras: Map<String, String?>): Boolean {
+        extras.get("orderId")?.let {
+            showOrderDetailScreen(Order(orderId = it.toLong()))
+            return true
+        }
+        return false
     }
 
     @TargetApi(Build.VERSION_CODES.M)

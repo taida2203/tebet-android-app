@@ -33,6 +33,9 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
+import androidx.core.content.ContextCompat.getSystemService
+
+
 
 class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector,
     HomeNavigator {
@@ -74,12 +77,27 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             baseBinding.topRightHolder,
             true
         )
-        showHomeScreen()
+        when {
+            !openFromNotification(bundleToMap(intent.extras)) -> showHomeScreen()
+        }
         viewModel.loadData()
         topLeftViewBinding?.avatar?.setOnClickListener { showProfileScreen() }
         viewModel.profileLiveData.observe(
             this,
             Observer<UserProfile> { topLeftViewBinding?.userProfile = it })
+    }
+
+    private fun bundleToMap(extras: Bundle?): Map<String, String?> {
+        val map = HashMap<String, String?>()
+        val ks = extras?.keySet()
+        val iterator = ks?.iterator()
+        iterator?.let {
+            while (it.hasNext()) {
+                val key = it.next()
+                map[key] = extras.getString(key)
+            }
+        }
+        return map
     }
 
     override fun showBorrowScreen() {

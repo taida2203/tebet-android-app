@@ -41,8 +41,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      */
     // [START receive_message]
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        (application as App).notificationHandlerData.postValue(remoteMessage)
         Timber.e("DOLPHIN Notification Received")
+        remoteMessage.notification?.let {
+            (application as App).notificationHandlerData.postValue(Pair(it, remoteMessage.data))
+        }
         // [START_EXCLUDE]
         // There are two types of messages data messages and notification messages. Data messages
         // are handled
