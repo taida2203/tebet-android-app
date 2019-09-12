@@ -17,7 +17,7 @@ fun Double.toDisplayWeight(): String {
 }
 
 fun Double.toDisplayPercent(): String {
-    return this.toInt().toString() + "%"
+    return "$this%"
 }
 
 fun ContainerOrderState.toDisplayContainerStatus(): String {
