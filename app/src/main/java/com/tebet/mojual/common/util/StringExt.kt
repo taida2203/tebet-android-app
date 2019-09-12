@@ -13,7 +13,7 @@ fun Double.toDisplayMoney(): String {
 }
 
 fun Double.toDisplayWeight(): String {
-    return this.toInt().toString()
+    return this.toString()
 }
 
 fun Double.toDisplayPercent(): String {
