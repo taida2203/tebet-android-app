@@ -106,7 +106,7 @@
 
     <string name="order_detail_title">Confirmation</string>
     <string name="order_detail_hint">Your order are checked. Please choose what container to sell.</string>
-    <string name="order_detail_button_submit">SUBMIT</string>
+    <string name="order_detail_button_submit">APPROVE</string>
     <string name="order_detail_button_reject">REJECT</string>
     <string name="order_detail_total_amount">Total Amount</string>
     <string name="order_detail_delivery_bonus">Delivery Bonus</string>
