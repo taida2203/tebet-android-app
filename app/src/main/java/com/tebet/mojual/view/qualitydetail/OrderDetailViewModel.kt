@@ -81,15 +81,11 @@ class OrderDetailViewModel(
         if (!navigator.validate()) {
             return
         }
-        val selectedItems = items.filter { item -> item.isSelected }
-        if (selectedItems.isEmpty()) {
+        if (items.firstOrNull { item -> item.isSelected } == null) {
             navigator.show(R.string.quality_check_error_select_order)
             return
         }
-        navigator.showConfirmDialog(selectedItems.map {
-            it.action = AssetAction.APPROVE.name
-            it
-        })
+        navigator.showConfirmDialog(items)
     }
 
     fun submitOrder(selectedItems: List<OrderContainer>) {
