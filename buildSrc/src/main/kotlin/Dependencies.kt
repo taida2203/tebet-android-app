@@ -52,7 +52,7 @@ object Versions {
     const val runner = "0.5"
     const val facebook = "[5,6)"
     const val googlePlayServices = "17.0.0"
-    const val googleFireBase = "16.0.6"
+    const val googleFireBase = "17.2.0"
 }
 
 @Suppress("unused")
@@ -71,7 +71,8 @@ object AppDependencies {
     const val googlePlayServiceLocation = "com.google.android.gms:play-services-location:${Versions.googlePlayServices}"
     const val googlePlayServiceMap = "com.google.android.gms:play-services-maps:${Versions.googlePlayServices}"
     const val googleFireBaseCore = "com.google.firebase:firebase-core:${Versions.googleFireBase}"
-    const val googleFireBaseMessaging = "com.google.firebase:firebase-messaging:19.0.1"
+    const val googleFireBaseAnalytics = "com.google.firebase:firebase-analytics:${Versions.googleFireBase}"
+    const val googleFireBaseMessaging = "com.google.firebase:firebase-messaging:20.0.0"
 
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     const val daggerAndroid = "com.google.dagger:dagger-android:${Versions.dagger}"

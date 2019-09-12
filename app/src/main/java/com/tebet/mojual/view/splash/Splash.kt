@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.library.baseAdapters.BR
+import com.crashlytics.android.Crashlytics
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivitySplashScreenBinding
 import com.tebet.mojual.view.home.Home
@@ -98,6 +99,8 @@ open class Splash : BaseActivity<ActivitySplashScreenBinding, SplashViewModel>()
 //                    // ...
 //                }
 //                .addOnFailureListener(this) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
+//        Crashlytics.getInstance().crash(); // Force a crash
+
     }
 
     override fun openSignUpInfoScreen() {

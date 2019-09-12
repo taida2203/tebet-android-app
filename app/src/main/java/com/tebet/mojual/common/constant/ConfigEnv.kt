@@ -28,15 +28,15 @@ object ConfigEnv {
         private set
 
     val isProductionEnv: Boolean
-        get() = environment == ConfigEnv.Environment.PRODUCTION
+        get() = environment == Environment.PRODUCTION
 
     val needCrashLogging: Boolean
-        get() = environment != ConfigEnv.Environment.DEV && !BuildConfig.DEBUG
+        get() = !BuildConfig.DEBUG // environment != ConfigEnv.Environment.DEV
 
     init {
         when (BuildConfig.ENV_NAME) {
             "dev" -> {
-                environment = ConfigEnv.Environment.DEV
+                environment = Environment.DEV
 
                 apiRoot = "https://dev.api.mo-jual.com"
                 isAnalyticEnabled = true
@@ -45,7 +45,7 @@ object ConfigEnv {
                 googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
             "local" -> {
-                environment = ConfigEnv.Environment.LOCAL
+                environment = Environment.LOCAL
 
                 apiRoot = "http://10.0.2.2:4000"
                 isAnalyticEnabled = true
@@ -54,7 +54,7 @@ object ConfigEnv {
                 googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
             "production" -> {
-                environment = ConfigEnv.Environment.PRODUCTION
+                environment = Environment.PRODUCTION
 
                 apiRoot = "https://dev.api.mo-jual.com"
                 isAnalyticEnabled = true

@@ -10,6 +10,7 @@ import androidx.multidex.MultiDexApplication
 import co.common.util.LanguageUtil
 import co.common.util.PreferenceUtils
 import co.sdk.auth.AuthSdk
+import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
 import com.google.firebase.messaging.RemoteMessage
 import com.squareup.leakcanary.LeakCanary
@@ -109,7 +110,7 @@ class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector {
             if (priority == Log.VERBOSE || priority == Log.DEBUG) {
                 return
             }
-            //            Crashlytics.logException(t);
+            Crashlytics.logException(t)
         }
     }
 
