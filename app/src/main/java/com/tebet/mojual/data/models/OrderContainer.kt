@@ -25,8 +25,8 @@ data class OrderContainer(
     var densityQc: Double? = null,
     var temperatureQc: Double? = null,
     var eugenolQc: Double? = null,
-    var weightQc: Double? = null,
     var weightCs: Double? = null,
+    var weightLs: Double? = null,
     var densityIot: Double? = null,
     var temperatureIot: Double? = null,
     var eugenolIot: Double? = null,
@@ -85,6 +85,28 @@ data class OrderContainer(
             }
             if (initialPrice != null) {
                 return initialPrice
+            }
+            return null
+        }
+
+    val weightDisplay: Double?
+        get() {
+            if (weightLs != null) {
+                return weightLs
+            }
+            if (weightCs != null) {
+                return weightCs
+            }
+            return null
+        }
+
+    val eugenolDisplay: Double?
+        get() {
+            if (eugenolQc != null) {
+                return eugenolQc
+            }
+            if (eugenolIot != null) {
+                return eugenolIot
             }
             return null
         }

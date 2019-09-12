@@ -26,14 +26,14 @@
         android:background="@drawable/border_history"
         android:onClick="@{() -> listener.onItemExpandClick(item)}"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/_16sdp"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingRight="@dimen/_16sdp"
-        android:paddingBottom="@dimen/_8sdp">
+        android:paddingBottom="@dimen/_8sdp"
+        android:paddingTop="@dimen/_8sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -48,6 +48,14 @@
                     android:onClick="@{() -> listener.onItemClick(item)}"
                     android:src="@{item.isSelected ? @drawable/selecte_box_checked : @drawable/selecte_box_uncheck}"
                     android:visibility="@{item.canAction ? View.VISIBLE : View.GONE}" />
+
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:onClick="@{() -> listener.onItemClick(item)}"
+                    android:src="@{!item.isRejected ? @drawable/container_accepted : @drawable/container_reject}"
+                    android:tint="@{!item.isRejected ? @color/green_change_course : @color/red_btn_dialog}"
+                    android:visibility="@{!item.canAction ? View.VISIBLE : View.GONE}" />
             </RelativeLayout>
 
             <LinearLayout
@@ -66,25 +74,6 @@
                     android:textColor="@color/green_dark"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold" />
-
-                <com.tebet.mojual.common.view.AppTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text=" - "
-                    android:textColor="@color/green_dark"
-                    android:textSize="@dimen/_10ssp"
-                    android:textStyle="bold"
-                    android:visibility="@{item.canAction ? View.GONE : View.VISIBLE}" />
-
-                <com.tebet.mojual.common.view.AppTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@{StringExtKt.toDisplayContainerStatus(item.state)}"
-                    android:textColor="@{!item.isRejected ? @color/green_change_course : @color/red_btn_dialog}"
-                    android:textSize="@dimen/_10ssp"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
@@ -97,6 +86,8 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
             android:orientation="vertical"
             android:visibility="@{item.expanded ? View.VISIBLE : View.GONE}">
 
@@ -126,7 +117,7 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:padding="@dimen/_4sdp"
-                        android:text="@{StringExtKt.toDisplayWeight(item.weightCs)}"
+                        android:text="@{StringExtKt.toDisplayWeight(item.weightDisplay)}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />
@@ -140,7 +131,7 @@
 
                     <com.tebet.mojual.common.view.AppTextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="@string/order_detail_price"
                         android:textColor="@color/black" />
@@ -184,7 +175,7 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:padding="@dimen/_4sdp"
-                        android:text="@{StringExtKt.toDisplayPercent(item.eugenolIot)}"
+                        android:text="@{StringExtKt.toDisplayPercent(item.eugenolDisplay)}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />
@@ -198,7 +189,7 @@
 
                     <com.tebet.mojual.common.view.AppTextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="@string/order_detail_amount"
                         android:textColor="@color/black" />
@@ -216,5 +207,23 @@
                 </LinearLayout>
             </TableRow>
         </TableLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:visibility="@{item.expanded ? View.VISIBLE : View.GONE}"
+            android:background="@color/mtrl_textinput_default_box_stroke_color" />
+
+        <com.tebet.mojual.common.view.AppTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:paddingTop="@dimen/_4sdp"
+            android:visibility="@{item.expanded ? View.VISIBLE : View.GONE}"
+            android:text="@{StringExtKt.toDisplayContainerStatus(item.state)}"
+            android:textColor="@{!item.isRejected ? @color/green_change_course : @color/red_btn_dialog}"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold" />
     </LinearLayout>
 </layout>

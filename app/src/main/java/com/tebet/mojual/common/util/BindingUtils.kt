@@ -1,12 +1,18 @@
 package com.tebet.mojual.common.util
 
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.os.Build
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tebet.mojual.R
 import com.tebet.mojual.common.adapter.scroll.RecyclerViewScrollCallback
 import com.tebet.mojual.common.view.AppEditText
+import timber.log.Timber
 
 
 class BindingUtils {
