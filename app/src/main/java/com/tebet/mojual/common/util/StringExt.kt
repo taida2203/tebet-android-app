@@ -2,6 +2,7 @@ package com.tebet.mojual.common.util
 
 import com.tebet.mojual.data.models.enumeration.ContainerOrderState
 import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 fun Double.toDisplayMoney(): String {
     if (this <= 0) {
@@ -17,7 +18,7 @@ fun Double.toDisplayWeight(): String {
 }
 
 fun Double.toDisplayPercent(): String {
-    return "$this%"
+    return ((this * 100).roundToInt() / 100f).toString() + "%"
 }
 
 fun ContainerOrderState.toDisplayContainerStatus(): String {
