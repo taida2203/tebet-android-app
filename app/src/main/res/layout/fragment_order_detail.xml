@@ -191,7 +191,7 @@
                 android:layout_weight="1"
                 android:enabled="@{!viewModel.isLoading &amp;&amp; viewModel.items.size() > 0}"
                 android:onClick="@{()-> viewModel.onSubmitClick()}"
-                android:text="@string/sale_button_submit" />
+                android:text="@string/order_detail_button_approve" />
         </LinearLayout>
     </LinearLayout>
 </layout>
