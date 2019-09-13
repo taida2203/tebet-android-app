@@ -14,11 +14,11 @@ fun Double.toDisplayMoney(): String {
 }
 
 fun Double.toDisplayWeight(): String {
-    return this.toString()
+    return this.toString().replace("\\.0+$", "")
 }
 
 fun Double.toDisplayPercent(): String {
-    return ((this * 100).roundToInt() / 100f).toString() + "%"
+    return ((this * 100).roundToInt() / 100f).toString().replace("\\.0+$", "") + "%"
 }
 
 fun ContainerOrderState.toDisplayContainerStatus(): String {
