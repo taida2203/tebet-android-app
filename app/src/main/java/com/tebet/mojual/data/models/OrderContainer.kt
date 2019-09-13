@@ -50,9 +50,9 @@ data class OrderContainer(
                 // Initial price rejected
                 ContainerOrderStatus.INITIAL_PRICE_REJECTED.name -> ContainerOrderState.INITIAL_PRICE_REJECTED // Customer not accept initial price and don’t want to sale
                 // Sale requested
-                ContainerOrderStatus.SALE_REQUESTED.name -> ContainerOrderState.SALE_REQUESTED // Customer want to sale and submitted sale request
+                ContainerOrderStatus.SALE_REQUESTED.name,
+                ContainerOrderStatus.CONTACTED_LOGISTIC_TO_PICK.name -> ContainerOrderState.SALE_REQUESTED // Customer want to sale and submitted sale request
                 // Checking
-                ContainerOrderStatus.CONTACTED_LOGISTIC_TO_PICK.name, // Logistic staff already contacted Logistic company to pick container
                 ContainerOrderStatus.PICKED_TO_FACTORY.name, // container is picked up to Factory (on the way to the factory
                 ContainerOrderStatus.ARRIVED_IN_FACTORY.name -> ContainerOrderState.CHECKING // container is arrived in Factory
                 // Sale rejected
