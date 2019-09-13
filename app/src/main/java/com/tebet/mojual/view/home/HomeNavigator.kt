@@ -20,4 +20,5 @@ interface HomeNavigator {
     fun showRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
     fun showInboxScreen()
     fun showHistorySearchScreen(searchOrderRequest: SearchOrderRequest)
+    fun showBankConfirmScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
 }

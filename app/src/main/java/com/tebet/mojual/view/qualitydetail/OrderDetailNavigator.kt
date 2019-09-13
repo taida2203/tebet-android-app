@@ -10,4 +10,5 @@ interface OrderDetailNavigator : BaseActivityNavigator {
     fun openOrderDetailScreen(it: OrderDetail)
     fun openRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
     fun showConfirmDialog(selectedItems: List<OrderContainer>)
+    fun openBankConfirmScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
 }

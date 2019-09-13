@@ -18,6 +18,7 @@ import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.databinding.ItemHomeAvatarBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
+import com.tebet.mojual.view.bankconfirm.BankConfirmFragment
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.history.HistoryFragment
 import com.tebet.mojual.view.home.content.HomeFragment
@@ -129,6 +130,8 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun showProfileScreen() = openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
 
+    override fun showBankConfirmScreen(order: OrderDetail, selectedItems: List<OrderContainer>)  = openFragmentSlideRight(BankConfirmFragment(), R.id.contentHolder, BankConfirmFragment::class.java.simpleName)
+
     override fun showOrderCompleteScreen(dataResponse: Order) {
         supportFragmentManager.popBackStack()
         openFragmentSlideRight(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder, SaleDetailFragment::class.java.simpleName, dataResponse.orderCode)
@@ -212,6 +215,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             is OrderDetailFragment -> title = getString(R.string.order_detail_title)
             is QualityFragment -> title = getString(R.string.home_menu_check_quality)
             is HistorySearchFragment -> title = getString(R.string.history_search_title)
+            is BankConfirmFragment -> title = getString(R.string.bank_confirm_title)
         }
     }
 

@@ -132,4 +132,6 @@
     <string name="history_search_title">Advanced Search</string>
 
     <string name="message_title">Notification</string>
+
+    <string name="bank_confirm_title">Bank confirm</string>
 </resources>

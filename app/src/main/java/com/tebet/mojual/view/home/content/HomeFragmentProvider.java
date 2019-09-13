@@ -1,5 +1,7 @@
 package com.tebet.mojual.view.home.content;
 
+import com.tebet.mojual.view.bankconfirm.BankConfirmFragment;
+import com.tebet.mojual.view.bankconfirm.BankConfirmFragmentModule;
 import com.tebet.mojual.view.history.HistoryFragment;
 import com.tebet.mojual.view.history.HistoryFragmentModule;
 import com.tebet.mojual.view.historysearch.HistorySearchFragmentModule;
@@ -39,4 +41,7 @@ public abstract class HomeFragmentProvider {
 
     @ContributesAndroidInjector(modules = HistorySearchFragmentModule.class)
     abstract HistorySearchFragment provideHistorySearchFragmentFactory();
+
+    @ContributesAndroidInjector(modules = BankConfirmFragmentModule.class)
+    abstract BankConfirmFragment provideBankConfirmFragmentFactory();
 }

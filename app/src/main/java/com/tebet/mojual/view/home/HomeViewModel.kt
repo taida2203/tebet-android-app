@@ -91,4 +91,8 @@ class HomeViewModel(
     fun onSearchAdvancedClick(searchOrderRequest: SearchOrderRequest) {
         navigator.showHistorySearchScreen(searchOrderRequest)
     }
+
+    fun onBankConfirmClick(order: OrderDetail, selectedItems: List<OrderContainer>) {
+        navigator.showBankConfirmScreen(order, selectedItems)
+    }
 }

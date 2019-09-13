@@ -70,17 +70,15 @@ class OrderDetailViewModel(
         if (!navigator.validate()) {
             return
         }
-        if (items.firstOrNull { it.status?.equals(ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name) == true } == null) {
-            submitOrder(items.toList().map {
-                it.action = AssetAction.REJECT.name
-                it
-            })
+        val rejectItems = items.toList().map {
+            it.action = AssetAction.REJECT.name
+            it
+        }
+        if (rejectItems.firstOrNull { it.status?.equals(ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name) == true } == null) {
+            submitOrder(rejectItems)
         } else {
             order.get()?.let { od ->
-                navigator.openRejectReasonScreen(od, items.toList().map {
-                    it.action = AssetAction.REJECT.name
-                    it
-                })
+                navigator.openRejectReasonScreen(od, rejectItems)
             }
         }
     }
@@ -96,16 +94,16 @@ class OrderDetailViewModel(
         navigator.showConfirmDialog(items)
     }
 
-    fun submitOrder(selectedItems: List<OrderContainer>) {
-        order.get()?.let {
+    private fun submitOrder(selectedItems: List<OrderContainer>) {
+        order.get()?.let { order ->
             navigator.showLoading(true)
             compositeDisposable.add(
-                dataManager.confirmOrder(it.orderId, selectedItems)
+                dataManager.confirmOrder(order.orderId, selectedItems)
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Order>() {
                         override fun onSuccess(dataResponse: Order) {
                             navigator.showLoading(false)
-                            order.get()?.let {
+                            this@OrderDetailViewModel.order.get()?.let {
                                 navigator.openOrderDetailScreen(it)
                             }
                         }
@@ -116,6 +114,19 @@ class OrderDetailViewModel(
                         }
                     })
             )
+        }
+    }
+
+    fun approveOrder(selectedItems: List<OrderContainer>) {
+        if (selectedItems.firstOrNull {
+                it.status?.equals(ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name) == true ||
+                        it.status?.equals(ContainerOrderStatus.SECOND_FINALIZED_PRICE_OFFERED.name) == true
+            } != null) {
+            order.get()?.let { order ->
+                navigator.openBankConfirmScreen(order, selectedItems)
+            }
+        } else {
+            submitOrder(selectedItems)
         }
     }
 }

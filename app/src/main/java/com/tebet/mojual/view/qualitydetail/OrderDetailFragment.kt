@@ -18,9 +18,6 @@ import com.tebet.mojual.view.home.Home
 
 class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetailViewModel>(),
     OrderDetailNavigator {
-
-
-
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -62,6 +59,10 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
         (activity as Home).viewModel.onOrderDetailClick(Order(it))
     }
 
+    override fun openBankConfirmScreen(order: OrderDetail, selectedItems: List<OrderContainer>) {
+        (activity as Home).viewModel.onBankConfirmClick(order, selectedItems)
+    }
+
     override fun openRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>) {
         activity?.supportFragmentManager?.let {
             RoundedDialog(getString(R.string.order_detail_dialog_reject))
@@ -89,7 +90,7 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
                     }
 
                     override fun onSecondButtonClicked(selectedValue: Any?) {
-                        viewModel.submitOrder(selectedItems)
+                        viewModel.approveOrder(selectedItems)
                     }
                 }).show(it, "")
         }
