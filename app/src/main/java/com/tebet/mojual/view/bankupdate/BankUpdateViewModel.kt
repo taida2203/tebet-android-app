@@ -1,46 +1,25 @@
-package com.tebet.mojual.view.bankconfirm
+package com.tebet.mojual.view.bankupdate
 
 import androidx.lifecycle.MutableLiveData
-import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.models.Order
-import com.tebet.mojual.data.models.OrderContainer
-import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import java.util.concurrent.TimeUnit
 
-
-class BankConfirmViewModel(
+class BankUpdateViewModel(
     dataManager: DataManager,
     schedulerProvider: SchedulerProvider
 ) :
-    BaseViewModel<BankConfirmNavigator>(dataManager, schedulerProvider) {
-    var order: OrderDetail? = null
-    var selectedItems: List<OrderContainer>? = null
+    BaseViewModel<BankUpdateNavigator>(dataManager, schedulerProvider) {
     var userProfileLiveData: MutableLiveData<UserProfile> = MutableLiveData()
 
-    fun onUpdateClick() {
-        navigator.openBankUpdateScreen()
-    }
-
-    fun onSubmitClick() {
-        order?.let { od ->
-            selectedItems?.let { items ->
-                submitOrder(items)
-                return
-            }
-        }
-        navigator.show(R.string.general_error)
-    }
-
-    fun loadData(forceLoad: Boolean? = false) {
+    fun loadData() {
         navigator.showLoading(true)
-        var updateProfileStream = dataManager.getUserProfileDB()
-        if (forceLoad == false) updateProfileStream = dataManager.getProfile()
         compositeDisposable.add(
-            updateProfileStream.subscribeOn(schedulerProvider.io())
+            dataManager.getUserProfileDB()
+                .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onSuccess(dataResponse: UserProfile) {
@@ -56,18 +35,17 @@ class BankConfirmViewModel(
         )
     }
 
-    private fun submitOrder(selectedItems: List<OrderContainer>) {
-        order?.let { order ->
-            navigator.showLoading(true)
+    fun onSubmitClick() {
+        navigator.showLoading(true)
+        userProfileLiveData.value?.let { profile ->
             compositeDisposable.add(
-                dataManager.confirmOrder(order.orderId, selectedItems)
+                dataManager.updateProfile(profile)
                     .observeOn(schedulerProvider.ui())
-                    .subscribeWith(object : CallbackWrapper<Order>() {
-                        override fun onSuccess(dataResponse: Order) {
+                    .debounce(400, TimeUnit.MILLISECONDS)
+                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                        override fun onSuccess(dataResponse: UserProfile) {
                             navigator.showLoading(false)
-                            this@BankConfirmViewModel.order?.let {
-                                navigator.openOrderDetailScreen(it)
-                            }
+                            navigator.openPreviousScreen()
                         }
 
                         override fun onFailure(error: String?) {

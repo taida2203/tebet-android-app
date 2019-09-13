@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -16,62 +17,72 @@
         android:paddingTop="@dimen/_20sdp"
         android:paddingRight="@dimen/_20sdp">
 
-
-        <com.tebet.mojual.common.view.AppTextView
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:layout_marginBottom="15dp"
-            android:text="@string/order_reject_detail" />
+            android:scrollbars="none">
 
-        <com.tebet.mojual.common.view.AppTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:layout_marginBottom="5dp"
-            android:text="@string/order_reject_quest_1" />
-
-        <com.tebet.mojual.common.view.AppEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/border_history"
-            android:hint="Your answer"
-            android:text="@={viewModel.rejectMessage1}" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
 
 
-        <com.tebet.mojual.common.view.AppTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:layout_marginBottom="5dp"
-            android:text="@string/order_reject_quest_2" />
+                <com.tebet.mojual.common.view.AppTextView
+                    android:id="@+id/etBankName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_name"
+                    android:imeOptions="actionNext"
+                    android:nextFocusDown="@+id/etBankAccountNumber"
+                    android:text="@{viewModel.userProfileLiveData.bankName}" />
 
-        <com.tebet.mojual.common.view.AppEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_history"
-            android:hint="Your answer"
-            android:text="@={viewModel.rejectMessage2}" />
 
-        <View
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                <com.tebet.mojual.common.view.AppTextView
+                    android:id="@+id/etBankAccountNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_account_number"
+                    android:text="@{viewModel.userProfileLiveData.bankAccountNumber}" />
+
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:id="@+id/etBankAccountName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_account_name"
+                    android:text="@{viewModel.userProfileLiveData.bankAccountName}" />
+
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:id="@+id/etRegionName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_region"
+                    android:text="@{viewModel.userProfileLiveData.bankRegionName}" />
+
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.tebet.mojual.common.view.AppButtonRounded
+            <com.tebet.mojual.common.view.AppButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginBottom="10dp"
-                android:enabled="@{!viewModel.isLoading &amp;&amp; viewModel.items.size() > 0}"
+                android:onClick="@{()-> viewModel.onUpdateClick()}"
+                android:text="@string/general_btn_next" />
+
+            <com.tebet.mojual.common.view.AppButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:onClick="@{()-> viewModel.onSubmitClick()}"
-                android:text="@string/order_reject_buttom_confirm" />
+                android:text="@string/general_btn_next" />
         </LinearLayout>
     </LinearLayout>
 </layout>

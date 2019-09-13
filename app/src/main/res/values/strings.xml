@@ -5,6 +5,7 @@
     <string name="general_btn_back">back</string>
     <string name="general_btn_no">NO</string>
     <string name="general_btn_yes">YES</string>
+    <string name="general_error">Something went wrong, please restart and try again !!</string>
     <string name="general_error_feature_disabled">this feature will coming soon !</string>
     <string name="general_error_feature_permission">you don\'t have permission to access this feature yet</string>
     <string name="general_error_validation_fill_all_field">Fill all required field !!</string>
@@ -134,4 +135,5 @@
     <string name="message_title">Notification</string>
 
     <string name="bank_confirm_title">Bank confirm</string>
+    <string name="bank_update_title">Update Bank</string>
 </resources>

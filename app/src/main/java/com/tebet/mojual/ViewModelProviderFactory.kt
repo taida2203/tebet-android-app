@@ -6,6 +6,7 @@ import com.tebet.mojual.common.util.Sensor
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.view.bankconfirm.BankConfirmViewModel
+import com.tebet.mojual.view.bankupdate.BankUpdateViewModel
 import com.tebet.mojual.view.base.BaseActivityViewModel
 import com.tebet.mojual.view.forgotpassword.ForgotPasswordViewModel
 import com.tebet.mojual.view.history.HistoryViewModel
@@ -67,6 +68,8 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(MessageViewModel::class.java) -> MessageViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(HistorySearchViewModel::class.java) -> HistorySearchViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(BankConfirmViewModel::class.java) -> BankConfirmViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(SelectQuantityViewModel::class.java) -> SelectQuantityViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(BankUpdateViewModel::class.java) -> BankUpdateViewModel(dataManager, schedulerProvider) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

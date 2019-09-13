@@ -130,7 +130,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun showProfileScreen() = openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
 
-    override fun showBankConfirmScreen(order: OrderDetail, selectedItems: List<OrderContainer>)  = openFragmentSlideRight(BankConfirmFragment(), R.id.contentHolder, BankConfirmFragment::class.java.simpleName)
+    override fun showBankConfirmScreen(order: OrderDetail, selectedItems: List<OrderContainer>)  = openFragmentSlideRight(BankConfirmFragment.newInstance(order, selectedItems), R.id.contentHolder, BankConfirmFragment::class.java.simpleName)
 
     override fun showOrderCompleteScreen(dataResponse: Order) {
         supportFragmentManager.popBackStack()
@@ -139,7 +139,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun showOrderDetailScreen(dataResponse: Order) {
         if (currentFragment() !is OrderDetailFragment) {
-            if (currentFragment() is OrderRejectFragment) {
+            if (currentFragment() is OrderRejectFragment || currentFragment() is BankConfirmFragment) {
                 supportFragmentManager.popBackStack()
             } else {
                 openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName, dataResponse.orderCode)

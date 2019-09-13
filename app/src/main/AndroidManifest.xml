@@ -71,7 +71,9 @@
         <activity
             android:name=".view.qualitycontainer.QualityAddContainer"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".view.bankupdate.BankUpdate"
+            android:screenOrientation="portrait" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.tebet.mojual.fileprovider"

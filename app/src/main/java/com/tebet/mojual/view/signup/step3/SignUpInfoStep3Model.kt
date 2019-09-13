@@ -33,8 +33,8 @@ class SignUpInfoStep3Model(
         navigator.showLoading(true)
         compositeDisposable.add(
             Observable.zip(
-                dataManager.getRegionDB(),
-                dataManager.getBankDB(),
+                dataManager.getRegions(),
+                dataManager.getBanks(),
                 BiFunction<AuthJson<List<Region>>, AuthJson<List<Bank>>, Pair<List<Region>?, List<Bank>?>>
                 { regions, banks ->
                     Pair(regions.data, banks.data)

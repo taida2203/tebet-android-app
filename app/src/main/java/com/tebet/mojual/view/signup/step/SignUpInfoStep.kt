@@ -16,10 +16,12 @@ abstract class SignUpInfoStep<T : ViewDataBinding, V : SignUpInfoStepViewModel<*
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.userProfile.set((activity as SignUpInfo).viewModel.userProfile)
-        (activity as SignUpInfo).viewModel.userProfileLiveData.observe(this, Observer<UserProfile> { userProfile ->
-            viewModel.userProfile.set(userProfile)
-        })
+        if (activity is SignUpInfo) {
+            viewModel.userProfile.set((activity as SignUpInfo).viewModel.userProfile)
+            (activity as SignUpInfo).viewModel.userProfileLiveData.observe(this, Observer<UserProfile> { userProfile ->
+                viewModel.userProfile.set(userProfile)
+            })
+        }
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
     }

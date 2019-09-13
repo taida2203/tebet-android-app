@@ -1,5 +1,7 @@
 package com.tebet.mojual.view.bankconfirm
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -11,14 +13,12 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.databinding.FragmentBankConfirmBinding
-import com.tebet.mojual.databinding.FragmentOrderRejectBinding
+import com.tebet.mojual.view.bankupdate.BankUpdate
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.home.Home
 
 class BankConfirmFragment : BaseFragment<FragmentBankConfirmBinding, BankConfirmViewModel>(),
     BankConfirmNavigator {
-
-
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -50,15 +50,23 @@ class BankConfirmFragment : BaseFragment<FragmentBankConfirmBinding, BankConfirm
         viewModel.navigator = this
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
-        viewModel.order.set(order?.let { OrderDetail(it) })
-        selectedItems?.let { viewModel.items.addAll(it) }
-    }
-
-    override fun validate(): Boolean {
-        return validator.validate()
+        viewModel.order = order?.let { OrderDetail(it) }
+        viewModel.selectedItems = selectedItems
+        viewModel.loadData()
     }
 
     override fun openOrderDetailScreen(order: OrderDetail) {
         (activity as Home).viewModel.onOrderDetailClick(Order(order))
+    }
+
+    override fun openBankUpdateScreen() {
+        startActivityForResult(Intent(context, BankUpdate::class.java), 500)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 500 && resultCode == Activity.RESULT_OK) {
+            viewModel.loadData(true)
+        }
     }
 }
