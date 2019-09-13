@@ -40,7 +40,7 @@ class OrderDetailViewModel(
         order.get()?.let {
             navigator.showLoading(true)
             compositeDisposable.add(
-                dataManager.getOrderDetail(541/*it.orderId*/, loadContainers = true, loadCustomer = true)
+                dataManager.getOrderDetail(it.orderId, loadContainers = true, loadCustomer = true)
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<OrderDetail>() {
                         override fun onSuccess(dataResponse: OrderDetail) {
@@ -118,12 +118,6 @@ class OrderDetailViewModel(
     }
 
     fun approveOrder(selectedItems: List<OrderContainer>) {
-        if (true) {
-            order.get()?.let { order ->
-                navigator.openBankConfirmScreen(order, selectedItems)
-            }
-            return
-        }
         if (selectedItems.firstOrNull {
                 it.status?.equals(ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name) == true ||
                         it.status?.equals(ContainerOrderStatus.SECOND_FINALIZED_PRICE_OFFERED.name) == true
