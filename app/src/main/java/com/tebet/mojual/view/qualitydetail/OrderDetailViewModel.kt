@@ -10,6 +10,7 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.data.models.enumeration.AssetAction
+import com.tebet.mojual.data.models.enumeration.ContainerOrderStatus
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import me.tatarka.bindingcollectionadapter2.ItemBinding
@@ -69,11 +70,18 @@ class OrderDetailViewModel(
         if (!navigator.validate()) {
             return
         }
-        order.get()?.let { od ->
-            navigator.openRejectReasonScreen(od, items.toList().map {
+        if (items.firstOrNull { it.status?.equals(ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name) == true } == null) {
+            submitOrder(items.toList().map {
                 it.action = AssetAction.REJECT.name
                 it
             })
+        } else {
+            order.get()?.let { od ->
+                navigator.openRejectReasonScreen(od, items.toList().map {
+                    it.action = AssetAction.REJECT.name
+                    it
+                })
+            }
         }
     }
 
