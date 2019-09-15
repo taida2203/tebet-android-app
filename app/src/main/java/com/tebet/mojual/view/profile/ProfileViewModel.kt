@@ -1,8 +1,14 @@
 package com.tebet.mojual.view.profile
 
 import androidx.databinding.ObservableField
+import co.common.util.LanguageUtil
+import co.common.util.PreferenceUtils
+import co.common.util.PreferenceUtils.getString
+import co.common.view.dialog.LanguageChoiceDialog
+import co.common.view.dialog.SingleChoiceDialog
 import co.sdk.auth.AuthSdk
 import com.google.firebase.iid.FirebaseInstanceId
+import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
@@ -10,9 +16,7 @@ import com.tebet.mojual.data.models.request.DeviceRegisterRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
 
 class ProfileViewModel(
     dataManager: DataManager,
@@ -86,4 +90,13 @@ class ProfileViewModel(
             it.expanded = !it.expanded
         }
     }
+
+    fun onChangeLanguageClick(){
+        navigator.openChangeLanguageDialog()
+    }
+
+    fun currentLangauge(){
+
+    }
+
 }

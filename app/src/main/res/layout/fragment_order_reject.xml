@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -54,10 +55,12 @@
             android:hint="Your answer"
             android:text="@={viewModel.rejectMessage2}" />
 
-        <View
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:questions="@{viewModel.order.rejectionQuestions}"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -2,4 +2,6 @@
 <resources>
     <string name="cakap_chat_okay">OKE</string>
     <string name="cakap_chat_upgrade_to_premium">Upgrade ke Premium</string>
+    <string name="support_language_english">English</string>
+    <string name="support_language_bahasa">Bahasa Indonesia</string>
 </resources>

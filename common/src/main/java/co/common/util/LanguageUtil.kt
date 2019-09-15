@@ -15,7 +15,7 @@ class LanguageUtil {
     }
 
     fun getLanguageIndex(): Int {
-        return co.common.util.PreferenceUtils.getInt(PREF_LANGUAGE_INDEX, -1)
+        return PreferenceUtils.getInt(PREF_LANGUAGE_INDEX, -1)
     }
 
     fun updateLanguage(context: Context) {
@@ -25,13 +25,13 @@ class LanguageUtil {
             !TextUtils.isEmpty(language) && !"in".equals(language, ignoreCase = true) && !"in".equals(language, ignoreCase = true) -> LANGUAGE_INDEX_ENGLISH
             else -> LANGUAGE_INDEX_BAHASA
         }
-        if (currentLanguageIndex == co.common.util.PreferenceUtils.getInt(
+        if (currentLanguageIndex == PreferenceUtils.getInt(
                 PREF_LANGUAGE_INDEX,
                 -1
             )
         ) return
 
-        when (co.common.util.PreferenceUtils.getInt(
+        when (PreferenceUtils.getInt(
             PREF_LANGUAGE_INDEX,
             LANGUAGE_INDEX_ENGLISH
         )) {
@@ -41,7 +41,7 @@ class LanguageUtil {
     }
 
     fun changeBahasa(context: Context) {
-        co.common.util.PreferenceUtils.saveInt(
+        PreferenceUtils.saveInt(
             PREF_LANGUAGE_INDEX,
             LANGUAGE_INDEX_BAHASA
         )
@@ -49,14 +49,14 @@ class LanguageUtil {
     }
 
     fun changeEnglish(context: Context) {
-        co.common.util.PreferenceUtils.saveInt(
+        PreferenceUtils.saveInt(
             PREF_LANGUAGE_INDEX,
             LANGUAGE_INDEX_ENGLISH
         )
         changeLanguage(context, "en")
     }
 
-    fun changeLanguage(context: Context, languageCode: String) {
+    private fun changeLanguage(context: Context, languageCode: String) {
         val res = context.resources
         val dm = res.displayMetrics
         val conf = res.configuration

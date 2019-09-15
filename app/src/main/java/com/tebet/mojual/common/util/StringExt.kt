@@ -14,7 +14,8 @@ fun Double.toDisplayMoney(): String {
 }
 
 fun Double.toDisplayWeight(): String {
-    return this.toString().replace("\\.0+$", "")
+    val decimalFormat =  DecimalFormat("0.###")
+    return decimalFormat.format(this)
 }
 
 fun Double.toDisplayPercent(): String {

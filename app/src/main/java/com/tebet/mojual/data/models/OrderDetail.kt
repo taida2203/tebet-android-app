@@ -29,7 +29,8 @@ data class OrderDetail(
     var paidDate: Long? = null,
     var containersReturnedDate: Long? = null,
     var basePrice: Double? = null,
-    var containers: List<OrderContainer>? = null
+    var containers: List<OrderContainer>? = null,
+    var rejectionQuestions: List<Question>? = null
 ) : Serializable, IOrder {
     constructor(order: IOrder) : this(order.orderId, order.orderCode) {
         if (order is Order) {

@@ -57,6 +57,7 @@
     <string name="home_menu_borrow">Borrow</string>
     <string name="home_menu_tips">Tips</string>
     <string name="home_bonus">BONUS</string>
+    <string name="home_rating">YOUR RATING</string>
 
     <string name="sale_button_submit">SUBMIT</string>
     <string name="sale_estimated_price">Estimate Order Amount</string>
@@ -134,6 +135,20 @@
 
     <string name="message_title">Notification</string>
 
-    <string name="bank_confirm_title">Bank confirm</string>
     <string name="bank_update_title">Update Bank</string>
+
+    <string name="profile_button_logout">LOG OUT</string>
+
+    <string name="reject_hint_your_answer">Your answer</string>
+    <string name="bank_update_button_update">UPDATE</string>
+    <string name="bank_update_notice">Money will be transfered to your account. Please input your bank account information.</string>
+
+    <string name="bank_confirm_title">Bank confirm</string>
+    <string name="bank_confirm_notice">Money will be transfered to your account. Please confirm your bank account information.</string>
+    <string name="bank_confirm_button_confirm">CONFIRM</string>
+    <string name="bank_confirm_button_update">UPDATE</string>
+    <string name="bank_confirm_bank_name">Bank name:</string>
+    <string name="bank_confirm_bank_acc_number">Bank account number:</string>
+    <string name="bank_confirm_bank_acc_name">Bank account name:</string>
+    <string name="bank_confirm_bank_region">Bank region:</string>
 </resources>

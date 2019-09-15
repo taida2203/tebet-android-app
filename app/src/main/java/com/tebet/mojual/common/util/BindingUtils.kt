@@ -1,18 +1,16 @@
 package com.tebet.mojual.common.util
 
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.os.Build
+import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
+import android.widget.LinearLayout
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tebet.mojual.R
 import com.tebet.mojual.common.adapter.scroll.RecyclerViewScrollCallback
 import com.tebet.mojual.common.view.AppEditText
-import timber.log.Timber
+import com.tebet.mojual.data.models.Question
+import com.tebet.mojual.view.qualityreject.question.QuestionInputView
 
 
 class BindingUtils {
@@ -33,6 +31,17 @@ class BindingUtils {
                 .placeholder(R.drawable.signup_avatar_blank)
                 .centerCrop()
                 .into(imageView)
+        }
+
+        @BindingAdapter("questions")
+        @JvmStatic
+        fun setQuestions(layout: LinearLayout, questions: List<Question>?) {
+            val context = layout.context
+            questions?.forEach { question ->
+                val myItem = QuestionInputView(context)
+                myItem.data.set(question)
+                layout.addView(myItem)
+            }
         }
 
         @BindingAdapter("onOkInSoftKeyboard")

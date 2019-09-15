@@ -39,4 +39,8 @@
         <item name="colorControlNormal">@color/down_grey_color</item>
         <item name="colorControlActivated">@color/star_active</item>
     </style>
+    <style name="HomeRatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="colorControlNormal">@color/down_grey_color</item>
+        <item name="colorControlActivated">@color/star_active</item>
+    </style>
 </resources>

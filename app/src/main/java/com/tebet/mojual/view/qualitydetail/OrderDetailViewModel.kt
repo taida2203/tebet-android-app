@@ -40,7 +40,7 @@ class OrderDetailViewModel(
         order.get()?.let {
             navigator.showLoading(true)
             compositeDisposable.add(
-                dataManager.getOrderDetail(it.orderId, loadContainers = true, loadCustomer = true)
+                dataManager.getOrderDetail(547/*it.orderId*/, loadContainers = true, loadCustomer = true)
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<OrderDetail>() {
                         override fun onSuccess(dataResponse: OrderDetail) {
@@ -67,19 +67,18 @@ class OrderDetailViewModel(
     }
 
     fun onRejectClick() {
-        if (!navigator.validate()) {
-            return
-        }
+        navigator.showRejectConfirm()
+    }
+
+    fun rejectOrder() {
         val rejectItems = items.toList().map {
             it.action = AssetAction.REJECT.name
             it
         }
         if (rejectItems.firstOrNull { it.status?.equals(ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name) == true } == null) {
-            submitOrder(rejectItems)
+            order.get()?.let { navigator.openReasonScreen(it, rejectItems) }
         } else {
-            order.get()?.let { od ->
-                navigator.openRejectReasonScreen(od, rejectItems)
-            }
+            submitOrder(rejectItems)
         }
     }
 
@@ -118,6 +117,12 @@ class OrderDetailViewModel(
     }
 
     fun approveOrder(selectedItems: List<OrderContainer>) {
+        if (true) {
+            order.get()?.let { order ->
+                navigator.openBankConfirmScreen(order, selectedItems)
+            }
+            return
+        }
         if (selectedItems.firstOrNull {
                 it.status?.equals(ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name) == true ||
                         it.status?.equals(ContainerOrderStatus.SECOND_FINALIZED_PRICE_OFFERED.name) == true

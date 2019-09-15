@@ -63,7 +63,7 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
         (activity as Home).viewModel.onBankConfirmClick(order, selectedItems)
     }
 
-    override fun openRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>) {
+    override fun showRejectConfirm() {
         activity?.supportFragmentManager?.let {
             RoundedDialog(getString(R.string.order_detail_dialog_reject))
                 .addFirstButton(RoundedDialogButton(getString(R.string.general_btn_no), R.drawable.rounded_bg_button_trans))
@@ -74,11 +74,16 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
                         }
 
                         override fun onSecondButtonClicked(selectedValue: Any?) {
-                            (activity as Home).viewModel.onReasonClick(order, selectedItems)
+                            viewModel.rejectOrder()
                         }
                     }).show(it, "")
         }
     }
+
+    override fun openReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>) {
+        (activity as Home).viewModel.onReasonClick(order, selectedItems)
+    }
+
     override fun showConfirmDialog(selectedItems: List<OrderContainer>) {
         activity?.supportFragmentManager?.let {
             RoundedDialog(getString(R.string.order_detail_dialog_confirm))

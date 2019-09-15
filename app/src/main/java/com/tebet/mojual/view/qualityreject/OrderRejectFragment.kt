@@ -49,7 +49,7 @@ class OrderRejectFragment : BaseFragment<FragmentOrderRejectBinding, OrderReject
         viewModel.navigator = this
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
-        viewModel.order.set(order?.let { OrderDetail(it) })
+        viewModel.order.set(order)
         selectedItems?.let { viewModel.items.addAll(it) }
     }
 

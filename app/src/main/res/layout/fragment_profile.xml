@@ -43,9 +43,12 @@
                 style="@style/Widget.AppCompat.RatingBar.Indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:isIndicator="true"
                 android:max="5"
                 android:rating="4.5"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
                 android:stepSize=".5"
                 android:theme="@style/RatingBar"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -55,10 +58,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
                 android:text="@{viewModel.userProfile.rating}"
-                android:textColor="@color/gray_text"
+                android:textColor="@color/grey_btn_dialog"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ratingBar"
@@ -90,8 +91,8 @@
 
                     <ImageView
                         android:id="@+id/ivBasicInfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
                         android:src="@{viewModel.userProfile.basicInfo ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +135,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvBasicInfoFullName" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -168,7 +169,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvBasicInfoPhone" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -201,7 +202,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvBasicInfoKTP" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -234,7 +235,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvBasicInfoBonus" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -258,8 +259,8 @@
 
                     <ImageView
                         android:id="@+id/ivDomicle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
                         android:src="@{viewModel.userProfile.domicileAddress.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -302,7 +303,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvDomicleFullName" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -335,7 +336,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvDomiclePhone" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -368,7 +369,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvDomicleKTP" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -401,7 +402,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvDomicleBonus" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -425,8 +426,8 @@
 
                     <ImageView
                         android:id="@+id/ivPickUp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
                         android:src="@{viewModel.userProfile.pickupAddress.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -469,7 +470,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvPickupFullName" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -502,7 +503,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvPickupPhone" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -535,7 +536,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvPickupKTP" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -568,7 +569,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvPickupBonus" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -592,8 +593,8 @@
 
                     <ImageView
                         android:id="@+id/ivBankAccount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
                         android:src="@{viewModel.userProfile.bankAccount ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -638,7 +639,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvBankName" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -671,7 +672,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvBankAccountNumber" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -704,7 +705,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvBankAccountName" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -737,7 +738,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvBankRegion" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -782,8 +783,8 @@
 
                         <ImageView
                             android:id="@+id/ivSetPin"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
                             android:src="@drawable/ic_arrow_right"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -793,7 +794,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/ivSetPin" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -813,8 +814,8 @@
 
                         <ImageView
                             android:id="@+id/ivChangePassword"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
                             android:src="@drawable/ic_arrow_right"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -861,8 +862,8 @@
 
                         <ImageView
                             android:id="@+id/ivContact"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
                             android:src="@drawable/ic_arrow_right"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -872,7 +873,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/ivContact" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -896,12 +897,13 @@
                             android:textColor="@color/dark_green"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/ivLanguage"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginRight="@dimen/_5sdp"/>
 
                         <ImageView
                             android:id="@+id/ivLanguage"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
                             android:src="@drawable/ic_arrow_right"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -911,7 +913,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/dividerLighterGray"
+                            android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/ivLanguage" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -948,11 +950,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
                     android:onClick="@{()-> viewModel.logout()}"
-                    android:text="Logout"
+                    android:text="@string/profile_button_logout"
                     android:textAllCaps="true"
                     android:textColor="@color/green_dark"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

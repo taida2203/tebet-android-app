@@ -49,4 +49,6 @@
     <color name="grey_text_notify">#d5d5df</color>
     <color name="buttonGreen">#49802D</color>
     <color name="home_line">#DDE8E9</color>
+    <color name="grey_mess">#8A949D</color>
+    <color name="grey_press">#E2E9F1</color>
 </resources>

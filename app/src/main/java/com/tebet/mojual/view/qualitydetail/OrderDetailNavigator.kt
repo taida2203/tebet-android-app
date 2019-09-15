@@ -8,7 +8,8 @@ interface OrderDetailNavigator : BaseActivityNavigator {
     fun validate(): Boolean
     fun itemSelected(item: OrderContainer)
     fun openOrderDetailScreen(it: OrderDetail)
-    fun openRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
+    fun showRejectConfirm()
     fun showConfirmDialog(selectedItems: List<OrderContainer>)
     fun openBankConfirmScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
+    fun openReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
 }

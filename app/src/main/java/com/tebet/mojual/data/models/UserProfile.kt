@@ -4,6 +4,9 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.room.*
 import androidx.databinding.library.baseAdapters.BR
+import co.common.util.LanguageUtil
+import co.common.util.PreferenceUtils
+import com.tebet.mojual.BuildConfig
 
 @Entity(
     tableName = "UserProfile"
@@ -40,9 +43,7 @@ data class UserProfile(
     @ColumnInfo(name = "username")
     var username: String? = null
 ) : BaseObservable() {
-    companion object {
-
-    }
+    companion object;
 
     enum class Status(val status: String) {
         Init("INIT"), InitProfile("INIT_PROFILE"), New("NEW"), Verified("VERIFIED"), Rejected("REJECTED")
@@ -57,33 +58,33 @@ data class UserProfile(
         }
 
     var avatarLocal: String? = null
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.avatarLocal)
         }
     var ktpLocal: String? = null
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.ktpLocal)
         }
     var birthday: String? = null
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.birthday)
         }
 
     var bankName: String? = null
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.bankName)
         }
 
     var bankRegionName: String? = null
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.bankRegionName)
@@ -91,7 +92,7 @@ data class UserProfile(
 
     @Embedded(prefix = "add1_")
     var domicileAddress: Address? = Address(type = Address.DOMICILE_ADDRESS)
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.domicileAddress)
@@ -99,7 +100,7 @@ data class UserProfile(
 
     @Embedded(prefix = "add2_")
     var pickupAddress: Address? = Address(type = Address.PICK_UP_ADDRESS)
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.pickupAddress)
@@ -107,7 +108,7 @@ data class UserProfile(
 
     @Ignore
     var basicInfo: Boolean = true
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = !value
             notifyPropertyChanged(BR.basicInfo)
@@ -115,11 +116,29 @@ data class UserProfile(
 
     @Ignore
     var bankAccount: Boolean = true
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = !value
             notifyPropertyChanged(BR.bankAccount)
         }
+
+    @Ignore
+    var language: Int = PreferenceUtils.getInt(LanguageUtil.PREF_LANGUAGE_INDEX, -1)
+        @Bindable get
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.language)
+        }
+
+    @Ignore
+    var version: String = BuildConfig.VERSION_NAME
+        @Bindable get
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.version)
+        }
+
+
     fun isUserVerified(): Boolean {
         return statusEnum == Status.Verified
     }
