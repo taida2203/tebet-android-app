@@ -62,18 +62,4 @@
     <string name="sale_quantity">Pilih jumlah</string>
     <string name="sale_selected_date">Pilih tanggal pengiriman</string>
     <string name="sale_select_title">Pilih jumlah barang dan tanggal pengiriman</string>
-
-    <string name="profile_telephone">Telephone</string>
-    <string name="profile_domicle_address">Domicle Address</string>
-    <string name="profile_basic_information">Basic information</string>
-    <string name="profile_pickup_address">Pickup Address</string>
-    <string name="profile_bank_account">Bank Account</string>
-    <string name="profile_security">Security</string>
-    <string name="profile_set_pin">Set Pin</string>
-    <string name="profile_change_password">Change Password</string>
-    <string name="profile_other">Other</string>
-    <string name="profile_contact_mojual">Contact MOJUAL</string>
-    <string name="profile_logout">Logout</string>
-    <string name="profile_version">Version</string>
-    <string name="profile_language">Language</string>
 </resources>
