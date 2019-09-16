@@ -13,6 +13,10 @@ fun Double.toDisplayMoney(): String {
     return "Rp. $formattedNumber"
 }
 
+fun Float.toDisplayMoney(): String {
+    return this.toDouble().toDisplayMoney()
+}
+
 fun Double.toDisplayWeight(): String {
     val decimalFormat =  DecimalFormat("0.###")
     return decimalFormat.format(this)

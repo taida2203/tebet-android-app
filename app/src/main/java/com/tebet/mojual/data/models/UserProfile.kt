@@ -27,8 +27,7 @@ data class UserProfile(
     var gender: String? = null,
     var ktp: String? = null,
     var ktpNumber: String? = null,
-    var rating: String? = "4.5",
-    var bonus: Double? = 100000.0,
+    var totalBonus: Double = 0.0,
     var lastName: String? = null,
     var bankAccountNumber: String? = null,
     var bankAccountName: String? = null,
@@ -41,7 +40,9 @@ data class UserProfile(
     var profileType: String? = null,
     var token: String? = null,
     @ColumnInfo(name = "username")
-    var username: String? = null
+    var username: String? = null,
+    @Embedded
+    var setting: ProfileSetting = ProfileSetting()
 ) : BaseObservable() {
     companion object;
 

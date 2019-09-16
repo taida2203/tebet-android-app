@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "e7da4cb35d32b3f70df532ed1c439773",
+    "identityHash": "191aac3a83e7653b352f018262433d7a",
     "entities": [
       {
         "tableName": "UserProfile",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`avatarLocal` TEXT, `ktpLocal` TEXT, `birthday` TEXT, `bankName` TEXT, `bankRegionName` TEXT, `userId` INTEGER, `status` TEXT, `authenticationType` TEXT, `avatar` TEXT, `bankCode` TEXT, `bankRegionCode` TEXT, `email` TEXT, `firstName` TEXT, `fullName` TEXT, `gender` TEXT, `ktp` TEXT, `ktpNumber` TEXT, `rating` TEXT, `bonus` REAL, `lastName` TEXT, `bankAccountNumber` TEXT, `bankAccountName` TEXT, `phone` TEXT, `profileId` INTEGER, `profileType` TEXT, `token` TEXT, `username` TEXT, `add1_mapLocation` TEXT, `add1_city` TEXT, `add1_address` TEXT, `add1_country` TEXT, `add1_kecamatan` TEXT, `add1_kelurahan` TEXT, `add1_latitude` REAL, `add1_longitude` REAL, `add1_postalCode` TEXT, `add1_rtrw` TEXT, `add1_type` TEXT, `add2_mapLocation` TEXT, `add2_city` TEXT, `add2_address` TEXT, `add2_country` TEXT, `add2_kecamatan` TEXT, `add2_kelurahan` TEXT, `add2_latitude` REAL, `add2_longitude` REAL, `add2_postalCode` TEXT, `add2_rtrw` TEXT, `add2_type` TEXT, PRIMARY KEY(`userId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`avatarLocal` TEXT, `ktpLocal` TEXT, `birthday` TEXT, `bankName` TEXT, `bankRegionName` TEXT, `userId` INTEGER, `status` TEXT, `authenticationType` TEXT, `avatar` TEXT, `bankCode` TEXT, `bankRegionCode` TEXT, `email` TEXT, `firstName` TEXT, `fullName` TEXT, `gender` TEXT, `ktp` TEXT, `ktpNumber` TEXT, `totalBonus` REAL NOT NULL, `lastName` TEXT, `bankAccountNumber` TEXT, `bankAccountName` TEXT, `phone` TEXT, `profileId` INTEGER, `profileType` TEXT, `token` TEXT, `username` TEXT, `add1_mapLocation` TEXT, `add1_city` TEXT, `add1_address` TEXT, `add1_country` TEXT, `add1_kecamatan` TEXT, `add1_kelurahan` TEXT, `add1_latitude` REAL, `add1_longitude` REAL, `add1_postalCode` TEXT, `add1_rtrw` TEXT, `add1_type` TEXT, `add2_mapLocation` TEXT, `add2_city` TEXT, `add2_address` TEXT, `add2_country` TEXT, `add2_kecamatan` TEXT, `add2_kelurahan` TEXT, `add2_latitude` REAL, `add2_longitude` REAL, `add2_postalCode` TEXT, `add2_rtrw` TEXT, `add2_type` TEXT, `profileSettingId` INTEGER, `basePrice` REAL, `qcType` TEXT, `deliveryBonus` REAL, `volumeBonusPerKg` REAL, `minPriceIncrease` REAL, `maxPriceIncrease` REAL, `rate` REAL NOT NULL, `iotDefaultDensity` REAL, `note` TEXT, PRIMARY KEY(`userId`))",
         "fields": [
           {
             "fieldPath": "avatarLocal",
@@ -111,16 +111,10 @@
             "notNull": false
           },
           {
-            "fieldPath": "rating",
-            "columnName": "rating",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "bonus",
-            "columnName": "bonus",
+            "fieldPath": "totalBonus",
+            "columnName": "totalBonus",
             "affinity": "REAL",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "lastName",
@@ -299,6 +293,66 @@
           {
             "fieldPath": "pickupAddress.type",
             "columnName": "add2_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "setting.profileSettingId",
+            "columnName": "profileSettingId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "setting.basePrice",
+            "columnName": "basePrice",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "setting.qcType",
+            "columnName": "qcType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "setting.deliveryBonus",
+            "columnName": "deliveryBonus",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "setting.volumeBonusPerKg",
+            "columnName": "volumeBonusPerKg",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "setting.minPriceIncrease",
+            "columnName": "minPriceIncrease",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "setting.maxPriceIncrease",
+            "columnName": "maxPriceIncrease",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "setting.rate",
+            "columnName": "rate",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "setting.iotDefaultDensity",
+            "columnName": "iotDefaultDensity",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "setting.note",
+            "columnName": "note",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -589,7 +643,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e7da4cb35d32b3f70df532ed1c439773\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"191aac3a83e7653b352f018262433d7a\")"
     ]
   }
 }

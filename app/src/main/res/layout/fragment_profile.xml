@@ -58,7 +58,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.userProfile.rating}"
+                android:text="@{String.valueOf(viewModel.userProfile.setting.rate)}"
                 android:textColor="@color/grey_btn_dialog"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
@@ -223,7 +223,7 @@
                             android:id="@+id/tvBasicInfoBonus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{StringExtKt.toDisplayMoney(viewModel.userProfile.bonus)}"
+                            android:text="@{StringExtKt.toDisplayMoney(viewModel.userProfile.totalBonus)}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
