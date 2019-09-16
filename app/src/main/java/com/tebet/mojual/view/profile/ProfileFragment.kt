@@ -11,6 +11,7 @@ import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentProfileBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.login.Login
+import com.tebet.mojual.view.profilechangepass.ChangePassword
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(), ProfileNavigator {
     override val bindingVariable: Int
@@ -55,5 +56,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 activity?.recreate()
             }
         }).show(fragmentManager, "")
+    }
+
+    override fun openChangePasswordScreen() {
+        startActivity(Intent(activity, ChangePassword::class.java))
     }
 }

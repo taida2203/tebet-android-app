@@ -12,6 +12,7 @@ import com.tebet.mojual.view.sale.SaleFragmentProvider
 import com.tebet.mojual.view.saledetail.SaleDetailFragmentProvider
 import com.tebet.mojual.view.selectfuturedate.SelectFutureDate
 import com.tebet.mojual.view.bankupdate.BankUpdate
+import com.tebet.mojual.view.profilechangepass.ChangePassword
 import com.tebet.mojual.view.selectquantity.SelectQuantity
 import com.tebet.mojual.view.signup.SignUpInfo
 import com.tebet.mojual.view.signup.SignUpInfoFragmentProvider
@@ -57,4 +58,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [SignUpInfoFragmentProvider::class])
     abstract fun BankUpdateActivity(): BankUpdate
+
+    @ContributesAndroidInjector
+    abstract fun changePasswordActivity(): ChangePassword
 }

@@ -71,12 +71,20 @@ class ProfileViewModel(
     }
 
     fun onBasicInfoClick() {
-        userProfile.get()?.basicInfo = userProfile.get()?.basicInfo!!
+        userProfile.get()?.let {
+            it.basicInfo = it.basicInfo
+        }
+    }
+
+    fun onChangePassClick() {
+        navigator.openChangePasswordScreen()
     }
 
 
     fun onBankAccountClick() {
-        userProfile.get()?.bankAccount = userProfile.get()?.bankAccount!!
+        userProfile.get()?.let {
+            it.bankAccount = it.bankAccount
+        }
     }
 
     fun onDomicileClick() {
@@ -96,7 +104,6 @@ class ProfileViewModel(
     }
 
     fun currentLangauge(){
-
     }
 
 }

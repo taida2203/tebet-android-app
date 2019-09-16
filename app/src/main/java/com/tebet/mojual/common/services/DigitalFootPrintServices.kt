@@ -100,7 +100,7 @@ class DigitalFootPrintServices : IntentService(DigitalFootPrintServices::class.j
 
     override fun onHandleIntent(intent: Intent?) {
         if (intent != null) {
-            orderId = intent.getLongExtra(ORDER_ID)
+            orderId = intent.getLongExtra(ORDER_ID, 0)
             orderCode = intent.getStringExtra(ORDER_CODE)
         }
     }
