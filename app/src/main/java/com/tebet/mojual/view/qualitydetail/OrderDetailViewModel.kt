@@ -40,7 +40,7 @@ class OrderDetailViewModel(
         order.get()?.let {
             navigator.showLoading(true)
             compositeDisposable.add(
-                dataManager.getOrderDetail(547/*it.orderId*/, loadContainers = true, loadCustomer = true)
+                dataManager.getOrderDetail(it.orderId, loadContainers = true, loadCustomer = true)
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<OrderDetail>() {
                         override fun onSuccess(dataResponse: OrderDetail) {
