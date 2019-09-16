@@ -18,6 +18,7 @@ import com.tebet.mojual.data.models.LocationData
 import com.tebet.mojual.data.models.request.ScanLocationRequest
 import dagger.android.AndroidInjection
 import pub.devrel.easypermissions.EasyPermissions
+import timber.log.Timber
 import javax.inject.Inject
 
 class DigitalFootPrintServices : IntentService(DigitalFootPrintServices::class.java.simpleName),
@@ -145,7 +146,7 @@ class DigitalFootPrintServices : IntentService(DigitalFootPrintServices::class.j
                     orderId = orderId,
                     orderCode = orderCode
                 )
-            ).subscribe()
+            ).subscribe({}, {error-> Timber.e(error)})
         }
     }
 

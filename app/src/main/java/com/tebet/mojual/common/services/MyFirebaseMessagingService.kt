@@ -52,6 +52,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * is initially generated so this is where you would retrieve the token.
      */
     override fun onNewToken(token: String) {
-        dataManager.registerDevice(DeviceRegisterRequest(token)).subscribe()
+        dataManager.registerDevice(DeviceRegisterRequest(token)).subscribe({}, {error-> Timber.e(error)})
     }
 }

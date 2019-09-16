@@ -22,6 +22,7 @@ import io.reactivex.functions.BiFunction
 import io.reactivex.observers.DisposableObserver
 import me.tatarka.bindingcollectionadapter2.collections.MergeObservableList
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 
@@ -157,7 +158,7 @@ class QualityAddContainerViewModel(
                         item.customerData.sensorData = savedData.toJson()
                         true
                     }
-                }.subscribe()
+                }.subscribe({}, {error-> Timber.e(error)})
         )
     }
 
@@ -165,7 +166,7 @@ class QualityAddContainerViewModel(
         compositeDisposable.add(
             dataManager.insertContainerCheck(item.customerData)
                 .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui()).subscribe()
+                .observeOn(schedulerProvider.ui()).subscribe({}, {error-> Timber.e(error)})
         )
     }
 
@@ -185,7 +186,7 @@ class QualityAddContainerViewModel(
                         true
                     }.subscribeOn(schedulerProvider.ui())
                 }
-                .observeOn(schedulerProvider.ui()).subscribe()
+                .observeOn(schedulerProvider.ui()).subscribe({}, {error-> Timber.e(error)})
         )
     }
 
