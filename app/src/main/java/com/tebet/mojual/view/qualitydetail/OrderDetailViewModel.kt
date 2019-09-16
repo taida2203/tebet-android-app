@@ -117,12 +117,6 @@ class OrderDetailViewModel(
     }
 
     fun approveOrder(selectedItems: List<OrderContainer>) {
-        if (true) {
-            order.get()?.let { order ->
-                navigator.openBankConfirmScreen(order, selectedItems)
-            }
-            return
-        }
         if (selectedItems.firstOrNull {
                 it.status?.equals(ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name) == true ||
                         it.status?.equals(ContainerOrderStatus.SECOND_FINALIZED_PRICE_OFFERED.name) == true
