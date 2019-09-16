@@ -46,7 +46,7 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:isIndicator="true"
                 android:max="5"
-                android:rating="4.5"
+                android:rating="@{viewModel.userProfile.setting.rate}"
                 android:scaleX="0.5"
                 android:scaleY="0.5"
                 android:stepSize=".5"
