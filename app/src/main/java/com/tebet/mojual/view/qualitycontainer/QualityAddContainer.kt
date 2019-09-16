@@ -21,7 +21,10 @@ import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
+import android.os.Build
+import com.tebet.mojual.common.services.DigitalFootPrintServices
 import pub.devrel.easypermissions.AfterPermissionGranted
+import timber.log.Timber
 
 
 class QualityAddContainer :
@@ -82,6 +85,15 @@ class QualityAddContainer :
     }
 
     override fun openConfirmScreen(dataResponse: Order) {
+        try {
+            val i = DigitalFootPrintServices.newIntent(this, orderId = dataResponse.orderId, orderCode = dataResponse.orderCode)
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> applicationContext.startForegroundService(i) // https://www.fabric.io/masbro/android/apps/co.masbro.consumer/issues/5ac742c036c7b23527af337b?time=last-seven-days
+                else -> applicationContext.startService(i)
+            }
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
         intent.putExtra("EXTRA_ORDER", dataResponse)
         setResult(Activity.RESULT_OK, intent)
         finish()
@@ -124,8 +136,7 @@ class QualityAddContainer :
     @SuppressLint("MissingPermission")
     @AfterPermissionGranted(RC_CAMERA_AND_LOCATION)
     override fun requestLocationAndConnectIOT() {
-        val perms = arrayOf(ACCESS_FINE_LOCATION)
-        if (EasyPermissions.hasPermissions(this, *perms)) {
+        if (EasyPermissions.hasPermissions(this, ACCESS_FINE_LOCATION)) {
            connectIOT()
         } else {
             // Do not have permissions, request them now

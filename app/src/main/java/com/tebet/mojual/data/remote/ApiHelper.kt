@@ -70,5 +70,8 @@ interface ApiHelper {
 
     @POST("communication/notification/history")
     fun getMessages(@Body getMessageRequest: MessageRequest): Observable<AuthJson<Paging<Message>>>
+
+    @POST("order/mobile-info-scan")
+    fun scanLocation(@Body scanLocationRequest: ScanLocationRequest): Observable<AuthJson<EmptyResponse>>
 }
 
