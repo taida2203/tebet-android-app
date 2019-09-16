@@ -94,9 +94,9 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         })
         setSupportActionBar(baseBinding.baseToolbar)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        (application as App).notificationHandlerData.observe(this, Observer<Pair<RemoteMessage.Notification, Map<String, String>?>> {remoteMessage ->
-            remoteMessage.first.let {
-                var alert = Alerter.create(this)
+        (application as App).notificationHandlerData.observe(this, Observer { remoteMessage ->
+            remoteMessage?.first?.let {
+                val alert = Alerter.create(this)
                     .setIcon(R.drawable.logosmall)
                     .setBackgroundColorRes(R.color.green_dark) // or setBackgroundColorInt(Color.CYAN)
                     .setText(it.body.toString())
@@ -114,7 +114,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                     }
                 }
                 alert.show()
-
+                (application as App).notificationHandlerData.postValue(null)
             }
         })
         onCreateBase(savedInstanceState, contentLayoutId)

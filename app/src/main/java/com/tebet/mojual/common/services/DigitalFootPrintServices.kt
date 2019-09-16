@@ -3,12 +3,16 @@ package com.tebet.mojual.common.services
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.IntentService
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -100,6 +104,25 @@ class DigitalFootPrintServices : IntentService(DigitalFootPrintServices::class.j
     }
 
     override fun onHandleIntent(intent: Intent?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            try {
+                // https://www.fabric.io/masbro/android/apps/co.masbro.consumer/issues/5ac742c036c7b23527af337b?time=last-seven-days
+                val CHANNEL_ID = "tebet_channel_2"
+                val channel = NotificationChannel(
+                    CHANNEL_ID,
+                    "tebet", NotificationManager.IMPORTANCE_DEFAULT
+                )
+                (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(
+                    channel
+                )
+                val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle("")
+                    .setContentText("").build()
+                startForeground(2, notification)
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+        }
         if (intent != null) {
             orderId = intent.getLongExtra(ORDER_ID, 0)
             orderCode = intent.getStringExtra(ORDER_CODE)
