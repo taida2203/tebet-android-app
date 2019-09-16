@@ -78,7 +78,8 @@
     <string name="sale_detail_title_quantity">Quantity</string>
     <string name="sale_detail_title_total_price">Total Price</string>
     <string name="sale_detail_submit">CREATE NEW ORDER</string>
-    <string name="sale_detail_container">%1$s Containers</string>
+    <string name="sale_detail_container">%1$s Container</string>
+    <string name="sale_detail_containers">%1$s Containers</string>
 
 
     <string name="month_year_picker_date">Date</string>

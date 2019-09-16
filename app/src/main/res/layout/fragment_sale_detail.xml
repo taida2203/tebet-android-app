@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="@{@string/sale_detail_container(String.valueOf(viewModel.order.quantity))}"
+                android:text="@{viewModel.order.quantity > 1 ? @string/sale_detail_containers(String.valueOf(viewModel.order.quantity)) : @string/sale_detail_container(String.valueOf(viewModel.order.quantity))}"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
         </LinearLayout>

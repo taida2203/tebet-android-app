@@ -75,7 +75,7 @@ class OrderDetailViewModel(
             it.action = AssetAction.REJECT.name
             it
         }
-        if (rejectItems.firstOrNull { it.status?.equals(ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name) == true } == null) {
+        if (rejectItems.firstOrNull { it.status?.equals(ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name) == true } != null) {
             order.get()?.let { navigator.openReasonScreen(it, rejectItems) }
         } else {
             submitOrder(rejectItems)

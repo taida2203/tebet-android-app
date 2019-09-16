@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@{@string/sale_detail_container(String.valueOf(item.quantity))}"
+                        android:text="@{item.quantity > 1 ? @string/sale_detail_containers(String.valueOf(item.quantity)) : @string/sale_detail_container(String.valueOf(item.quantity))}"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />
