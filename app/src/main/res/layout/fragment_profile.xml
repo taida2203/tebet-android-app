@@ -281,7 +281,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Full Name"
+                            android:text="@string/registration_step2_address"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -291,7 +291,7 @@
                             android:id="@+id/tvDomicleFullName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.userProfile.fullName}"
+                            android:text="@{viewModel.userProfile.domicileAddress.address}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
@@ -314,7 +314,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Telephone"
+                            android:text="@string/registration_step2_kelurahan"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -324,7 +324,7 @@
                             android:id="@+id/tvDomiclePhone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.userProfile.phone}"
+                            android:text="@{viewModel.userProfile.domicileAddress.kelurahan}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
@@ -347,7 +347,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="KTP Number"
+                            android:text="@string/registration_step2_kecamatan"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -357,7 +357,7 @@
                             android:id="@+id/tvDomicleKTP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.userProfile.ktpNumber}"
+                            android:text="@{viewModel.userProfile.domicileAddress.kecamatan}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
@@ -380,7 +380,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bonus"
+                            android:text="@string/registration_step2_rt_rw"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -390,7 +390,7 @@
                             android:id="@+id/tvDomicleBonus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{StringExtKt.toDisplayMoney(viewModel.userProfile.bonus)}"
+                            android:text="@{viewModel.userProfile.domicileAddress.rtrw}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
@@ -405,6 +405,73 @@
                             android:background="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/tvDomicleBonus" />
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/registration_step2_city"
+                            android:textColor="@color/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.tebet.mojual.common.view.AppTextView
+                            android:id="@+id/tvCity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.userProfile.domicileAddress.city}"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/black"
+                            app:layout_constraintTop_toBottomOf="@+id/tvCity" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/registration_step2_postal_code"
+                            android:textColor="@color/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.tebet.mojual.common.view.AppTextView
+                            android:id="@+id/tvPostalCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.userProfile.domicileAddress.postalCode}"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/black"
+                            app:layout_constraintTop_toBottomOf="@+id/tvPostalCode" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
@@ -435,7 +502,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
-                    android:id="@+id/llPickupAddress"
+                    android:id="@+id/llpickupAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -448,17 +515,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Full Name"
+                            android:text="@string/registration_step2_address"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.tebet.mojual.common.view.AppTextView
-                            android:id="@+id/tvPickupFullName"
+                            android:id="@+id/tvPickupleFullName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.userProfile.fullName}"
+                            android:text="@{viewModel.userProfile.pickupAddress.address}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
@@ -471,7 +538,7 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@color/black"
-                            app:layout_constraintTop_toBottomOf="@+id/tvPickupFullName" />
+                            app:layout_constraintTop_toBottomOf="@+id/tvPickupleFullName" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -481,17 +548,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Telephone"
+                            android:text="@string/registration_step2_kelurahan"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.tebet.mojual.common.view.AppTextView
-                            android:id="@+id/tvPickupPhone"
+                            android:id="@+id/tvPickuplePhone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.userProfile.phone}"
+                            android:text="@{viewModel.userProfile.pickupAddress.kelurahan}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
@@ -504,7 +571,7 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@color/black"
-                            app:layout_constraintTop_toBottomOf="@+id/tvPickupPhone" />
+                            app:layout_constraintTop_toBottomOf="@+id/tvPickuplePhone" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -514,17 +581,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="KTP Number"
+                            android:text="@string/registration_step2_kecamatan"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.tebet.mojual.common.view.AppTextView
-                            android:id="@+id/tvPickupKTP"
+                            android:id="@+id/tvPickupleKTP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.userProfile.ktpNumber}"
+                            android:text="@{viewModel.userProfile.pickupAddress.kecamatan}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
@@ -537,7 +604,7 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@color/black"
-                            app:layout_constraintTop_toBottomOf="@+id/tvPickupKTP" />
+                            app:layout_constraintTop_toBottomOf="@+id/tvPickupleKTP" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -547,17 +614,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bonus"
+                            android:text="@string/registration_step2_rt_rw"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.tebet.mojual.common.view.AppTextView
-                            android:id="@+id/tvPickupBonus"
+                            android:id="@+id/tvPickupleBonus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{StringExtKt.toDisplayMoney(viewModel.userProfile.bonus)}"
+                            android:text="@{viewModel.userProfile.pickupAddress.rtrw}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
@@ -570,8 +637,75 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="@color/black"
-                            app:layout_constraintTop_toBottomOf="@+id/tvPickupBonus" />
+                            app:layout_constraintTop_toBottomOf="@+id/tvPickupleBonus" />
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/registration_step2_city"
+                            android:textColor="@color/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.tebet.mojual.common.view.AppTextView
+                            android:id="@+id/tvCity2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.userProfile.pickupAddress.city}"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/black"
+                            app:layout_constraintTop_toBottomOf="@+id/tvCity2" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/registration_step2_postal_code"
+                            android:textColor="@color/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.tebet.mojual.common.view.AppTextView
+                            android:id="@+id/tvPostalCode2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.userProfile.pickupAddress.postalCode}"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/black"
+                            app:layout_constraintTop_toBottomOf="@+id/tvPostalCode2" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
@@ -625,11 +759,11 @@
                         <com.tebet.mojual.common.view.AppTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:gravity="end"
                             android:text="@{viewModel.userProfile.bankName}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
-                            android:gravity="end"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/tvBankName"
@@ -879,12 +1013,13 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:onClick="@{()->viewModel.onChangeLanguageClick()}">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Language"
+                            android:text="@string/profile_language"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -893,12 +1028,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="English"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:text="@{viewModel.userProfile.language == 0 ? @string/support_language_english : @string/support_language_bahasa}"
                             android:textColor="@color/dark_green"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/ivLanguage"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginRight="@dimen/_5sdp"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:id="@+id/ivLanguage"
