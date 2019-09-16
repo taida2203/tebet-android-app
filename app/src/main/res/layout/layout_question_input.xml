@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reject_hint_your_answer"
                 app:validateEmpty="@{true}"
+                android:text="@={view.data.answer}"
                 app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
 

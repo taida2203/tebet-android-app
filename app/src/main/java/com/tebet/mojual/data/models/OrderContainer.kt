@@ -2,8 +2,8 @@ package com.tebet.mojual.data.models
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import androidx.room.Ignore
 import androidx.databinding.library.baseAdapters.BR
+import androidx.room.Ignore
 import com.tebet.mojual.data.models.enumeration.AssetAction
 import com.tebet.mojual.data.models.enumeration.ContainerOrderState
 import com.tebet.mojual.data.models.enumeration.ContainerOrderStatus
@@ -37,8 +37,7 @@ data class OrderContainer(
     var modifiedBy: String? = null,
     var modifiedDate: Long? = null,
     var action: String? = AssetAction.APPROVE.name,
-    var rejectMessage1: String? = null,
-    var rejectMessage2: String? = null
+    var orderAnswers : List<Question> = arrayListOf()
 ) : BaseObservable() {
     val state: ContainerOrderState
         get() {

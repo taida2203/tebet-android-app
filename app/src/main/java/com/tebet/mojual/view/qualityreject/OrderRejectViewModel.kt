@@ -18,8 +18,6 @@ class OrderRejectViewModel(
     BaseViewModel<OrderRejectNavigator>(dataManager, schedulerProvider) {
     var order: ObservableField<OrderDetail> = ObservableField()
     var items: ObservableArrayList<OrderContainer> = ObservableArrayList()
-    var rejectMessage1: ObservableField<String> = ObservableField()
-    var rejectMessage2: ObservableField<String> = ObservableField()
 
     fun onSubmitClick() {
         if (!navigator.validate()) {
@@ -29,8 +27,9 @@ class OrderRejectViewModel(
             navigator.showLoading(true)
             compositeDisposable.add(
                 dataManager.confirmOrder(od.orderId, items.map {
-                    it.rejectMessage1 = rejectMessage1.get()
-                    it.rejectMessage2 = rejectMessage2.get()
+                    order.get()?.rejectionQuestions?.let { answers ->
+                        it.orderAnswers = answers
+                    }
                     it
                 })
                     .observeOn(schedulerProvider.ui())
