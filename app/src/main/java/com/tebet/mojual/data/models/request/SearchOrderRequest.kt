@@ -10,7 +10,7 @@ data class SearchOrderRequest(
     var loadCustomer: Boolean? = null,
     var loadContainers: Boolean? = null,
     var hasNoContainer: Boolean? = null,
-    var orders: Map<String, String>? = null,
+    var orders: Map<String, String>? = mapOf(Pair("od.createdDate", "DESC")),
     var limit: Int? = null,
     var offset: Int? = null
 )
