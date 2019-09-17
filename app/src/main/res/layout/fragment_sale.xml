@@ -80,12 +80,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="@dimen/_11ssp"
                 android:text="@string/sale_estimated_price" />
 
             <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="right"
                 android:text="@{StringExtKt.toDisplayMoney(viewModel.simulationPrice)}"
                 android:textStyle="bold" />
