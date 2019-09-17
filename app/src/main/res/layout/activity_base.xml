@@ -71,15 +71,15 @@
                         android:src="@drawable/mojual_logo"
                         android:visibility="@{viewModel.enableTopLogo ? View.VISIBLE : View.GONE}" />
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/ivBack"
-                        android:layout_width="@dimen/_12sdp"
-                        android:layout_height="@dimen/_12sdp"
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/icon_back"
+                        android:src="@drawable/icon_back"
+                        android:padding="@dimen/_10sdp"
                         android:onClick="@{()-> viewModel.onBackPressed()}"
-                        android:padding="@dimen/_6sdp" />
+                        android:contentDescription="TODO" />
 
                     <FrameLayout
                         android:id="@+id/topLeftHolder"

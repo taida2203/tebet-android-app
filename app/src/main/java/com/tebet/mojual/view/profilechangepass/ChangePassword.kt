@@ -11,6 +11,7 @@ class ChangePassword : ForgotPassword() {
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         super.onCreateBase(savedInstanceState, layoutId)
         title = getString(R.string.change_pass_title)
+        enableBackButton = true
     }
 
     override fun openHomeScreen() {
