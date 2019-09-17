@@ -23,148 +23,159 @@
         android:paddingTop="@dimen/_4sdp"
         android:paddingRight="@dimen/_20sdp">
 
-        <com.tebet.mojual.common.view.AppTextView
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.order.note}"
-            android:textColor="@color/red_btn_dialog"
-            android:visibility="@{viewModel.order.note != null ? View.VISIBLE : View.GONE}"
-            android:layout_marginBottom="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/order_detail_order_id" />
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@{viewModel.order.orderCode}"
-                android:textColor="@color/dark_green"
-                android:textStyle="bold" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Status" />
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@{!viewModel.order.isRejected ? @color/dark_green : @color/red_btn_dialog}"
-                android:text="@{viewModel.order.status}"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/order_detail_total_amount" />
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@{StringExtKt.toDisplayMoney(viewModel.order.totalPrice)}"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/order_detail_delivery_bonus"
-                 />
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@{StringExtKt.toDisplayMoney(viewModel.order.deliveryBonus)}"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/order_detail_volume_bonus"
-                 />
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@{StringExtKt.toDisplayMoney(viewModel.order.bonus)}"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Message"
-                 />
-
-            <com.tebet.mojual.common.view.AppTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@{viewModel.order.note}"
-                android:textColor="@color/red_btn_dialog"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <com.tebet.mojual.common.view.AppTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.order.canAction ? View.VISIBLE : View.GONE}"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/order_detail_hint"
-            android:textColor="@color/black" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:itemBinding="@{viewModel.itemBinding}"
-            app:items="@{viewModel.items}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.order.note}"
+                    android:textColor="@color/red_btn_dialog"
+                    android:visibility="@{viewModel.order.note != null ? View.VISIBLE : View.GONE}"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/order_detail_order_id" />
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{viewModel.order.orderCode}"
+                        android:textColor="@color/dark_green"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Status" />
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@{!viewModel.order.isRejected ? @color/dark_green : @color/red_btn_dialog}"
+                        android:text="@{viewModel.order.status}"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/order_detail_total_amount" />
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{StringExtKt.toDisplayMoney(viewModel.order.totalPrice)}"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/order_detail_delivery_bonus" />
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{StringExtKt.toDisplayMoney(viewModel.order.deliveryBonus)}"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/order_detail_volume_bonus" />
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{StringExtKt.toDisplayMoney(viewModel.order.bonus)}"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Message" />
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{viewModel.order.note}"
+                        android:textColor="@color/red_btn_dialog"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.order.canAction ? View.VISIBLE : View.GONE}"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@string/order_detail_hint"
+                    android:textColor="@color/black" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:itemBinding="@{viewModel.itemBinding}"
+                    app:items="@{viewModel.items}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
