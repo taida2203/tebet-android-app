@@ -22,6 +22,8 @@ import javax.inject.Inject
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
 import android.os.Build
+import co.common.view.dialog.RoundedDialog
+import co.common.view.dialog.RoundedOkDialog
 import com.tebet.mojual.common.services.DigitalFootPrintServices
 import pub.devrel.easypermissions.AfterPermissionGranted
 import timber.log.Timber
@@ -71,7 +73,7 @@ class QualityAddContainer :
         viewModel.loadData()
         mWifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         registerReceiver(mWifiScanReceiver, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // only for gingerbread and newer versions
             requestLocationAndConnectIOT()
         } else {
@@ -85,29 +87,28 @@ class QualityAddContainer :
     }
 
     override fun openConfirmScreen(dataResponse: Order) {
-//        try {
-//            val i = DigitalFootPrintServices.newIntent(this, orderId = dataResponse.orderId, orderCode = dataResponse.orderCode)
-//            when {
-//                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> applicationContext.startForegroundService(i) // https://www.fabric.io/masbro/android/apps/co.masbro.consumer/issues/5ac742c036c7b23527af337b?time=last-seven-days
-//                else -> applicationContext.startService(i)
-//            }
-//        } catch (e: Exception) {
-//            Timber.e(e)
-//        }
-        intent.putExtra("EXTRA_ORDER", dataResponse)
-        setResult(Activity.RESULT_OK, intent)
-        finish()
-//        RoundedOkDialog(getString(R.string.check_quality_add_container_turn_off_iot)).setRoundedDialogCallback(
-//            object : RoundedDialog.RoundedDialogCallback {
-//                override fun onFirstButtonClicked(selectedValue: Any?) {
-//                    if (!viewModel.sensorConnected) {
-//                        finish()
-//                    }
-//                }
-//
-//                override fun onSecondButtonClicked(selectedValue: Any?) {
-//                }
-//            }).show(supportFragmentManager, "")
+        try {
+            val i = DigitalFootPrintServices.newIntent(this, orderId = dataResponse.orderId, orderCode = dataResponse.orderCode)
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> applicationContext.startForegroundService(i) // https://www.fabric.io/masbro/android/apps/co.masbro.consumer/issues/5ac742c036c7b23527af337b?time=last-seven-days
+                else -> applicationContext.startService(i)
+            }
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
+        RoundedOkDialog(getString(R.string.check_quality_add_container_turn_off_iot)).setRoundedDialogCallback(
+            object : RoundedDialog.RoundedDialogCallback {
+                override fun onFirstButtonClicked(selectedValue: Any?) {
+                    if (!sensor.isConnected) {
+                        intent.putExtra("EXTRA_ORDER", dataResponse)
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    }
+                }
+
+                override fun onSecondButtonClicked(selectedValue: Any?) {
+                }
+            }).show(supportFragmentManager, "")
     }
 
     private var mWifiScanReceiver: BroadcastReceiver = object : BroadcastReceiver() {
