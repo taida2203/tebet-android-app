@@ -135,6 +135,8 @@
     <string name="history_search_title">Advanced Search</string>
 
     <string name="message_title">Notification</string>
+    <string name="message_today">Today</string>
+    <string name="message_yesterday">Yesterday</string>
 
     <string name="bank_update_title">Update Bank</string>
 
