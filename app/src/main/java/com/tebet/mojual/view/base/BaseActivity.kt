@@ -114,10 +114,17 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                     }
                 }
                 alert.show()
+                refreshData(it, remoteMessage.second)
                 (application as App).notificationHandlerData.postValue(null)
             }
         })
         onCreateBase(savedInstanceState, contentLayoutId)
+    }
+
+    protected open fun refreshData(
+        notification: RemoteMessage.Notification,
+        second: Map<String, String>?
+    ) {
     }
 
     open fun showOrderDetailScreen(dataResponse: Order) {}

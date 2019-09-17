@@ -85,15 +85,15 @@ class QualityAddContainer :
     }
 
     override fun openConfirmScreen(dataResponse: Order) {
-        try {
-            val i = DigitalFootPrintServices.newIntent(this, orderId = dataResponse.orderId, orderCode = dataResponse.orderCode)
-            when {
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> applicationContext.startForegroundService(i) // https://www.fabric.io/masbro/android/apps/co.masbro.consumer/issues/5ac742c036c7b23527af337b?time=last-seven-days
-                else -> applicationContext.startService(i)
-            }
-        } catch (e: Exception) {
-            Timber.e(e)
-        }
+//        try {
+//            val i = DigitalFootPrintServices.newIntent(this, orderId = dataResponse.orderId, orderCode = dataResponse.orderCode)
+//            when {
+//                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> applicationContext.startForegroundService(i) // https://www.fabric.io/masbro/android/apps/co.masbro.consumer/issues/5ac742c036c7b23527af337b?time=last-seven-days
+//                else -> applicationContext.startService(i)
+//            }
+//        } catch (e: Exception) {
+//            Timber.e(e)
+//        }
         intent.putExtra("EXTRA_ORDER", dataResponse)
         setResult(Activity.RESULT_OK, intent)
         finish()

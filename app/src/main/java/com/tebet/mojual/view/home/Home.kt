@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.library.baseAdapters.BR
+import com.google.firebase.messaging.RemoteMessage
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
@@ -216,6 +217,18 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             is QualityFragment -> title = getString(R.string.home_menu_check_quality)
             is HistorySearchFragment -> title = getString(R.string.history_search_title)
             is BankConfirmFragment -> title = getString(R.string.bank_confirm_title)
+        }
+    }
+
+    override fun refreshData(
+        notification: RemoteMessage.Notification,
+        second: Map<String, String>?
+    ) {
+        super.refreshData(notification, second)
+        second?.let {
+            if (currentFragment() is OrderDetailFragment) {
+                openFromNotification(second)
+            }
         }
     }
 
