@@ -22,11 +22,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import co.common.view.dialog.RoundedOkDialog
 import co.sdk.auth.core.models.LoginException
-import com.google.firebase.messaging.RemoteMessage
 import com.tapadoo.alerter.Alerter
 import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
+import com.tebet.mojual.data.models.Message
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.ActivityBaseBinding
 import dagger.android.AndroidInjection
@@ -95,41 +95,34 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         setSupportActionBar(baseBinding.baseToolbar)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         (application as App).notificationHandlerData.observe(this, Observer { remoteMessage ->
-            remoteMessage?.first?.let {
+            remoteMessage?.let {message ->
                 val alert = Alerter.create(this)
                     .setIcon(R.drawable.logosmall)
                     .setBackgroundColorRes(R.color.green_dark) // or setBackgroundColorInt(Color.CYAN)
-                    .setText(it.body.toString())
+                    .setText(message.message.toString())
                     .setTextAppearance(android.R.style.TextAppearance_Large_Inverse)
                     .setDuration(5000)
                     .enableSwipeToDismiss()
-
-                remoteMessage.second?.let { extraData ->
-                    extraData["orderId"]?.let { orderId ->
-                        alert.addButton("View", R.style.AlertButton, View.OnClickListener {
-                            openFromNotification(extraData)
-                        }).setOnClickListener(View.OnClickListener {
-                            openFromNotification(extraData)
-                        })
-                    }
+                if (!message.data["orderId"].isNullOrBlank()) {
+                    alert.addButton("View", R.style.AlertButton, View.OnClickListener {
+                        openFromNotification(message.data)
+                    }).setOnClickListener(View.OnClickListener {
+                        openFromNotification(message.data)
+                    })
                 }
                 alert.show()
-                refreshData(it, remoteMessage.second)
+                refreshData(message)
                 (application as App).notificationHandlerData.postValue(null)
             }
         })
         onCreateBase(savedInstanceState, contentLayoutId)
     }
 
-    protected open fun refreshData(
-        notification: RemoteMessage.Notification,
-        second: Map<String, String>?
-    ) {
-    }
+    protected open fun refreshData(notification: Message) {}
 
     open fun showOrderDetailScreen(dataResponse: Order) {}
 
-    protected fun openFromNotification(extras: Map<String, String?>): Boolean {
+    fun openFromNotification(extras: Map<String, String?>): Boolean {
         extras["orderId"]?.let {
             showOrderDetailScreen(Order(orderId = it.toLong()))
             return true

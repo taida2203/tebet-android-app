@@ -9,12 +9,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.library.baseAdapters.BR
-import com.google.firebase.messaging.RemoteMessage
 import com.tebet.mojual.R
-import com.tebet.mojual.data.models.Order
-import com.tebet.mojual.data.models.OrderContainer
-import com.tebet.mojual.data.models.OrderDetail
-import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.databinding.ItemHomeAvatarBinding
@@ -220,15 +216,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         }
     }
 
-    override fun refreshData(
-        notification: RemoteMessage.Notification,
-        second: Map<String, String>?
-    ) {
-        super.refreshData(notification, second)
-        second?.let {
-            if (currentFragment() is OrderDetailFragment) {
-                openFromNotification(second)
-            }
+    override fun refreshData(message: Message) {
+        super.refreshData(message)
+        if (currentFragment() is OrderDetailFragment) {
+            openFromNotification(message.data)
         }
     }
 

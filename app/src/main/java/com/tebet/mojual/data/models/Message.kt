@@ -11,6 +11,7 @@ data class Message(
     var profileId: Long? = null,
     var profileCode: Long? = null,
     var message: String? = null,
-    var createdDate: Long? = null
+    var createdDate: Long? = null,
+    var data: Map<String, String> = emptyMap()
 ) : Serializable, BaseObservable() {
 }

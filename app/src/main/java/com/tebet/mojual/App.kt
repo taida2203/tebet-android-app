@@ -16,6 +16,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.squareup.leakcanary.LeakCanary
 import com.tebet.mojual.common.constant.ConfigEnv
 import com.tebet.mojual.common.util.Utility
+import com.tebet.mojual.data.models.Message
 import com.tebet.mojual.di.component.DaggerAppComponent
 import com.tebet.mojual.di.module.AppModule
 import com.tebet.mojual.di.module.NetModule
@@ -38,7 +39,7 @@ class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector {
     @Inject
     lateinit var mCalligraphyConfig: CalligraphyConfig
 
-    var notificationHandlerData: MutableLiveData<Pair<RemoteMessage.Notification?, Map<String, String>?>?> = MutableLiveData()
+    var notificationHandlerData: MutableLiveData<Message?> = MutableLiveData()
         private set
 
     override fun onCreate() {

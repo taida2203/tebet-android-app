@@ -31,10 +31,11 @@ class MessageViewModel(
     val multipleItemsBind: OnItemBindClass<Any> = OnItemBindClass<Any>()
         .map(Message::class.java) { itemBinding, position, item ->
             itemBinding.set(BR.item, R.layout.item_message)
-//            itemBinding.bindExtra(BR.listener, object : OnListItemClick<Message> {
-//                override fun onItemClick(item: Message) {
-//                }
-//            })
+            itemBinding.bindExtra(BR.listener, object : OnListItemClick<Message> {
+                override fun onItemClick(item: Message) {
+                    navigator.openNotificationDetail(item)
+                }
+            })
         }
 
     fun loadData(page: Int = 0) {

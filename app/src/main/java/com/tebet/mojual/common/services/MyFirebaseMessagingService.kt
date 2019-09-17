@@ -4,6 +4,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.tebet.mojual.App
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.Message
 import com.tebet.mojual.data.models.request.DeviceRegisterRequest
 import dagger.android.AndroidInjection
 import timber.log.Timber
@@ -42,7 +43,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Timber.e("DOLPHIN Notification Received")
         remoteMessage.notification?.let {
-            (application as App).notificationHandlerData.postValue(Pair(it, remoteMessage.data))
+            var convertedMessage = Message(message = it.body)
+            remoteMessage.data.let { extraData ->
+                convertedMessage.data = extraData
+            }
+            (application as App).notificationHandlerData.postValue(convertedMessage)
         }
     }
 
