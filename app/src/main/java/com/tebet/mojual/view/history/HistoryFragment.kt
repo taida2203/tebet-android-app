@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.Fragment
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.request.SearchOrderRequest
@@ -24,11 +25,24 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
 
     private lateinit var validator: Validator
 
+    var searchRequest: SearchOrderRequest? = null
+
+    companion object {
+        fun newInstance(dataResponse: SearchOrderRequest?): Fragment {
+            val fragment = HistoryFragment()
+            fragment.searchRequest = dataResponse
+            return fragment
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.navigator = this
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
+        searchRequest?.let {
+            viewModel.searchRequest = it
+        }
         viewModel.loadData(false)
     }
 

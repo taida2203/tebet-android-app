@@ -7,6 +7,7 @@ import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Paging
+import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
@@ -27,6 +28,11 @@ class HistoryViewModel(
                     navigator.itemSelected(item)
                 }
             })
+    var searchRequest: SearchOrderRequest = SearchOrderRequest(
+        hasNoContainer = false
+    )
+
+    var userProfile: UserProfile? = null
 
     override fun loadData(isForceLoad: Boolean?) {
         loadData(0)
@@ -36,38 +42,44 @@ class HistoryViewModel(
         val offset = page * 10
         if (items.size >= offset) {
             navigator.showLoading(true)
-            compositeDisposable.add(
-                dataManager.getUserProfileDB()
-                    .concatMap {
-                        it.data?.profileId?.let { profileId ->
-                            dataManager.searchOrders(
-                                SearchOrderRequest(
-                                    profileId = profileId,
-                                    offset = page * 10,
-                                    limit = 10,
-                                    hasNoContainer = false
-                                )
-                            )
-                        } ?: error("Invalid User")
+            compositeDisposable.add(getUserProfile()
+                .map {
+                    it.profileId?.let { profileId ->
+                        searchRequest.profileId = profileId
                     }
-                    .observeOn(schedulerProvider.ui())
-                    .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
-                        override fun onSuccess(dataResponse: Paging<Order>) {
-                            dataResponse.data.forEach { order ->
-                                when {
-                                    items.contains(order) -> items[items.indexOf(order)] = order
-                                    else -> items.add(order)
-                                }
+                    searchRequest.offset = page * 10
+                    searchRequest.limit = 10
+                    searchRequest
+                }
+                .concatMap { dataManager.searchOrders(it) }
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
+                    override fun onSuccess(dataResponse: Paging<Order>) {
+                        dataResponse.data.forEach { order ->
+                            when {
+                                items.contains(order) -> items[items.indexOf(order)] = order
+                                else -> items.add(order)
                             }
-                            navigator.showLoading(false)
                         }
+                        navigator.showLoading(false)
+                    }
 
-                        override fun onFailure(error: String?) {
-                            navigator.showLoading(false)
-                            handleError(error)
-                        }
-                    })
+                    override fun onFailure(error: String?) {
+                        navigator.showLoading(false)
+                        handleError(error)
+                    }
+                })
             )
+        }
+    }
+
+    private fun getUserProfile(): Observable<UserProfile> {
+        return when (userProfile) {
+            null -> dataManager.getUserProfileDB().concatMap {
+                this.userProfile = it.data
+                Observable.just(this.userProfile)
+            }
+            else -> Observable.just(this.userProfile)
         }
     }
 

@@ -18,6 +18,7 @@ import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.bankconfirm.BankConfirmFragment
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.base.BaseFragment
+import com.tebet.mojual.view.help.QualityHelp
 import com.tebet.mojual.view.history.HistoryFragment
 import com.tebet.mojual.view.home.content.HomeFragment
 import com.tebet.mojual.view.historysearch.HistorySearchFragment
@@ -120,12 +121,18 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     override fun showHomeScreen() = openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
 
     override fun showTipScreen() {
-        //TODO: TBD
+        startActivity(Intent(this, QualityHelp::class.java))
     }
 
-    override fun showHistoryScreen() = openFragmentSlideRight(HistoryFragment(), R.id.contentHolder, HistoryFragment::class.java.simpleName)
+    override fun showHistoryScreen(searchOrderRequest: SearchOrderRequest?) {
+        if (currentFragment() is HistorySearchFragment) {
+            supportFragmentManager.popBackStack()
+            return
+        }
+        openFragmentSlideRight(HistoryFragment.newInstance(searchOrderRequest), R.id.contentHolder, HistoryFragment::class.java.simpleName)
+    }
 
-    override fun showHistorySearchScreen(searchOrderRequest: SearchOrderRequest) = openFragmentSlideRight(HistorySearchFragment(), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
+    override fun showHistorySearchScreen(searchOrderRequest: SearchOrderRequest) = openFragmentSlideRight(HistorySearchFragment.newInstance(searchOrderRequest), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
 
 
     override fun showInboxScreen() = openFragmentSlideRight(MessageFragment(), R.id.contentHolder, MessageFragment::class.java.simpleName)

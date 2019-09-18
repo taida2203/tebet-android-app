@@ -86,6 +86,7 @@
             android:cursorVisible="false"
             android:layout_marginBottom="@dimen/_15sdp"
             app:validateEmpty="@{true}"
+            android:text="@={viewModel.searchRequest.orderCode}"
             app:validateTypeAutoDismiss="@{true}" />
 
         <com.tebet.mojual.common.view.AppTextView
@@ -113,6 +114,7 @@
         <com.tebet.mojual.common.view.AppButtonRounded
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.submit()}"
             android:layout_marginBottom="@dimen/_10sdp"
             android:text="@string/history_advance_button_search" />
 

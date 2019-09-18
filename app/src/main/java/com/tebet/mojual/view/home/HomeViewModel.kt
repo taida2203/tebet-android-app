@@ -59,8 +59,12 @@ class HomeViewModel(
     }
 
     fun onHistoryClick() {
+        this.onHistoryClick(SearchOrderRequest())
+    }
+
+    fun onHistoryClick(searchOrderRequest: SearchOrderRequest?) {
         selectedTab.set(ScreenTab.History)
-        navigator.showHistoryScreen()
+        navigator.showHistoryScreen(searchOrderRequest)
     }
 
     fun onMessageClick() {
