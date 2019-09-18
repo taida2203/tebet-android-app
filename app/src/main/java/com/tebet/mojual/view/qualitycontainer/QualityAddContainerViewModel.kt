@@ -256,6 +256,7 @@ class QualityAddContainerViewModel(
     }
 
     fun onTipsClick() {
+        navigator.openQualityHelpScreen()
     }
 
     fun onSubmitClick() {

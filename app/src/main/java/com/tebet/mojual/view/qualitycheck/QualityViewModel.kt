@@ -109,6 +109,6 @@ class QualityViewModel(
     }
 
     fun onTipsClick() {
-
+        navigator.openQualityHelpScreen()
     }
 }

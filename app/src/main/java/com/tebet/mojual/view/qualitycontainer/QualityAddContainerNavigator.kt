@@ -8,4 +8,5 @@ interface QualityAddContainerNavigator: BaseActivityNavigator {
     fun dataValid(): Boolean
     fun reTryConnectIOT()
     fun requestLocationAndConnectIOT()
+    fun openQualityHelpScreen()
 }

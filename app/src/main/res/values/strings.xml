@@ -2,7 +2,7 @@
     <string name="app_name">MoJual</string>
 
     <string name="general_btn_next">Next</string>
-    <string name="general_btn_back">back</string>
+    <string name="general_btn_back">Back</string>
     <string name="general_btn_no">NO</string>
     <string name="general_btn_yes">YES</string>
     <string name="general_error">Something went wrong, please restart and try again !!</string>
@@ -180,4 +180,5 @@
     <string name="history_advance_hint_sort">Status</string>
     <string name="history_advance_button_search">SEARCH</string>
     <string name="history_advance_hint_date">15 Jul 2019</string>
+    <string name="quality_help_title">Help</string>
 </resources>

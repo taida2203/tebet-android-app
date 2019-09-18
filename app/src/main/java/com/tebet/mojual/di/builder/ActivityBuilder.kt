@@ -12,6 +12,7 @@ import com.tebet.mojual.view.sale.SaleFragmentProvider
 import com.tebet.mojual.view.saledetail.SaleDetailFragmentProvider
 import com.tebet.mojual.view.selectfuturedate.SelectFutureDate
 import com.tebet.mojual.view.bankupdate.BankUpdate
+import com.tebet.mojual.view.help.QualityHelp
 import com.tebet.mojual.view.profilechangepass.ChangePassword
 import com.tebet.mojual.view.selectquantity.SelectQuantity
 import com.tebet.mojual.view.signup.SignUpInfo
@@ -61,4 +62,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract fun changePasswordActivity(): ChangePassword
+
+    @ContributesAndroidInjector
+    abstract fun qualityHelpActivity(): QualityHelp
 }

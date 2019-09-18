@@ -8,4 +8,5 @@ interface QualityNavigator : BaseActivityNavigator {
     fun itemSelected(item: Order)
     fun openSellScreen()
     fun openAddContainerScreen(selectedItem: Order)
+    fun openQualityHelpScreen()
 }

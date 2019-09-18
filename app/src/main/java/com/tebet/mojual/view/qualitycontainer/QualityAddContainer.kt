@@ -25,6 +25,7 @@ import android.os.Build
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedOkDialog
 import com.tebet.mojual.common.services.DigitalFootPrintServices
+import com.tebet.mojual.view.help.QualityHelp
 import pub.devrel.easypermissions.AfterPermissionGranted
 import timber.log.Timber
 
@@ -157,5 +158,9 @@ class QualityAddContainer :
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun openQualityHelpScreen() {
+        startActivity(Intent(this, QualityHelp::class.java))
     }
 }
