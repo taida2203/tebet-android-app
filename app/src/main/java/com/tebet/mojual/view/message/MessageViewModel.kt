@@ -43,7 +43,11 @@ class MessageViewModel(
         navigator.showLoading(true)
 //        headerFooterItems.insertItem(R.layout.item_quality_loading)
         compositeDisposable.add(
-            dataManager.getMessages(MessageRequest(offset = (page - 1) * 10, limit = 10))
+            dataManager.getUserProfileDB()
+                .concatMap {
+                    it.data?.profileId?.let { profileId ->
+                        dataManager.getMessages(MessageRequest(profileId = profileId, offset = (page) * 10, limit = 10)) }
+                }
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Paging<Message>>() {
                     override fun onSuccess(dataResponse: Paging<Message>) {

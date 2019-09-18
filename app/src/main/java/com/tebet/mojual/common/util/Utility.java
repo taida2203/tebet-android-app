@@ -49,17 +49,17 @@ public class Utility {
 
         if (languageIndex < 0) {
             if (!TextUtils.isEmpty(language) && !"in-ID".equalsIgnoreCase(language) && !"in_ID".equalsIgnoreCase(language)) {
-                language = "en";
+                language = "en-US";
             } else {
-                language = "in";
+                language = "in-ID";
             }
         } else {
             switch (languageIndex) {
                 case 0:
-                    language = "en";
+                    language = "en-US";
                     break;
                 case 1:
-                    language = "in";
+                    language = "in-ID";
                     break;
             }
         }
