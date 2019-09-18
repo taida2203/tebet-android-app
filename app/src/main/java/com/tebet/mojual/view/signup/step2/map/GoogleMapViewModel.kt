@@ -56,7 +56,7 @@ class GoogleMapViewModel(
         dataManager.isShowTutorialShowed = true
     }
 
-    fun loadData() {
+    override fun loadData() {
         isShowTutorial.set(!dataManager.isShowTutorialShowed)
     }
 }

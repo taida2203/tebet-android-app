@@ -29,7 +29,7 @@ class SignUpInfoStep3Model(
         }
     }
 
-    fun loadData() {
+    override fun loadData() {
         navigator.showLoading(true)
         compositeDisposable.add(
             Observable.zip(

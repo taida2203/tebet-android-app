@@ -40,7 +40,7 @@ class HomeContentViewModel(
         navigator.show(R.string.general_error_feature_disabled)
     }
 
-    fun loadData() {
+    override fun loadData() {
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getUserProfileDB()

@@ -36,7 +36,7 @@ class OrderDetailViewModel(
                 }
             })
 
-    fun loadData() {
+    override fun loadData() {
         order.get()?.let {
             navigator.showLoading(true)
             compositeDisposable.add(

@@ -41,4 +41,7 @@ abstract class BaseViewModel<N>(
     protected fun handleError(error: String?) {
         baseErrorHandlerData.postValue(error)
     }
+
+    open fun loadData() {
+    }
 }

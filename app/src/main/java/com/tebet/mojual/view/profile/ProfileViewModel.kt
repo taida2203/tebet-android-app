@@ -54,7 +54,7 @@ class ProfileViewModel(
         )
     }
 
-    fun loadData() {
+    override fun loadData() {
         compositeDisposable.add(
             dataManager.getUserProfileDB()
                 .subscribeOn(schedulerProvider.io())

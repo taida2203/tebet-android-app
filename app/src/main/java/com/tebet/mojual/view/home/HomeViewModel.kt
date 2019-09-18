@@ -25,7 +25,7 @@ class HomeViewModel(
         Home, Message, History
     }
 
-    fun loadData() {
+    override fun loadData() {
         compositeDisposable.add(
             dataManager.getUserProfileDB()
                 .subscribeOn(schedulerProvider.io())

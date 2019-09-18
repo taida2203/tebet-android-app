@@ -122,12 +122,36 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     open fun showOrderDetailScreen(dataResponse: Order) {}
 
+    open fun showCheckQualityScreen() {}
+
     fun openFromNotification(extras: Map<String, String?>): Boolean {
-        extras["orderId"]?.let {
-            showOrderDetailScreen(Order(orderId = it.toLong()))
-            return true
+        when (extras["templateCode"]) {
+            "WELCOME" -> showTipScreen()
+            "CUSTOMER_VERIFIED"
+                , "CUSTOMER_REJECTED"
+                , " CUSTOMER_BLOCKED"
+                , "CUSTOMER_UNBLOCKED" -> showHomeScreen()
+            "FUTURE_SALE_REMINDER" -> showCheckQualityScreen()
+            "ORDER_PICKED_TO_FACTORY"
+                , "ORDER_ARRIVED_TO_FACTORY"
+                , "ORDER_FINAL_VERIFIED_DETAIL"
+                , "ORDER_NEGOTIATED_VERIFIED_DETAIL"
+                , "ORDER_PAID_TO_CUSTOMER"
+                , "ORDER_PICKED_TO_RETURN"
+                , "ORDER_RETURNED_TO_CUSTOMER"
+                , "ORDER_NOTE_MESSAGE"
+                , "ORDER_CONTACT_LOGISTIC_TO_PICKUP" -> extras["orderId"]?.let {
+                showOrderDetailScreen(Order(orderId = it.toLong()))
+                return true
+            }
         }
         return false
+    }
+
+    open fun showTipScreen() {
+    }
+
+    open fun showHomeScreen() {
     }
 
     @TargetApi(Build.VERSION_CODES.M)

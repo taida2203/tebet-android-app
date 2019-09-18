@@ -17,6 +17,7 @@ import com.tebet.mojual.databinding.ItemHomeAvatarBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.bankconfirm.BankConfirmFragment
 import com.tebet.mojual.view.base.BaseActivity
+import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.history.HistoryFragment
 import com.tebet.mojual.view.home.content.HomeFragment
 import com.tebet.mojual.view.historysearch.HistorySearchFragment
@@ -118,6 +119,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun showHomeScreen() = openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
 
+    override fun showTipScreen() {
+        //TODO: TBD
+    }
+
     override fun showHistoryScreen() = openFragmentSlideRight(HistoryFragment(), R.id.contentHolder, HistoryFragment::class.java.simpleName)
 
     override fun showHistorySearchScreen(searchOrderRequest: SearchOrderRequest) = openFragmentSlideRight(HistorySearchFragment(), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
@@ -138,13 +143,12 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         if (currentFragment() !is OrderDetailFragment) {
             if (currentFragment() is OrderRejectFragment || currentFragment() is BankConfirmFragment) {
                 supportFragmentManager.popBackStack()
-            } else {
-                openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName, dataResponse.orderCode)
+                return
             }
         } else {
             (currentFragment() as OrderDetailFragment).viewModel.order.set(OrderDetail(dataResponse))
-            (currentFragment() as OrderDetailFragment).viewModel.loadData()
         }
+        openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName, dataResponse.orderCode)
     }
 
     override fun showCheckQualityScreen() = openFragmentSlideRight(QualityFragment(), R.id.contentHolder, QualityFragment::class.java.simpleName)
@@ -165,7 +169,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag: String?) {
         currentFragment()?.let {
-            if (it::class == fragment::class) return
+            if (it::class == fragment::class) {
+                it.viewModel.loadData()
+                return
+            }
         }
         updateTitleAction(fragment)
         if (fragment is HomeFragment) if (currentFragment() !is HomeFragment) supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
@@ -178,10 +185,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         updateTitleAction(currentFragment())
     }
 
-    private fun currentFragment(): Fragment? {
+    private fun currentFragment(): BaseFragment<*, *>? {
         supportFragmentManager?.let {
             try {
-                return it.findFragmentByTag(it.getBackStackEntryAt(it.backStackEntryCount - 1).name)
+                return it.findFragmentByTag(it.getBackStackEntryAt(it.backStackEntryCount - 1).name) as BaseFragment<*, *>?
             } catch (e: Exception) {
             }
         }

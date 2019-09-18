@@ -15,7 +15,7 @@ class BankUpdateViewModel(
     BaseViewModel<BankUpdateNavigator>(dataManager, schedulerProvider) {
     var userProfileLiveData: MutableLiveData<UserProfile> = MutableLiveData()
 
-    fun loadData() {
+    override fun loadData() {
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getUserProfileDB()

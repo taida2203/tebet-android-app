@@ -23,7 +23,7 @@ class SaleDetailViewModel(
         navigator.openSaleScreen()
     }
 
-    fun loadData() {
+    override fun loadData() {
         order.get()?.let {
             navigator.showLoading(true)
             it.price?.let { it1 -> price.set(it1) }
