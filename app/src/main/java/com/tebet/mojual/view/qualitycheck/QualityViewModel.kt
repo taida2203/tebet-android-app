@@ -62,12 +62,20 @@ class QualityViewModel(
         navigator.showLoading(true)
 //        headerFooterItems.insertItem(R.layout.item_quality_loading)
         compositeDisposable.add(
-            dataManager.searchOrders(SearchOrderRequest(
-                hasNoContainer = true,
-                status = OrderStatus.OPEN.name,
-                offset = (page - 1) * 10,
-                limit = 10
-            ))
+            dataManager.getUserProfileDB()
+                .concatMap {
+                    it.data?.profileId?.let {profileId ->
+                        dataManager.searchOrders(
+                            SearchOrderRequest(
+                                profileId = profileId,
+                                hasNoContainer = true,
+                                status = OrderStatus.OPEN.name,
+                                offset = (page - 1) * 10,
+                                limit = 10
+                            )
+                        )
+                    } ?: error("Invalid User")
+                }
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                     override fun onSuccess(dataResponse: Paging<Order>) {

@@ -10,6 +10,7 @@ import com.tebet.mojual.data.models.Paging
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import io.reactivex.Observable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 
 
@@ -36,7 +37,19 @@ class HistoryViewModel(
         if (items.size >= offset) {
             navigator.showLoading(true)
             compositeDisposable.add(
-                dataManager.searchOrders(SearchOrderRequest(offset = page * 10, limit = 10, hasNoContainer = false))
+                dataManager.getUserProfileDB()
+                    .concatMap {
+                        it.data?.profileId?.let { profileId ->
+                            dataManager.searchOrders(
+                                SearchOrderRequest(
+                                    profileId = profileId,
+                                    offset = page * 10,
+                                    limit = 10,
+                                    hasNoContainer = false
+                                )
+                            )
+                        } ?: error("Invalid User")
+                    }
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                         override fun onSuccess(dataResponse: Paging<Order>) {
