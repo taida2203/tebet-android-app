@@ -55,7 +55,12 @@ class MessageViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Paging<Message>>() {
                     override fun onSuccess(dataResponse: Paging<Message>) {
-                        dataResponse.data.forEach {order->
+                        dataResponse.data.map { order ->
+                            if (order.data == null) {
+                                order.data = emptyMap()
+                            }
+                            order
+                        }.forEach { order ->
                             if (!items.contains(order)) items.add(order) else items[items.indexOf(order)] = order
                         }
 
