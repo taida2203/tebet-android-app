@@ -25,7 +25,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding, MessageViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.navigator = this
-        viewModel.loadData()
+        viewModel.loadData(false)
     }
 
     override fun openNotificationDetail(item: Message) {

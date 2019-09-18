@@ -29,7 +29,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
         viewModel.navigator = this
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
-        viewModel.loadData()
+        viewModel.loadData(false)
     }
 
     override fun itemSelected(item: Order) {

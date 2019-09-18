@@ -91,7 +91,7 @@ class SignUpInfoViewModel(
         )
     }
 
-    override fun loadData() {
+    override fun loadData(isForceLoad: Boolean?) {
         navigator.showLoading(true)
         compositeDisposable.add(
             Observable.zip(

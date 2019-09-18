@@ -25,7 +25,7 @@ class SelectQuantityViewModel(
             }
         })
 
-    override fun loadData() {
+    override fun loadData(isForceLoad: Boolean?) {
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getAssetDB()

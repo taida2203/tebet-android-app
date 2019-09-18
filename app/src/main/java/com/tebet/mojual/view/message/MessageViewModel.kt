@@ -38,6 +38,10 @@ class MessageViewModel(
             })
         }
 
+    override fun loadData(isForceLoad: Boolean?) {
+        super.loadData(isForceLoad)
+        loadData(0)
+    }
     fun loadData(page: Int = 0) {
         val offset = page * 10
         navigator.showLoading(true)

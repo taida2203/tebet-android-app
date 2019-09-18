@@ -40,7 +40,7 @@ class LoginWithPasswordViewModel(
         const val PHONE_PREFIX_ID = "+62"
     }
 
-    override fun loadData() {
+    override fun loadData(isForceLoad: Boolean?) {
         items.add(PHONE_PREFIX_ID)
         items.add(PHONE_PREFIX_VN)
         userInputPhonePrefix = items[0]

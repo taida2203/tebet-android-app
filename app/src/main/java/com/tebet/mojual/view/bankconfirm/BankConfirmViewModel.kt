@@ -35,7 +35,7 @@ class BankConfirmViewModel(
         navigator.show(R.string.general_error)
     }
 
-    fun loadData(forceLoad: Boolean? = false) {
+    override fun loadData(forceLoad: Boolean?) {
         navigator.showLoading(true)
         var updateProfileStream = dataManager.getUserProfileDB()
         if (forceLoad == false) updateProfileStream = dataManager.getProfile()

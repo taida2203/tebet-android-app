@@ -24,7 +24,7 @@ class SelectFutureDateViewModel(
                 }
             })
 
-    override fun loadData() {
+    override fun loadData(isForceLoad: Boolean?) {
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getNext7DaysPrice()

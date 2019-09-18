@@ -79,7 +79,7 @@ class SaleViewModel(
         )
     }
 
-    override fun loadData() {
+    override fun loadData(isForceLoad: Boolean?) {
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getUserProfileDB().concatMap { dataManager.getAsserts(it.data?.profileId.toString()) }

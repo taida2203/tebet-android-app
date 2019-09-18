@@ -42,6 +42,6 @@ abstract class BaseViewModel<N>(
         baseErrorHandlerData.postValue(error)
     }
 
-    open fun loadData() {
+    open fun loadData(isForceLoad: Boolean? = false) {
     }
 }

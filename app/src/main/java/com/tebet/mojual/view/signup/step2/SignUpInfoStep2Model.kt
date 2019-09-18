@@ -18,7 +18,7 @@ class SignUpInfoStep2Model(
 
     var cityLiveData = MutableLiveData<List<City>>()
 
-    override fun loadData() {
+    override fun loadData(isForceLoad: Boolean?) {
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.getCityDB()

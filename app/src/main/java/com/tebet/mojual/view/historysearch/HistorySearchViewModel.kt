@@ -10,6 +10,8 @@ class HistorySearchViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<HistorySearchNavigator>(dataManager, schedulerProvider) {
+    override fun loadData(isForceLoad: Boolean?) {
+    }
     fun loadData(page: Int = 0) {
     }
 }

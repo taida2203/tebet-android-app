@@ -27,6 +27,10 @@ class HistoryViewModel(
                 }
             })
 
+    override fun loadData(isForceLoad: Boolean?) {
+        loadData(0)
+    }
+
     fun loadData(page: Int = 0) {
         val offset = page * 10
         if (items.size >= offset) {

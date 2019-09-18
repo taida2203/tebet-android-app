@@ -7,6 +7,7 @@ import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class HomeContentViewModel(
@@ -40,10 +41,15 @@ class HomeContentViewModel(
         navigator.show(R.string.general_error_feature_disabled)
     }
 
-    override fun loadData() {
+    override fun loadData(isForceLoad: Boolean?) {
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.getUserProfileDB()
+            dataManager.getUserProfileDB().concatMap {
+                when (isForceLoad) {
+                    true -> dataManager.getProfile()
+                    else -> Observable.just(it)
+                }
+            }
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onFailure(error: String?) {

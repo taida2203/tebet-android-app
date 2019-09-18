@@ -23,7 +23,7 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.navigator = this
-        viewModel.loadData()
+        viewModel.loadData(false)
     }
 
 
