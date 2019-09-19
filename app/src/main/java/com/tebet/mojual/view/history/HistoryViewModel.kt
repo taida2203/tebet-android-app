@@ -35,6 +35,9 @@ class HistoryViewModel(
     var userProfile: UserProfile? = null
 
     override fun loadData(isForceLoad: Boolean?) {
+        if (isForceLoad == true) {
+            compositeDisposable.clear()
+        }
         loadData(0)
     }
 
@@ -55,7 +58,6 @@ class HistoryViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                     override fun onSuccess(dataResponse: Paging<Order>) {
-                        if(dataResponse.total < items.size) items.clear()
                         dataResponse.data.forEach { order ->
                             when {
                                 items.contains(order) -> items[items.indexOf(order)] = order
@@ -92,9 +94,5 @@ class HistoryViewModel(
         if (!navigator.validate()) {
             return
         }
-    }
-
-    fun onSearchAdvancedClick() {
-        navigator.openSearchAdvancedScreen(SearchOrderRequest())
     }
 }

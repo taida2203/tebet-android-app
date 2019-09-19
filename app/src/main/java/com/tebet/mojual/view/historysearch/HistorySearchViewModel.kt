@@ -36,6 +36,26 @@ class HistorySearchViewModel(
         )
     }
 
+    fun selectFromDate() {
+        navigator.openFromDatePicker()
+    }
+
+    fun selectToDate() {
+        navigator.openToDatePicker()
+    }
+
+    fun selectOrderBy() {
+        navigator.openOrderByPicker()
+    }
+
+    fun selectOrderType() {
+        navigator.openOrderTypePicker()
+    }
+
+    fun selectOrderStatus() {
+        navigator.openOrderStatusPicker()
+    }
+
     fun submit() {
         searchRequest.get()?.let {
             navigator.openHistoryScreen(it)

@@ -10,6 +10,8 @@
 
         <import type="com.tebet.mojual.common.util.StringExtKt" />
 
+        <import type="com.tebet.mojual.data.models.enumeration.ContainerOrderState" />
+
         <variable
             name="listener"
             type="com.tebet.mojual.view.qualitydetail.OrderDetailViewModel.OnFutureDateClick" />
@@ -221,7 +223,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/_4sdp"
             android:visibility="@{item.expanded ? View.VISIBLE : View.GONE}"
-            android:text="@{StringExtKt.toDisplayContainerStatus(item.state)}"
+            android:text="@{StringExtKt.fromStatusCodeToDisplayable(item.state.name())}"
             android:textColor="@{!item.isRejected ? @color/green_change_course : @color/red_btn_dialog}"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold" />

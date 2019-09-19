@@ -1,24 +1,24 @@
 package com.tebet.mojual.data.models.enumeration
 
-import java.util.Arrays
-
 /**
  * Created by TaiDA
  */
-enum class OrderStatus {
-    OPEN, // order is in processing
-    CLOSED, // order with no next steps
-    REJECTED; // still open but rejected and has next steps
+enum class SortType {
+    ASC,
+    DESC;
 
     companion object {
-        fun getByName(name: String): OrderStatus? {
+        fun getByName(name: String): SortType {
             val convertedItem = values().firstOrNull {
                 it.name.equals(
                     name,
                     ignoreCase = true
                 )
             }
-            return convertedItem
+            if (convertedItem != null) {
+                return convertedItem
+            }
+            return DESC
         }
     }
 }

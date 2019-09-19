@@ -1,17 +1,15 @@
 package com.tebet.mojual.data.models.enumeration
 
-import java.util.Arrays
-
 /**
  * Created by TaiDA
  */
-enum class OrderStatus {
-    OPEN, // order is in processing
-    CLOSED, // order with no next steps
-    REJECTED; // still open but rejected and has next steps
+enum class SortBy(val value: String) {
+    STATUS("od.status"),
+    SALE_DATE("od.planDate"),
+    AMOUNT("od.totalPrice");
 
     companion object {
-        fun getByName(name: String): OrderStatus? {
+        fun getByName(name: String): SortBy? {
             val convertedItem = values().firstOrNull {
                 it.name.equals(
                     name,

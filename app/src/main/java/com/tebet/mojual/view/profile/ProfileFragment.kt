@@ -37,15 +37,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     override fun openChangeLanguageDialog() {
-        val dialog = LanguageChoiceDialog()
-        dialog.setCallback(object :
+        LanguageChoiceDialog().setCallback(object :
             SingleChoiceDialog.SingleChoiceDialogCallback<String> {
             override fun onCancel() {
             }
 
             override fun onOk(selectedItem: String?) {
                 viewModel.doChangeLanguage(selectedItem)
-                dialog.dismiss()
             }
         }).show(fragmentManager, "")
     }

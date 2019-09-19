@@ -5,11 +5,18 @@ import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import co.common.view.dialog.DateDialog
+import co.common.view.dialog.SingleChoiceDialog
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.enumeration.OrderStatus
+import com.tebet.mojual.data.models.enumeration.SortBy
+import com.tebet.mojual.data.models.enumeration.SortType
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.databinding.FragmentHistorySearchBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.home.Home
+import java.util.*
+
 
 class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, HistorySearchViewModel>(),
     HistorySearchNavigator {
@@ -23,6 +30,11 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
         get() = R.layout.fragment_history_search
 
     var searchRequest: SearchOrderRequest? = null
+    var fromDateDialog: DateDialog? = null
+    var toDateDialog: DateDialog? = null
+    var statusChoiceDialog: SingleChoiceDialog<String>? = null
+    var sortByDialog: SingleChoiceDialog<String>? = null
+    var sortTypeDialog: SingleChoiceDialog<String>? = null
 
     companion object {
         fun newInstance(dataResponse: SearchOrderRequest): Fragment {
@@ -45,4 +57,108 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
         (activity as Home).viewModel.onHistoryClick(searchOrderRequest)
     }
 
+    override fun openFromDatePicker() {
+        if (fromDateDialog == null) {
+            fromDateDialog = DateDialog()
+            fromDateDialog?.setMaxDate(Calendar.getInstance())
+            fromDateDialog?.setOnDateSetListener { view, year, month, dayOfMonth ->
+                val cal = Calendar.getInstance()
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, month)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                cal.set(Calendar.HOUR, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+                viewModel.searchRequest.get()?.fromPlanDate = cal.timeInMillis
+            }
+        }
+        activity?.let {
+            fromDateDialog?.show(it.supportFragmentManager, "")
+        }
+    }
+
+    override fun openToDatePicker() {
+        if (toDateDialog == null) {
+            toDateDialog = DateDialog()
+            toDateDialog?.setMaxDate(Calendar.getInstance())
+            toDateDialog?.setOnDateSetListener { view, year, month, dayOfMonth ->
+                val cal = Calendar.getInstance()
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, month)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                cal.set(Calendar.HOUR, 23)
+                cal.set(Calendar.MINUTE, 59)
+                cal.set(Calendar.SECOND, 59)
+                viewModel.searchRequest.get()?.toPlanDate = cal.timeInMillis
+            }
+        }
+        activity?.let {
+            toDateDialog?.show(it.supportFragmentManager, "")
+        }
+    }
+
+    override fun openOrderStatusPicker() {
+        if (statusChoiceDialog == null) {
+            statusChoiceDialog = StatusChoiceDialog().setCallback(object :
+                SingleChoiceDialog.SingleChoiceDialogCallback<String> {
+                override fun onCancel() {
+                }
+
+                override fun onOk(selectedItem: String?) {
+                    viewModel.searchRequest.get()?.selectedStatus = selectedItem?.let {
+                        OrderStatus.getByName(
+                            it
+                        )
+                    }
+                }
+            })
+        }
+        statusChoiceDialog?.show(fragmentManager, "")
+    }
+
+    override fun openOrderByPicker() {
+        if (sortByDialog == null) {
+            sortByDialog = SortByDialog().setCallback(object :
+                SingleChoiceDialog.SingleChoiceDialogCallback<String> {
+                override fun onCancel() {
+                }
+
+                override fun onOk(selectedItem: String?) {
+                    selectedItem?.let {
+                        viewModel.searchRequest.get()?.selectedSortBy = SortBy.getByName(it)
+                    }
+                    viewModel.searchRequest.get()?.orders?.clear()
+                    viewModel.searchRequest.get()?.selectedSortBy?.value?.let { it1 ->
+                        viewModel.searchRequest.get()?.selectedSortType?.name?.let { it2 ->
+                            viewModel.searchRequest.get()?.orders?.put(it1, it2)
+                        }
+                    }
+                }
+            })
+        }
+        sortByDialog?.show(fragmentManager, "")
+    }
+
+    override fun openOrderTypePicker() {
+        if (sortTypeDialog == null) {
+            sortTypeDialog = SortTypeDialog().setCallback(object :
+                SingleChoiceDialog.SingleChoiceDialogCallback<String> {
+                override fun onCancel() {
+                }
+
+                override fun onOk(selectedItem: String?) {
+                    selectedItem?.let { item ->
+                        viewModel.searchRequest.get()?.selectedSortType = SortType.getByName(item)
+                        viewModel.searchRequest.get()?.orders?.let {
+                            if (it.size > 0) {
+                                it[it.keys.toTypedArray()[0]] = item
+                                viewModel.searchRequest.get()?.orders = it
+                            }
+                        }
+                    }
+                }
+            })
+        }
+        sortTypeDialog?.show(fragmentManager, "")
+    }
 }

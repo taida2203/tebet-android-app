@@ -7,5 +7,4 @@ import com.tebet.mojual.view.base.BaseActivityNavigator
 interface HistoryNavigator : BaseActivityNavigator {
     fun validate(): Boolean
     fun itemSelected(item: Order)
-    fun openSearchAdvancedScreen(searchOrderRequest: SearchOrderRequest)
 }

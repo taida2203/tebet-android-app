@@ -53,8 +53,4 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
     override fun validate(): Boolean {
         return validator.validate()
     }
-
-    override fun openSearchAdvancedScreen(searchOrderRequest: SearchOrderRequest) {
-        (activity as Home).viewModel.onSearchAdvancedClick(searchOrderRequest)
-    }
 }

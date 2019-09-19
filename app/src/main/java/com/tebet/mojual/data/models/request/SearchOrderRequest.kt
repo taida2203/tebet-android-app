@@ -1,14 +1,18 @@
 package com.tebet.mojual.data.models.request
 
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import androidx.databinding.library.baseAdapters.BR
+import com.tebet.mojual.data.models.enumeration.OrderStatus
+import com.tebet.mojual.data.models.enumeration.SortBy
+import com.tebet.mojual.data.models.enumeration.SortType
+
 data class SearchOrderRequest(
     var quantity: Int? = null,
     var planDate: Long? = null,
 
     var fromAmount: Double? = null,
     var toAmount: Double? = null,
-
-    var fromPlanDate: Long? = null,
-    var toPlanDate: Long? = null,
 
     var fromSaleDate: Long? = null,
     var toSaleDate: Long? = null,
@@ -25,10 +29,45 @@ data class SearchOrderRequest(
     var profileId: Int? = null,
     var profileCode: String? = null,
     var orderCode: String? = null,
-    var orders: Map<String, String>? = mapOf(Pair("od.createdDate", "DESC")),
+    var orders: HashMap<String, String>? = hashMapOf(Pair(SortBy.SALE_DATE.value, SortType.DESC.name)),
     var limit: Int? = null,
     var offset: Int? = null
-)
+) : BaseObservable() {
+    var fromPlanDate: Long? = null
+    @Bindable get
+    set(value) {
+        field = value
+        notifyPropertyChanged(BR.fromPlanDate)
+    }
+    var toPlanDate: Long? = null
+        @Bindable get
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.toPlanDate)
+        }
+
+    var selectedStatus: OrderStatus? = null
+        @Bindable get
+        set(value) {
+            field = value
+            status = value?.name
+            notifyPropertyChanged(BR.selectedStatus)
+        }
+
+    var selectedSortBy: SortBy? = SortBy.SALE_DATE
+        @Bindable get
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.selectedSortBy)
+        }
+
+    var selectedSortType: SortType = SortType.DESC
+        @Bindable get
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.selectedSortType)
+        }
+}
 
 
 //

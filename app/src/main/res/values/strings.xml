@@ -177,8 +177,11 @@
     <string name="history_advance_to_date">TO DATE</string>
     <string name="history_advance_id">ORDER ID</string>
     <string name="history_advance_sort">SORT BY</string>
+    <string name="history_advance_sort_type">SORT TYPE</string>
     <string name="history_advance_hint_sort">Status</string>
     <string name="history_advance_button_search">SEARCH</string>
     <string name="history_advance_hint_date">15 Jul 2019</string>
+    <string name="history_advance_status_all">ALL</string>
+
     <string name="quality_help_title">Help</string>
 </resources>

@@ -41,11 +41,13 @@ public abstract class SingleChoiceDialog<T> extends MasbroDialog<T> {
                     if (multipleChoiceDialogCallback != null) {
                         multipleChoiceDialogCallback.onOk(getSelectedItem());
                     }
+                    dismiss();
                 })
                 .setNegativeButton(R.string.general_button_cancel, (dialog, id) -> {
                             if (multipleChoiceDialogCallback != null) {
                                 multipleChoiceDialogCallback.onCancel();
                             }
+                            dismiss();
                         }
                 );
         return builder.create();

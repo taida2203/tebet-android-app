@@ -3,6 +3,7 @@ package com.tebet.mojual.view.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -76,8 +77,9 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             baseBinding.topRightHolder,
             true
         )
-        when {
-            !openFromNotification(bundleToMap(intent.extras)) -> showHomeScreen()
+        showHomeScreen()
+        intent.extras?.let {
+            openFromNotification(bundleToMap(it))
         }
         viewModel.loadData()
         topLeftViewBinding?.avatar?.setOnClickListener { showProfileScreen() }
@@ -151,6 +153,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         }
         if (currentFragment() is HistoryFragment && searchOrderRequest != null) {
             (currentFragment() as HistoryFragment).viewModel.searchRequest = searchOrderRequest
+            (currentFragment() as HistoryFragment).viewModel.items.clear()
         }
         openFragmentSlideRight(HistoryFragment.newInstance(searchOrderRequest), R.id.contentHolder, HistoryFragment::class.java.simpleName)
     }
@@ -176,7 +179,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     override fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag: String?) {
         currentFragment()?.let {
             if (it::class == fragment::class) {
-                it.viewModel.loadData()
+                it.viewModel.loadData(true)
                 return
             }
         }
@@ -204,6 +207,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     private fun updateTitleAction(fragment: Fragment?, titleString: String? = null) {
         baseBinding.viewModel?.enableTopLogo?.set(false)
         enableBackButton = true
+        topRightViewBinding?.search?.visibility = View.GONE
         when (fragment) {
             is HomeFragment -> {
                 enableBackButton = false
@@ -213,6 +217,13 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             is HistoryFragment -> {
                 viewModel.selectedTab.set(HomeViewModel.ScreenTab.History)
                 title = getString(R.string.history_title)
+
+                topRightViewBinding?.search?.visibility = View.VISIBLE
+                topRightViewBinding?.search?.setOnClickListener {
+                    if (currentFragment() is HistoryFragment) {
+                        showHistorySearchScreen((currentFragment() as HistoryFragment).viewModel.searchRequest)
+                    }
+                }
             }
             is MessageFragment -> {
                 viewModel.selectedTab.set(HomeViewModel.ScreenTab.Message)
