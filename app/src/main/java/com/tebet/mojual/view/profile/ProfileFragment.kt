@@ -44,21 +44,30 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             }
 
             override fun onOk(selectedItem: String?) {
-                when (selectedItem) {
-                    getString(R.string.support_language_english) -> {
-                        activity?.applicationContext?.let { LanguageUtil.instance.changeEnglish(it) }
-                    }
-                    getString(R.string.support_language_bahasa) -> {
-                        activity?.applicationContext?.let { LanguageUtil.instance.changeBahasa(it) }
-                    }
-                }
+                viewModel.doChangeLanguage(selectedItem)
                 dialog.dismiss()
-                activity?.recreate()
             }
         }).show(fragmentManager, "")
     }
 
     override fun openChangePasswordScreen() {
         startActivity(Intent(activity, ChangePassword::class.java))
+    }
+
+    override fun changeLanguage(selectedItem: String?) {
+        when (selectedItem) {
+            getString(R.string.support_language_english) -> {
+                activity?.applicationContext?.let {
+                    LanguageUtil.instance.changeEnglish(it)
+                    activity?.recreate()
+                }
+            }
+            getString(R.string.support_language_bahasa) -> {
+                activity?.applicationContext?.let {
+                    LanguageUtil.instance.changeBahasa(it)
+                    activity?.recreate()
+                }
+            }
+        }
     }
 }

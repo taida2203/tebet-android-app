@@ -42,7 +42,8 @@ data class UserProfile(
     @ColumnInfo(name = "username")
     var username: String? = null,
     @Embedded
-    var setting: ProfileSetting = ProfileSetting()
+    var setting: ProfileSetting = ProfileSetting(),
+    var language: String? = "in"
 ) : BaseObservable() {
     companion object;
 
@@ -124,11 +125,11 @@ data class UserProfile(
         }
 
     @Ignore
-    var language: Int = PreferenceUtils.getInt(LanguageUtil.PREF_LANGUAGE_INDEX, -1)
+    var languageIndex: Int = PreferenceUtils.getInt(LanguageUtil.PREF_LANGUAGE_INDEX, -1)
         @Bindable get
         set(value) {
             field = value
-            notifyPropertyChanged(BR.language)
+            notifyPropertyChanged(BR.languageIndex)
         }
 
     @Ignore

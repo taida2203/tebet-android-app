@@ -113,7 +113,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun showSellScreen() {
         if (currentFragment() is SaleDetailFragment) {
-            supportFragmentManager.popBackStack()
+            supportFragmentManager.popBackStackImmediate()
         }
         openFragmentSlideRight(SaleFragment(), R.id.contentHolder, SaleFragment::class.java.simpleName)
     }
@@ -124,17 +124,6 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         startActivity(Intent(this, QualityHelp::class.java))
     }
 
-    override fun showHistoryScreen(searchOrderRequest: SearchOrderRequest?) {
-        if (currentFragment() is HistorySearchFragment) {
-            supportFragmentManager.popBackStack()
-            return
-        }
-        openFragmentSlideRight(HistoryFragment.newInstance(searchOrderRequest), R.id.contentHolder, HistoryFragment::class.java.simpleName)
-    }
-
-    override fun showHistorySearchScreen(searchOrderRequest: SearchOrderRequest) = openFragmentSlideRight(HistorySearchFragment.newInstance(searchOrderRequest), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
-
-
     override fun showInboxScreen() = openFragmentSlideRight(MessageFragment(), R.id.contentHolder, MessageFragment::class.java.simpleName)
 
     override fun showProfileScreen() = openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
@@ -142,21 +131,31 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     override fun showBankConfirmScreen(order: OrderDetail, selectedItems: List<OrderContainer>)  = openFragmentSlideRight(BankConfirmFragment.newInstance(order, selectedItems), R.id.contentHolder, BankConfirmFragment::class.java.simpleName)
 
     override fun showOrderCompleteScreen(dataResponse: Order) {
-        supportFragmentManager.popBackStack()
+        supportFragmentManager.popBackStackImmediate()
         openFragmentSlideRight(SaleDetailFragment.newInstance(dataResponse), R.id.contentHolder, SaleDetailFragment::class.java.simpleName, dataResponse.orderCode)
     }
 
     override fun showOrderDetailScreen(dataResponse: Order) {
-        if (currentFragment() !is OrderDetailFragment) {
-            if (currentFragment() is OrderRejectFragment || currentFragment() is BankConfirmFragment) {
-                supportFragmentManager.popBackStack()
-                return
-            }
-        } else {
+        if (currentFragment() is OrderRejectFragment || currentFragment() is BankConfirmFragment) {
+            supportFragmentManager.popBackStackImmediate()
+        }
+        if (currentFragment() is OrderDetailFragment) {
             (currentFragment() as OrderDetailFragment).viewModel.order.set(OrderDetail(dataResponse))
         }
         openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName, dataResponse.orderCode)
     }
+
+    override fun showHistoryScreen(searchOrderRequest: SearchOrderRequest?) {
+        if (currentFragment() is HistorySearchFragment) {
+            supportFragmentManager.popBackStackImmediate()
+        }
+        if (currentFragment() is HistoryFragment && searchOrderRequest != null) {
+            (currentFragment() as HistoryFragment).viewModel.searchRequest = searchOrderRequest
+        }
+        openFragmentSlideRight(HistoryFragment.newInstance(searchOrderRequest), R.id.contentHolder, HistoryFragment::class.java.simpleName)
+    }
+
+    override fun showHistorySearchScreen(searchOrderRequest: SearchOrderRequest) = openFragmentSlideRight(HistorySearchFragment.newInstance(searchOrderRequest), R.id.contentHolder, HistorySearchFragment::class.java.simpleName)
 
     override fun showCheckQualityScreen() = openFragmentSlideRight(QualityFragment(), R.id.contentHolder, QualityFragment::class.java.simpleName)
 
@@ -245,7 +244,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                     if (currentFragment() is QualityFragment) {
                         (currentFragment() as QualityFragment).viewModel.items.remove(it)
                     } else if (currentFragment() is SaleFragment) {
-                        supportFragmentManager.popBackStack()
+                        supportFragmentManager.popBackStackImmediate()
                     }
                     showOrderDetailScreen(it as Order)
                 }

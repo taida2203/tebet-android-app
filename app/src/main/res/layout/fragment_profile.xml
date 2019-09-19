@@ -1033,7 +1033,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/_5sdp"
-                            android:text="@{viewModel.userProfile.language == 0 ? @string/support_language_english : @string/support_language_bahasa}"
+                            android:text="@{viewModel.userProfile.languageIndex == 0 ? @string/support_language_english : @string/support_language_bahasa}"
                             android:textColor="@color/dark_green"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/ivLanguage"

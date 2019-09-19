@@ -9,6 +9,7 @@ import co.common.view.dialog.SingleChoiceDialog
 import co.sdk.auth.AuthSdk
 import com.google.firebase.iid.FirebaseInstanceId
 import com.tebet.mojual.R
+import com.tebet.mojual.common.util.Utility
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.UserProfile
@@ -17,6 +18,7 @@ import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
+import java.util.concurrent.TimeUnit
 
 class ProfileViewModel(
     dataManager: DataManager,
@@ -104,6 +106,38 @@ class ProfileViewModel(
     }
 
     fun currentLangauge(){
+    }
+
+    fun doChangeLanguage(selectedItem: String?) {
+        when (selectedItem) {
+            Utility.getInstance().getString(R.string.support_language_english) -> {
+                userProfile.get()?.language = "en"
+            }
+            Utility.getInstance().getString(R.string.support_language_bahasa) -> {
+                userProfile.get()?.language = "in"
+            }
+        }
+        userProfile.get()?.let {
+            navigator.showLoading(true)
+            compositeDisposable.add(
+                dataManager.updateProfile(it)
+                    .concatMap { dataManager.getProfile() }
+                    .observeOn(schedulerProvider.ui())
+                    .debounce(400, TimeUnit.MILLISECONDS)
+                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                        override fun onSuccess(dataResponse: UserProfile) {
+                            navigator.showLoading(false)
+                            userProfile.set(dataResponse)
+                            navigator.changeLanguage(selectedItem)
+                        }
+
+                        override fun onFailure(error: String?) {
+                            navigator.showLoading(false)
+                            handleError(error)
+                        }
+                    })
+            )
+        }
     }
 
 }

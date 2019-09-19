@@ -55,6 +55,7 @@ class HistoryViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<Paging<Order>>() {
                     override fun onSuccess(dataResponse: Paging<Order>) {
+                        if(dataResponse.total < items.size) items.clear()
                         dataResponse.data.forEach { order ->
                             when {
                                 items.contains(order) -> items[items.indexOf(order)] = order
