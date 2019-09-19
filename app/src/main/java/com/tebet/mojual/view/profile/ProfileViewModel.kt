@@ -82,6 +82,10 @@ class ProfileViewModel(
         navigator.openChangePasswordScreen()
     }
 
+    fun onPinCodeClick() {
+        navigator.openPinCodeScreen()
+    }
+
 
     fun onBankAccountClick() {
         userProfile.get()?.let {

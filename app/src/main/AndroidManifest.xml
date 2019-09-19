@@ -81,6 +81,9 @@
         <activity
             android:name=".view.help.QualityHelp"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.profilepin.PinCode"
+            android:screenOrientation="portrait" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.tebet.mojual.fileprovider"

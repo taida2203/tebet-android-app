@@ -14,6 +14,7 @@ import com.tebet.mojual.view.selectfuturedate.SelectFutureDate
 import com.tebet.mojual.view.bankupdate.BankUpdate
 import com.tebet.mojual.view.help.QualityHelp
 import com.tebet.mojual.view.profilechangepass.ChangePassword
+import com.tebet.mojual.view.profilepin.PinCode
 import com.tebet.mojual.view.selectquantity.SelectQuantity
 import com.tebet.mojual.view.signup.SignUpInfo
 import com.tebet.mojual.view.signup.SignUpInfoFragmentProvider
@@ -65,4 +66,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract fun qualityHelpActivity(): QualityHelp
+
+    @ContributesAndroidInjector
+    abstract fun pinCodeActivity(): PinCode
 }

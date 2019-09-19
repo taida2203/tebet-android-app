@@ -12,8 +12,10 @@ import com.tebet.mojual.databinding.FragmentProfileBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.profilechangepass.ChangePassword
+import com.tebet.mojual.view.profilepin.PinCode
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(), ProfileNavigator {
+
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -67,5 +69,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 }
             }
         }
+    }
+
+    override fun openPinCodeScreen() {
+        startActivity(Intent(activity, PinCode::class.java))
     }
 }
