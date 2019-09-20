@@ -1,5 +1,7 @@
 package com.tebet.mojual.common.services
 
+import android.os.Handler
+import android.os.Looper
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.tebet.mojual.App
@@ -43,11 +45,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Timber.e("DOLPHIN Notification Received")
         remoteMessage.notification?.let {
-            var convertedMessage = Message(message = it.body)
+            val convertedMessage = Message(message = it.body)
             remoteMessage.data.let { extraData ->
                 convertedMessage.data = extraData
             }
-            (application as App).notificationHandlerData.postValue(convertedMessage)
+            when {
+                convertedMessage.data["templateCode"] == "WELCOME" -> Handler(Looper.getMainLooper()).postDelayed({
+                    (application as App).notificationHandlerData.postValue(convertedMessage)
+                }, 1000)
+                else -> (application as App).notificationHandlerData.postValue(convertedMessage)
+            }
         }
     }
 
