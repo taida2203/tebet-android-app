@@ -63,6 +63,7 @@ class ProfileViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onFailure(error: String?) {
+                        handleError(error)
                     }
 
                     override fun onSuccess(dataResponse: UserProfile) {
@@ -109,16 +110,15 @@ class ProfileViewModel(
         navigator.openChangeLanguageDialog()
     }
 
-    fun currentLangauge(){
-    }
-
     fun doChangeLanguage(selectedItem: String?) {
         when (selectedItem) {
             Utility.getInstance().getString(R.string.support_language_english) -> {
-                userProfile.get()?.language = "en"
+                if (LanguageUtil.instance.getLanguageIndex() == LanguageUtil.LANGUAGE_INDEX_ENGLISH) return
+                userProfile.get()?.language = UserProfile.LANGUAGE_EN
             }
             Utility.getInstance().getString(R.string.support_language_bahasa) -> {
-                userProfile.get()?.language = "in"
+                if (LanguageUtil.instance.getLanguageIndex() == LanguageUtil.LANGUAGE_INDEX_BAHASA) return
+                userProfile.get()?.language = UserProfile.LANGUAGE_IN
             }
         }
         userProfile.get()?.let {

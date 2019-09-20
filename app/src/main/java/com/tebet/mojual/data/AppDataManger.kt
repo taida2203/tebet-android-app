@@ -1,6 +1,7 @@
 package com.tebet.mojual.data
 
 import androidx.room.EmptyResultSetException
+import co.common.util.LanguageUtil
 import co.sdk.auth.core.models.AuthJson
 import co.sdk.auth.core.models.LoginConfiguration
 import com.google.firebase.iid.FirebaseInstanceId
@@ -160,9 +161,17 @@ class AppDataManger @Inject constructor(
                     }.addOnFailureListener {
                         emitter.onError(it)
                     }.addOnCanceledListener { emitter.onError(Throwable()) }
-                }.concatMap { registerDevice(DeviceRegisterRequest(it)) }
+                }
+                    .concatMap { registerDevice(DeviceRegisterRequest(it)) }
                     .concatMap { Observable.just(profile) }.subscribe({}, {})
-            }.doOnError { getUserProfileDB() }.concatMap { updateProfileDB(it) }
+            }.doOnError { getUserProfileDB() }
+                .concatMap {
+                    when (it.data?.language) {
+                        UserProfile.LANGUAGE_EN -> LanguageUtil.instance.changeEnglish()
+                        else -> LanguageUtil.instance.changeBahasa()
+                    }
+                    Observable.just(it)
+                }.concatMap { updateProfileDB(it) }
         }
         return getUserProfileDB()
     }

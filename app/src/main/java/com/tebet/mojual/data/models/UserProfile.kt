@@ -42,10 +42,12 @@ data class UserProfile(
     @ColumnInfo(name = "username")
     var username: String? = null,
     @Embedded
-    var setting: ProfileSetting = ProfileSetting(),
-    var language: String? = "in"
+    var setting: ProfileSetting = ProfileSetting()
 ) : BaseObservable() {
-    companion object;
+    companion object {
+        const val LANGUAGE_EN = "en"
+        const val LANGUAGE_IN = "in"
+    }
 
     enum class Status(val status: String) {
         Init("INIT"), InitProfile("INIT_PROFILE"), New("NEW"), Verified("VERIFIED"), Rejected("REJECTED")
@@ -108,6 +110,15 @@ data class UserProfile(
             notifyPropertyChanged(BR.pickupAddress)
         }
 
+    var language: String? = LANGUAGE_IN
+        set(value) {
+            field = value
+            languageIndex = when (value) {
+                LANGUAGE_EN -> 0
+                else -> 1
+            }
+        }
+
     @Ignore
     var basicInfo: Boolean = true
         @Bindable get
@@ -125,7 +136,7 @@ data class UserProfile(
         }
 
     @Ignore
-    var languageIndex: Int = PreferenceUtils.getInt(LanguageUtil.PREF_LANGUAGE_INDEX, -1)
+    var languageIndex: Int = LanguageUtil.LANGUAGE_INDEX_BAHASA
         @Bindable get
         set(value) {
             field = value

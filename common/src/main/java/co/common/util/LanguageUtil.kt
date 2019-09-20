@@ -40,20 +40,20 @@ class LanguageUtil {
         }
     }
 
-    fun changeBahasa(context: Context) {
+    fun changeBahasa(context: Context? = null) {
         PreferenceUtils.saveInt(
             PREF_LANGUAGE_INDEX,
             LANGUAGE_INDEX_BAHASA
         )
-        changeLanguage(context, "in")
+        context?.let { changeLanguage(it, "in") }
     }
 
-    fun changeEnglish(context: Context) {
+    fun changeEnglish(context: Context? = null) {
         PreferenceUtils.saveInt(
             PREF_LANGUAGE_INDEX,
             LANGUAGE_INDEX_ENGLISH
         )
-        changeLanguage(context, "en")
+        context?.let { changeLanguage(it, "en") }
     }
 
     private fun changeLanguage(context: Context, languageCode: String) {

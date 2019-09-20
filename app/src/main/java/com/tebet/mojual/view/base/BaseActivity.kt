@@ -20,6 +20,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import co.common.util.LanguageUtil
 import co.common.view.dialog.RoundedOkDialog
 import co.sdk.auth.core.models.LoginException
 import com.tapadoo.alerter.Alerter
@@ -82,6 +83,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        LanguageUtil.instance.updateLanguage(this)
         performDependencyInjection()
         super.onCreate(savedInstanceState)
         baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base)
