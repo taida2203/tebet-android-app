@@ -44,36 +44,38 @@ class MessageViewModel(
     }
     fun loadData(page: Int = 0) {
         val offset = page * 10
-        navigator.showLoading(true)
+        if (items.size >= offset) {
+            navigator.showLoading(true)
 //        headerFooterItems.insertItem(R.layout.item_quality_loading)
-        compositeDisposable.add(
-            dataManager.getUserProfileDB()
-                .concatMap {
-                    it.data?.profileId?.let { profileId ->
-                        dataManager.getMessages(MessageRequest(profileId = profileId, offset = (page) * 10, limit = 10)) }
-                }
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<Paging<Message>>() {
-                    override fun onSuccess(dataResponse: Paging<Message>) {
-                        dataResponse.data.map { order ->
-                            if (order.data == null) {
-                                order.data = emptyMap()
+            compositeDisposable.add(
+                dataManager.getUserProfileDB()
+                    .concatMap {
+                        it.data?.profileId?.let { profileId ->
+                            dataManager.getMessages(MessageRequest(profileId = profileId, offset = (page) * 10, limit = 10)) }
+                    }
+                    .observeOn(schedulerProvider.ui())
+                    .subscribeWith(object : CallbackWrapper<Paging<Message>>() {
+                        override fun onSuccess(dataResponse: Paging<Message>) {
+                            dataResponse.data.map { order ->
+                                if (order.data == null) {
+                                    order.data = emptyMap()
+                                }
+                                order
+                            }.forEach { order ->
+                                if (!items.contains(order)) items.add(order) else items[items.indexOf(order)] = order
                             }
-                            order
-                        }.forEach { order ->
-                            if (!items.contains(order)) items.add(order) else items[items.indexOf(order)] = order
+
+                            navigator.showLoading(false)
+//                        headerFooterItems.removeItem(R.layout.item_quality_loading)
                         }
 
-                        navigator.showLoading(false)
+                        override fun onFailure(error: String?) {
+                            navigator.showLoading(false)
 //                        headerFooterItems.removeItem(R.layout.item_quality_loading)
-                    }
-
-                    override fun onFailure(error: String?) {
-                        navigator.showLoading(false)
-//                        headerFooterItems.removeItem(R.layout.item_quality_loading)
-                        handleError(error)
-                    }
-                })
-        )
+                            handleError(error)
+                        }
+                    })
+            )
+        }
     }
 }

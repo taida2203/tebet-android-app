@@ -177,13 +177,13 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     }
 
     override fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag: String?) {
+        updateTitleAction(fragment)
         currentFragment()?.let {
             if (it::class == fragment::class) {
                 it.viewModel.loadData(true)
                 return
             }
         }
-        updateTitleAction(fragment)
         if (fragment is HomeFragment) if (currentFragment() !is HomeFragment) supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         super.openFragmentSlideRight(fragment, placeHolder, backStackTag)
     }
