@@ -5,6 +5,7 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -29,7 +30,11 @@ import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.data.models.Message
 import com.tebet.mojual.data.models.Order
+import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.databinding.ActivityBaseBinding
+import com.tebet.mojual.view.help.QualityHelp
+import com.tebet.mojual.view.home.Home
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_base.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -122,18 +127,25 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     protected open fun refreshData(notification: Message) {}
 
-    open fun showOrderDetailScreen(dataResponse: Order) {}
-
     open fun showCheckQualityScreen() {}
 
     fun openFromNotification(extras: Map<String, String?>): Boolean {
         when (extras["templateCode"]) {
-            "WELCOME" -> showTipScreen()
+            "WELCOME" -> {
+                showTipScreen()
+                return true
+            }
             "CUSTOMER_VERIFIED"
                 , "CUSTOMER_REJECTED"
                 , " CUSTOMER_BLOCKED"
-                , "CUSTOMER_UNBLOCKED" -> showHomeScreen()
-            "FUTURE_SALE_REMINDER" -> showCheckQualityScreen()
+                , "CUSTOMER_UNBLOCKED" -> {
+                showHomeScreen()
+                return true
+            }
+            "FUTURE_SALE_REMINDER" -> {
+                showCheckQualityScreen()
+                return true
+            }
             "ORDER_PICKED_TO_FACTORY"
                 , "ORDER_ARRIVED_TO_FACTORY"
                 , "ORDER_FINAL_VERIFIED_DETAIL"
@@ -151,9 +163,40 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     open fun showTipScreen() {
+        if (this !is Home) {
+            startActivity(Intent(this, QualityHelp::class.java))
+        }
     }
 
     open fun showHomeScreen() {
+        if (this !is Home) {
+            showLoading(true)
+            viewModel.compositeDisposable.add(
+                viewModel.dataManager.getProfile()
+                    .subscribeOn(viewModel.schedulerProvider.io())
+                    .observeOn(viewModel.schedulerProvider.ui())
+                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                        override fun onFailure(error: String?) {
+                            showLoading(false)
+                            handleError(error)
+                        }
+
+                        override fun onSuccess(dataResponse: UserProfile) {
+                            showLoading(false)
+                            val intent = Intent(activity(), Home::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            startActivity(intent)
+                            finish()
+                        }
+                    })
+            )
+        }
+    }
+
+    open fun showOrderDetailScreen(dataResponse: Order) {
+        if (this !is Home) {
+            // TODO: add order detail activity page
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
