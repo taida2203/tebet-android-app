@@ -83,12 +83,14 @@
 
                     <FrameLayout
                         android:id="@+id/topLeftHolder"
+                        android:padding="@dimen/_4sdp"
                         android:layout_width="@dimen/_36sdp"
                         android:layout_height="@dimen/_36sdp" />
 
                     <FrameLayout
                         android:id="@+id/topRightHolder"
                         android:layout_width="wrap_content"
+                        android:padding="@dimen/_4sdp"
                         android:layout_height="@dimen/_36sdp"
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
