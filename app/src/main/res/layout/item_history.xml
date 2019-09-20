@@ -10,67 +10,67 @@
         <import type="com.tebet.mojual.common.util.StringExtKt" />
 
         <variable
-                name="listener"
-                type="com.tebet.mojual.view.history.HistoryViewModel.OnFutureDateClick" />
+            name="listener"
+            type="com.tebet.mojual.view.history.HistoryViewModel.OnFutureDateClick" />
 
         <variable
-                name="item"
-                type="com.tebet.mojual.data.models.Order" />
+            name="item"
+            type="com.tebet.mojual.data.models.Order" />
     </data>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_history"
-            android:onClick="@{() -> listener.onItemClick(item)}"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/_16sdp"
-            android:paddingTop="@dimen/_8sdp"
-            android:layout_marginBottom="@dimen/_6sdp"
-            android:paddingRight="@dimen/_16sdp"
-            android:paddingBottom="@dimen/_8sdp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_history"
+        android:onClick="@{() -> listener.onItemClick(item)}"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:paddingRight="@dimen/_16sdp"
+        android:paddingBottom="@dimen/_8sdp">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
 
             <LinearLayout
-                    android:layout_width="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:text="@{item.orderCode}"
+                    android:textColor="@color/green_dark"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold" />
 
                 <com.tebet.mojual.common.view.AppTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{item.orderCode}"
-                        android:textColor="@color/green_dark"
-                        android:textSize="@dimen/_16ssp"
-                        android:textStyle="bold" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@{DateExtKt.toDisplayDate(item.planDate)}"
+                    android:textSize="@dimen/_14ssp" />
 
                 <com.tebet.mojual.common.view.AppTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="@{DateExtKt.toDisplayDate(item.planDate)}"
-                        android:textSize="@dimen/_14ssp" />
-
-                <com.tebet.mojual.common.view.AppTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="Rp 2.000.000"
-                        android:textSize="@dimen/_14ssp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@{StringExtKt.toDisplayMoney(item.totalPrice)}"
+                    android:textSize="@dimen/_14ssp" />
             </LinearLayout>
 
             <com.tebet.mojual.common.view.AppTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_12sdp"
-                    android:text="@{StringExtKt.fromStatusCodeToDisplayable(item.status)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:text="@{StringExtKt.fromStatusCodeToDisplayable(item.status)}"
                 android:textColor="@{!item.isRejected ? @color/green_change_course : @color/red_btn_dialog}"
-                    android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_14ssp" />
         </LinearLayout>
     </LinearLayout>
 </layout>

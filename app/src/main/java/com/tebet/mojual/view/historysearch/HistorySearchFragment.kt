@@ -86,9 +86,9 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
                 cal.set(Calendar.YEAR, year)
                 cal.set(Calendar.MONTH, month)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                cal.set(Calendar.HOUR, 23)
-                cal.set(Calendar.MINUTE, 59)
-                cal.set(Calendar.SECOND, 59)
+                cal.set(Calendar.HOUR, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
                 viewModel.searchRequest.get()?.toPlanDate = cal.timeInMillis
             }
         }

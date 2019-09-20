@@ -20,7 +20,7 @@ fun Float.toDisplayMoney(): String {
 
 fun Double.toDisplayWeight(): String {
     val decimalFormat =  DecimalFormat("0.###")
-    return decimalFormat.format(this)
+    return decimalFormat.format(this) + "Kg"
 }
 
 fun Double.toDisplayPercent(): String {

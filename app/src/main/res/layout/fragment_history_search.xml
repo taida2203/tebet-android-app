@@ -114,7 +114,6 @@
                 <com.tebet.mojual.common.view.AppEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:cursorVisible="false"
                     android:layout_marginBottom="@dimen/_15sdp"
                     android:text="@={viewModel.searchRequest.orderCode}"
                     app:validateEmpty="@{true}"

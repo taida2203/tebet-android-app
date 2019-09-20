@@ -1,9 +1,10 @@
 package com.tebet.mojual.common.util
 
-import android.view.LayoutInflater
+import android.graphics.drawable.Drawable
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tebet.mojual.R
@@ -15,20 +16,21 @@ import com.tebet.mojual.view.qualityreject.question.QuestionInputView
 
 class BindingUtils {
     companion object {
-        @BindingAdapter("imageUrl")
+        @BindingAdapter(value = ["imageUrl", "imageError"], requireAll = false)
         @JvmStatic
-        fun setImageUrl(imageView: ImageView, url: String?) {
+        fun setImageUrl(imageView: ImageView, imageUrl: String?, imageError: Drawable?) {
             val context = imageView.context
-            url?.let {
+            var imageErrorRes = imageError?.let { errorId -> errorId } ?: ContextCompat.getDrawable(context, R.drawable.signup_avatar_blank)
+            imageUrl?.let {
                 GlideApp.with(context).load(it)
-                    .error(R.drawable.signup_avatar_blank)
-                    .placeholder(R.drawable.signup_avatar_blank)
+                    .error(imageErrorRes)
+                    .placeholder(imageErrorRes)
                     .centerCrop()
                     .into(imageView)
                 return
             }
-            GlideApp.with(context).load(R.drawable.signup_avatar_blank)
-                .placeholder(R.drawable.signup_avatar_blank)
+            GlideApp.with(context).load(imageErrorRes)
+                .placeholder(imageErrorRes)
                 .centerCrop()
                 .into(imageView)
         }
@@ -76,7 +78,7 @@ class BindingUtils {
          * @param resetLoadingState  Reset endless scroll listener when performing a new search
          * @param onScrolledListener    OnScrolledListener for RecyclerView scrolled
          */
-        @BindingAdapter(value = *arrayOf("visibleThreshold", "resetLoadingState", "onScrolledToBottom"), requireAll = false)
+        @BindingAdapter(value = ["visibleThreshold", "resetLoadingState", "onScrolledToBottom"], requireAll = false)
         @JvmStatic
         fun setRecyclerViewScrollCallback(recyclerView: RecyclerView, visibleThreshold: Int, resetLoadingState: Boolean,
                                           onScrolledListener: RecyclerViewScrollCallback.OnScrolledListener) {
