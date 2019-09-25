@@ -1,33 +1,35 @@
 package com.tebet.mojual.view.qualitycontainer
 
+import android.Manifest.permission.*
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.location.LocationManager
 import android.net.wifi.WifiManager
+import android.os.Build
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
-import androidx.databinding.library.baseAdapters.BR
+import co.common.view.dialog.RoundedCancelOkDialog
+import co.common.view.dialog.RoundedDialog
+import co.common.view.dialog.RoundedOkDialog
 import com.tebet.mojual.R
+import com.tebet.mojual.common.services.DigitalFootPrintServices
 import com.tebet.mojual.common.util.Sensor
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.ActivityQualityAddContainerBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
-import pub.devrel.easypermissions.EasyPermissions
-import javax.inject.Inject
-import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.annotation.SuppressLint
-import android.os.Build
-import co.common.view.dialog.RoundedDialog
-import co.common.view.dialog.RoundedOkDialog
-import com.tebet.mojual.common.services.DigitalFootPrintServices
 import com.tebet.mojual.view.help.QualityHelp
 import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
+import javax.inject.Inject
 
 
 class QualityAddContainer :
@@ -50,9 +52,12 @@ class QualityAddContainer :
 
     companion object {
         private const val RC_CAMERA_AND_LOCATION = 300
+        private const val GPS_ENABLE = 301
     }
 
     lateinit var mWifiManager: WifiManager
+    var gpsDialog: RoundedDialog? = null
+
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         viewDataBinding?.sensor = sensor
@@ -81,6 +86,25 @@ class QualityAddContainer :
             connectIOT()
         }
     }
+
+    private fun buildAlertMessageNoGps() {
+        if (gpsDialog == null) {
+            gpsDialog = RoundedCancelOkDialog("Your GPS seems to be disabled, do you want to enable it?").setRoundedDialogCallback(
+                    object : RoundedDialog.RoundedDialogCallback {
+                        override fun onFirstButtonClicked(selectedValue: Any?) {
+                        }
+
+                        override fun onSecondButtonClicked(selectedValue: Any?) {
+                            startActivityForResult(
+                                Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),
+                                GPS_ENABLE
+                            )
+                        }
+                    })
+        }
+        gpsDialog?.show(supportFragmentManager, "")
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -138,15 +162,21 @@ class QualityAddContainer :
     @SuppressLint("MissingPermission")
     @AfterPermissionGranted(RC_CAMERA_AND_LOCATION)
     override fun requestLocationAndConnectIOT() {
-        if (EasyPermissions.hasPermissions(this, ACCESS_FINE_LOCATION)) {
-           connectIOT()
+        if (EasyPermissions.hasPermissions(this, *arrayOf(ACCESS_FINE_LOCATION, ACCESS_WIFI_STATE, ACCESS_NETWORK_STATE, CHANGE_WIFI_STATE, CHANGE_NETWORK_STATE))) {
+            val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                buildAlertMessageNoGps()
+            } else {
+                connectIOT()
+            }
         } else {
             // Do not have permissions, request them now
-            EasyPermissions.requestPermissions(this, "Require permission", RC_CAMERA_AND_LOCATION, ACCESS_FINE_LOCATION)
+            EasyPermissions.requestPermissions(this, "Require permission", RC_CAMERA_AND_LOCATION, *arrayOf(ACCESS_FINE_LOCATION, ACCESS_WIFI_STATE, ACCESS_NETWORK_STATE, CHANGE_WIFI_STATE, CHANGE_NETWORK_STATE))
         }
     }
 
     private fun connectIOT() {
+        sensor.checkSensorStatus()
         if (!sensor.isEnabled) {
             reTryConnectIOT()
         } else if (!sensor.isConnected) {
@@ -158,6 +188,13 @@ class QualityAddContainer :
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            GPS_ENABLE -> requestLocationAndConnectIOT()
+        }
     }
 
     override fun openQualityHelpScreen() {

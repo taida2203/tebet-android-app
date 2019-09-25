@@ -3,6 +3,7 @@ package com.tebet.mojual.common.util
 import android.content.Context
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiManager
+import android.os.Handler
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.google.gson.Gson
@@ -47,35 +48,63 @@ fun ArrayList<SensorData>.toJson(): String {
 
 class Sensor(var applicationContext: Context) : BaseObservable() {
     val sensorSSID = "iSpindel"
+    var internetSSID: String? = null
+
     fun connect() {
         checkSensorStatus()
         if (!isConnected) {
             try {
-                val wifiManager =
-                    applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-                val wc = WifiConfiguration()
-                wc.SSID = sensorSSID
-                wc.preSharedKey = ""
-                wc.status = WifiConfiguration.Status.ENABLED
-                wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE)
-
-                wifiManager.isWifiEnabled = true
-                var netId = wifiManager.addNetwork(wc)
-                if (netId == -1) {
-                    getExistingNetworkId(wc.SSID)?.let {
-                        netId = it
-                    }
-                }
-                var result = wifiManager.scanResults
-                if (netId >= 0) {
-                    wifiManager.disconnect()
-                    wifiManager.enableNetwork(netId, true)
-                    wifiManager.reconnect()
-                    isConnected = true
-                }
+                val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+                internetSSID = wifiManager.connectionInfo.ssid.substring(1, wifiManager.connectionInfo.ssid.length -1)
+                connectToWifiSSID(sensorSSID)
+                frequencyCheckStatus(true)
             } catch (e: Exception) {
                 Timber.e(e)
             }
+        }
+    }
+
+    private fun frequencyCheckStatus(isConnected: Boolean) {
+        val handler = Handler()
+        var retryTime = 0
+        Handler().postDelayed({
+            retryTime += 1
+            checkSensorStatus()
+            if (isConnected || retryTime > 10) {
+                handler.removeCallbacks(null)
+            }
+        }, 1000)
+    }
+
+    fun disConnect() {
+        try {
+            internetSSID?.let { connectToWifiSSID(it) }
+            frequencyCheckStatus(false)
+        } catch (e: Exception) {
+
+        }
+    }
+
+    private fun connectToWifiSSID(ssid: String) {
+        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val wc = WifiConfiguration()
+        wc.SSID = "\"" + ssid + "\""
+        wc.preSharedKey = ""
+        wc.status = WifiConfiguration.Status.ENABLED
+        wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE)
+
+
+        wifiManager.isWifiEnabled = true
+        var netId = wifiManager.addNetwork(wc)
+        if (netId == -1) {
+            getExistingNetworkId(wc.SSID)?.let {
+                netId = it
+            }
+        }
+        if (netId >= 0) {
+            wifiManager.disconnect()
+            wifiManager.enableNetwork(netId, true)
+            wifiManager.reconnect()
         }
     }
 

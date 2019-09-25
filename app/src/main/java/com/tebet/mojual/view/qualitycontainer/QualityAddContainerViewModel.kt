@@ -261,7 +261,8 @@ class QualityAddContainerViewModel(
 
     fun onSubmitClick() {
         if (!allCheckingComplete()) return
-        if (sensorManager.checkSensorStatus().isConnected || sensorManager.checkSensorStatus().isEnabled) {
+        if (sensorManager.checkSensorStatus().isConnected) {
+            sensorManager.disConnect()
             navigator.show(R.string.check_quality_add_container_turn_off_iot)
             Handler().postDelayed({ navigator.reTryConnectIOT() }, 5000)
             return
