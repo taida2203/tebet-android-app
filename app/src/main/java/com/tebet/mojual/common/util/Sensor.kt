@@ -9,7 +9,12 @@ import androidx.databinding.Bindable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import androidx.databinding.library.baseAdapters.BR
+import com.isupatches.wisefy.WiseFy
+import com.isupatches.wisefy.callbacks.SearchForSSIDCallbacks
+import com.isupatches.wisefy.constants.MISSING_PARAMETER
+import com.isupatches.wisefy.constants.NETWORK_ALREADY_CONFIGURED
 import com.tebet.mojual.data.models.SensorData
+import io.reactivex.Observable
 import org.jsoup.Jsoup
 import timber.log.Timber
 import kotlin.collections.ArrayList
@@ -46,75 +51,92 @@ fun ArrayList<SensorData>.toJson(): String {
     return Gson().toJson(target, listType)
 }
 
-class Sensor(var applicationContext: Context) : BaseObservable() {
-    val sensorSSID = "iSpindel"
-    var internetSSID: String? = null
+class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObservable() {
+    private var currentInternetSSID: String? = null
 
-    fun connect() {
-        checkSensorStatus()
-        if (!isConnected) {
-            try {
-                val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-                internetSSID = wifiManager.connectionInfo.ssid.substring(1, wifiManager.connectionInfo.ssid.length -1)
-                connectToWifiSSID(sensorSSID)
-                frequencyCheckStatus(true)
-            } catch (e: Exception) {
-                Timber.e(e)
+    companion object {
+        const val sensorSSID = "iSpindel"
+    }
+
+    fun connectIOTWifi(): Observable<Boolean> {
+        isEnabled = false
+        isConnected = false
+        return Observable.fromCallable {
+            wifiManager.searchForSSID(sensorSSID, 5000)
+        }.concatMap {
+            isEnabled = it.isNotEmpty()
+            if (isEnabled) connectIOT().concatMap {
+                Observable.fromCallable<Boolean> {
+                    isConnected = wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) ?: false
+                    isConnected
+                }
+            } else Observable.just(true)
+        }
+    }
+
+    private fun connectIOT(): Observable<Boolean> {
+        val wfMng = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        return Observable.fromCallable<Boolean> {
+            var resultSSID = wifiManager.getCurrentNetwork()?.ssid
+            resultSSID?.let {
+                currentInternetSSID = if(resultSSID.startsWith("\"")) resultSSID.substring(1, resultSSID.length -1) else resultSSID
+            }
+            wifiManager.removeNetwork(sensorSSID)
+            val listDeviceWifiSaved = wifiManager.searchForSavedNetworks(sensorSSID)
+            listDeviceWifiSaved?.forEach { wfMng.removeNetwork(it.networkId) }
+            true
+        }.concatMap {
+            Observable.fromCallable<Boolean> {
+                val result = wifiManager.addOpenNetwork(sensorSSID)
+                result != NETWORK_ALREADY_CONFIGURED && result != MISSING_PARAMETER
+            }
+        }.concatMap {
+            if (!it) {
+                Observable.fromCallable<Boolean> {
+                    val wc = WifiConfiguration()
+                    wc.SSID = "\"" + sensorSSID + "\""
+                    wc.preSharedKey = ""
+                    wc.status = WifiConfiguration.Status.ENABLED
+                    wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE)
+
+
+                    wfMng.isWifiEnabled = true
+                    val netId = wfMng.addNetwork(wc)
+                    netId != -1
+                }
+            } else {
+                Observable.just(it)
+            }
+        }.concatMap {
+            Observable.fromCallable<Boolean> {
+                val listDeviceWifiSaved = wifiManager.searchForSavedNetworks(sensorSSID)
+                val selectedItem = listDeviceWifiSaved?.firstOrNull { wifi ->
+                    wifi.SSID.contains(sensorSSID) && wifi.SSID.contains("\"")
+                }
+                if (listDeviceWifiSaved != null && listDeviceWifiSaved.size > 1) {
+                    selectedItem?.networkId?.let { it1 ->
+                        wfMng.disconnect()
+                        wfMng.enableNetwork(it1, true)
+                        wfMng.reconnect()
+                        true
+                    } ?: true
+                } else {
+                    wifiManager.connectToNetwork(
+                        sensorSSID,
+                        5000
+                    )
+                }
+                true
             }
         }
     }
 
-    private fun frequencyCheckStatus(isConnected: Boolean) {
-        val handler = Handler()
-        var retryTime = 0
-        Handler().postDelayed({
-            retryTime += 1
-            checkSensorStatus()
-            if (isConnected || retryTime > 10) {
-                handler.removeCallbacks(null)
-            }
-        }, 1000)
-    }
-
-    fun disConnect() {
-        try {
-            internetSSID?.let { connectToWifiSSID(it) }
-            frequencyCheckStatus(false)
-        } catch (e: Exception) {
-
+    fun connectNetworkWifi(): Observable<Boolean> {
+        return Observable.fromCallable<Boolean> {
+            if (wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) == true) {
+                wifiManager.connectToNetwork(currentInternetSSID, 5000)
+            } else true
         }
-    }
-
-    private fun connectToWifiSSID(ssid: String) {
-        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        val wc = WifiConfiguration()
-        wc.SSID = "\"" + ssid + "\""
-        wc.preSharedKey = ""
-        wc.status = WifiConfiguration.Status.ENABLED
-        wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE)
-
-
-        wifiManager.isWifiEnabled = true
-        var netId = wifiManager.addNetwork(wc)
-        if (netId == -1) {
-            getExistingNetworkId(wc.SSID)?.let {
-                netId = it
-            }
-        }
-        if (netId >= 0) {
-            wifiManager.disconnect()
-            wifiManager.enableNetwork(netId, true)
-            wifiManager.reconnect()
-        }
-    }
-
-    private fun getExistingNetworkId(SSID: String): Int? {
-        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        var currentNetwork: WifiConfiguration? = null
-        wifiManager.configuredNetworks?.let {
-            currentNetwork = it.firstOrNull { wifi -> wifi.SSID.contains(SSID) }
-        }
-        return currentNetwork?.networkId
     }
 
     var isConnected: Boolean = false
@@ -130,11 +152,4 @@ class Sensor(var applicationContext: Context) : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.enabled)
         }
-
-    fun checkSensorStatus(): Sensor {
-        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        isConnected = wifiManager.connectionInfo.ssid.contains(sensorSSID)
-        return this
-    }
-
 }

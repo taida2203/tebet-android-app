@@ -112,6 +112,7 @@ dependencies {
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:3.1.0'
     implementation 'com.tapadoo.android:alerter:4.0.2'
     implementation 'com.iarcuschin:simpleratingbar:0.1.5'
+    implementation 'com.isupatches:wisefy:4.0.0'
 
     implementation AppDependencies.calligraphy
 

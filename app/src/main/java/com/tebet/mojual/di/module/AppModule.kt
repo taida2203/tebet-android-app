@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.isupatches.wisefy.WiseFy
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.Sensor
 import com.tebet.mojual.common.util.rx.AppSchedulerProvider
@@ -100,8 +101,15 @@ class AppModule(private val app: Application) {
 
     @Provides
     @Singleton
-    internal fun provideSensorHelper(appContext: Context): Sensor {
-        return Sensor(appContext)
+    internal fun provideSensorHelper(wifiManager: WiseFy, appContext: Context): Sensor {
+        return Sensor(wifiManager, appContext)
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideWifiHelper(appContext: Context): WiseFy {
+        // useLegacyConnection = false, useLegacySearch = true
+        return WiseFy.Brains(appContext, useLegacyConnection = false, useLegacySearch = true).logging(true).getSmarts()
     }
 
 //  @Provides

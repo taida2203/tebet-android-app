@@ -1,10 +1,9 @@
 package com.tebet.mojual.view.qualitycontainer
 
-import android.os.Handler
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
-import co.sdk.auth.core.models.AuthJson
 import androidx.databinding.library.baseAdapters.BR
+import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.R
 import com.tebet.mojual.common.adapter.OnListItemClick
 import com.tebet.mojual.common.util.*
@@ -36,13 +35,15 @@ class QualityAddContainerViewModel(
         schedulerProvider: SchedulerProvider,
         sensorManager: Sensor
     ) : this(dataManager, schedulerProvider) {
-        this.sensorManager = sensorManager
+        this.sensorManager.set(sensorManager)
     }
 
     var order = ObservableField<Order>()
+    var sensorManager = ObservableField<Sensor>()
     var assignedContainers: ArrayList<Asset> = ArrayList()
     var items: ObservableArrayList<ContainerWrapper> = ObservableArrayList()
-    private lateinit var sensorManager: Sensor
+
+
     /**
      * Items merged with a header on top
      */
@@ -56,7 +57,6 @@ class QualityAddContainerViewModel(
                 .bindExtra(BR.listener, object : OnListItemClick<String> {
                     override fun onItemClick(item: String) {
                         if (!allCheckingComplete()) return
-                        sensorManager.checkSensorStatus()
                         val containersLeft = getAvailableContainer()
                         if (containersLeft.isEmpty()) {
                             navigator.show(R.string.check_quality_add_container_no_available_container)
@@ -147,7 +147,7 @@ class QualityAddContainerViewModel(
     }
 
     private fun collectSensorData(item: ContainerWrapper) {
-        if (!sensorManager.isConnected) return
+        if (sensorManager.get()?.isConnected == false) return
         compositeDisposable.add(
             dataManager.scanSensorData()
                 .concatMap { sensorData ->
@@ -261,48 +261,51 @@ class QualityAddContainerViewModel(
 
     fun onSubmitClick() {
         if (!allCheckingComplete()) return
-        if (sensorManager.checkSensorStatus().isConnected) {
-            sensorManager.disConnect()
-            navigator.show(R.string.check_quality_add_container_turn_off_iot)
-            Handler().postDelayed({ navigator.reTryConnectIOT() }, 5000)
-            return
-        }
-        navigator.showLoading(true)
-        compositeDisposable.add(
-            Observable.just(order.get()!!)
-                .concatMap {
-                    when {
-                        it.orderId < 0 -> dataManager.createOrder(
-                            CreateOrderRequest(
-                                it.quantity,
-                                it.planDate,
-                                items.map { item -> item.customerData })
-                        )
-                        else -> dataManager.updateOrderQuality(
-                            it.orderId,
-                            items.map { item -> item.customerData })
-                    }
-                }
-                .concatMap { apiResponse ->
-                    Observable.fromCallable {
-                        items.map { wrapper -> wrapper.customerData }
-                            .forEach(this@QualityAddContainerViewModel::removeContainerDB)
-                        true
-                    }.concatMap { Observable.just(apiResponse) }
-                }
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<Order>() {
-                    override fun onSuccess(dataResponse: Order) {
-                        navigator.showLoading(false)
-                        navigator.openConfirmScreen(dataResponse)
-                    }
+        sensorManager.get()?.let {sensor ->
+            if(sensor.isEnabled) navigator.showTurnOffIOTDialog()
+            navigator.showLoading(true)
+            compositeDisposable.add(
+                sensor.connectNetworkWifi().concatMap {
+                    Observable.just(order.get()!!)
+                        .concatMap {
+                            when {
+                                it.orderId < 0 -> dataManager.createOrder(
+                                    CreateOrderRequest(
+                                        it.quantity,
+                                        it.planDate,
+                                        items.map { item -> item.customerData })
+                                )
+                                else -> dataManager.updateOrderQuality(
+                                    it.orderId,
+                                    items.map { item -> item.customerData })
+                            }
+                        }
+                        .concatMap { apiResponse ->
+                            Observable.fromCallable {
+                                items.map { wrapper -> wrapper.customerData }
+                                    .forEach(this@QualityAddContainerViewModel::removeContainerDB)
+                                true
+                            }.concatMap { Observable.just(apiResponse) }
+                        }
+                }.subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui())
+                    .subscribeWith(object : CallbackWrapper<Order>() {
+                        override fun onSuccess(dataResponse: Order) {
+                            navigator.showLoading(false)
+                            navigator.openConfirmScreen(dataResponse)
+                        }
 
-                    override fun onFailure(error: String?) {
-                        navigator.showLoading(false)
-                        handleError(error)
-                    }
-                })
-        )
+                        override fun onFailure(error: String?) {
+                            navigator.showLoading(false)
+                            handleError(error)
+                        }
+                    })
+            )
+        }
+    }
+
+    fun connectIOT() {
+        sensorManager.get()?.connectIOTWifi()?.subscribe({}, {})?.let { compositeDisposable.add(it) }
     }
 
     interface OnFutureDateClick {
