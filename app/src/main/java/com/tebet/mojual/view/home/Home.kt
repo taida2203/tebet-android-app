@@ -152,7 +152,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             supportFragmentManager.popBackStackImmediate()
         }
         if (currentFragment() is HistoryFragment && searchOrderRequest != null) {
-            (currentFragment() as HistoryFragment).viewModel.searchRequest = searchOrderRequest
+            (currentFragment() as HistoryFragment).viewModel.searchRequest.set(searchOrderRequest)
             (currentFragment() as HistoryFragment).viewModel.items.clear()
         }
         openFragmentSlideRight(HistoryFragment.newInstance(searchOrderRequest), R.id.contentHolder, HistoryFragment::class.java.simpleName)
@@ -221,7 +221,11 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                 topRightViewBinding?.search?.visibility = View.VISIBLE
                 topRightViewBinding?.search?.setOnClickListener {
                     if (currentFragment() is HistoryFragment) {
-                        showHistorySearchScreen((currentFragment() as HistoryFragment).viewModel.searchRequest)
+                        (currentFragment() as HistoryFragment).viewModel.searchRequest.get()?.let { it1 ->
+                            showHistorySearchScreen(
+                                it1
+                            )
+                        }
                     }
                 }
             }

@@ -38,12 +38,12 @@ public class MasbroDialog<T> extends DialogFragment {
         }
 
         if (pButton != null) {
-            pButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.dialogColorOK));
+            pButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green_dark));
             pButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.dialogColorBaseWhite));
         }
 
         if (nButton != null) {
-            nButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.dialogColorOK));
+            nButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green_dark));
             nButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.dialogColorBaseWhite));
         }
     }

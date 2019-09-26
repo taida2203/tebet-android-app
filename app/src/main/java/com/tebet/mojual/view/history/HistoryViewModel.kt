@@ -1,6 +1,7 @@
 package com.tebet.mojual.view.history
 
 import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableField
 import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
@@ -13,7 +14,6 @@ import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
-
 
 class HistoryViewModel(
     dataManager: DataManager,
@@ -28,15 +28,15 @@ class HistoryViewModel(
                     navigator.itemSelected(item)
                 }
             })
-    var searchRequest: SearchOrderRequest = SearchOrderRequest(
-        hasNoContainer = false
-    )
+
+    var searchRequest: ObservableField<SearchOrderRequest> = ObservableField(SearchOrderRequest(hasNoContainer = false))
 
     var userProfile: UserProfile? = null
 
     override fun loadData(isForceLoad: Boolean?) {
         if (isForceLoad == true) {
             compositeDisposable.clear()
+            items.clear()
         }
         loadData(0)
     }
@@ -48,11 +48,11 @@ class HistoryViewModel(
             compositeDisposable.add(getUserProfile()
                 .map {
                     it.profileId?.let { profileId ->
-                        searchRequest.profileId = profileId
+                        searchRequest.get()?.profileId = profileId
                     }
-                    searchRequest.offset = page * 10
-                    searchRequest.limit = 10
-                    searchRequest
+                    searchRequest.get()?.offset = page * 10
+                    searchRequest.get()?.limit = 10
+                    searchRequest.get()
                 }
                 .concatMap { dataManager.searchOrders(it) }
                 .observeOn(schedulerProvider.ui())
@@ -94,5 +94,9 @@ class HistoryViewModel(
         if (!navigator.validate()) {
             return
         }
+    }
+
+    fun selectOrderStatus() {
+        navigator.openOrderStatusPicker()
     }
 }

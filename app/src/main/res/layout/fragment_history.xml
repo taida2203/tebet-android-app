@@ -22,11 +22,37 @@
         android:paddingTop="@dimen/_20sdp"
         android:paddingRight="@dimen/_20sdp">
 
-        <com.tebet.mojual.common.view.AppEditText
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_16sdp"
-            android:text="@string/history_filter" />
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/filter_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:cursorVisible="false"
+                android:drawableRight="@drawable/signup_dropdown_btn"
+                android:hint="@string/history_filter"
+                android:onClick="@{() -> viewModel.selectOrderStatus()}">
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/filter_edit"
+                android:layout_alignBottom="@+id/filter_edit"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:text="@{viewModel.searchRequest.selectedStatus !=null ? StringExtKt.fromStatusCodeToDisplayable(viewModel.searchRequest.selectedStatus.name()) : @string/history_advance_status_all}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
