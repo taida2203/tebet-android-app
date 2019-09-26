@@ -40,6 +40,9 @@ class MessageViewModel(
 
     override fun loadData(isForceLoad: Boolean?) {
         super.loadData(isForceLoad)
+        if (isForceLoad == true) {
+            items.clear()
+        }
         loadData(0)
     }
     fun loadData(page: Int = 0) {
