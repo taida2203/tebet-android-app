@@ -261,8 +261,8 @@ class QualityAddContainerViewModel(
 
     fun onSubmitClick() {
         if (!allCheckingComplete()) return
-        sensorManager.get()?.let {sensor ->
-            if(sensor.isEnabled) navigator.showTurnOffIOTDialog()
+        sensorManager.get()?.let { sensor ->
+            if (sensor.isEnabled) navigator.showTurnOffIOTDialog()
             navigator.showLoading(true)
             compositeDisposable.add(
                 sensor.connectNetworkWifi().concatMap {
@@ -304,8 +304,22 @@ class QualityAddContainerViewModel(
         }
     }
 
+    fun retryConnectIOT() {
+        if (sensorManager.get()?.status == SensorStatus.ON) {
+            navigator.connectIOTManual()
+        } else {
+            connectIOT()
+        }
+    }
     fun connectIOT() {
-        sensorManager.get()?.connectIOTWifi()?.subscribe({}, {})?.let { compositeDisposable.add(it) }
+        sensorManager.get()?.let {
+            compositeDisposable.add(
+                it.connectIOTWifi()
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe({}, {})
+            )
+        }
     }
 
     interface OnFutureDateClick {

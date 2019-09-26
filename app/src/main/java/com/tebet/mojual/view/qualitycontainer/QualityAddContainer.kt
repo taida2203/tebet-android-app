@@ -8,6 +8,7 @@ import android.content.Intent
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
@@ -45,6 +46,7 @@ class QualityAddContainer :
     companion object {
         private const val RC_CAMERA_AND_LOCATION = 300
         private const val GPS_ENABLE = 301
+        private const val WIFI_MANUAL = 302
     }
 
     private var gpsDialog: RoundedDialog? = null
@@ -142,6 +144,10 @@ class QualityAddContainer :
         }
     }
 
+    override fun connectIOTManual() {
+        startActivityForResult(Intent(Settings.ACTION_WIFI_SETTINGS), WIFI_MANUAL)
+    }
+
     override fun showTurnOffIOTDialog() {
         if (turnOffIOTDialog == null) {
             turnOffIOTDialog = RoundedOkDialog(getString(R.string.check_quality_add_container_turn_off_iot))
@@ -159,6 +165,7 @@ class QualityAddContainer :
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             GPS_ENABLE -> requestLocationAndConnectIOT()
+            WIFI_MANUAL -> viewModel.connectIOT()
         }
     }
 

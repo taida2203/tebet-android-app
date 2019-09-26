@@ -13,6 +13,7 @@ import com.isupatches.wisefy.WiseFy
 import com.isupatches.wisefy.callbacks.SearchForSSIDCallbacks
 import com.isupatches.wisefy.constants.MISSING_PARAMETER
 import com.isupatches.wisefy.constants.NETWORK_ALREADY_CONFIGURED
+import com.tebet.mojual.R
 import com.tebet.mojual.data.models.SensorData
 import io.reactivex.Observable
 import org.jsoup.Jsoup
@@ -51,6 +52,13 @@ fun ArrayList<SensorData>.toJson(): String {
     return Gson().toJson(target, listType)
 }
 
+enum class SensorStatus {
+    OFF,
+    ON,
+    CONNECTED,
+    CONNECTING
+}
+
 class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObservable() {
     private var currentInternetSSID: String? = null
 
@@ -61,16 +69,27 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
     fun connectIOTWifi(): Observable<Boolean> {
         isEnabled = false
         isConnected = false
+        canRetry = false
+        status = SensorStatus.CONNECTING
         return Observable.fromCallable {
-            wifiManager.searchForSSID(sensorSSID, 5000)
+            wifiManager.searchForSSID(sensorSSID, 5000) ?: ""
         }.concatMap {
             isEnabled = it.isNotEmpty()
-            if (isEnabled) connectIOT().concatMap {
-                Observable.fromCallable<Boolean> {
-                    isConnected = wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) ?: false
-                    isConnected
+            if (wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) == true) {
+                isConnected = true
+                Observable.just(true)
+            } else {
+                if (isEnabled) connectIOT().concatMap {
+                    Observable.fromCallable<Boolean> {
+                        isConnected = wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) ?: false
+                        canRetry = !isConnected
+                        isConnected
+                    }
+                } else {
+                    canRetry = true
+                    Observable.just(true)
                 }
-            } else Observable.just(true)
+            }
         }
     }
 
@@ -140,16 +159,49 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
     }
 
     var isConnected: Boolean = false
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
+            when {
+                value -> status = SensorStatus.CONNECTED
+                else -> if (isEnabled) status = SensorStatus.ON
+            }
             notifyPropertyChanged(BR.connected)
         }
 
-    var isEnabled: Boolean = false
-        @Bindable get() = field
+    var canRetry: Boolean = false
+        @Bindable get
         set(value) {
             field = value
+            notifyPropertyChanged(BR.canRetry)
+        }
+
+    var isEnabled: Boolean = false
+        @Bindable get
+        set(value) {
+            field = value
+            when {
+                value -> if (status == SensorStatus.OFF) status = SensorStatus.ON
+                else -> status = SensorStatus.OFF
+            }
             notifyPropertyChanged(BR.enabled)
+        }
+
+    var status: SensorStatus = SensorStatus.OFF
+        @Bindable get
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.status)
+            notifyPropertyChanged(BR.statusDisplay)
+        }
+
+    val statusDisplay: String
+        @Bindable get (){
+            return when (status) {
+                SensorStatus.CONNECTING -> Utility.getInstance().getString(R.string.check_quality_iot_connecting)
+                SensorStatus.OFF -> Utility.getInstance().getString(R.string.check_quality_iot_not_turn_off)
+                SensorStatus.ON -> Utility.getInstance().getString(R.string.check_quality_iot_not_connect)
+                SensorStatus.CONNECTED -> Utility.getInstance().getString(R.string.check_quality_iot_connected)
+            }
         }
 }

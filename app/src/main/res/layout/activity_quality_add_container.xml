@@ -4,13 +4,13 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="com.tebet.mojual.common.util.SensorStatus" />
+
         <variable
             name="viewModel"
             type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel" />
-
-        <variable
-            name="sensor"
-            type="com.tebet.mojual.common.util.Sensor" />
     </data>
 
     <LinearLayout
@@ -27,15 +27,39 @@
             android:paddingLeft="@dimen/_20sdp"
             android:paddingRight="@dimen/_20sdp">
 
-            <com.tebet.mojual.common.view.AppTextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_8sdp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="@{sensor.connected ? @color/green_dark : @color/red_btn_dialog}"
-                android:text="@{sensor.isConnected ? @string/check_quality_iot_connected : @string/check_quality_iot_not_connect}"
-                android:textSize="@dimen/_16ssp" />
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/check_quality_iot"
+                    android:textSize="@dimen/_16ssp" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:textStyle="bold"
+                    android:textColor="@{viewModel.sensorManager.status == SensorStatus.CONNECTING ? @color/statusWarn : viewModel.sensorManager.status == SensorStatus.CONNECTED ? @color/green_dark : @color/red_btn_dialog}"
+                    android:text="@{viewModel.sensorManager.statusDisplay}"
+                    android:textSize="@dimen/_16ssp" />
+
+                <com.tebet.mojual.common.view.AppButtonRounded
+                    android:layout_width="wrap_content"
+                    android:text="@{viewModel.sensorManager.status == SensorStatus.OFF ? @string/check_quality_add_button_retry : @string/check_quality_add_button_manual}"
+                    android:visibility="@{viewModel.sensorManager.canRetry ? View.VISIBLE : View.GONE}"
+                    android:onClick="@{()-> viewModel.retryConnectIOT()}"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleView"

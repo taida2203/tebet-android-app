@@ -99,8 +99,13 @@
     <string name="check_quality_add_container_turn_off_iot">Please turn of IoT device first to save Device battery</string>
     <string name="check_quality_tip1">Dont know how to check?</string>
     <string name="check_quality_tip2">See Tips</string>
-    <string name="check_quality_iot_connected">Connected to IOT device</string>
-    <string name="check_quality_iot_not_connect">Not connect to IOT device</string>
+    <string name="check_quality_iot">IOT status:</string>
+    <string name="check_quality_iot_connected">Connected</string>
+    <string name="check_quality_iot_connecting">Connecting...</string>
+    <string name="check_quality_iot_not_connect">Not connect</string>
+    <string name="check_quality_iot_not_turn_off">Turn off</string>
+    <string name="check_quality_add_button_retry">RETRY</string>
+    <string name="check_quality_add_button_manual">MANUAL</string>
     <string name="check_quality_add_container_no_available_container">You don\'t have any available containers !!</string>
     <string name="check_quality_add_container_block_while_checking">Please wait checking complete or cancel current checking to add more !!</string>
     <string name="check_quality_add_container_item_id">ID</string>

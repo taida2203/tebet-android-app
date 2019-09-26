@@ -10,4 +10,5 @@ interface QualityAddContainerNavigator: BaseActivityNavigator {
     fun requestLocationAndConnectIOT()
     fun showTurnOffIOTDialog()
     fun openQualityHelpScreen()
+    fun connectIOTManual()
 }
