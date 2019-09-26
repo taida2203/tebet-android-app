@@ -137,6 +137,7 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
                         wfMng.disconnect()
                         wfMng.enableNetwork(it1, true)
                         wfMng.reconnect()
+                        Thread.sleep(5000)
                         true
                     } ?: true
                 } else {
