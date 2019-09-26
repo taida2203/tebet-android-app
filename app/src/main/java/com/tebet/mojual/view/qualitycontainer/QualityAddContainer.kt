@@ -6,6 +6,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -16,13 +18,19 @@ import br.com.ilhasoft.support.validation.Validator
 import co.common.view.dialog.RoundedCancelOkDialog
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedOkDialog
+import com.github.pwittchen.reactivenetwork.library.rx2.ConnectivityPredicate
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.tebet.mojual.R
 import com.tebet.mojual.common.services.DigitalFootPrintServices
+import com.tebet.mojual.common.util.Sensor
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.ActivityQualityAddContainerBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.help.QualityHelp
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
@@ -51,6 +59,7 @@ class QualityAddContainer :
 
     private var gpsDialog: RoundedDialog? = null
     private var turnOffIOTDialog: RoundedDialog? = null
+    private var previousConnectedWifi: String? = null
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
@@ -70,6 +79,28 @@ class QualityAddContainer :
             if (!viewModel.order.get()?.orderCode.isNullOrBlank()) title = String.format(getString(R.string.check_quality_add_container_order), viewModel.order.get()?.orderCode)
         }
         viewModel.loadData()
+
+        val react = ReactiveNetwork
+            .observeNetworkConnectivity(this)
+            .filter(ConnectivityPredicate.hasState(NetworkInfo.State.CONNECTED))
+            .filter(ConnectivityPredicate.hasType(ConnectivityManager.TYPE_WIFI))
+            .concatMap {
+                var nextOBS = Observable.just(true)
+                if(it.extraInfo() != previousConnectedWifi) {
+                    viewModel.sensorManager.get()?.refreshStatus()?.let { sensorRefreshObs ->
+                        nextOBS = sensorRefreshObs
+                    }
+                    Timber.e("DOLPHIN" + it.typeName())
+                }
+                previousConnectedWifi = it.extraInfo()
+                nextOBS
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+
+            }, {})
+        viewModel.compositeDisposable.add(react)
     }
 
     private fun buildAlertMessageNoGps() {
@@ -165,7 +196,7 @@ class QualityAddContainer :
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             GPS_ENABLE -> requestLocationAndConnectIOT()
-            WIFI_MANUAL -> viewModel.connectIOT()
+            WIFI_MANUAL -> viewModel.sensorManager.get()?.refreshStatus()
         }
     }
 

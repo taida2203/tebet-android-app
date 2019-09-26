@@ -94,3 +94,12 @@
 -keepclassmembers class ** {
 @com.mindorks.placeholderview.annotations.** <methods>;
 }
+
+
+
+
+# ReactiveNetwork
+-dontwarn com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
+-dontwarn io.reactivex.functions.Function
+-dontwarn rx.internal.util.**
+-dontwarn sun.misc.Unsafe

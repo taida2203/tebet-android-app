@@ -64,49 +64,54 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
 
     companion object {
         const val sensorSSID = "iSpindel"
+        const val delayWait = 5000
     }
 
     fun connectIOTWifi(): Observable<Boolean> {
-        isEnabled = false
-        isConnected = false
-        canRetry = false
         status = SensorStatus.CONNECTING
-        return Observable.fromCallable {
-            wifiManager.searchForSSID(sensorSSID, 5000) ?: ""
-        }.concatMap {
-            isEnabled = it.isNotEmpty()
-            if (wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) == true) {
-                isConnected = true
-                Observable.just(true)
-            } else {
-                if (isEnabled) connectIOT().concatMap {
+        return refreshStatus().concatMap {
+            if (isEnabled && !isConnected) {
+                status = SensorStatus.CONNECTING
+                connectIOT().concatMap {
                     Observable.fromCallable<Boolean> {
                         isConnected = wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) ?: false
-                        canRetry = !isConnected
                         isConnected
                     }
-                } else {
-                    canRetry = true
-                    Observable.just(true)
                 }
-            }
+            } else Observable.just(true)
+        }
+    }
+
+    fun refreshStatus(): Observable<Boolean> {
+        isEnabled = false
+        isConnected = false
+        status = SensorStatus.CONNECTING
+        return Observable.fromCallable {
+            wifiManager.searchForSSID(sensorSSID, delayWait) ?: ""
+        }.concatMap {
+            isEnabled = it.isNotEmpty()
+            if (isEnabled) isConnected = wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) == true
+            Observable.just(true)
         }
     }
 
     private fun connectIOT(): Observable<Boolean> {
         val wfMng = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         return Observable.fromCallable<Boolean> {
+            wifiManager.removeNetwork(sensorSSID)
+            Thread.sleep(delayWait.toLong()/2)
             var resultSSID = wifiManager.getCurrentNetwork()?.ssid
             resultSSID?.let {
                 currentInternetSSID = if(resultSSID.startsWith("\"")) resultSSID.substring(1, resultSSID.length -1) else resultSSID
             }
-            wifiManager.removeNetwork(sensorSSID)
             val listDeviceWifiSaved = wifiManager.searchForSavedNetworks(sensorSSID)
             listDeviceWifiSaved?.forEach { wfMng.removeNetwork(it.networkId) }
+            Thread.sleep(delayWait.toLong()/2)
             true
         }.concatMap {
             Observable.fromCallable<Boolean> {
                 val result = wifiManager.addOpenNetwork(sensorSSID)
+                Thread.sleep(delayWait.toLong()/2)
                 result != NETWORK_ALREADY_CONFIGURED && result != MISSING_PARAMETER
             }
         }.concatMap {
@@ -137,15 +142,10 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
                         wfMng.disconnect()
                         wfMng.enableNetwork(it1, true)
                         wfMng.reconnect()
-                        Thread.sleep(5000)
+                        Thread.sleep(delayWait.toLong())
                         true
                     } ?: true
-                } else {
-                    wifiManager.connectToNetwork(
-                        sensorSSID,
-                        5000
-                    )
-                }
+                } else wifiManager.connectToNetwork(sensorSSID, delayWait)
                 true
             }
         }
@@ -154,7 +154,7 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
     fun connectNetworkWifi(): Observable<Boolean> {
         return Observable.fromCallable<Boolean> {
             if (wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) == true) {
-                wifiManager.connectToNetwork(currentInternetSSID, 5000)
+                wifiManager.connectToNetwork(currentInternetSSID, delayWait)
             } else true
         }
     }
@@ -168,13 +168,6 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
                 else -> if (isEnabled) status = SensorStatus.ON
             }
             notifyPropertyChanged(BR.connected)
-        }
-
-    var canRetry: Boolean = false
-        @Bindable get
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.canRetry)
         }
 
     var isEnabled: Boolean = false
@@ -196,13 +189,14 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
             notifyPropertyChanged(BR.statusDisplay)
         }
 
-    val statusDisplay: String
+    val statusDisplay: String?
         @Bindable get (){
             return when (status) {
                 SensorStatus.CONNECTING -> Utility.getInstance().getString(R.string.check_quality_iot_connecting)
                 SensorStatus.OFF -> Utility.getInstance().getString(R.string.check_quality_iot_not_turn_off)
                 SensorStatus.ON -> Utility.getInstance().getString(R.string.check_quality_iot_not_connect)
                 SensorStatus.CONNECTED -> Utility.getInstance().getString(R.string.check_quality_iot_connected)
+                else -> ""
             }
         }
 }

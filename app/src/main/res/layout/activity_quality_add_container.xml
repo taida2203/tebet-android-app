@@ -56,7 +56,7 @@
                 <com.tebet.mojual.common.view.AppButtonRounded
                     android:layout_width="wrap_content"
                     android:text="@{viewModel.sensorManager.status == SensorStatus.OFF ? @string/check_quality_add_button_retry : @string/check_quality_add_button_manual}"
-                    android:visibility="@{viewModel.sensorManager.canRetry ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{viewModel.sensorManager.status != null &amp;&amp; viewModel.sensorManager.status != SensorStatus.CONNECTING &amp;&amp; viewModel.sensorManager.status != SensorStatus.CONNECTED ? View.VISIBLE : View.GONE}"
                     android:onClick="@{()-> viewModel.retryConnectIOT()}"
                     android:layout_height="wrap_content" />
             </LinearLayout>
