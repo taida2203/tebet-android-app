@@ -230,8 +230,7 @@ class QualityAddContainerViewModel(
                                 response.first.filter { it.orderCode == order.orderCode }
                             val unAvailableCachedItem =
                                 cachedItemByOrder.filter { cachedContainer ->
-                                    assignedContainers
-                                        .firstOrNull { cachedContainer.assetCode == it.code } == null
+                                    assignedContainers.firstOrNull { cachedContainer.assetCode == it.code } == null
                                 }
 
                             // remove item that contain un available container
@@ -318,6 +317,16 @@ class QualityAddContainerViewModel(
                     .subscribeOn(schedulerProvider.io())
                     .observeOn(schedulerProvider.ui())
                     .subscribe({}, {})
+            )
+        }
+    }
+
+    fun refreshIOTStatus() {
+        sensorManager.get()?.let {
+            compositeDisposable.add(
+                it.refreshStatus()
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui()).subscribe({}, {})
             )
         }
     }

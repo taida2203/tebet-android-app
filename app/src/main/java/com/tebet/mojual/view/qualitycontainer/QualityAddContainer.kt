@@ -196,7 +196,7 @@ class QualityAddContainer :
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             GPS_ENABLE -> requestLocationAndConnectIOT()
-            WIFI_MANUAL -> viewModel.sensorManager.get()?.refreshStatus()
+            WIFI_MANUAL -> viewModel.refreshIOTStatus()
         }
     }
 
