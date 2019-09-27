@@ -209,6 +209,7 @@ class QualityAddContainerViewModel(
             }
         })
         navigator.showLoading(true)
+        sensorManager.get()?.status = SensorStatus.CONNECTING
         compositeDisposable.add(
             Observable.zip(
                 dataManager.getContainerCheckDB(),
@@ -307,7 +308,7 @@ class QualityAddContainerViewModel(
         if (sensorManager.get()?.status == SensorStatus.ON) {
             navigator.connectIOTManual()
         } else {
-            connectIOT()
+            navigator.requestLocationAndConnectIOT()
         }
     }
     fun connectIOT() {

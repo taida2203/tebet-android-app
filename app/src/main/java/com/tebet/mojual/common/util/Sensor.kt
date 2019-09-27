@@ -126,6 +126,7 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
 
                     wfMng.isWifiEnabled = true
                     val netId = wfMng.addNetwork(wc)
+                    Thread.sleep(delayWait.toLong() / 2)
                     netId != -1
                 }
             } else {
@@ -134,10 +135,13 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
         }.concatMap {
             Observable.fromCallable<Boolean> {
                 val listDeviceWifiSaved = wifiManager.searchForSavedNetworks(sensorSSID)
-                val selectedItem = listDeviceWifiSaved?.firstOrNull { wifi ->
+                var selectedItem = listDeviceWifiSaved?.firstOrNull { wifi ->
                     wifi.SSID.contains(sensorSSID) && wifi.SSID.contains("\"")
                 }
-                if (listDeviceWifiSaved != null && listDeviceWifiSaved.size > 1) {
+                if (selectedItem == null) {
+                    selectedItem = listDeviceWifiSaved?.firstOrNull()
+                }
+                if ((listDeviceWifiSaved != null && listDeviceWifiSaved.size > 1) || !it) {
                     selectedItem?.networkId?.let { it1 ->
                         wfMng.disconnect()
                         wfMng.enableNetwork(it1, true)

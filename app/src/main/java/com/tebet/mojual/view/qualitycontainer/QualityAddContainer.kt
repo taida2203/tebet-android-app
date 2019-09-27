@@ -159,7 +159,7 @@ class QualityAddContainer :
     @AfterPermissionGranted(RC_CAMERA_AND_LOCATION)
     override fun requestLocationAndConnectIOT() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (EasyPermissions.hasPermissions(this, *arrayOf(ACCESS_FINE_LOCATION, ACCESS_WIFI_STATE, ACCESS_NETWORK_STATE, CHANGE_WIFI_STATE, CHANGE_NETWORK_STATE))) {
+            if (EasyPermissions.hasPermissions(this, *arrayOf(ACCESS_FINE_LOCATION, ACCESS_WIFI_STATE, ACCESS_NETWORK_STATE, CHANGE_WIFI_STATE))) {
                 val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
                 if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     buildAlertMessageNoGps()
@@ -168,7 +168,7 @@ class QualityAddContainer :
                 }
             } else {
                 // Do not have permissions, request them now
-                EasyPermissions.requestPermissions(this, "Require permission", RC_CAMERA_AND_LOCATION, *arrayOf(ACCESS_FINE_LOCATION, ACCESS_WIFI_STATE, ACCESS_NETWORK_STATE, CHANGE_WIFI_STATE, CHANGE_NETWORK_STATE))
+                EasyPermissions.requestPermissions(this, "Require permission", RC_CAMERA_AND_LOCATION, *arrayOf(ACCESS_FINE_LOCATION, ACCESS_WIFI_STATE, ACCESS_NETWORK_STATE, CHANGE_WIFI_STATE))
             }
         } else {
             viewModel.connectIOT()
