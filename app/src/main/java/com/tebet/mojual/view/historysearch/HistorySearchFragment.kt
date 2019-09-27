@@ -60,7 +60,9 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
     override fun openFromDatePicker() {
         if (fromDateDialog == null) {
             fromDateDialog = DateDialog()
-            fromDateDialog?.setMaxDate(Calendar.getInstance())
+            val next7Day = Calendar.getInstance()
+            next7Day.add(Calendar.DAY_OF_MONTH, 8)
+            fromDateDialog?.setMaxDate(next7Day)
             fromDateDialog?.setOnDateSetListener { view, year, month, dayOfMonth ->
                 val cal = Calendar.getInstance()
                 cal.set(Calendar.YEAR, year)
@@ -80,7 +82,9 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
     override fun openToDatePicker() {
         if (toDateDialog == null) {
             toDateDialog = DateDialog()
-            toDateDialog?.setMaxDate(Calendar.getInstance())
+            val next7Day = Calendar.getInstance()
+            next7Day.add(Calendar.DAY_OF_MONTH, 8)
+            toDateDialog?.setMaxDate(next7Day)
             toDateDialog?.setOnDateSetListener { view, year, month, dayOfMonth ->
                 val cal = Calendar.getInstance()
                 cal.set(Calendar.YEAR, year)
