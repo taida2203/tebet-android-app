@@ -4,8 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
+import co.common.constant.AppConstant
 import co.common.util.LanguageUtil
+import co.common.util.PreferenceUtils
 import co.common.view.dialog.LanguageChoiceDialog
+import co.common.view.dialog.RoundedCancelOkDialog
+import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.SingleChoiceDialog
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentProfileBinding
@@ -72,6 +76,25 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     override fun openPinCodeScreen() {
-        startActivity(Intent(activity, PinCode::class.java))
+        val pin = PreferenceUtils.getString(AppConstant.PIN_CODE, "")
+        if (pin.isEmpty()) {
+            startActivity(
+                Intent(activity, PinCode::class.java).putExtra(
+                    AppConstant.PIN_TYPE_INPUT,
+                    PinCode.ADD_PIN
+                )
+            )
+        } else {
+            RoundedCancelOkDialog(this.getString(R.string.pin_message_remove)).setRoundedDialogCallback(object : RoundedDialog.RoundedDialogCallback {
+                override fun onFirstButtonClicked(selectedValue: Any?) {
+                    // No need handle cancel this case
+                }
+
+                override fun onSecondButtonClicked(selectedValue: Any?) {
+                    PreferenceUtils.saveString(AppConstant.PIN_CODE, "")
+//                    adapter.notifyDataSetChanged()
+                }
+            }).show(this.childFragmentManager, "activity")
+        }
     }
 }

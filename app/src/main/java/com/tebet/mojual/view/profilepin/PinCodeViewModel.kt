@@ -9,7 +9,7 @@ class PinCodeViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<PinCodeNavigator>(dataManager, schedulerProvider) {
-    fun onForgotPasswordClick() {
+    fun onGoBackHomeScreen() {
         navigator.openHomeScreen()
     }
 }

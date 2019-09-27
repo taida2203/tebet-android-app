@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.tebet.mojual.view.profilepin.PinCodeViewModel" />
@@ -14,21 +13,157 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <WebView
-            android:id="@+id/webView"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_above="@id/btnNext"
-            android:padding="@dimen/_20sdp" />
+            android:layout_above="@id/layout_buttons"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp">
 
-        <com.tebet.mojual.common.view.AppButton
-            android:id="@+id/btnNext"
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/title_container"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:id="@+id/warning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:text="@string/pin_message_warn" />
+            </ScrollView>
+
+            <RelativeLayout
+                android:id="@+id/title_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/text_input_container">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/pin_enter"
+                    android:textColor="#95a2b1" />
+
+                <TextView
+                    android:id="@+id/tv_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_toRightOf="@+id/title"
+                    android:gravity="right"
+                    android:textColor="#f75c75"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/text_input_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/et_code_1"
+                    style="@android:style/Widget.EditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:focusableInTouchMode="false"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:maxLength="1"
+                    android:nextFocusRight="@+id/et_code_2"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/et_code_2"
+                    style="@android:style/Widget.EditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:focusableInTouchMode="false"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:maxLength="1"
+                    android:nextFocusLeft="@+id/et_code_1"
+                    android:nextFocusRight="@+id/et_code_3"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/et_code_3"
+                    style="@android:style/Widget.EditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:focusableInTouchMode="false"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:maxLength="1"
+                    android:nextFocusLeft="@+id/et_code_2"
+                    android:nextFocusRight="@+id/et_code_4"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/et_code_4"
+                    style="@android:style/Widget.EditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:focusableInTouchMode="false"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:maxLength="1"
+                    android:nextFocusLeft="@+id/et_code_3"
+                    android:nextFocusRight="@+id/et_code_5"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <com.tebet.mojual.common.view.AppEditText
+            android:id="@+id/et_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-200dp"
+            android:background="@null"
+            android:inputType="phone"
+            android:lines="1"
+            android:maxLength="4" />
+
+
+        <LinearLayout
+            android:id="@+id/layout_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:enabled="@{!viewModel.isLoading}"
-            android:onClick="@{()-> viewModel.onForgotPasswordClick()}"
-            android:text="@string/general_btn_back" />
+            android:orientation="vertical">
+
+
+            <com.tebet.mojual.common.view.AppButton
+                android:id="@+id/btn_close"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:lines="1"
+                android:onClick="@{()->viewModel.onGoBackHomeScreen() }"
+                android:text="@string/profile_button_logout"
+                android:textColor="@color/white"
+                android:textSize="16.2sp" />
+
+        </LinearLayout>
+
     </RelativeLayout>
+
 </layout>

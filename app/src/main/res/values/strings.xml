@@ -189,4 +189,10 @@
     <string name="history_advance_status_all">ALL</string>
 
     <string name="quality_help_title">Help</string>
+    <string name="pin_message_warn">You will be logout from Monjual after 5 attempts. Logout to reset PIN</string>
+    <string name="pin_enter">Enter pin code</string>
+    <string name="pin_message_not_matched">PIN not matched</string>
+    <string name="pin_message_wrong">Wrong PIN</string>
+    <string name="pin_message_remove">Do you want to remove PIN code ?</string>
+    <string name="pin_confirm">Confirm PIN code</string>
 </resources>
