@@ -29,7 +29,7 @@ data class SearchOrderRequest(
     var profileId: Int? = null,
     var profileCode: String? = null,
     var orderCode: String? = null,
-    var orders: HashMap<String, String>? = hashMapOf(Pair(SortBy.SALE_DATE.value, SortType.DESC.name)),
+    var orders: HashMap<String, String>? = hashMapOf(Pair(SortBy.ORDER_ID.value, SortType.DESC.name)),
     var limit: Int? = null,
     var offset: Int? = null
 ) : BaseObservable() {

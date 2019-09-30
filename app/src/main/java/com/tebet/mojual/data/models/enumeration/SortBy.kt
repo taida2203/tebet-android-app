@@ -6,6 +6,7 @@ package com.tebet.mojual.data.models.enumeration
 enum class SortBy(val value: String) {
     STATUS("od.status"),
     SALE_DATE("od.planDate"),
+    ORDER_ID("od.orderId"),
     AMOUNT("od.totalPrice");
 
     companion object {

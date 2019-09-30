@@ -60,6 +60,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:text="@{item.quantity > 1 ? @string/history_containers(String.valueOf(item.quantity)) : @string/history_container(String.valueOf(item.quantity))}"
+                    android:textSize="@dimen/_14ssp" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="@{StringExtKt.toDisplayMoney(item.totalPrice)}"
                     android:textSize="@dimen/_14ssp" />
             </LinearLayout>
