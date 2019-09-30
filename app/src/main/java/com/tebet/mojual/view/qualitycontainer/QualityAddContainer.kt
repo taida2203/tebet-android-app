@@ -82,8 +82,8 @@ class QualityAddContainer :
 
         val react = ReactiveNetwork
             .observeNetworkConnectivity(this)
-            .filter(ConnectivityPredicate.hasState(NetworkInfo.State.CONNECTED))
-            .filter(ConnectivityPredicate.hasType(ConnectivityManager.TYPE_WIFI))
+//            .filter(ConnectivityPredicate.hasState(NetworkInfo.State.CONNECTED))
+//            .filter(ConnectivityPredicate.hasType(ConnectivityManager.TYPE_WIFI))
             .concatMap {
                 var nextOBS = Observable.just(true)
                 if(it.extraInfo() != previousConnectedWifi) {
