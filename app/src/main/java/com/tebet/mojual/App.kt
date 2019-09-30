@@ -1,11 +1,14 @@
 package com.tebet.mojual
 
 import android.app.Activity
+import android.app.Application
 import android.app.Service
 import android.content.Context
+import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import co.common.util.LanguageUtil
 import co.common.util.PreferenceUtils
@@ -29,7 +32,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import java.util.*
 import javax.inject.Inject
 
-class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector {
+class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector, Application.ActivityLifecycleCallbacks {
     val context: Context
         get() = this
     @Inject
@@ -66,7 +69,7 @@ class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector {
 
         Utility.init(this)
         PreferenceUtils.init(this)
-
+        registerActivityLifecycleCallbacks(this)
 
         var uuid: String? = null
         try {
@@ -100,6 +103,48 @@ class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector {
         }
     }
 
+    override fun onActivityCreated(activity: Activity?, bundle: Bundle?) {
+        wasInBackground = false
+        stateOfLifeCycle = "Create"
+    }
+
+    override fun onTrimMemory(level: Int) {
+        if (stateOfLifeCycle == "Stop") {
+            wasInBackground = true
+        }
+        super.onTrimMemory(level)
+    }
+
+    override fun onActivityStarted(activity: Activity?) {
+        stateOfLifeCycle = "Start"
+    }
+
+    override fun onActivityResumed(activity: Activity?) {
+        stateOfLifeCycle = "Resume"
+    }
+
+    override fun onActivityPaused(activity: Activity?) {
+        stateOfLifeCycle = "Pause"
+    }
+
+
+    override fun onActivityStopped(activity: Activity?) {
+        stateOfLifeCycle = "Stop"
+    }
+
+    override fun onActivityDestroyed(activity: Activity?) {
+        wasInBackground = false
+        stateOfLifeCycle = "Destroy"
+    }
+
+    override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
+
     /**
      *
      *
@@ -118,6 +163,8 @@ class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector {
     companion object {
         lateinit var instance: App
             private set
+        var wasInBackground = false
+        var stateOfLifeCycle = ""
     }
 
     override fun activityInjector(): AndroidInjector<Activity> = activityInjector

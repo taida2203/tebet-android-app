@@ -112,6 +112,7 @@
         <service
             android:name=".common.services.DigitalFootPrintServices"
             android:exported="false" />
+        <service android:name=".common.services.ScreenListenerService" />
     </application>
 
 </manifest>

@@ -1,7 +1,6 @@
 package com.tebet.mojual.view.profilepin
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -11,7 +10,6 @@ import co.common.constant.AppConstant
 import co.common.util.PreferenceUtils
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.afterTextChanged
-import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.ActivityPinCodeBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
@@ -46,6 +44,7 @@ open class PinCode : BaseActivity<ActivityPinCodeBinding, PinCodeViewModel>(),
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         title = getString(R.string.pin_enter)
+        viewModel.loadData()
         screenMode = intent.getIntExtra(AppConstant.PIN_TYPE_INPUT, CHECK_PIN)
         edtCodes = listOf<TextView>(et_code_1, et_code_2, et_code_3, et_code_4)
         edtCodes.forEach { textView ->
@@ -69,18 +68,12 @@ open class PinCode : BaseActivity<ActivityPinCodeBinding, PinCodeViewModel>(),
                 if (it.length >= 4) {
                     when (screenMode) {
                         CHECK_PIN -> {
-//                            if (toolbar != null) {
-//                                toolbar.setTitle(R.string.pin_enter)
-//                            }
+                            title = getString(R.string.pin_enter)
                             val currentCode =
                                 PreferenceUtils.getString(AppConstant.PIN_CODE, tempPin)
                             if (it == currentCode) {
-                                if (isLoggedIn()) {
-                                    finish()
-//                                    startPermissionActivity()
-                                } else {
-                                    navigateToLogin()
-                                }
+                                setResult(RESULT_OK)
+                                finish()
                             } else {
                                 retryCount++
                                 if (retryCount > 5) {
@@ -94,9 +87,7 @@ open class PinCode : BaseActivity<ActivityPinCodeBinding, PinCodeViewModel>(),
                             }
                         }
                         ADD_PIN -> {
-//                            if (toolbar != null) {
-//                                toolbar.setTitle(R.string.pin_confirm)
-//                            }
+                            title = getString(R.string.pin_confirm)
                             tempPin = it
                             screenMode = VERIFY_PIN
                             tv_title.text = getString(R.string.pin_confirm)
@@ -122,19 +113,15 @@ open class PinCode : BaseActivity<ActivityPinCodeBinding, PinCodeViewModel>(),
         finish()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        hideKeyboard()
+    }
+
     private fun showSoftKeyboard(view: View) {
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         view.requestFocus()
         inputMethodManager.showSoftInput(view, 0)
-    }
-
-    private fun isLoggedIn(): Boolean {
-        val user =
-            PreferenceUtils.getObject(
-                AppConstant.TEMP_USER_PROFILE,
-                UserProfile::class.java
-            ) as UserProfile
-        return user != null
     }
 
     private fun resetInputPin() {
@@ -142,24 +129,4 @@ open class PinCode : BaseActivity<ActivityPinCodeBinding, PinCodeViewModel>(),
         et_code.setText("")
 
     }
-
-    private fun navigateToLogin() {
-        finish()
-//        startActivity(
-//            Intent(
-//                this,
-//                SplashActivity::class.java
-//            ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//        )
-    }
-//    fun startPermissionActivity() {
-//        if (!Utility.getInstance().isPermissionValid()) {
-//            startActivity(
-//                Intent(
-//                    this,
-//                    PermissionActivity::class.java
-//                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//            )
-//        }
-//    }
 }

@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.library.baseAdapters.BR
+import co.common.util.PreferenceUtils
+import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.request.SearchOrderRequest
@@ -35,6 +37,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 import com.tebet.mojual.view.message.MessageFragment
+import com.tebet.mojual.view.profilepin.PinCode
 
 
 class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector,
@@ -79,6 +82,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         )
         showHomeScreen()
         intent.extras?.let {
+            PreferenceUtils.saveBoolean(BaseActivity.EXTRA_FORCE_LOCK, true)
             openFromNotification(bundleToMap(it))
         }
         viewModel.loadData()
@@ -86,6 +90,18 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         viewModel.profileLiveData.observe(
             this,
             Observer<UserProfile> { topLeftViewBinding?.userProfile = it })
+
+        if (isPinSetted()) {
+            if (!App.wasInBackground && !forceLock) {
+                startPinCodeScreen()
+            }
+        } else {
+//            if (isFirstTimeLogin) {
+//                showSuggestedSetPin()
+//            } else {
+//                startPermissionActivity()
+//            }
+        }
     }
 
     private fun bundleToMap(extras: Bundle?): Map<String, String?> {

@@ -157,7 +157,7 @@
                 android:background="@color/colorAccent"
                 android:lines="1"
                 android:onClick="@{()->viewModel.onGoBackHomeScreen() }"
-                android:text="@string/profile_button_logout"
+                android:text="EXIT"
                 android:textColor="@color/white"
                 android:textSize="16.2sp" />
 

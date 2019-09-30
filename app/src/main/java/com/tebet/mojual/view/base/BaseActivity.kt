@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.ActivityManager
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -21,22 +23,32 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import co.common.constant.AppConstant
 import co.common.util.LanguageUtil
+import co.common.util.PreferenceUtils
 import co.common.view.dialog.RoundedOkDialog
 import co.sdk.auth.core.models.LoginException
 import com.tapadoo.alerter.Alerter
 import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
+import com.tebet.mojual.common.services.ScreenListenerService
 import com.tebet.mojual.data.models.Message
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.databinding.ActivityBaseBinding
+import com.tebet.mojual.view.LockActivity
 import com.tebet.mojual.view.help.QualityHelp
 import com.tebet.mojual.view.home.Home
+import com.tebet.mojual.view.login.Login
+import com.tebet.mojual.view.profilepin.PinCode
+import com.tebet.mojual.view.signup.SignUpInfo
+import com.tebet.mojual.view.signup.step0.SignUpPassword
+import com.tebet.mojual.view.splash.Splash
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_base.*
+import timber.log.Timber
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
@@ -80,6 +92,14 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             }
         }
 
+    private var mReceiver: ScreenReceiver? = null
+    protected var forceLock: Boolean = PreferenceUtils.getBoolean(EXTRA_FORCE_LOCK, false)
+
+    companion object {
+        const val REQUEST_CODE_PIN = 1991
+        const val EXTRA_FORCE_LOCK = "EXTRA_FORCE_LOCK"
+    }
+
     override fun onFragmentAttached() {
     }
 
@@ -122,7 +142,34 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                 (application as App).notificationHandlerData.postValue(null)
             }
         })
+
+        val filter = IntentFilter(Intent.ACTION_SCREEN_ON)
+        filter.addAction(Intent.ACTION_SCREEN_OFF)
+        mReceiver = ScreenReceiver()
+        try {
+            registerReceiver(mReceiver, filter)
+        } catch (e: Exception) {
+            Timber.d(e)
+        }
+        if (!isMyServiceRunning(ScreenListenerService::class.java)) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                startService(Intent(applicationContext, ScreenListenerService::class.java))
+            }
+        }
+
+        if (intent != null) forceLock = intent.getBooleanExtra(EXTRA_FORCE_LOCK, false)
+
         onCreateBase(savedInstanceState, contentLayoutId)
+    }
+
+    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
     }
 
     protected open fun refreshData(notification: Message) {}
@@ -372,6 +419,56 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     override fun show(messageResId: Int) {
         RoundedOkDialog(getString(messageResId)).show(supportFragmentManager, getString(messageResId))
+    }
+
+    protected fun isPinSetted(): Boolean {
+        val pin = PreferenceUtils.getString(AppConstant.PIN_CODE, "")
+        return pin.isNotEmpty()
+    }
+
+    protected fun startPinCodeScreen() {
+        if (isPinSetted()) {
+            if (activity() !is PinCode) startActivityForResult(Intent(this, PinCode::class.java), REQUEST_CODE_PIN)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if ((App.wasInBackground || forceLock)
+            && activity() !is Splash
+            && activity() !is Login
+            && activity() !is SignUpInfo
+            && activity() !is SignUpPassword
+            && activity() !is LockActivity
+        ) {
+            App.wasInBackground = false
+            PreferenceUtils.saveBoolean(EXTRA_FORCE_LOCK, false)
+            startPinCodeScreen()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE_PIN -> if (resultCode != Activity.RESULT_OK) finish()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+            unregisterReceiver(mReceiver)
+        } catch (e: Exception) {
+            Timber.d(e)
+        }
+    }
+
+    class ScreenReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == Intent.ACTION_SCREEN_OFF) {
+                App.wasInBackground = true
+            }
+        }
     }
 }
 
