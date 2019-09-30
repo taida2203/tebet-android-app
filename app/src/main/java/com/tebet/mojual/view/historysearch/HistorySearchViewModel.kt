@@ -58,6 +58,9 @@ class HistorySearchViewModel(
 
     fun submit() {
         searchRequest.get()?.let {
+            it.toPlanDate?.let { toPlanDate ->
+                it.toPlanDate = toPlanDate + (24 * 60 * 60 * 1000 - 1) // a day
+            }
             navigator.openHistoryScreen(it)
         }
     }
