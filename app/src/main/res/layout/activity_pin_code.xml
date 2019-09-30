@@ -58,7 +58,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="40dp"
                     android:layout_marginLeft="40dp"
-                    android:layout_toRightOf="@+id/title"
                     android:gravity="right"
                     android:textColor="#f75c75"
                     android:textStyle="bold" />
