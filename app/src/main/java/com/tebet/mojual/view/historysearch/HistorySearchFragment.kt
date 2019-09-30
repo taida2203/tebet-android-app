@@ -49,6 +49,7 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
         viewModel.navigator = this
         viewModel.loadData(false)
         searchRequest?.let {
+            it.selectedSortBy = SortBy.SALE_DATE
             viewModel.searchRequest.set(it)
         }
     }
