@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -21,7 +20,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:gravity="center"
             android:orientation="vertical"
@@ -88,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="Basic information"
+                        android:text="@string/profile_basic_information"
                         android:textAllCaps="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +117,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Full Name"
+                            android:text="@string/registration_step1_full_name"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -152,7 +151,7 @@
                             android:id="@+id/labelPhone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Telephone"
+                            android:text="@string/profile_telephone"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -185,7 +184,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="KTP Number"
+                            android:text="@string/registration_step1_ktp_number"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -218,7 +217,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bonus"
+                            android:text="@string/profile_bonus"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -256,7 +255,7 @@
                         android:id="@+id/tvDomicleAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Domicle Address"
+                        android:text="@string/profile_domicle_address"
                         android:textAllCaps="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -490,7 +489,7 @@
                         android:id="@+id/tvPickupAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pickup Address"
+                        android:text="@string/profile_pickup_address"
                         android:textAllCaps="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -724,7 +723,7 @@
                         android:id="@+id/tvBankAccount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bank Account"
+                        android:text="@string/profile_bank_account"
                         android:textAllCaps="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -755,7 +754,7 @@
                             android:id="@+id/tvBankName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bank Name"
+                            android:text="@string/registration_step3_bank_account_name"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -789,7 +788,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bank Account Number"
+                            android:text="@string/registration_step3_bank_account_number"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -822,7 +821,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bank Account Name"
+                            android:text="@string/registration_step3_bank_account_name"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -855,7 +854,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bank Region"
+                            android:text="@string/registration_step3_bank_region"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -892,7 +891,7 @@
                         android:id="@+id/tvSecurity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Security"
+                        android:text="@string/profile_security"
                         android:textAllCaps="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -914,7 +913,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Set Pin"
+                            android:text="@string/profile_set_pin"
                             android:textAllCaps="true"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -947,7 +946,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Change Password"
+                            android:text="@string/profile_change_password"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -974,7 +973,7 @@
                         android:id="@+id/tvOther"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Other"
+                        android:text="@string/profile_other"
                         android:textAllCaps="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -995,7 +994,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Contact MOJUAL"
+                            android:text="@string/profile_contact_mojual"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -1067,7 +1066,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Version"
+                            android:text="@string/profile_version"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
