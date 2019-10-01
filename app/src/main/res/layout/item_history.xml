@@ -8,6 +8,7 @@
         <import type="com.tebet.mojual.common.util.DateExtKt" />
 
         <import type="com.tebet.mojual.common.util.StringExtKt" />
+        <import type="com.tebet.mojual.data.models.enumeration.OrderStatus" />
 
         <variable
             name="listener"
@@ -75,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_12sdp"
-                android:text="@{StringExtKt.toDisplayStatus(item.status)}"
+                android:text="@{StringExtKt.toDisplayStatus(OrderStatus.getByName(item.status))}"
                 android:textColor="@{!item.isRejected ? @color/green_change_course : @color/red_btn_dialog}"
                 android:textSize="@dimen/_14ssp" />
         </LinearLayout>
