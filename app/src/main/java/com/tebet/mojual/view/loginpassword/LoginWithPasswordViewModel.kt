@@ -50,7 +50,12 @@ class LoginWithPasswordViewModel(
         if (!navigator.dataValid()) {
             return
         }
-        val fullPhoneNumber = userInputPhonePrefix + userInputPhone.trim()
+        val fullPhoneNumber =
+            userInputPhonePrefix + if (userInputPhone.startsWith("0")) userInputPhone.substring(
+                1,
+                userInputPhone.length
+            ).trim() else userInputPhone.trim()
+
         if (!when (userInputPhonePrefix) {
                 PHONE_PREFIX_ID -> {
                     fullPhoneNumber.matches(Regex("(\\+62((\\d{3}([ -]\\d{3,})([- ]\\d{4,})?)|(\\d+)))|(\\(\\d+\\) \\d+)|\\d{3}( \\d+)+|(\\d+[ -]\\d+)|\\d+"))
