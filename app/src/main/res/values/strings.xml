@@ -101,8 +101,8 @@
     <string name="check_quality_tip2">See Tips</string>
     <string name="check_quality_iot">IOT status:</string>
     <string name="check_quality_iot_connected">Connected</string>
-    <string name="check_quality_iot_connecting">Connecting...</string>
     <string name="check_quality_iot_not_connect">Not connect</string>
+    <string name="check_quality_iot_connecting">Connecting...</string>
     <string name="check_quality_iot_not_turn_off">Turn off</string>
     <string name="check_quality_add_button_retry">RETRY</string>
     <string name="check_quality_add_button_manual">MANUAL</string>
@@ -136,6 +136,8 @@
 
     <string name="history_title">History</string>
     <string name="history_filter">FILTER BY</string>
+    <string name="history_container">%1$s Container</string>
+    <string name="history_containers">%1$s Containers</string>
 
     <string name="history_search_title">Advanced Search</string>
 
@@ -189,13 +191,11 @@
     <string name="history_advance_status_all">ALL</string>
 
     <string name="quality_help_title">Help</string>
+
     <string name="pin_message_warn">You will be logout from Monjual after 5 attempts. Logout to reset PIN</string>
     <string name="pin_enter">Enter pin code</string>
     <string name="pin_message_not_matched">PIN not matched</string>
     <string name="pin_message_wrong">Wrong PIN</string>
     <string name="pin_message_remove">Do you want to remove PIN code ?</string>
     <string name="pin_confirm">Confirm PIN code</string>
-
-    <string name="history_container">%1$s Container</string>
-    <string name="history_containers">%1$s Containers</string>
 </resources>
