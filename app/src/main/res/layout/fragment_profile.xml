@@ -5,6 +5,7 @@
     <data>
 
         <import type="com.tebet.mojual.common.util.StringExtKt" />
+        <import type="android.text.TextUtils"/>
 
         <import type="android.view.View" />
 
@@ -913,7 +914,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/profile_set_pin"
+                            android:text="@{!TextUtils.isEmpty(viewModel.pin) ? @string/profile_remove_pin : @string/profile_set_pin}"
                             android:textAllCaps="true"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"

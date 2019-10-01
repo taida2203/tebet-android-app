@@ -179,6 +179,7 @@
     <string name="profile_bank_account">Bank Account</string>
     <string name="profile_security">Security</string>
     <string name="profile_set_pin">Set Pin</string>
+    <string name="profile_remove_pin">Remove Pin</string>
     <string name="profile_change_password">Change Password</string>
     <string name="profile_other">Other</string>
     <string name="profile_contact_mojual">Contact MOJUAL</string>

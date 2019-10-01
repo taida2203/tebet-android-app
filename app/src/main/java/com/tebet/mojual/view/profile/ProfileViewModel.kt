@@ -1,6 +1,7 @@
 package com.tebet.mojual.view.profile
 
 import androidx.databinding.ObservableField
+import co.common.constant.AppConstant
 import co.common.util.LanguageUtil
 import co.common.util.PreferenceUtils
 import co.common.util.PreferenceUtils.getString
@@ -25,6 +26,7 @@ class ProfileViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<ProfileNavigator>(dataManager, schedulerProvider) {
+    var pin : ObservableField<String> = ObservableField("")
     var userProfile: ObservableField<UserProfile> = ObservableField()
     fun logout() {
         navigator.showLoading(true)
@@ -57,6 +59,7 @@ class ProfileViewModel(
     }
 
     override fun loadData(isForceLoad: Boolean?) {
+        pin.set(getString(AppConstant.PIN_CODE, ""))
         compositeDisposable.add(
             dataManager.getUserProfileDB()
                 .subscribeOn(schedulerProvider.io())

@@ -58,50 +58,48 @@ open class PinCode : BaseActivity<ActivityPinCodeBinding, PinCodeViewModel>(),
             }
         }
         et_code.afterTextChanged {
-            if (it.trim().isNotEmpty()) {
-                for (i in it.indices) {
-                    edtCodes[i].text = it.substring(i, i + 1)
-                }
-                for (i in it.length..3) {
-                    edtCodes[i].text = ""
-                }
-                if (it.length >= 4) {
-                    when (screenMode) {
-                        CHECK_PIN -> {
-                            title = getString(R.string.pin_enter)
-                            val currentCode =
-                                PreferenceUtils.getString(AppConstant.PIN_CODE, tempPin)
-                            if (it == currentCode) {
-                                setResult(RESULT_OK)
-                                openHomeScreen()
-                            } else {
-                                retryCount++
-                                if (retryCount > 5) {
-                                    resetInputPin()
-                                    tv_error.setText(R.string.pin_message_not_matched)
-                                    btn_close.performClick()
-                                } else {
-                                    resetInputPin()
-                                    tv_error.setText(R.string.pin_message_wrong)
-                                }
-                            }
-                        }
-                        ADD_PIN -> {
-                            title = getString(R.string.pin_confirm)
-                            tempPin = it
-                            screenMode = VERIFY_PIN
-                            tv_title.text = getString(R.string.pin_confirm)
-                            resetInputPin()
-                        }
-                        VERIFY_PIN -> if (it == tempPin) {
-                            hideKeyboard()
-                            PreferenceUtils.saveString(AppConstant.PIN_CODE, tempPin)
+            for (i in it.indices) {
+                edtCodes[i].text = it.substring(i, i + 1)
+            }
+            for (i in it.length..3) {
+                edtCodes[i].text = ""
+            }
+            if (it.length >= 4) {
+                when (screenMode) {
+                    CHECK_PIN -> {
+                        title = getString(R.string.pin_enter)
+                        val currentCode =
+                            PreferenceUtils.getString(AppConstant.PIN_CODE, tempPin)
+                        if (it == currentCode) {
                             setResult(RESULT_OK)
                             openHomeScreen()
                         } else {
-                            resetInputPin()
-                            tv_error.setText(R.string.pin_message_not_matched)
+                            retryCount++
+                            if (retryCount > 5) {
+                                resetInputPin()
+                                tv_error.setText(R.string.pin_message_not_matched)
+                                btn_close.performClick()
+                            } else {
+                                resetInputPin()
+                                tv_error.setText(R.string.pin_message_wrong)
+                            }
                         }
+                    }
+                    ADD_PIN -> {
+                        title = getString(R.string.pin_confirm)
+                        tempPin = it
+                        screenMode = VERIFY_PIN
+                        tv_title.text = getString(R.string.pin_confirm)
+                        resetInputPin()
+                    }
+                    VERIFY_PIN -> if (it == tempPin) {
+                        hideKeyboard()
+                        PreferenceUtils.saveString(AppConstant.PIN_CODE, tempPin)
+                        setResult(RESULT_OK)
+                        openHomeScreen()
+                    } else {
+                        resetInputPin()
+                        tv_error.setText(R.string.pin_message_not_matched)
                     }
                 }
             }
