@@ -13,15 +13,13 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.enumeration.OrderStatus
 
 class StatusChoiceDialog : SingleChoiceDialog<OrderStatus>() {
-    private var listDialog: List<OrderStatus>? = null
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        listDialog = listOf(OrderStatus.ALL, OrderStatus.OPEN, OrderStatus.CLOSED, OrderStatus.REJECTED)
-        setItems(listDialog)
+        setItems(listOf(OrderStatus.ALL, OrderStatus.OPEN, OrderStatus.CLOSED, OrderStatus.REJECTED))
         return super.onCreateDialog(savedInstanceState)
     }
 
     override fun getListItemAsString(): List<String> {
-        return listDialog!!.map { it.toDisplayStatus() }
+        return items!!.map { it.toDisplayStatus() }
     }
 
     override fun onStart() {

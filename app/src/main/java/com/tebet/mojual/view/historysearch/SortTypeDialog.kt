@@ -12,18 +12,13 @@ import com.tebet.mojual.data.models.enumeration.OrderStatus
 import com.tebet.mojual.data.models.enumeration.SortType
 
 class SortTypeDialog : SingleChoiceDialog<SortType>() {
-    private var listDialog: List<SortType>? = null
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        listDialog = listOf(
-            SortType.DESC,
-            SortType.ASC
-        )
-        setItems(listDialog)
+        setItems(listOf(SortType.DESC, SortType.ASC))
         return super.onCreateDialog(savedInstanceState)
     }
 
     override fun getListItemAsString(): List<String> {
-        return listDialog!!.map { it.toDisplayStatus() }
+        return items!!.map { it.toDisplayStatus() }
     }
 
     override fun onStart() {

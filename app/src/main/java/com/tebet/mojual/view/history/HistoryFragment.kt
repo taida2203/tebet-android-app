@@ -68,7 +68,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
                 }
 
                 override fun onOk(selectedItem: OrderStatus?) {
-                    viewModel.searchRequest.set(SearchOrderRequest(status = selectedItem?.name))
+                    viewModel.searchRequest.set(SearchOrderRequest(status = if (selectedItem != OrderStatus.ALL) selectedItem?.name else null))
                     viewModel.loadData(true)
                 }
             })

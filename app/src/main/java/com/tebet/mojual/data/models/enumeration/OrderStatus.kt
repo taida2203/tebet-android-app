@@ -12,10 +12,9 @@ enum class OrderStatus {
     companion object {
         @JvmStatic
         fun getByName(name: String): OrderStatus? {
-            val convertedItem = values().firstOrNull {
-                it.name.equals(name, ignoreCase = true) && it != ALL
+            return values().firstOrNull {
+                it.name.equals(name, ignoreCase = true)
             }
-            return convertedItem
         }
     }
 }

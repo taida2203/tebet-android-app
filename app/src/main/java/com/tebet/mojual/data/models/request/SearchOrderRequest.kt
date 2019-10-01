@@ -50,7 +50,7 @@ data class SearchOrderRequest(
         @Bindable get
         set(value) {
             field = value
-            status = value?.name
+            status = if (value != OrderStatus.ALL) value?.name else null
             notifyPropertyChanged(BR.selectedStatus)
         }
 
