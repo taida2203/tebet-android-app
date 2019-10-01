@@ -8,23 +8,20 @@ import android.view.View
 import co.common.util.LanguageUtil
 import co.common.view.dialog.SingleChoiceDialog
 import com.tebet.mojual.R
+import com.tebet.mojual.common.util.toDisplayStatus
+import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.enumeration.OrderStatus
 
-class StatusChoiceDialog : SingleChoiceDialog<String>() {
-    private var listDialog: List<String>? = null
+class StatusChoiceDialog : SingleChoiceDialog<OrderStatus>() {
+    private var listDialog: List<OrderStatus>? = null
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        listDialog = listOf(
-            getString(R.string.history_advance_status_all),
-            OrderStatus.OPEN.name,
-            OrderStatus.CLOSED.name,
-            OrderStatus.REJECTED.name
-        )
+        listDialog = listOf(OrderStatus.ALL, OrderStatus.OPEN, OrderStatus.CLOSED, OrderStatus.REJECTED)
         setItems(listDialog)
         return super.onCreateDialog(savedInstanceState)
     }
 
     override fun getListItemAsString(): List<String> {
-        return listDialog!!
+        return listDialog!!.map { it.toDisplayStatus() }
     }
 
     override fun onStart() {

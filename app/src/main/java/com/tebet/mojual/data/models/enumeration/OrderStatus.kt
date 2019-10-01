@@ -1,11 +1,10 @@
 package com.tebet.mojual.data.models.enumeration
 
-import java.util.Arrays
-
 /**
  * Created by TaiDA
  */
 enum class OrderStatus {
+    ALL, // local status
     OPEN, // order is in processing
     CLOSED, // order with no next steps
     REJECTED; // still open but rejected and has next steps
@@ -13,10 +12,7 @@ enum class OrderStatus {
     companion object {
         fun getByName(name: String): OrderStatus? {
             val convertedItem = values().firstOrNull {
-                it.name.equals(
-                    name,
-                    ignoreCase = true
-                )
+                it.name.equals(name, ignoreCase = true) && it != ALL
             }
             return convertedItem
         }

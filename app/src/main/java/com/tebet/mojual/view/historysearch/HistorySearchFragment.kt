@@ -32,9 +32,9 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
     var searchRequest: SearchOrderRequest? = null
     var fromDateDialog: DateDialog? = null
     var toDateDialog: DateDialog? = null
-    var statusChoiceDialog: SingleChoiceDialog<String>? = null
-    var sortByDialog: SingleChoiceDialog<String>? = null
-    var sortTypeDialog: SingleChoiceDialog<String>? = null
+    var statusChoiceDialog: SingleChoiceDialog<OrderStatus>? = null
+    var sortByDialog: SingleChoiceDialog<SortBy>? = null
+    var sortTypeDialog: SingleChoiceDialog<SortType>? = null
 
     companion object {
         fun newInstance(dataResponse: SearchOrderRequest): Fragment {
@@ -105,16 +105,12 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
     override fun openOrderStatusPicker() {
         if (statusChoiceDialog == null) {
             statusChoiceDialog = StatusChoiceDialog().setCallback(object :
-                SingleChoiceDialog.SingleChoiceDialogCallback<String> {
+                SingleChoiceDialog.SingleChoiceDialogCallback<OrderStatus> {
                 override fun onCancel() {
                 }
 
-                override fun onOk(selectedItem: String?) {
-                    viewModel.searchRequest.get()?.selectedStatus = selectedItem?.let {
-                        OrderStatus.getByName(
-                            it
-                        )
-                    }
+                override fun onOk(selectedItem: OrderStatus?) {
+                    viewModel.searchRequest.get()?.selectedStatus = selectedItem
                 }
             })
         }
@@ -124,14 +120,12 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
     override fun openOrderByPicker() {
         if (sortByDialog == null) {
             sortByDialog = SortByDialog().setCallback(object :
-                SingleChoiceDialog.SingleChoiceDialogCallback<String> {
+                SingleChoiceDialog.SingleChoiceDialogCallback<SortBy> {
                 override fun onCancel() {
                 }
 
-                override fun onOk(selectedItem: String?) {
-                    selectedItem?.let {
-                        viewModel.searchRequest.get()?.selectedSortBy = SortBy.getByName(it)
-                    }
+                override fun onOk(selectedItem: SortBy?) {
+                    viewModel.searchRequest.get()?.selectedSortBy = selectedItem
                     viewModel.searchRequest.get()?.orders?.clear()
                     viewModel.searchRequest.get()?.selectedSortBy?.value?.let { it1 ->
                         viewModel.searchRequest.get()?.selectedSortType?.name?.let { it2 ->
@@ -147,18 +141,16 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
     override fun openOrderTypePicker() {
         if (sortTypeDialog == null) {
             sortTypeDialog = SortTypeDialog().setCallback(object :
-                SingleChoiceDialog.SingleChoiceDialogCallback<String> {
+                SingleChoiceDialog.SingleChoiceDialogCallback<SortType> {
                 override fun onCancel() {
                 }
 
-                override fun onOk(selectedItem: String?) {
-                    selectedItem?.let { item ->
-                        viewModel.searchRequest.get()?.selectedSortType = SortType.getByName(item)
-                        viewModel.searchRequest.get()?.orders?.let {
-                            if (it.size > 0) {
-                                it[it.keys.toTypedArray()[0]] = item
-                                viewModel.searchRequest.get()?.orders = it
-                            }
+                override fun onOk(selectedItem: SortType?) {
+                    viewModel.searchRequest.get()?.selectedSortType = selectedItem!!
+                    viewModel.searchRequest.get()?.orders?.let {
+                        if (it.size > 0) {
+                            it[it.keys.toTypedArray()[0]] = selectedItem!!.name
+                            viewModel.searchRequest.get()?.orders = it
                         }
                     }
                 }

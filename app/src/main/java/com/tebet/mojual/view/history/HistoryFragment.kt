@@ -33,7 +33,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
     private lateinit var validator: Validator
 
     var searchRequest: SearchOrderRequest? = null
-    var statusChoiceDialog: SingleChoiceDialog<String>? = null
+    var statusChoiceDialog: SingleChoiceDialog<OrderStatus>? = null
 
     companion object {
         fun newInstance(dataResponse: SearchOrderRequest?): Fragment {
@@ -63,15 +63,12 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
     override fun openOrderStatusPicker() {
         if (statusChoiceDialog == null) {
             statusChoiceDialog = StatusChoiceDialog().setCallback(object :
-                SingleChoiceDialog.SingleChoiceDialogCallback<String> {
+                SingleChoiceDialog.SingleChoiceDialogCallback<OrderStatus> {
                 override fun onCancel() {
                 }
 
-                override fun onOk(selectedItem: String?) {
-                    selectedItem?.let {
-                        viewModel.searchRequest.set(SearchOrderRequest(status = OrderStatus.getByName(it)?.name))
-
-                    }
+                override fun onOk(selectedItem: OrderStatus?) {
+                    viewModel.searchRequest.set(SearchOrderRequest(status = selectedItem?.name))
                     viewModel.loadData(true)
                 }
             })

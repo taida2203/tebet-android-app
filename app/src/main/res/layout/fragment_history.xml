@@ -47,7 +47,7 @@
                 android:layout_alignBottom="@+id/filter_edit"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/_30sdp"
-                android:text="@{viewModel.searchRequest.selectedStatus !=null ? StringExtKt.fromStatusCodeToDisplayable(viewModel.searchRequest.selectedStatus.name()) : @string/history_advance_status_all}"
+                android:text="@{StringExtKt.toDisplayStatus(viewModel.searchRequest.selectedStatus)}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16ssp"
                 android:textStyle="bold" />

@@ -57,7 +57,7 @@
                     android:onClick="@{() -> viewModel.selectOrderStatus()}"
                     android:hint="@string/history_advance_hint_order"
                     android:textColorHint="@color/black"
-                    android:text="@{viewModel.searchRequest.selectedStatus !=null ? StringExtKt.fromStatusCodeToDisplayable(viewModel.searchRequest.selectedStatus.name()) : @string/history_advance_status_all}"
+                    android:text="@{viewModel.searchRequest.selectedStatus !=null ? StringExtKt.toDisplayStatus(viewModel.searchRequest.selectedStatus) : @string/history_advance_status_all}"
                     android:layout_marginBottom="@dimen/_15sdp"
                     app:validateEmpty="@{true}"
                     app:validateTypeAutoDismiss="@{true}" />
@@ -133,7 +133,7 @@
                     android:drawableRight="@drawable/signup_dropdown_btn"
                     android:focusable="false"
                     android:hint="@string/history_advance_hint_sort"
-                    android:text="@{StringExtKt.fromStatusCodeToDisplayable(viewModel.searchRequest.selectedSortBy.name())}"
+                    android:text="@{StringExtKt.toDisplayStatus(viewModel.searchRequest.selectedSortBy)}"
                     android:imeOptions="actionNext"
                     android:layout_marginBottom="@dimen/_15sdp"
                     android:onClick="@{() -> viewModel.selectOrderBy()}"
@@ -155,7 +155,7 @@
                     android:focusable="false"
                     android:hint="@string/history_advance_hint_sort"
                     android:imeOptions="actionNext"
-                    android:text="@{StringExtKt.fromStatusCodeToDisplayable(viewModel.searchRequest.selectedSortType.name())}"
+                    android:text="@{StringExtKt.toDisplayStatus(viewModel.searchRequest.selectedSortType)}"
                     android:onClick="@{() -> viewModel.selectOrderType()}"
                     android:textColorHint="@color/black"
                     app:validateEmpty="@{true}" />
