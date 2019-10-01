@@ -205,6 +205,11 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                 showOrderDetailScreen(Order(orderId = it.toLong()))
                 return true
             }
+            else -> {
+                extras["orderId"]?.let {
+                    showOrderDetailScreen(Order(orderId = it.toLong()))
+                }
+            }
         }
         return false
     }
