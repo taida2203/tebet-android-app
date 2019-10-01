@@ -73,7 +73,7 @@ open class PinCode : BaseActivity<ActivityPinCodeBinding, PinCodeViewModel>(),
                                 PreferenceUtils.getString(AppConstant.PIN_CODE, tempPin)
                             if (it == currentCode) {
                                 setResult(RESULT_OK)
-                                finish()
+                                openHomeScreen()
                             } else {
                                 retryCount++
                                 if (retryCount > 5) {
@@ -97,7 +97,7 @@ open class PinCode : BaseActivity<ActivityPinCodeBinding, PinCodeViewModel>(),
                             hideKeyboard()
                             PreferenceUtils.saveString(AppConstant.PIN_CODE, tempPin)
                             setResult(RESULT_OK)
-                            finish()
+                            openHomeScreen()
                         } else {
                             resetInputPin()
                             tv_error.setText(R.string.pin_message_not_matched)
@@ -110,12 +110,8 @@ open class PinCode : BaseActivity<ActivityPinCodeBinding, PinCodeViewModel>(),
     }
 
     override fun openHomeScreen() {
-        finish()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
         hideKeyboard()
+        finish()
     }
 
     private fun showSoftKeyboard(view: View) {
