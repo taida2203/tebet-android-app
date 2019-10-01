@@ -80,7 +80,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
     }
 
     override fun onResume() {
-        
+
         super.onResume()
         hideKeyboard()
     }
