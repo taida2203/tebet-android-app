@@ -28,7 +28,7 @@
                 android:layout_weight="1"
                 android:fontFamily="bold"
                 android:gravity="center"
-                android:text="Demographic"
+                android:text="@string/registration_demographic"
                 android:textSize="@dimen/_12ssp" />
 
             <com.tebet.mojual.common.view.AppTextView
@@ -45,7 +45,7 @@
                 android:layout_weight="1"
                 android:fontFamily="bold"
                 android:gravity="center"
-                android:text="Contact"
+                android:text="@string/registration_contact"
                 android:textSize="@dimen/_12ssp" />
 
             <com.tebet.mojual.common.view.AppTextView
@@ -62,7 +62,7 @@
                 android:layout_weight="1"
                 android:fontFamily="bold"
                 android:gravity="center"
-                android:text="Payment"
+                android:text="@string/registration_payment"
                 android:textSize="@dimen/_12ssp" />
         </LinearLayout>
 

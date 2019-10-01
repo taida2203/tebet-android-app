@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:text="DOMICILE ADDRESS"
+                    android:text="@string/registration_step2_domicile_address"
                     android:textSize="@dimen/_14ssp" />
 
                 <ImageView
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:text="PICKUP ADDRESS"
+                    android:text="@string/registration_step2_pickup_address"
                     android:textSize="@dimen/_14ssp" />
 
                 <ImageView

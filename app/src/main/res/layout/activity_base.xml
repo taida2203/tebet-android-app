@@ -78,8 +78,7 @@
                         android:layout_centerVertical="true"
                         android:src="@drawable/icon_back"
                         android:padding="@dimen/_10sdp"
-                        android:onClick="@{()-> viewModel.onBackPressed()}"
-                        android:contentDescription="TODO" />
+                        android:onClick="@{()-> viewModel.onBackPressed()}" />
 
                     <FrameLayout
                         android:id="@+id/topLeftHolder"

@@ -17,6 +17,9 @@
     <string name="login_password_phone">Phone</string>
 
     <string name="registration_title">Sign Up</string>
+    <string name="registration_demographic">Demographic</string>
+    <string name="registration_contact">Contact</string>
+    <string name="registration_payment">Payment</string>
     <string name="registration_step1_selfie_tutorial">Your selfie photo, please capture front of your face.</string>
     <string name="registration_step1_full_name">Full Name</string>
     <string name="registration_step1_date_of_birth">Date of Birth</string>
@@ -32,11 +35,16 @@
     <string name="registration_step2_postal_code">Postal Code</string>
     <string name="registration_step2_google_map_title">Select location on Map</string>
     <string name="registration_step2_choose_on_map">Choose on Map</string>
+    <string name="registration_step2_domicile_address">DOMICILE ADDRESS</string>
+    <string name="registration_step2_pickup_address">PICKUP ADDRESS</string>
     <string name="registration_step3_bank_name">Bank Name</string>
     <string name="registration_step3_bank_account_number">Bank account number</string>
     <string name="registration_step3_bank_account_name">Bank account name</string>
     <string name="registration_step3_bank_region">Bank region</string>
+
     <string name="login_password_title">Login with phone number</string>
+    <string name="login_password_forgot">Forgot password?</string>
+    <string name="login_password_login">Login</string>
 
     <string name="sign_up_password_title">Sign Up</string>
     <string name="forgot_password_title">Input new password</string>
@@ -127,6 +135,8 @@
     <string name="order_detail_dialog_reject">Are you sure to reject all container?</string>
     <string name="order_detail_dialog_confirm">Are you sure to sell your selected container?</string>
     <string name="order_detail_button_approve">APPROVE</string>
+    <string name="order_detail_status">Status</string>
+    <string name="order_detail_message">Message</string>
 
     <string name="order_reject_title">Let Us Know</string>
     <string name="order_reject_detail">Why do you reject? let us know by answer some questions below</string>
@@ -207,4 +217,5 @@
     <string name="pin_message_wrong">Wrong PIN</string>
     <string name="pin_message_remove">Do you want to remove PIN code ?</string>
     <string name="pin_confirm">Confirm PIN code</string>
+    <string name="pin_exit">EXIT</string>
 </resources>

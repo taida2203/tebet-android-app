@@ -2,15 +2,13 @@ package com.tebet.mojual.common.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.AutoCompleteTextView
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import androidx.core.content.ContextCompat
-import com.google.android.material.textfield.TextInputEditText
 import com.tebet.mojual.R
-import android.graphics.drawable.Drawable
 import com.tebet.mojual.common.util.Utility
 
 
-open class AppAutoCompleteEditText : AutoCompleteTextView {
+open class AppAutoCompleteEditText : AppCompatAutoCompleteTextView {
     constructor(context: Context) : super(context) {
         setFont(null)
     }

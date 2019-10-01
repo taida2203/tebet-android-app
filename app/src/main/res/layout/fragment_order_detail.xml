@@ -71,7 +71,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Status" />
+                        android:text="@string/order_detail_status" />
 
                     <com.tebet.mojual.common.view.AppTextView
                         android:layout_width="0dp"
@@ -148,7 +148,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Message" />
+                        android:text="@string/order_detail_message" />
 
                     <com.tebet.mojual.common.view.AppTextView
                         android:layout_width="0dp"
