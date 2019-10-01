@@ -237,6 +237,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                 topRightViewBinding?.search?.visibility = View.VISIBLE
                 topRightViewBinding?.search?.setOnClickListener {
                     if (currentFragment() is HistoryFragment) {
+                        (currentFragment() as HistoryFragment).viewModel.searchRequest.set(SearchOrderRequest())
                         (currentFragment() as HistoryFragment).viewModel.searchRequest.get()?.let { it1 ->
                             showHistorySearchScreen(
                                 it1
