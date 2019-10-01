@@ -68,16 +68,21 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
                 }
 
                 override fun onOk(selectedItem: String?) {
-                    viewModel.searchRequest.get()?.selectedStatus = selectedItem?.let {
-                        OrderStatus.getByName(
-                            it
-                        )
+                    selectedItem?.let {
+                        viewModel.searchRequest.set(SearchOrderRequest(status = OrderStatus.getByName(it)?.name))
+
                     }
                     viewModel.loadData(true)
                 }
             })
         }
         statusChoiceDialog?.show(fragmentManager, "")
+    }
+
+    override fun onResume() {
+        
+        super.onResume()
+        hideKeyboard()
     }
 
     override fun validate(): Boolean {
