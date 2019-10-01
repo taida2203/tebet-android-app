@@ -28,7 +28,4 @@ class ScreenListenerService : Service() {
         return null
     }
 
-    override fun onCreate() {
-        super.onCreate()
-    }
 }

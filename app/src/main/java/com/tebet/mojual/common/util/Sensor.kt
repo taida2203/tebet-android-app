@@ -42,12 +42,12 @@ fun String.toSensor(): SensorData {
 
 fun String.toSensors(): ArrayList<SensorData> {
     if (this.isBlank()) return arrayListOf()
-    val listType = object : TypeToken<List<SensorData>>() {}.getType()
+    val listType = object : TypeToken<List<SensorData>>() {}.type
     return Gson().fromJson<ArrayList<SensorData>>(this, listType)
 }
 
 fun ArrayList<SensorData>.toJson(): String {
-    val listType = object : TypeToken<List<SensorData>>() {}.getType()
+    val listType = object : TypeToken<List<SensorData>>() {}.type
     val target = this
     return Gson().toJson(target, listType)
 }

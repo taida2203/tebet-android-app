@@ -22,13 +22,13 @@ class Address(
         const val PICK_UP_ADDRESS = "PICK_UP_ADDRESS"
     }
     var mapLocation: String? = null
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.mapLocation)
         }
     var city: String? = null
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.city)
@@ -36,7 +36,7 @@ class Address(
 
     @Ignore
     var expanded: Boolean = true
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.expanded)

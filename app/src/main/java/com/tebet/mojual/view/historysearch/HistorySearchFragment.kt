@@ -149,7 +149,7 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
                     viewModel.searchRequest.get()?.selectedSortType = selectedItem!!
                     viewModel.searchRequest.get()?.orders?.let {
                         if (it.size > 0) {
-                            it[it.keys.toTypedArray()[0]] = selectedItem!!.name
+                            it[it.keys.toTypedArray()[0]] = selectedItem.name
                             viewModel.searchRequest.get()?.orders = it
                         }
                     }

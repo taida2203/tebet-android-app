@@ -28,7 +28,7 @@ data class Order(
     var price: Double? = null
     @Ignore
     var isSelected: Boolean = false
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.selected)

@@ -22,7 +22,7 @@ data class ContainerWrapper(
     var assignedContainers: ObservableList<Asset> = ObservableArrayList()
 
     var selectedItem: Int = -1
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             val selectedContainer = assignedContainers[value]
@@ -34,7 +34,7 @@ data class ContainerWrapper(
         }
 
     var selectedWeight: Int = -1
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             customerData.weight = weightList[value].toDouble()
@@ -43,21 +43,21 @@ data class ContainerWrapper(
 
     @Ignore
     var checking: CheckStatus = CheckStatus.CheckStatusCheck
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.checking)
         }
     @Ignore
     var expanded: Boolean = true
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.expanded)
         }
     @Ignore
     var timeCountDown: Long? = null
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.timeCountDown)

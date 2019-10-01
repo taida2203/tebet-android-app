@@ -147,7 +147,7 @@ data class OrderContainer(
         }
 
     var isSelected: Boolean = true
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             action = if (value) AssetAction.APPROVE.name else AssetAction.REJECT.name
@@ -156,7 +156,7 @@ data class OrderContainer(
 
     @Ignore
     var expanded: Boolean = true
-        @Bindable get() = field
+        @Bindable get
         set(value) {
             field = value
             notifyPropertyChanged(BR.expanded)
