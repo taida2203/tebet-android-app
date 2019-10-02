@@ -50,7 +50,7 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
         viewModel.loadData(false)
         searchRequest?.let {
             viewModel.searchRequest.set(it)
-            viewModel.searchRequest.get()?.selectedSortBy = SortBy.SALE_DATE
+            viewModel.searchRequest.get()?.selectedSortBy = SortBy.ORDER_ID
         }
     }
 
