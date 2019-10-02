@@ -170,8 +170,10 @@
         <com.tebet.mojual.common.view.AppButtonRounded
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.submit()}"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:onClick="@{() -> viewModel.submit()}"
             android:text="@string/history_advance_button_search" />
     </LinearLayout>
 

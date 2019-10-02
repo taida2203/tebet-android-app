@@ -73,14 +73,16 @@
                     android:layout_height="wrap_content">
 
                     <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:rating="@{viewModel.userProfile.setting.rate}"
                         app:srb_drawBorderEnabled="false"
                         app:srb_fillColor="@color/star_active"
                         app:srb_isIndicator="true"
+                        app:srb_starCornerRadius="7.5"
                         app:srb_numberOfStars="5"
                         app:srb_starBackgroundColor="@color/down_grey_color"
+                        app:srb_starSize="@dimen/_17sdp"
                         app:srb_stepSize="0.5" />
                 </LinearLayout>
 

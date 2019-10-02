@@ -5,7 +5,7 @@
             <solid android:color="#ffffff"/>
             <corners android:radius="3dp"/>
             <stroke
-                android:width="@dimen/_2sdp"
+                android:width="@dimen/_1sdp"
                 android:color="@color/mtrl_textinput_default_box_stroke_color"
                 />
         </shape>

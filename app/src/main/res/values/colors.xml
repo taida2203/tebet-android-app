@@ -51,4 +51,6 @@
     <color name="home_line">#DDE8E9</color>
     <color name="grey_mess">#8A949D</color>
     <color name="grey_press">#E2E9F1</color>
+    <color name="green_sale">#33774b</color>
+    <color name="sale_line">#c8d7df</color>
 </resources>
