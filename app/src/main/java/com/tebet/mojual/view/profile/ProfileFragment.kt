@@ -80,6 +80,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         viewModel.pin.set(PreferenceUtils.getString(AppConstant.PIN_CODE, ""))
     }
     override fun openPinCodeScreen() {
+        viewModel.pin.set(PreferenceUtils.getString(AppConstant.PIN_CODE, ""))
         if (viewModel.pin.get()?.isEmpty()!!) {
             startActivity(
                 Intent(activity, PinCode::class.java).putExtra(
