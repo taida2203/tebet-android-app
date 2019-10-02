@@ -33,7 +33,25 @@ class MessageViewModel(
             itemBinding.set(BR.item, R.layout.item_message)
             itemBinding.bindExtra(BR.listener, object : OnListItemClick<Message> {
                 override fun onItemClick(item: Message) {
-                    navigator.openNotificationDetail(item)
+                    navigator.showLoading(true)
+                    compositeDisposable.add(
+                        dataManager.markRead(item.notificationHistoryId!!)
+                            .observeOn(schedulerProvider.ui())
+                            .subscribeWith(object : CallbackWrapper<Message>() {
+                                override fun onSuccess(order: Message) {
+                                    navigator.showLoading(false)
+                                    if (!items.contains(order)) items.add(order) else items[items.indexOf(
+                                        order
+                                    )] = order
+                                    navigator.openNotificationDetail(item)
+                                }
+
+                                override fun onFailure(error: String?) {
+                                    navigator.showLoading(false)
+                                    navigator.openNotificationDetail(item)
+                                }
+                            })
+                    )
                 }
             })
         }
@@ -45,6 +63,7 @@ class MessageViewModel(
         }
         loadData(0)
     }
+
     fun loadData(page: Int = 0) {
         val offset = page * 10
         if (items.size >= offset) {
@@ -54,7 +73,17 @@ class MessageViewModel(
                 dataManager.getUserProfileDB()
                     .concatMap {
                         it.data?.profileId?.let { profileId ->
-                            dataManager.getMessages(MessageRequest(profileId = profileId, offset = (page) * 10, limit = 10)) }
+                            dataManager.getUnreadCount()
+                                .concatMap {
+                                    dataManager.getMessages(
+                                        MessageRequest(
+                                            profileId = profileId,
+                                            offset = (page) * 10,
+                                            limit = 10
+                                        )
+                                    )
+                                }
+                        }
                     }
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Paging<Message>>() {
@@ -65,7 +94,9 @@ class MessageViewModel(
                                 }
                                 order
                             }.forEach { order ->
-                                if (!items.contains(order)) items.add(order) else items[items.indexOf(order)] = order
+                                if (!items.contains(order)) items.add(order) else items[items.indexOf(
+                                    order
+                                )] = order
                             }
 
                             navigator.showLoading(false)

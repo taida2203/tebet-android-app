@@ -68,6 +68,12 @@ interface ApiHelper {
     @POST("communication/device/unregister")
     fun unRegisterDevice(@Body deviceRegisterRequest: DeviceRegisterRequest): Observable<AuthJson<EmptyResponse>>
 
+    @PUT("communication/notification/read/{notificationId}")
+    fun markRead(@Path(value = "notificationId") notificationId: Long): Observable<AuthJson<Message>>
+
+    @GET("communication/notification/read")
+    fun getUnreadCount(): Observable<AuthJson<Long>>
+
     @POST("communication/notification/history")
     fun getMessages(@Body getMessageRequest: MessageRequest): Observable<AuthJson<Paging<Message>>>
 

@@ -12,5 +12,6 @@ data class Message(
     var profileCode: Long? = null,
     var message: String? = null,
     var createdDate: Long? = null,
+    var read: Boolean? = true,
     var data: Map<String, String> = emptyMap()
 ) : Serializable, BaseObservable()

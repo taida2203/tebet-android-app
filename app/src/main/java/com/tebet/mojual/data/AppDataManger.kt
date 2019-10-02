@@ -241,5 +241,9 @@ class AppDataManger @Inject constructor(
     override fun getMessages(messageRequest: MessageRequest): Observable<AuthJson<Paging<Message>>> = api.getMessages(messageRequest)
 
     override fun scanLocation(scanLocationRequest: ScanLocationRequest): Observable<AuthJson<EmptyResponse>> = api.scanLocation(scanLocationRequest)
+
+    override fun markRead(notificationId: Long): Observable<AuthJson<Message>> = api.markRead(notificationId)
+
+    override fun getUnreadCount(): Observable<AuthJson<Long>> = api.getUnreadCount()
 }
 
