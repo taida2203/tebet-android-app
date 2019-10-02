@@ -54,7 +54,7 @@ data class SearchOrderRequest(
             notifyPropertyChanged(BR.selectedStatus)
         }
 
-    var selectedSortBy: SortBy? = SortBy.SALE_DATE
+    var selectedSortBy: SortBy? = SortBy.ORDER_ID
         @Bindable get
         set(value) {
             field = value

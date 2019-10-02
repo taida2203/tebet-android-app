@@ -40,6 +40,7 @@ fun OrderStatus?.toDisplayStatus(): String {
 
 fun SortBy?.toDisplayStatus(): String {
     return when (this) {
+        SortBy.ORDER_ID -> Utility.getInstance().getString(R.string.history_advance_status_order_id)
         SortBy.STATUS -> Utility.getInstance().getString(R.string.history_advance_status_status)
         SortBy.SALE_DATE -> Utility.getInstance().getString(R.string.history_advance_status_sale_date)
         SortBy.AMOUNT -> Utility.getInstance().getString(R.string.history_advance_status_amount)

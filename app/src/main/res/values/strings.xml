@@ -200,10 +200,11 @@
     <string name="history_advance_hint_sort">Status</string>
     <string name="history_advance_button_search">SEARCH</string>
     <string name="history_advance_hint_date">15 Jul 2019</string>
-    <string name="history_advance_status_all">ALL</string>
-    <string name="history_advance_status_open">OPEN</string>
-    <string name="history_advance_status_closed">CLOSED</string>
-    <string name="history_advance_status_rejected">REJECTED</string>
+    <string name="history_advance_status_all">All</string>
+    <string name="history_advance_status_open">Open</string>
+    <string name="history_advance_status_closed">Closed</string>
+    <string name="history_advance_status_rejected">Rejected</string>
+    <string name="history_advance_status_order_id">Order Code</string>
     <string name="history_advance_status_sale_date">Sale Date</string>
     <string name="history_advance_status_status">Status</string>
     <string name="history_advance_status_amount">Amount</string>

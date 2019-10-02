@@ -13,7 +13,7 @@ import com.tebet.mojual.data.models.enumeration.SortBy
 
 class SortByDialog : SingleChoiceDialog<SortBy>() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        setItems(listOf(SortBy.SALE_DATE, SortBy.STATUS, SortBy.AMOUNT))
+        setItems(listOf(SortBy.ORDER_ID, SortBy.SALE_DATE, SortBy.STATUS, SortBy.AMOUNT))
         return super.onCreateDialog(savedInstanceState)
     }
 
