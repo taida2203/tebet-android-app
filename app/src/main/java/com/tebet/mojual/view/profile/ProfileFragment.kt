@@ -96,7 +96,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
                 override fun onSecondButtonClicked(selectedValue: Any?) {
                     PreferenceUtils.saveString(AppConstant.PIN_CODE, "")
-//                    adapter.notifyDataSetChanged()
+                    viewModel.pin.set(PreferenceUtils.getString(AppConstant.PIN_CODE, ""))
                 }
             }).show(this.childFragmentManager, "activity")
         }
