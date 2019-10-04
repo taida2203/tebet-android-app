@@ -16,7 +16,7 @@ import com.tebet.mojual.databinding.LayoutQuestionInputBinding
 @InverseBindingMethods(
     value = [InverseBindingMethod(
         type = QuestionInputView::class,
-        attribute = "bind:data",
+        attribute = "data",
         method = "getValue"
     )]
 )
@@ -57,14 +57,10 @@ class QuestionInputView : LinearLayout {
         orientation = HORIZONTAL
     }
 
-    companion object {
-        @BindingAdapter(value = ["bind:data"], requireAll = false)
-        @JvmStatic
-        fun setQuestionData(view: QuestionInputView, question: Question?) {
-            view.data.set(question)
-        }
+    @BindingAdapter(value = ["data"], requireAll = false)
+    fun QuestionInputView.setQuestionData(question: Question?) {
+        this@QuestionInputView.data.set(question)
     }
-
 
     fun validate(): Boolean {
         return validator.validate()

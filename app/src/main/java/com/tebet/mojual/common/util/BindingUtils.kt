@@ -35,43 +35,6 @@ class BindingUtils {
                 .into(imageView)
         }
 
-        @BindingAdapter("questions")
-        @JvmStatic
-        fun setQuestions(layout: LinearLayout, questions: List<Question>?) {
-            val context = layout.context
-            questions?.forEach { question ->
-                val myItem = QuestionInputView(context)
-                myItem.data.set(question)
-                layout.addView(myItem)
-            }
-        }
-
-        @BindingAdapter("onOkInSoftKeyboard")
-        @JvmStatic
-        fun setOnOkInSoftKeyboardListener(
-            view: EditText,
-            listener: OnOkInSoftKeyboardListener?
-        ) {
-            if (listener == null) {
-                view.setOnEditorActionListener(null)
-            } else {
-                view.setOnEditorActionListener { v, actionId, event ->
-                    // ... solution to receiving event
-                    listener.onOkInSoftKeyboard()
-                    true
-                }
-            }
-        }
-
-        @BindingAdapter("onOkInSoftKeyboard")
-        @JvmStatic
-        fun setOnOkAppEditTextInSoftKeyboardListener(
-            view: AppEditText,
-            listener: OnOkInSoftKeyboardListener?
-        ) {
-            setOnOkInSoftKeyboardListener(view, listener)
-        }
-
         /**
          * @param recyclerView  RecyclerView to bind to RecyclerViewScrollCallback
          * @param visibleThreshold  The minimum number of items to have below your current scroll position before loading more.
@@ -92,6 +55,43 @@ class BindingUtils {
 
             recyclerView.clearOnScrollListeners()
             recyclerView.addOnScrollListener(callback)
+        }
+    }
+
+
+    @BindingAdapter("questions")
+    fun LinearLayout.setQuestions(questions: List<Question>?) {
+        val context = this@setQuestions.context
+        questions?.forEach { question ->
+            val myItem = QuestionInputView(context)
+            myItem.data.set(question)
+            this@setQuestions.addView(myItem)
+        }
+    }
+
+    @BindingAdapter("onOkInSoftKeyboard")
+    fun EditText.setOnOkInSoftKeyboardListener(listener: OnOkInSoftKeyboardListener?) {
+        if (listener == null) {
+            this@setOnOkInSoftKeyboardListener.setOnEditorActionListener(null)
+        } else {
+            this@setOnOkInSoftKeyboardListener.setOnEditorActionListener { _, _, _ ->
+                // ... solution to receiving event
+                listener.onOkInSoftKeyboard()
+                true
+            }
+        }
+    }
+
+    @BindingAdapter("onOkInSoftKeyboard")
+    fun AppEditText.setOnOkAppEditTextInSoftKeyboardListener(listener: OnOkInSoftKeyboardListener?) {
+        if (listener == null) {
+            this@setOnOkAppEditTextInSoftKeyboardListener.setOnEditorActionListener(null)
+        } else {
+            this@setOnOkAppEditTextInSoftKeyboardListener.setOnEditorActionListener { _, _, _ ->
+                // ... solution to receiving event
+                listener.onOkInSoftKeyboard()
+                true
+            }
         }
     }
 

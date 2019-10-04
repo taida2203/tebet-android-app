@@ -7,19 +7,18 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.databinding.*
-import br.com.ilhasoft.support.validation.Validator
 import androidx.databinding.library.baseAdapters.BR
+import br.com.ilhasoft.support.validation.Validator
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Asset
 import com.tebet.mojual.data.models.ContainerWrapper
 import com.tebet.mojual.databinding.LayoutContainerInputBinding
-import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 
 @InverseBindingMethods(
     value = [InverseBindingMethod(
         type = ContainerInputView::class,
-        attribute = "bind:data",
+        attribute = "container",
         method = "getValue"
     )]
 )
@@ -71,19 +70,12 @@ class ContainerInputView : LinearLayout {
         orientation = LinearLayout.HORIZONTAL
     }
 
-    companion object {
-        @BindingAdapter(value = ["bind:data"], requireAll = false)
-        @JvmStatic
-        fun setAddressData(view: ContainerInputView, containerWrapper: ContainerWrapper?) {
-            view.data.set(containerWrapper)
-            containerWrapper?.weightList?.let {
-                view.itemWeights.clear()
-                view.itemWeights.addAll(it)
-            }
-//        mBinding?.setVariable(BR.data, data.get())
-//        if (viewModel != null) {
-//            this.viewModel = viewModel
-//        }
+    @BindingAdapter(value = ["container"], requireAll = false)
+    fun ContainerInputView.setContainer(container: ContainerWrapper?) {
+        this@ContainerInputView.data.set(container)
+        container?.weightList?.let {
+            this@ContainerInputView.itemWeights.clear()
+            this@ContainerInputView.itemWeights.addAll(it)
         }
     }
 

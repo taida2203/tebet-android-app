@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="@{item.expanded ? View.VISIBLE : View.GONE}"
-            app:data="@{item}" />
+            app:container="@{item}" />
 
         <com.tebet.mojual.common.view.AppButtonRounded
             android:layout_width="match_parent"

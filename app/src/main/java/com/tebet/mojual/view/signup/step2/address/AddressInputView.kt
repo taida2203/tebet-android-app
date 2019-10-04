@@ -20,7 +20,7 @@ import com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model
 @InverseBindingMethods(
     value = [InverseBindingMethod(
         type = AddressInputView::class,
-        attribute = "bind:data",
+        attribute = "data",
         method = "getValue"
     )]
 )
@@ -83,7 +83,7 @@ class AddressInputView : LinearLayout {
     }
 
     companion object {
-        @BindingAdapter(value = ["bind:data", "bind:cities", "bind:viewModel"], requireAll = false)
+        @BindingAdapter(value = ["data", "cities", "viewModel"], requireAll = false)
         @JvmStatic
         fun setAddressData(view: AddressInputView, address: Address?, cities: List<City>?, viewModel: SignUpInfoStep2Model?) {
             view.data.set(address)
