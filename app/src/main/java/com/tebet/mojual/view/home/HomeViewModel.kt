@@ -4,10 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.models.Order
-import com.tebet.mojual.data.models.OrderContainer
-import com.tebet.mojual.data.models.OrderDetail
-import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
@@ -31,7 +28,8 @@ class HomeViewModel(
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
+                        handleError(error)
                     }
 
                     override fun onSuccess(dataResponse: UserProfile) {

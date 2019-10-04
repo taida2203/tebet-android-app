@@ -8,13 +8,13 @@ import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Asset
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Price
 import com.tebet.mojual.data.models.request.CreateOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
-import java.util.*
 
 
 class SaleViewModel(
@@ -71,7 +71,7 @@ class SaleViewModel(
                         navigator.openSaleDetailScreen(dataResponse)
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         navigator.showLoading(false)
                         handleError(error)
                     }
@@ -90,7 +90,7 @@ class SaleViewModel(
                         navigator.showLoading(false)
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         navigator.showLoading(false)
                         handleError(error)
                     }

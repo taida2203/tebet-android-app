@@ -6,6 +6,7 @@ import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Address
 import com.tebet.mojual.data.models.City
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.signup.step.SignUpInfoStepViewModel
 
@@ -30,7 +31,7 @@ class SignUpInfoStep2Model(
                         cityLiveData.value = dataResponse
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         navigator.showLoading(false)
                         handleError(error)
                     }

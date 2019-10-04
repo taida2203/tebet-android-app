@@ -5,6 +5,7 @@ import co.sdk.auth.AuthSdk
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
@@ -32,8 +33,9 @@ class SplashViewModel(
                         }
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         navigator.openLoginScreen()
+                        handleError(error)
                     }
 
                     override fun onComplete() {

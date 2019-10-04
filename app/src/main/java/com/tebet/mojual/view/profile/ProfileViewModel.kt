@@ -3,16 +3,14 @@ package com.tebet.mojual.view.profile
 import androidx.databinding.ObservableField
 import co.common.constant.AppConstant
 import co.common.util.LanguageUtil
-import co.common.util.PreferenceUtils
 import co.common.util.PreferenceUtils.getString
-import co.common.view.dialog.LanguageChoiceDialog
-import co.common.view.dialog.SingleChoiceDialog
 import co.sdk.auth.AuthSdk
 import com.google.firebase.iid.FirebaseInstanceId
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.Utility
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.models.request.DeviceRegisterRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
@@ -26,12 +24,12 @@ class ProfileViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<ProfileNavigator>(dataManager, schedulerProvider) {
-    var pin : ObservableField<String> = ObservableField("")
+    var pin: ObservableField<String> = ObservableField("")
     var userProfile: ObservableField<UserProfile> = ObservableField()
-    fun logout() {
-        navigator.showLoading(true)
-        compositeDisposable.add(
-            Observable.create<String> { emitter ->
+
+    companion object {
+        fun logoutStream(dataManager: DataManager): Observable<Any> {
+            return Observable.create<String> { emitter ->
                 FirebaseInstanceId.getInstance().instanceId
                     .addOnSuccessListener { emitter.onNext(it.token) }
                     .addOnFailureListener { emitter.onError(it) }
@@ -40,7 +38,12 @@ class ProfileViewModel(
                 .concatMap { dataManager.unRegisterDevice(DeviceRegisterRequest(it)) }
                 .concatMap { AuthSdk.instance.logout(true) }
                 .doOnComplete { dataManager.clearAllTables().subscribe({}, {}) }
-                .observeOn(schedulerProvider.ui())
+        }
+    }
+    fun logout() {
+        navigator.showLoading(true)
+        compositeDisposable.add(
+            logoutStream(dataManager).observeOn(schedulerProvider.ui())
                 .subscribeWith(object : DisposableObserver<Any>() {
                     override fun onComplete() {
                     }
@@ -65,7 +68,7 @@ class ProfileViewModel(
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         handleError(error)
                     }
 
@@ -109,7 +112,7 @@ class ProfileViewModel(
         }
     }
 
-    fun onChangeLanguageClick(){
+    fun onChangeLanguageClick() {
         navigator.openChangeLanguageDialog()
     }
 
@@ -138,7 +141,7 @@ class ProfileViewModel(
                             navigator.changeLanguage(selectedItem)
                         }
 
-                        override fun onFailure(error: String?) {
+                        override fun onFailure(error: NetworkError) {
                             navigator.showLoading(false)
                             handleError(error)
                         }

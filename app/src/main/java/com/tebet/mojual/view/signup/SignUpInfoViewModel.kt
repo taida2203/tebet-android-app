@@ -8,9 +8,7 @@ import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function4
-import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -34,7 +32,7 @@ class SignUpInfoViewModel(
                 userProfile.avatar = dataResponse
             }
 
-            override fun onFailure(error: String?) {
+            override fun onFailure(error: NetworkError) {
                 navigator.showLoading(false)
                 handleError(error)
             }
@@ -50,7 +48,7 @@ class SignUpInfoViewModel(
 
             }
 
-            override fun onFailure(error: String?) {
+            override fun onFailure(error: NetworkError) {
                 navigator.showLoading(false)
                 handleError(error)
             }
@@ -83,7 +81,7 @@ class SignUpInfoViewModel(
                         navigator.openHomeScreen()
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         navigator.showLoading(false)
                         handleError(error)
                     }
@@ -101,7 +99,7 @@ class SignUpInfoViewModel(
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         navigator.showLoading(false)
                         handleError(error)
                     }

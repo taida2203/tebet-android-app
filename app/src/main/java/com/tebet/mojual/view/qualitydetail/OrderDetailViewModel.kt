@@ -6,6 +6,7 @@ import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
@@ -52,7 +53,7 @@ class OrderDetailViewModel(
                             navigator.showLoading(false)
                         }
 
-                        override fun onFailure(error: String?) {
+                        override fun onFailure(error: NetworkError) {
                             navigator.showLoading(false)
                             handleError(error)
                         }
@@ -107,7 +108,7 @@ class OrderDetailViewModel(
                             }
                         }
 
-                        override fun onFailure(error: String?) {
+                        override fun onFailure(error: NetworkError) {
                             navigator.showLoading(false)
                             handleError(error)
                         }

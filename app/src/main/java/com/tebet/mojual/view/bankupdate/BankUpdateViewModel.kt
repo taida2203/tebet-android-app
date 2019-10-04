@@ -3,6 +3,7 @@ package com.tebet.mojual.view.bankupdate
 import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
@@ -27,7 +28,7 @@ class BankUpdateViewModel(
                         navigator.showLoading(false)
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         navigator.showLoading(false)
                         handleError(error)
                     }
@@ -48,7 +49,7 @@ class BankUpdateViewModel(
                             navigator.openPreviousScreen()
                         }
 
-                        override fun onFailure(error: String?) {
+                        override fun onFailure(error: NetworkError) {
                             navigator.showLoading(false)
                             handleError(error)
                         }

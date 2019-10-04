@@ -34,6 +34,7 @@ import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
 import com.tebet.mojual.common.services.ScreenListenerService
 import com.tebet.mojual.data.models.Message
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
@@ -41,11 +42,13 @@ import com.tebet.mojual.databinding.ActivityBaseBinding
 import com.tebet.mojual.view.help.QualityHelp
 import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.login.Login
+import com.tebet.mojual.view.profile.ProfileViewModel
 import com.tebet.mojual.view.profilepin.PinCode
 import com.tebet.mojual.view.signup.SignUpInfo
 import com.tebet.mojual.view.signup.step0.SignUpPassword
 import com.tebet.mojual.view.splash.Splash
 import dagger.android.AndroidInjection
+import io.reactivex.observers.DisposableObserver
 import kotlinx.android.synthetic.main.activity_base.*
 import timber.log.Timber
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -55,7 +58,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     BaseFragment.Callback, BaseActivityNavigator {
     var viewDataBinding: T? = null
         private set
-    private var mViewModel: V? = null
 
     protected lateinit var baseBinding: ActivityBaseBinding
 
@@ -115,7 +117,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             ViewModelProviders.of(this, factory).get(BaseActivityViewModel::class.java)
         baseBinding.viewModel?.navigator = this
         performDataBinding()
-        mViewModel?.baseErrorHandlerData?.observe(this, Observer<String> {
+        viewModel.baseErrorHandlerData.observe(this, Observer<NetworkError> {
             handleError(it)
         })
         setSupportActionBar(baseBinding.baseToolbar)
@@ -227,7 +229,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                     .subscribeOn(viewModel.schedulerProvider.io())
                     .observeOn(viewModel.schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                        override fun onFailure(error: String?) {
+                        override fun onFailure(error: NetworkError) {
                             showLoading(false)
                             handleError(error)
                         }
@@ -282,8 +284,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     private fun performDataBinding() {
         viewDataBinding =
             DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding.placeHolder, true)
-        this.mViewModel = if (mViewModel == null) viewModel else mViewModel
-        viewDataBinding?.setVariable(bindingVariable, mViewModel)
+        viewDataBinding?.setVariable(bindingVariable, viewModel)
         viewDataBinding?.executePendingBindings()
     }
 
@@ -330,8 +331,30 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         exeption?.errorMessage?.let { show(it) }
     }
 
-    fun handleError(exception: Throwable) {
-        exception.let { it.message?.let { it1 -> show(it1) } }
+    fun handleError(exception: NetworkError) {
+        exception.message?.let { show(it) }
+        if (exception.errorCode == 401) {
+            viewModel.compositeDisposable.add(ProfileViewModel.logoutStream(viewModel.dataManager).subscribeWith(object :
+                DisposableObserver<Any>() {
+                override fun onComplete() {
+                }
+
+                override fun onNext(t: Any) {
+                    forceLogin()
+                }
+
+                override fun onError(e: Throwable) {
+                    forceLogin()
+                }
+            }))
+        }
+    }
+
+    fun forceLogin() {
+        finish()
+        val loginIntent = Intent(this@BaseActivity, Login::class.java)
+        loginIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(loginIntent)
     }
 
     override fun setTitle(titleId: Int) {

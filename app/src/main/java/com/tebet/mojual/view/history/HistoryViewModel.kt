@@ -6,6 +6,7 @@ import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Paging
 import com.tebet.mojual.data.models.UserProfile
@@ -67,7 +68,7 @@ class HistoryViewModel(
                         navigator.showLoading(false)
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         navigator.showLoading(false)
                         handleError(error)
                     }

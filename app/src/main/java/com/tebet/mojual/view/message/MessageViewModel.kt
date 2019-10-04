@@ -8,6 +8,7 @@ import com.tebet.mojual.common.adapter.OnListItemClick
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Message
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.Paging
 import com.tebet.mojual.data.models.request.MessageRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
@@ -53,8 +54,9 @@ class MessageViewModel(
                                     navigator.openNotificationDetail(item)
                                 }
 
-                                override fun onFailure(error: String?) {
+                                override fun onFailure(error: NetworkError) {
                                     navigator.showLoading(false)
+                                    handleError(error)
                                     navigator.openNotificationDetail(item)
                                 }
                             })
@@ -105,7 +107,7 @@ class MessageViewModel(
 //                        headerFooterItems.removeItem(R.layout.item_quality_loading)
                         }
 
-                        override fun onFailure(error: String?) {
+                        override fun onFailure(error: NetworkError) {
                             navigator.showLoading(false)
 //                        headerFooterItems.removeItem(R.layout.item_quality_loading)
                             handleError(error)

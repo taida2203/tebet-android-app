@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders
 import co.common.view.dialog.DateDialog
 import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
@@ -95,8 +96,8 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         viewDataBinding?.btnBack?.setOnClickListener {
             onBackPressed()
         }
-        viewModel.baseErrorHandlerData.observe(this, Observer<String> {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        viewModel.baseErrorHandlerData.observe(this, Observer<NetworkError> {
+            Toast.makeText(this, it.errorMessage, Toast.LENGTH_SHORT).show()
         })
         viewModel.loadData()
     }

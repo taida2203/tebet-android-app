@@ -7,6 +7,7 @@ import com.tebet.mojual.common.adapter.OnListItemClick
 import com.tebet.mojual.common.util.Utility
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Paging
 import com.tebet.mojual.data.models.enumeration.OrderStatus
@@ -85,7 +86,7 @@ class QualityViewModel(
 //                        headerFooterItems.removeItem(R.layout.item_quality_loading)
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         navigator.showLoading(false)
 //                        headerFooterItems.removeItem(R.layout.item_quality_loading)
                         handleError(error)

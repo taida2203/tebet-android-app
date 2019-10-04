@@ -11,11 +11,11 @@ import com.tebet.mojual.R
 import com.tebet.mojual.common.util.BindingUtils
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import me.tatarka.bindingcollectionadapter2.ItemBinding
-import java.util.concurrent.TimeUnit
 
 class LoginWithPasswordViewModel(
     dataManager: DataManager,
@@ -88,7 +88,7 @@ class LoginWithPasswordViewModel(
                             }
                         }
 
-                        override fun onFailure(error: String?) {
+                        override fun onFailure(error: NetworkError) {
                             navigator.showLoading(false)
                             handleError(error)
                         }
@@ -118,7 +118,7 @@ class LoginWithPasswordViewModel(
                             }
                         }
 
-                        override fun onFailure(error: String?) {
+                        override fun onFailure(error: NetworkError) {
                             navigator.showLoading(false)
                             handleError(error)
                         }

@@ -3,12 +3,11 @@ package com.tebet.mojual.view.forgotpassword
 import com.tebet.mojual.common.util.BindingUtils
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.models.request.UpdatePasswordRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 class ForgotPasswordViewModel(
@@ -41,7 +40,7 @@ class ForgotPasswordViewModel(
                         navigator.openHomeScreen()
                     }
 
-                    override fun onFailure(error: String?) {
+                    override fun onFailure(error: NetworkError) {
                         navigator.showLoading(false)
                         handleError(error)
                     }

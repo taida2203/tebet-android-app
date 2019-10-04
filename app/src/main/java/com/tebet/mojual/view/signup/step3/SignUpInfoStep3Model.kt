@@ -6,14 +6,12 @@ import com.tebet.mojual.common.util.BindingUtils
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Bank
+import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.Region
-import com.tebet.mojual.view.base.BaseActivityNavigator
 import com.tebet.mojual.view.signup.step.SignUpInfoStepViewModel
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
 
 class SignUpInfoStep3Model(
     dataManager: DataManager,
@@ -51,7 +49,7 @@ class SignUpInfoStep3Model(
 
                     override fun onError(e: Throwable) {
                         navigator.showLoading(false)
-                        handleError(e.message)
+                        handleError(NetworkError(e))
                     }
                     override fun onComplete() {
                     }

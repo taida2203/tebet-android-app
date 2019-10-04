@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.NetworkError
+import com.tebet.mojual.view.profile.ProfileViewModel
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableObserver
 
 import java.lang.ref.WeakReference
 
@@ -20,7 +23,7 @@ abstract class BaseViewModel<N>(
 
     private var mNavigator: WeakReference<N>? = null
 
-    var baseErrorHandlerData: MutableLiveData<String> = MutableLiveData()
+    var baseErrorHandlerData: MutableLiveData<NetworkError> = MutableLiveData()
         private set
 
     var navigator: N
@@ -38,7 +41,7 @@ abstract class BaseViewModel<N>(
         this.isLoading.set(isLoading)
     }
 
-    protected fun handleError(error: String?) {
+    protected fun handleError(error: NetworkError) {
         baseErrorHandlerData.postValue(error)
     }
 

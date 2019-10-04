@@ -14,6 +14,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.tebet.mojual.ViewModelProviderFactory
+import com.tebet.mojual.data.models.NetworkError
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -62,7 +63,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         super.onCreate(savedInstanceState)
         mViewModel = viewModel
-        mViewModel?.baseErrorHandlerData?.observe(this, Observer<String> {
+        mViewModel?.baseErrorHandlerData?.observe(this, Observer<NetworkError> {
             (activity as BaseActivity<*, *>).handleError(it)
         })
         setHasOptionsMenu(false)
