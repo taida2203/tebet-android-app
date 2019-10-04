@@ -21,6 +21,7 @@ import com.tebet.mojual.view.profile.ProfileViewModel
 import com.tebet.mojual.view.profilepin.PinCodeViewModel
 import com.tebet.mojual.view.qualitycheck.QualityViewModel
 import com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel
+import com.tebet.mojual.view.qualitydetail.OrderDetailActivityViewModel
 import com.tebet.mojual.view.qualitydetail.OrderDetailViewModel
 import com.tebet.mojual.view.qualityreject.OrderRejectViewModel
 import com.tebet.mojual.view.sale.SaleViewModel
@@ -74,6 +75,7 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(BankUpdateViewModel::class.java) -> BankUpdateViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(QualityHelpViewModel::class.java) -> QualityHelpViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(PinCodeViewModel::class.java) -> PinCodeViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(OrderDetailActivityViewModel::class.java) -> OrderDetailActivityViewModel(dataManager, schedulerProvider) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

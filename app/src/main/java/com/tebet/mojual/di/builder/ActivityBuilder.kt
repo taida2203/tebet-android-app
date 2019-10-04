@@ -15,6 +15,8 @@ import com.tebet.mojual.view.bankupdate.BankUpdate
 import com.tebet.mojual.view.help.QualityHelp
 import com.tebet.mojual.view.profilechangepass.ChangePassword
 import com.tebet.mojual.view.profilepin.PinCode
+import com.tebet.mojual.view.qualitydetail.OrderDetailActivity
+import com.tebet.mojual.view.qualitydetail.OrderDetailFragmentProvider
 import com.tebet.mojual.view.selectquantity.SelectQuantity
 import com.tebet.mojual.view.signup.SignUpInfo
 import com.tebet.mojual.view.signup.SignUpInfoFragmentProvider
@@ -69,4 +71,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract fun pinCodeActivity(): PinCode
+
+    @ContributesAndroidInjector(modules = [OrderDetailFragmentProvider::class])
+    abstract fun orderDetailActivity(): OrderDetailActivity
 }
