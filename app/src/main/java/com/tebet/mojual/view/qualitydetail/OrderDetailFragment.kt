@@ -32,7 +32,7 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
     var order: Order? = null
 
     companion object {
-        fun newInstance(dataResponse: Order): Fragment {
+        fun newInstance(dataResponse: Order): OrderDetailFragment {
             val fragment = OrderDetailFragment()
             fragment.order = dataResponse
             return fragment

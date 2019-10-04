@@ -37,6 +37,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 import com.tebet.mojual.view.message.MessageFragment
+import com.tebet.mojual.view.qualitydetail.OrderDetailActivity
 
 
 class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector,
@@ -153,13 +154,16 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     }
 
     override fun showOrderDetailScreen(dataResponse: Order) {
-        if (currentFragment() is OrderRejectFragment || currentFragment() is BankConfirmFragment) {
-            supportFragmentManager.popBackStackImmediate()
-        }
-        if (currentFragment() is OrderDetailFragment) {
-            (currentFragment() as OrderDetailFragment).viewModel.order.set(OrderDetail(dataResponse))
-        }
-        openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName, dataResponse.orderCode)
+        var mIntent = Intent(this, OrderDetailActivity::class.java)
+        mIntent.putExtra("EXTRA_ORDER", dataResponse)
+        startActivityForResult(mIntent, 501)
+//        if (currentFragment() is OrderRejectFragment || currentFragment() is BankConfirmFragment) {
+//            supportFragmentManager.popBackStackImmediate()
+//        }
+//        if (currentFragment() is OrderDetailFragment) {
+//            (currentFragment() as OrderDetailFragment).viewModel.order.set(OrderDetail(dataResponse))
+//        }
+//        openFragmentSlideRight(OrderDetailFragment.newInstance(dataResponse), R.id.contentHolder, OrderDetailFragment::class.java.simpleName, dataResponse.orderCode)
     }
 
     override fun showHistoryScreen(searchOrderRequest: SearchOrderRequest?) {
