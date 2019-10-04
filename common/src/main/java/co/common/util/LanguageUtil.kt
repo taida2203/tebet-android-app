@@ -62,13 +62,10 @@ class LanguageUtil {
         val res = context.resources
         val dm = res.displayMetrics
         val conf = res.configuration
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) { // API 17+ only.
-            conf.setLocale(Locale(languageCode.toLowerCase(Locale.getDefault())))
-            context.createConfigurationContext(conf)
-
-        } else {
-            conf.locale = Locale(languageCode)
-            res.updateConfiguration(conf, dm)
-        }
+        conf.locale = Locale(languageCode.toLowerCase())
+        // API 17+ only.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) context.createConfigurationContext(
+            conf
+        ) else res.updateConfiguration(conf, dm)
     }
 }
