@@ -14,4 +14,11 @@ data class Message(
     var createdDate: Long? = null,
     var read: Boolean? = true,
     var data: Map<String, String> = emptyMap()
-) : Serializable, BaseObservable()
+) : Serializable, BaseObservable() {
+    override fun equals(other: Any?): Boolean {
+        if (other is Message) {
+            return notificationHistoryId == other.notificationHistoryId
+        }
+        return super.equals(other)
+    }
+}

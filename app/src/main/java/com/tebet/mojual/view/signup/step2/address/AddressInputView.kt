@@ -68,7 +68,7 @@ class AddressInputView : LinearLayout {
         mBinding?.etCity?.threshold = 1
         mBinding?.etCity?.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                var currentItemString = cityAdapter?.getItem(position)
+                val currentItemString = cityAdapter?.getItem(position)
                 data.get()?.city =
                     viewModel?.cityLiveData?.value?.firstOrNull { city -> city.fullName == currentItemString }?.fullName
             }

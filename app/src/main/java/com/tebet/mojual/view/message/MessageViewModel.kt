@@ -2,6 +2,7 @@ package com.tebet.mojual.view.message
 
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.library.baseAdapters.BR
+import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.R
 import com.tebet.mojual.common.adapter.OnListItemClick
 import com.tebet.mojual.common.util.rx.SchedulerProvider
@@ -11,6 +12,7 @@ import com.tebet.mojual.data.models.Paging
 import com.tebet.mojual.data.models.request.MessageRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import io.reactivex.Observable
 import me.tatarka.bindingcollectionadapter2.collections.MergeObservableList
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 
@@ -35,8 +37,13 @@ class MessageViewModel(
                 override fun onItemClick(item: Message) {
                     navigator.showLoading(true)
                     compositeDisposable.add(
-                        dataManager.markRead(item.notificationHistoryId!!)
-                            .observeOn(schedulerProvider.ui())
+                        Observable.just(item)
+                            .concatMap {
+                                when {
+                                    it.read == false -> dataManager.markRead(item.notificationHistoryId!!)
+                                    else -> Observable.just(AuthJson(status = "", message = "", data = it))
+                                }
+                            }.observeOn(schedulerProvider.ui())
                             .subscribeWith(object : CallbackWrapper<Message>() {
                                 override fun onSuccess(dataResponse: Message) {
                                     navigator.showLoading(false)
