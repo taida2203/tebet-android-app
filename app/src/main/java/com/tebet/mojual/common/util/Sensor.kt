@@ -148,9 +148,9 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
                         wfMng.reconnect()
                         Thread.sleep(delayWait.toLong())
                         true
-                    } ?: true
+                    }
                 } else wifiManager.connectToNetwork(sensorSSID, delayWait)
-                true
+                false
             }
         }
     }
@@ -200,7 +200,6 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
                 SensorStatus.OFF -> Utility.getInstance().getString(R.string.check_quality_iot_not_turn_off)
                 SensorStatus.ON -> Utility.getInstance().getString(R.string.check_quality_iot_not_connect)
                 SensorStatus.CONNECTED -> Utility.getInstance().getString(R.string.check_quality_iot_connected)
-                else -> ""
             }
         }
 }

@@ -72,7 +72,7 @@ class AuthFacebookMethod : AuthMethod {
         }
         val request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken()
-        ) { `object`, response ->
+        ) { `object`, _ ->
             var email: String? = null
             try {
                 email = `object`.getString("email")

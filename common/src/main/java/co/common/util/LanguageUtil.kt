@@ -1,5 +1,6 @@
 package co.common.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.text.TextUtils
@@ -56,15 +57,18 @@ class LanguageUtil {
         context?.let { changeLanguage(it, "en") }
     }
 
+    @Suppress("DEPRECATION")
     private fun changeLanguage(context: Context, languageCode: String) {
         val res = context.resources
         val dm = res.displayMetrics
         val conf = res.configuration
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) { // API 17+ only.
-            conf.setLocale(Locale(languageCode.toLowerCase()))
+            conf.setLocale(Locale(languageCode.toLowerCase(Locale.getDefault())))
+            context.createConfigurationContext(conf)
+
         } else {
             conf.locale = Locale(languageCode)
+            res.updateConfiguration(conf, dm)
         }
-        res.updateConfiguration(conf, dm)
     }
 }

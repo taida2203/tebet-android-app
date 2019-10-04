@@ -26,7 +26,7 @@ class BankConfirmViewModel(
     }
 
     fun onSubmitClick() {
-        order?.let { od ->
+        order?.let {
             selectedItems?.let { items ->
                 submitOrder(items)
                 return
@@ -35,10 +35,10 @@ class BankConfirmViewModel(
         navigator.show(R.string.general_error)
     }
 
-    override fun loadData(forceLoad: Boolean?) {
+    override fun loadData(isForceLoad: Boolean?) {
         navigator.showLoading(true)
         var updateProfileStream = dataManager.getUserProfileDB()
-        if (forceLoad == false) updateProfileStream = dataManager.getProfile()
+        if (isForceLoad == false) updateProfileStream = dataManager.getProfile()
         compositeDisposable.add(
             updateProfileStream.subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())

@@ -28,12 +28,12 @@ class LoginViewModel(
                 AuthSdk.instance.logout(true)
                     .concatMap {
                         AuthSdk.instance.login(activity, AuthAccountKitMethod(), LoginConfiguration(logoutWhileExpired = false))
-                            .doOnError { error ->
+                            .doOnError {
                                 navigator.showLoading(false)
                                 registerNewUser()
                             }
                     }
-                    .concatMap { result -> dataManager.getProfile() }
+                    .concatMap { dataManager.getProfile() }
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {
                         override fun onSuccess(dataResponse: UserProfile) {
@@ -66,13 +66,13 @@ class LoginViewModel(
                                 phone = AuthSdk.instance.getBrandLoginToken()?.phone
                             )
                         )
-                    }.concatMap { registerResponse ->
+                    }.concatMap { _ ->
                         AuthSdk.instance.login(
                             it,
                             AuthAccountKitMethod(),
                             LoginConfiguration(logoutWhileExpired = false)
                         )
-                    }.concatMap { loginResponse -> dataManager.getProfile() }
+                    }.concatMap { dataManager.getProfile() }
                     .subscribeWith(object :
                         CallbackWrapper<UserProfile>() {
                         override fun onSuccess(dataResponse: UserProfile) {

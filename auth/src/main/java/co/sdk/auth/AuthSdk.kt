@@ -120,7 +120,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
 
                             override fun onSuccess(code: Int, response: Token?) {
                                 saveObject(AUTH_LOGIN_TOKEN, response)
-                                if (authMethod != null && authMethod is AuthAccountKitMethod && config.logoutWhileExpired) {
+                                if (authMethod is AuthAccountKitMethod && config.logoutWhileExpired) {
                                     authMethod.logout(context, true, null)
                                 }
                                 response?.let { callback?.onSuccess(code, it) }
@@ -173,7 +173,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         return Observable.create { emitter ->
             run {
                 login(context, authMethod, config, object : ApiCallBack<Token>() {
-                    override fun onSuccess(responeCode: Int, response: Token?) {
+                    override fun onSuccess(code: Int, response: Token?) {
                         response?.let { emitter.onNext(it) } ?: emitter.onNext(Token())
                     }
 
@@ -190,7 +190,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         return Observable.create { emitter ->
             run {
                 logout(forceLogout, object : ApiCallBack<Any>() {
-                    override fun onSuccess(responeCode: Int, response: Any?) {
+                    override fun onSuccess(code: Int, response: Any?) {
                         emitter.onNext("")
                     }
 

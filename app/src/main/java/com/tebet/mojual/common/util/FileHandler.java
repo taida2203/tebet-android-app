@@ -7,12 +7,15 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.widget.Toast;
+
 import androidx.core.content.FileProvider;
+
 import com.tebet.mojual.common.BuildConfig;
-import timber.log.Timber;
 
 import java.io.File;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class FileHandler {
     public static void openFile(Context context, String type, File file) {
@@ -22,7 +25,7 @@ public class FileHandler {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             try {
                 file = new File(context.getFilesDir(), file.getName());
-                mExposedFileUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, file);
+                mExposedFileUri = FileProvider.getUriForFile(context, "com.tebet.mojual", file);
             } catch (Exception ex) {
                 Timber.e(ex);
             }

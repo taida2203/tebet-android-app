@@ -37,7 +37,6 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 import com.tebet.mojual.view.message.MessageFragment
-import com.tebet.mojual.view.profilepin.PinCode
 
 
 class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragmentInjector,
@@ -261,10 +260,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         }
     }
 
-    override fun refreshData(message: Message) {
-        super.refreshData(message)
+    override fun refreshData(notification: Message) {
+        super.refreshData(notification)
         if (currentFragment() is OrderDetailFragment) {
-            openFromNotification(message.data)
+            openFromNotification(notification.data)
         }
     }
 

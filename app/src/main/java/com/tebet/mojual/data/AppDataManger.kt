@@ -56,7 +56,7 @@ class AppDataManger @Inject constructor(
 
     override fun getAssetDB(): Observable<AuthJson<List<Asset>>> = room.asset.concatMap { bankDao ->
         bankDao.queryAsset().subscribeOn(Schedulers.newThread())
-            .doOnError { message -> EmptyResultSetException("") }
+            .doOnError { message -> throw EmptyResultSetException(message.message) }
             .toObservable().map { assets -> AuthJson(null, "", assets) }
     }
 
@@ -85,7 +85,7 @@ class AppDataManger @Inject constructor(
 
     override fun getRegionDB(): Observable<AuthJson<List<Region>>> = room.region.concatMap { bankDao ->
         bankDao.queryRegion().subscribeOn(Schedulers.newThread())
-            .doOnError { message -> EmptyResultSetException("") }
+            .doOnError { message -> throw EmptyResultSetException(message.message) }
             .toObservable().map { regions -> AuthJson(null, "", regions) }
     }
 
@@ -106,12 +106,12 @@ class AppDataManger @Inject constructor(
     override fun getReserveGeoLocation(latlng: String, key: String): Observable<GeoCodeResponse> = apiGoogle.getReserveGeoLocation(latlng, key)
 
     override fun getCityDB(): Observable<AuthJson<List<City>>> = room.city.concatMap { cityDao ->
-        cityDao.queryCity().subscribeOn(Schedulers.newThread()).doOnError { message -> EmptyResultSetException("") }
+        cityDao.queryCity().subscribeOn(Schedulers.newThread()).doOnError { message -> throw EmptyResultSetException(message.message) }
             .toObservable().map { citys -> AuthJson(null, "", citys) }
     }
 
     override fun getBankDB(): Observable<AuthJson<List<Bank>>> = room.bank.concatMap { bankDao ->
-        bankDao.queryBank().subscribeOn(Schedulers.newThread()).doOnError { message -> EmptyResultSetException("") }
+        bankDao.queryBank().subscribeOn(Schedulers.newThread()).doOnError { message -> throw EmptyResultSetException(message.message) }
             .toObservable().map { banks -> AuthJson(null, "", banks) }
     }
 
@@ -189,13 +189,13 @@ class AppDataManger @Inject constructor(
 
     override fun getUserProfileDB(): Observable<AuthJson<UserProfile>> = room.userProfile.concatMap { userProfileDao ->
         userProfileDao.queryUserProfile().subscribeOn(Schedulers.newThread())
-            .doOnError { message -> EmptyResultSetException("") }
+            .doOnError { message -> throw EmptyResultSetException(message.message) }
             .toObservable().map { userProfile -> AuthJson(null, "", userProfile) }
     }
 
     override fun getContainerCheckDB(): Observable<List<Quality>> = room.quality.concatMap { containerDao ->
         containerDao.queryContainerChecks().subscribeOn(Schedulers.newThread())
-            .doOnError { message -> EmptyResultSetException("") }
+            .doOnError { message -> throw EmptyResultSetException(message.message) }
             .toObservable()
     }
 

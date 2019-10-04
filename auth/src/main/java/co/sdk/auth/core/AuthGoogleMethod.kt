@@ -138,7 +138,7 @@ class AuthGoogleMethod : AuthMethod, GoogleApiClient.OnConnectionFailedListener 
                                     } else {
                                         context?.let { it3 ->
                                             logout(it3, true, object : ApiCallBack<Any>() {
-                                                override fun onSuccess(responeCode: Int, response: Any?) {
+                                                override fun onSuccess(code: Int, response: Any?) {
                                                     if (callback != null) {
                                                         callback!!.onFailed(LoginException(502, Utility.instance.getString(
                                                             R.string.general_message_error)))

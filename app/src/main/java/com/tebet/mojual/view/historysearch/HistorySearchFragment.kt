@@ -64,7 +64,7 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
             val next7Day = Calendar.getInstance()
             next7Day.add(Calendar.DAY_OF_MONTH, 8)
             fromDateDialog?.setMaxDate(next7Day)
-            fromDateDialog?.setOnDateSetListener { view, year, month, dayOfMonth ->
+            fromDateDialog?.setOnDateSetListener { _, year, month, dayOfMonth ->
                 val cal = Calendar.getInstance()
                 cal.set(Calendar.YEAR, year)
                 cal.set(Calendar.MONTH, month)
@@ -87,7 +87,7 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
             val next7Day = Calendar.getInstance()
             next7Day.add(Calendar.DAY_OF_MONTH, 8)
             toDateDialog?.setMaxDate(next7Day)
-            toDateDialog?.setOnDateSetListener { view, year, month, dayOfMonth ->
+            toDateDialog?.setOnDateSetListener { _, year, month, dayOfMonth ->
                 val cal = Calendar.getInstance()
                 cal.set(Calendar.YEAR, year)
                 cal.set(Calendar.MONTH, month)

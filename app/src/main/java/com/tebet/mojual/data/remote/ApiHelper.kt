@@ -75,7 +75,7 @@ interface ApiHelper {
     fun getUnreadCount(): Observable<AuthJson<Long>>
 
     @POST("communication/notification/history")
-    fun getMessages(@Body getMessageRequest: MessageRequest): Observable<AuthJson<Paging<Message>>>
+    fun getMessages(@Body messageRequest: MessageRequest): Observable<AuthJson<Paging<Message>>>
 
     @POST("order/mobile-info-scan")
     fun scanLocation(@Body scanLocationRequest: ScanLocationRequest): Observable<AuthJson<EmptyResponse>>
