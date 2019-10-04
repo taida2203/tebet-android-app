@@ -38,7 +38,6 @@ import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.databinding.ActivityBaseBinding
-import com.tebet.mojual.view.LockActivity
 import com.tebet.mojual.view.help.QualityHelp
 import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.login.Login
