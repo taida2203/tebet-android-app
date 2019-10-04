@@ -9,7 +9,6 @@ import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Paging
-import com.tebet.mojual.data.models.enumeration.ContainerOrderStatus
 import com.tebet.mojual.data.models.enumeration.OrderStatus
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
@@ -33,14 +32,14 @@ class QualityViewModel(
         .insertList(items)
 
     val multipleItemsBind: OnItemBindClass<Any> = OnItemBindClass<Any>()
-        .map(String::class.java) { itemBinding, position, item ->
+        .map(String::class.java) { itemBinding, _, _ ->
             itemBinding.set(BR.item, R.layout.item_quality_add)
             itemBinding.bindExtra(BR.listener, object : OnListItemClick<String> {
                 override fun onItemClick(item: String) = navigator.openSellScreen()
             })
         }
         .map(Integer::class.java, BR.item, R.layout.item_quality_loading)
-        .map(Order::class.java) { itemBinding, position, item ->
+        .map(Order::class.java) { itemBinding, _, _ ->
             itemBinding.set(BR.item, R.layout.item_quality_check_order)
             itemBinding.bindExtra(BR.listener, object : OnListItemClick<Order> {
                 override fun onItemClick(item: Order) {
@@ -58,7 +57,6 @@ class QualityViewModel(
     }
 
     fun loadData(page: Int = 0) {
-        val offset = page * 10
         navigator.showLoading(true)
 //        headerFooterItems.insertItem(R.layout.item_quality_loading)
         compositeDisposable.add(

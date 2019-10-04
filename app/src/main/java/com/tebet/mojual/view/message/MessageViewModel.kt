@@ -29,7 +29,7 @@ class MessageViewModel(
         .insertList(items)
 
     val multipleItemsBind: OnItemBindClass<Any> = OnItemBindClass<Any>()
-        .map(Message::class.java) { itemBinding, position, item ->
+        .map(Message::class.java) { itemBinding, _, _ ->
             itemBinding.set(BR.item, R.layout.item_message)
             itemBinding.bindExtra(BR.listener, object : OnListItemClick<Message> {
                 override fun onItemClick(item: Message) {
@@ -38,11 +38,11 @@ class MessageViewModel(
                         dataManager.markRead(item.notificationHistoryId!!)
                             .observeOn(schedulerProvider.ui())
                             .subscribeWith(object : CallbackWrapper<Message>() {
-                                override fun onSuccess(order: Message) {
+                                override fun onSuccess(dataResponse: Message) {
                                     navigator.showLoading(false)
-                                    if (!items.contains(order)) items.add(order) else items[items.indexOf(
-                                        order
-                                    )] = order
+                                    if (!items.contains(dataResponse)) items.add(dataResponse) else items[items.indexOf(
+                                        dataResponse
+                                    )] = dataResponse
                                     navigator.openNotificationDetail(item)
                                 }
 
@@ -88,12 +88,7 @@ class MessageViewModel(
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Paging<Message>>() {
                         override fun onSuccess(dataResponse: Paging<Message>) {
-                            dataResponse.data.map { order ->
-                                if (order.data == null) {
-                                    order.data = emptyMap()
-                                }
-                                order
-                            }.forEach { order ->
+                            dataResponse.data.forEach { order ->
                                 if (!items.contains(order)) items.add(order) else items[items.indexOf(
                                     order
                                 )] = order

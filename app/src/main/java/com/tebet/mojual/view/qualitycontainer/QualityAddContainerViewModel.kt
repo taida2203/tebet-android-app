@@ -52,7 +52,7 @@ class QualityAddContainerViewModel(
         .insertList(items)
 
     val onItemBind: OnItemBindClass<Any> = OnItemBindClass<Any>()
-        .map(String::class.java) { itemBinding, position, item ->
+        .map(String::class.java) { itemBinding, _, _ ->
             itemBinding.set(BR.item, R.layout.item_quality_add)
                 .bindExtra(BR.listener, object : OnListItemClick<String> {
                     override fun onItemClick(item: String) {
@@ -79,7 +79,7 @@ class QualityAddContainerViewModel(
                     }
                 })
         }
-        .map(ContainerWrapper::class.java) { itemBinding, position, item ->
+        .map(ContainerWrapper::class.java) { itemBinding, _, _ ->
             itemBinding.set(BR.item, R.layout.item_quality_add_container)
                 .bindExtra(BR.listener, object : OnFutureDateClick {
                     override fun onItemRemoveClick(item: ContainerWrapper) {

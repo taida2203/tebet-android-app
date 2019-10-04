@@ -55,7 +55,7 @@ class MyAppGlideModule : AppGlideModule() {
 
                     val builder = OkHttpClient.Builder()
                     builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
-                    builder.hostnameVerifier { hostname, session -> true }
+                    builder.hostnameVerifier { _, _ -> true }
 
                     return builder.build()
                 } catch (e: Exception) {

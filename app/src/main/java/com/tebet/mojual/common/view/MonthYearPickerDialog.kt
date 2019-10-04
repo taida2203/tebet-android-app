@@ -115,7 +115,7 @@ class MonthYearPickerDialog : DialogFragment() {
         }
         //final String[][] dayArray = new String[1][1];
 
-        monthPicker!!.setOnValueChangedListener { picker, oldVal, newVal ->
+        monthPicker!!.setOnValueChangedListener { _, _, newVal ->
             when (newVal) {
                 1, 3, 5, 7, 8, 10, 12 -> {
                     daysOfMonth = 31
@@ -174,7 +174,7 @@ class MonthYearPickerDialog : DialogFragment() {
         val `in` = findInput(yearPicker!!)
         `in`!!.inputType = InputType.TYPE_CLASS_NUMBER
 
-        yearPicker!!.setOnValueChangedListener { picker, oldVal, newVal ->
+        yearPicker!!.setOnValueChangedListener { picker, _, _ ->
             try {
                 if (isLeapYear(picker.value)) {
                     daysOfMonth = 29
@@ -192,7 +192,7 @@ class MonthYearPickerDialog : DialogFragment() {
 
             listener!!.onDateSet(
                 null,
-                Integer.valueOf(tempArray[yearPicker!!.value - 1]),
+                Integer.valueOf(tempArray[yearPicker?.value ?: 0 - 1]),
                 monthPicker!!.value,
                 dayPicker!!.value
             )

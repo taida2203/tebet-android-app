@@ -234,7 +234,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
     override fun selectBirthDay() {
         birthDayDialog = DateDialog()
         birthDayDialog.setMaxDate(Calendar.getInstance())
-        birthDayDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
+        birthDayDialog.setOnDateSetListener { _, year, month, dayOfMonth ->
             viewModel.userProfile.birthday = "$dayOfMonth/$month/$year"
         }
         birthDayDialog.show(supportFragmentManager, "")

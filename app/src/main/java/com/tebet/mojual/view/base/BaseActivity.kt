@@ -443,7 +443,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             && activity() !is Login
             && activity() !is SignUpInfo
             && activity() !is SignUpPassword
-            && activity() !is LockActivity
         ) {
             App.wasInBackground = false
             PreferenceUtils.saveBoolean(EXTRA_FORCE_LOCK, false)

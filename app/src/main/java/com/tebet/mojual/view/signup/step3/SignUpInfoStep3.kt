@@ -37,15 +37,15 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
         viewDataBinding?.etBankName?.setAdapter(bankAdapter)
         viewDataBinding?.etBankName?.threshold = 1
         viewDataBinding?.etBankName?.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-                var currentItemString = bankAdapter?.getItem(position)
-                var selectedItem =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                val currentItemString = bankAdapter?.getItem(position)
+                val selectedItem =
                     viewModel.bankNameLiveData.value?.firstOrNull { bank -> bank.name == currentItemString }
 
                 viewModel.userProfile.get()?.bankName = selectedItem?.name
                 viewModel.userProfile.get()?.bankCode = selectedItem?.code
             }
-        viewDataBinding?.etBankName?.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+        viewDataBinding?.etBankName?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 validateBankCode()
                 validator.validate(view)
@@ -56,9 +56,9 @@ class SignUpInfoStep3 : SignUpInfoStep<FragmentSignUpInfoStep3Binding, SignUpInf
         viewDataBinding?.etRegionName?.setAdapter(regionAdapter)
         viewDataBinding?.etRegionName?.threshold = 1
         viewDataBinding?.etRegionName?.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-                var currentItemString = regionAdapter?.getItem(position)
-                var selectedItem =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                val currentItemString = regionAdapter?.getItem(position)
+                val selectedItem =
                     viewModel.bankRegionLiveData.value?.firstOrNull { region -> region.name == currentItemString }
 
                 viewModel.userProfile.get()?.bankRegionName = selectedItem?.name

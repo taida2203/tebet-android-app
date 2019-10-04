@@ -6,7 +6,7 @@ import androidx.room.Ignore
 import androidx.databinding.library.baseAdapters.BR
 import java.io.Serializable
 
-class Address(
+class Address @Ignore constructor(
     var address: String? = null,
     var country: String? = null,
     var kecamatan: String? = null,
@@ -17,6 +17,7 @@ class Address(
     var rtrw: String? = null,
     var type: String? = null
 ) : Serializable, BaseObservable() {
+    constructor() : this(null)
     companion object {
         const val DOMICILE_ADDRESS = "DOMICILE_ADDRESS"
         const val PICK_UP_ADDRESS = "PICK_UP_ADDRESS"

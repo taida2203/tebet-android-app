@@ -1,8 +1,9 @@
 package com.tebet.mojual.data.models
 
+import androidx.room.Ignore
 import java.io.Serializable
 
-class ProfileSetting(
+class ProfileSetting @Ignore constructor(
     var profileSettingId: Long? = null,
     var basePrice: Double? = null,
     var qcType: String? = null,
@@ -13,4 +14,6 @@ class ProfileSetting(
     var rate: Float = 0.0f,
     var iotDefaultDensity: Double? = null,
     var note: String? = null
-) : Serializable
+) : Serializable {
+    constructor() : this(null)
+}

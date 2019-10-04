@@ -9,17 +9,16 @@ import android.util.Base64
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.databinding.library.baseAdapters.BR
-import com.crashlytics.android.Crashlytics
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.ActivitySplashScreenBinding
+import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.login.Login
-import com.tebet.mojual.view.signup.step0.SignUpPassword
-import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.signup.SignUpInfo
+import com.tebet.mojual.view.signup.step0.SignUpPassword
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -62,11 +61,11 @@ open class Splash : BaseActivity<ActivitySplashScreenBinding, SplashViewModel>()
         Handler().postDelayed({
             viewModel.loadProfile()
         }, duration.toLong())
-        viewModel.profileError.observe(this, Observer<String> { error ->
+        viewModel.profileError.observe(this, Observer<String> {
             val builder = AlertDialog.Builder(this@Splash)
             builder.setMessage(getString(R.string.general_message_error))
             // add a button
-            builder.setPositiveButton(getString(R.string.general_button_ok)) { dialog, which -> finish() }
+            builder.setPositiveButton(getString(R.string.general_button_ok)) { _, _ -> finish() }
             // create and show the alert dialog
             val dialog = builder.create()
             dialog.show()

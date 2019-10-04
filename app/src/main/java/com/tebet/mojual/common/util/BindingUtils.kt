@@ -56,41 +56,45 @@ class BindingUtils {
             recyclerView.clearOnScrollListeners()
             recyclerView.addOnScrollListener(callback)
         }
-    }
 
-
-    @BindingAdapter("questions")
-    fun LinearLayout.setQuestions(questions: List<Question>?) {
-        val context = this@setQuestions.context
-        questions?.forEach { question ->
-            val myItem = QuestionInputView(context)
-            myItem.data.set(question)
-            this@setQuestions.addView(myItem)
-        }
-    }
-
-    @BindingAdapter("onOkInSoftKeyboard")
-    fun EditText.setOnOkInSoftKeyboardListener(listener: OnOkInSoftKeyboardListener?) {
-        if (listener == null) {
-            this@setOnOkInSoftKeyboardListener.setOnEditorActionListener(null)
-        } else {
-            this@setOnOkInSoftKeyboardListener.setOnEditorActionListener { _, _, _ ->
-                // ... solution to receiving event
-                listener.onOkInSoftKeyboard()
-                true
+        @BindingAdapter("onOkInSoftKeyboard")
+        @JvmStatic
+        fun EditText.setOnOkInSoftKeyboardListener(listener: OnOkInSoftKeyboardListener?) {
+            if (listener == null) {
+                this@setOnOkInSoftKeyboardListener.setOnEditorActionListener(null)
+            } else {
+                this@setOnOkInSoftKeyboardListener.setOnEditorActionListener { _, _, _ ->
+                    // ... solution to receiving event
+                    listener.onOkInSoftKeyboard()
+                    this@setOnOkInSoftKeyboardListener.setOnEditorActionListener(null)
+                    true
+                }
             }
         }
-    }
 
-    @BindingAdapter("onOkInSoftKeyboard")
-    fun AppEditText.setOnOkAppEditTextInSoftKeyboardListener(listener: OnOkInSoftKeyboardListener?) {
-        if (listener == null) {
-            this@setOnOkAppEditTextInSoftKeyboardListener.setOnEditorActionListener(null)
-        } else {
-            this@setOnOkAppEditTextInSoftKeyboardListener.setOnEditorActionListener { _, _, _ ->
-                // ... solution to receiving event
-                listener.onOkInSoftKeyboard()
-                true
+        @BindingAdapter("onOkInSoftKeyboard")
+        @JvmStatic
+        fun AppEditText.setOnOkAppEditTextInSoftKeyboardListener(listener: OnOkInSoftKeyboardListener?) {
+            if (listener == null) {
+                this@setOnOkAppEditTextInSoftKeyboardListener.setOnEditorActionListener(null)
+            } else {
+                this@setOnOkAppEditTextInSoftKeyboardListener.setOnEditorActionListener { _, _, _ ->
+                    // ... solution to receiving event
+                    listener.onOkInSoftKeyboard()
+                    this@setOnOkAppEditTextInSoftKeyboardListener.setOnEditorActionListener(null)
+                    true
+                }
+            }
+        }
+
+        @BindingAdapter("questions")
+        @JvmStatic
+        fun LinearLayout.setQuestions(questions: List<Question>?) {
+            val context = this@setQuestions.context
+            questions?.forEach { question ->
+                val myItem = QuestionInputView(context)
+                myItem.data.set(question)
+                this@setQuestions.addView(myItem)
             }
         }
     }

@@ -67,12 +67,12 @@ class AddressInputView : LinearLayout {
         mBinding?.etCity?.setAdapter(cityAdapter)
         mBinding?.etCity?.threshold = 1
         mBinding?.etCity?.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
+            AdapterView.OnItemClickListener { _, _, position, _ ->
                 var currentItemString = cityAdapter?.getItem(position)
                 data.get()?.city =
                     viewModel?.cityLiveData?.value?.firstOrNull { city -> city.fullName == currentItemString }?.fullName
             }
-        mBinding?.etCity?.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
+        mBinding?.etCity?.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 if (viewModel?.cityLiveData?.value?.firstOrNull { city -> city.fullName == data.get()?.city } == null) {
                     data.get()?.city = ""

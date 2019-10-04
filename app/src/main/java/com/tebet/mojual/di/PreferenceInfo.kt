@@ -1,9 +1,7 @@
 package com.tebet.mojual.di
 
 import javax.inject.Qualifier
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 
 @Qualifier
-@Retention(RetentionPolicy.RUNTIME)
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 annotation class PreferenceInfo

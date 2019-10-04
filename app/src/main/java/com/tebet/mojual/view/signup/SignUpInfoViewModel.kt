@@ -97,7 +97,7 @@ class SignUpInfoViewModel(
             Observable.zip(
                 dataManager.getCities(), dataManager.getRegions(), dataManager.getBanks(), dataManager.getUserProfileDB(),
                 Function4<AuthJson<List<City>>, AuthJson<List<Region>>, AuthJson<List<Bank>>, AuthJson<UserProfile>, AuthJson<UserProfile>>
-                { cities, regions, banks, profile -> profile })
+                { _, _, _, profile -> profile })
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {

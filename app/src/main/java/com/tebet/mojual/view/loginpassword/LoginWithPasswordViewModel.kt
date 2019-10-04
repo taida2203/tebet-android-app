@@ -76,7 +76,7 @@ class LoginWithPasswordViewModel(
         navigator.activity()?.let {
             compositeDisposable.add(
                 AuthSdk.instance.login(it, AuthPasswordMethod(), configuration)
-                    .concatMap { result -> dataManager.getProfile() }
+                    .concatMap { dataManager.getProfile() }
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {
                         override fun onSuccess(dataResponse: UserProfile) {
