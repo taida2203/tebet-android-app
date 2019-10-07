@@ -56,11 +56,11 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
     }
 
     override fun openOrderDetailScreen(it: OrderDetail) {
-        (activity as Home).viewModel.onOrderDetailClick(Order(it))
+        viewModel.loadData()
     }
 
     override fun openBankConfirmScreen(order: OrderDetail, selectedItems: List<OrderContainer>) {
-        (activity as Home).viewModel.onBankConfirmClick(order, selectedItems)
+        (activity as OrderDetailActivity).viewModel.onBankConfirmClick(order, selectedItems)
     }
 
     override fun showRejectConfirm() {
@@ -81,7 +81,7 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
     }
 
     override fun openReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>) {
-        (activity as Home).viewModel.onReasonClick(order, selectedItems)
+        (activity as OrderDetailActivity).viewModel.onReasonClick(order, selectedItems)
     }
 
     override fun showConfirmDialog(selectedItems: List<OrderContainer>) {

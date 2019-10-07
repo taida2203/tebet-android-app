@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
+import com.tebet.mojual.data.models.OrderContainer
+import com.tebet.mojual.data.models.OrderDetail
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.databinding.ActivityOrderDetailBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
@@ -37,6 +39,8 @@ class OrderDetailActivity :
 
     private var topRightViewBinding: ItemHomeIconBinding? = null
 
+    var currentFragment: OrderDetailFragment? = null
+
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         title = getString(R.string.order_detail_title)
@@ -48,7 +52,6 @@ class OrderDetailActivity :
                 true
             )
 
-        var currentFragment: OrderDetailFragment? = null
         intent?.getSerializableExtra("EXTRA_ORDER")?.let {
             currentFragment = OrderDetailFragment.newInstance(it as Order)
             openFragment(currentFragment!!, R.id.placeHolderChild)
@@ -63,4 +66,22 @@ class OrderDetailActivity :
         finish()
     }
 
+    override fun showOrderDetailScreen(dataResponse: Order) {
+        currentFragment?.viewModel?.loadData(true)
+    }
+
+    override fun onBankConfirmClick(order: OrderDetail, selectedItems: List<OrderContainer>) {
+        intent.putExtra("EXTRA_ORDER_DETAIL", order)
+        intent.putExtra("EXTRA_SELECTED_CONTAINER", ArrayList<OrderContainer>(selectedItems))
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    override fun onReasonClick(order: OrderDetail, selectedItems: List<OrderContainer>) {
+        intent.putExtra("EXTRA_ORDER_DETAIL", order)
+        intent.putExtra("EXTRA_SELECTED_CONTAINER", ArrayList<OrderContainer>(selectedItems))
+        intent.putExtra("EXTRA_IS_REJECTED", true)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
 }

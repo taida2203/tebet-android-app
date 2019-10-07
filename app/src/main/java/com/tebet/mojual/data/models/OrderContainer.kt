@@ -7,6 +7,7 @@ import androidx.room.Ignore
 import com.tebet.mojual.data.models.enumeration.AssetAction
 import com.tebet.mojual.data.models.enumeration.ContainerOrderState
 import com.tebet.mojual.data.models.enumeration.ContainerOrderStatus
+import java.io.Serializable
 
 data class OrderContainer(
     var assetId: Long? = null,
@@ -38,7 +39,7 @@ data class OrderContainer(
     var modifiedDate: Long? = null,
     var action: String? = AssetAction.APPROVE.name,
     var orderAnswers : List<Question> = arrayListOf()
-) : BaseObservable() {
+) : BaseObservable(), Serializable {
     val state: ContainerOrderState
         get() {
             return when (status) {

@@ -154,12 +154,12 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     }
 
     override fun showOrderDetailScreen(dataResponse: Order) {
+        if (currentFragment() is OrderRejectFragment || currentFragment() is BankConfirmFragment) {
+            supportFragmentManager.popBackStackImmediate()
+        }
         var mIntent = Intent(this, OrderDetailActivity::class.java)
         mIntent.putExtra("EXTRA_ORDER", dataResponse)
         startActivityForResult(mIntent, 501)
-//        if (currentFragment() is OrderRejectFragment || currentFragment() is BankConfirmFragment) {
-//            supportFragmentManager.popBackStackImmediate()
-//        }
 //        if (currentFragment() is OrderDetailFragment) {
 //            (currentFragment() as OrderDetailFragment).viewModel.order.set(OrderDetail(dataResponse))
 //        }
@@ -273,8 +273,8 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 500) {
-            if (resultCode == Activity.RESULT_OK) {
+        when (requestCode) {
+            500 -> if (resultCode == Activity.RESULT_OK) {
                 data?.getSerializableExtra("EXTRA_ORDER")?.let {
                     if (currentFragment() is QualityFragment) {
                         (currentFragment() as QualityFragment).viewModel.items.remove(it)
@@ -283,6 +283,32 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                     }
                     showOrderDetailScreen(it as Order)
                 }
+            }
+            501 -> {
+                if (data?.hasExtra("EXTRA_SELECTED_CONTAINER") == true || data?.hasExtra("EXTRA_ORDER_DETAIL") == true) {
+                    data.getSerializableExtra("EXTRA_ORDER_DETAIL")?.let {
+                        val selectedContainers = try {
+                            data.getSerializableExtra("EXTRA_SELECTED_CONTAINER") as ArrayList<OrderContainer>
+                        } catch (e: Exception) {
+                            arrayListOf<OrderContainer>()
+                        }
+                        if (data.hasExtra("EXTRA_IS_REJECTED")) {
+                            viewModel.onReasonClick(it as OrderDetail, selectedContainers)
+                        } else {
+                            viewModel.onBankConfirmClick(it as OrderDetail, selectedContainers)
+
+                        }
+                    }
+
+                }
+//                data?.getSerializableExtra("EXTRA_ORDER")?.let {
+//                    if (currentFragment() is QualityFragment) {
+//                        (currentFragment() as QualityFragment).viewModel.items.remove(it)
+//                    } else if (currentFragment() is SaleFragment) {
+//                        supportFragmentManager.popBackStackImmediate()
+//                    }
+//                    showOrderDetailScreen(it as Order)
+//                }
             }
         }
     }
