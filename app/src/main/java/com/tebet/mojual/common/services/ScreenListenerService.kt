@@ -10,7 +10,7 @@ import com.tebet.mojual.view.base.BaseActivity
 
 class ScreenListenerService : Service() {
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val filter = IntentFilter(Intent.ACTION_SCREEN_ON)
         filter.addAction(Intent.ACTION_SCREEN_OFF)
         filter.addAction(Intent.ACTION_USER_PRESENT)
@@ -24,7 +24,7 @@ class ScreenListenerService : Service() {
             get() = this@ScreenListenerService
     }
 
-    override fun onBind(intent: Intent): IBinder? {
+    override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 

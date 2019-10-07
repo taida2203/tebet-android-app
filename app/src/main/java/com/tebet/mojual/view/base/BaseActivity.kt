@@ -32,6 +32,7 @@ import com.tapadoo.alerter.Alerter
 import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
+import com.tebet.mojual.common.services.DigitalFootPrintServices
 import com.tebet.mojual.common.services.ScreenListenerService
 import com.tebet.mojual.data.models.Message
 import com.tebet.mojual.data.models.NetworkError
@@ -154,7 +155,15 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
         if (!isMyServiceRunning(ScreenListenerService::class.java)) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                startService(Intent(applicationContext, ScreenListenerService::class.java))
+                try {
+                    val i = Intent(applicationContext, ScreenListenerService::class.java)
+                    when {
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> applicationContext.startForegroundService(i) // https://www.fabric.io/masbro/android/apps/co.masbro.consumer/issues/5ac742c036c7b23527af337b?time=last-seven-days
+                        else -> applicationContext.startService(i)
+                    }
+                } catch (e: Exception) {
+                    Timber.e(e)
+                }
             }
         }
 
