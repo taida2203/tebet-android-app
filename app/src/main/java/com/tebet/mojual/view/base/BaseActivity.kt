@@ -32,7 +32,6 @@ import com.tapadoo.alerter.Alerter
 import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.ViewModelProviderFactory
-import com.tebet.mojual.common.services.DigitalFootPrintServices
 import com.tebet.mojual.common.services.ScreenListenerService
 import com.tebet.mojual.data.models.Message
 import com.tebet.mojual.data.models.NetworkError
@@ -334,10 +333,16 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     override fun showLoading(isLoading: Boolean) {
         viewModel.setIsLoading(isLoading)
         baseBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        showEmpty(false)
     }
 
-    fun handleError(exeption: LoginException?) {
-        exeption?.errorMessage?.let { show(it) }
+    override fun showEmpty(isEmpty: Boolean) {
+        viewModel.setIsEmpty(isEmpty)
+        baseBinding.emptyView.visibility = if (isEmpty) View.VISIBLE else View.GONE
+    }
+
+    fun handleError(exception: LoginException?) {
+        exception?.errorMessage?.let { show(it) }
     }
 
     fun handleError(exception: NetworkError) {

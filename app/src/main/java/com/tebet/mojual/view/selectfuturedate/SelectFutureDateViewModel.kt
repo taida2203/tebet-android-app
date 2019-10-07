@@ -33,6 +33,7 @@ class SelectFutureDateViewModel(
                 .subscribeWith(object : CallbackWrapper<List<Price>>() {
                     override fun onSuccess(dataResponse: List<Price>) {
                         navigator.showLoading(false)
+                        navigator.showEmpty(dataResponse.isNullOrEmpty())
                         if (dataResponse.isEmpty()) return
                         dataResponse[0].isToday = true
                         dataResponse.map { responsePrice ->

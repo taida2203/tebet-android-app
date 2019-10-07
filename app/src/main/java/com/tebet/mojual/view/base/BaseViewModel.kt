@@ -19,6 +19,8 @@ abstract class BaseViewModel<N>(
 
     val isLoading = ObservableBoolean()
 
+    val isEmpty = ObservableBoolean()
+
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private var mNavigator: WeakReference<N>? = null
@@ -39,6 +41,10 @@ abstract class BaseViewModel<N>(
 
     fun setIsLoading(isLoading: Boolean) {
         this.isLoading.set(isLoading)
+    }
+
+    fun setIsEmpty(isEmpty: Boolean) {
+        this.isEmpty.set(isEmpty)
     }
 
     protected fun handleError(error: NetworkError) {

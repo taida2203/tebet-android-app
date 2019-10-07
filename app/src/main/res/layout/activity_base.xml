@@ -132,5 +132,20 @@
             android:minHeight="40dp"
             android:visibility="gone" />
 
+
+        <LinearLayout
+            android:id="@+id/emptyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/_16ssp"
+                android:layout_height="wrap_content"
+                android:text="No data" />
+        </LinearLayout>
     </RelativeLayout>
 </layout>

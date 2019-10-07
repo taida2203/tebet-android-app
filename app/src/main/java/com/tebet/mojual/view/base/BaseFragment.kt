@@ -119,6 +119,11 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         (activity() as BaseActivity<*, *>).showLoading(isLoading)
     }
 
+    override fun showEmpty(isEmpty: Boolean) {
+        viewModel.setIsEmpty(isEmpty)
+        (activity() as BaseActivity<*, *>).showEmpty(isEmpty)
+    }
+
     override fun activity(): Activity? {
         return baseActivity
     }

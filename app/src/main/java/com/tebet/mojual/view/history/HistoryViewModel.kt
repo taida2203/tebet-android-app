@@ -66,6 +66,7 @@ class HistoryViewModel(
                             }
                         }
                         navigator.showLoading(false)
+                        navigator.showEmpty(page == 0 && dataResponse.data.isNullOrEmpty())
                     }
 
                     override fun onFailure(error: NetworkError) {

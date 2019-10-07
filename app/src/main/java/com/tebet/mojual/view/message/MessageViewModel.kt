@@ -104,6 +104,7 @@ class MessageViewModel(
                             }
 
                             navigator.showLoading(false)
+                            navigator.showEmpty(page == 0 && dataResponse.data.isNullOrEmpty())
 //                        headerFooterItems.removeItem(R.layout.item_quality_loading)
                         }
 
