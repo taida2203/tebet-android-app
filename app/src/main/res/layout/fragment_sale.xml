@@ -65,7 +65,6 @@
                 android:cursorVisible="false"
                 android:drawableRight="@drawable/signup_dropdown_btn"
                 android:textColorHint="@color/black"
-                android:layout_marginRight="@dimen/_7sdp"
                 android:focusable="false"
                 android:hint="@string/sale_quantity"
                 android:onClick="@{()->viewModel.openSelectQuantityScreen()}"
