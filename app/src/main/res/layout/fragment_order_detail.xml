@@ -194,13 +194,15 @@
 
             <Button
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
+                android:gravity="center"
                 android:enabled="@{!viewModel.isLoading}"
                 android:onClick="@{()-> viewModel.onRejectClick()}"
                 android:text="@string/order_detail_button_reject"
-                android:textColor="@color/red_btn_dialog" />
+                android:textColor="@color/red_btn_dialog"
+                android:stateListAnimator="@null"/>
 
             <View
                 android:layout_width="@dimen/_10sdp"

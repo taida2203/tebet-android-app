@@ -26,9 +26,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minHeight="@dimen/_64sdp"
             android:orientation="vertical"
-            android:background="@drawable/background_mess">
+            android:minHeight="@dimen/_62sdp"
+            android:background="@{item.read == false ? @color/grey_mess : @color/white_mess}">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
