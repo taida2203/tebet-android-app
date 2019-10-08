@@ -26,6 +26,7 @@
     <string name="registration_step1_ktp_number">KTP Number</string>
     <string name="registration_step1_upload_ktp_photo">Upload KTP Photo</string>
     <string name="registration_step1_error_name">Invalid name</string>
+    <string name="registration_step2_email">Email</string>
     <string name="registration_step2_email_optional">Email (Optional)</string>
     <string name="registration_step2_address">Address</string>
     <string name="registration_step2_kelurahan">Kelurahan</string>

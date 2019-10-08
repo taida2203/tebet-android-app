@@ -23,6 +23,7 @@
     <string name="registration_step1_ktp_number">Nomor KTP</string>
     <string name="registration_step1_upload_ktp_photo">Ambil foto KTP anda</string>
     <string name="registration_step1_error_name">Dilarang memakai karakter khusus</string>
+    <string name="registration_step2_email">Email</string>
     <string name="registration_step2_email_optional">Email (pilihan)</string>
     <string name="registration_step2_address">Alamat</string>
     <string name="registration_step2_kelurahan">Kelurahan</string>
