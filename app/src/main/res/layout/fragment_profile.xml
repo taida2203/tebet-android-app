@@ -179,6 +179,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
+                        android:visibility="@{viewModel.userProfile.email != null ? View.VISIBLE : View.GONE}"
                         android:layout_height="wrap_content">
 
                         <TextView
