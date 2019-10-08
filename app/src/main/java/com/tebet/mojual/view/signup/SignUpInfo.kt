@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders
 import co.common.view.dialog.DateDialog
 import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.common.util.toDisplayDate
 import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
@@ -42,7 +43,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
     HasSupportFragmentInjector, SignUpNavigator {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-    lateinit var birthDayDialog: DateDialog
+    var birthDayDialog: DateDialog? = null
 
     private var topRightViewBinding: ItemHomeIconBinding? = null
 
@@ -233,11 +234,21 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
     }
 
     override fun selectBirthDay() {
-        birthDayDialog = DateDialog()
-        birthDayDialog.setMaxDate(Calendar.getInstance())
-        birthDayDialog.setOnDateSetListener { _, year, month, dayOfMonth ->
-            viewModel.userProfile.birthday = "$dayOfMonth/$month/$year"
+        if (birthDayDialog == null) {
+            birthDayDialog = DateDialog()
+            birthDayDialog?.setMaxDate(Calendar.getInstance())
+            birthDayDialog?.setOnDateSetListener { _, year, month, dayOfMonth ->
+                val cal = Calendar.getInstance()
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, month)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                cal.set(Calendar.HOUR_OF_DAY, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+                cal.set(Calendar.MILLISECOND, 0)
+                viewModel.userProfile.birthday = cal.timeInMillis.toDisplayDate()
+            }
         }
-        birthDayDialog.show(supportFragmentManager, "")
+        birthDayDialog?.show(supportFragmentManager, "")
     }
 }
