@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_16sdp"
                 android:cursorVisible="false"
-                android:drawableRight="@drawable/signup_dropdown_btn"
+                android:drawableRight="@drawable/signup_dropdown_layer"
                 android:hint="@string/history_filter"
                 android:onClick="@{() -> viewModel.selectOrderStatus()}">
 
