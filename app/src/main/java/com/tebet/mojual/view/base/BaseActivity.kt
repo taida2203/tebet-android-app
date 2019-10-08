@@ -346,7 +346,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     fun handleError(exception: NetworkError) {
-        exception.message?.let { show(it) }
+        exception.errorMessage?.let { show(it) }
         if (exception.errorCode == 401) {
             viewModel.compositeDisposable.add(ProfileViewModel.logoutStream(viewModel.dataManager).subscribeWith(object :
                 DisposableObserver<Any>() {

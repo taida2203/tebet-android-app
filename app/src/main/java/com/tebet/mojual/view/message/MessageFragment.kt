@@ -6,7 +6,6 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Message
-import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.databinding.FragmentMessageBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.home.Home
@@ -30,5 +29,9 @@ class MessageFragment : BaseFragment<FragmentMessageBinding, MessageViewModel>()
 
     override fun openNotificationDetail(item: Message) {
         baseActivity?.openFromNotification(item.data)
+    }
+
+    override fun showUnreadCount(unreadCountResponse: Long) {
+        (activity as Home).viewModel.showUnreadCount(unreadCountResponse)
     }
 }

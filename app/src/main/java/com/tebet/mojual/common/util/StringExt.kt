@@ -63,3 +63,7 @@ fun String?.fromStatusCodeToDisplayable(): String? {
 fun String?.fromCodeToDisplayable(): String? {
     return this?.replace("_", " ")
 }
+
+fun Long?.toDisplayLong(): String? {
+    return this?.toString()
+}

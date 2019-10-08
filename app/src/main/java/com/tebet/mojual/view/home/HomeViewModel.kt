@@ -1,6 +1,7 @@
 package com.tebet.mojual.view.home
 
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableLong
 import androidx.lifecycle.MutableLiveData
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
@@ -15,6 +16,7 @@ class HomeViewModel(
 ) :
     BaseViewModel<HomeNavigator>(dataManager, schedulerProvider) {
     var profileLiveData = MutableLiveData<UserProfile>()
+    var unreadCount = ObservableLong()
 
     var selectedTab = ObservableField(ScreenTab.Home)
 
@@ -96,5 +98,9 @@ class HomeViewModel(
 
     fun onBankConfirmClick(order: OrderDetail, selectedItems: List<OrderContainer>) {
         navigator.showBankConfirmScreen(order, selectedItems)
+    }
+
+    fun showUnreadCount(unreadCountResponse: Long) {
+        unreadCount.set(unreadCountResponse)
     }
 }
