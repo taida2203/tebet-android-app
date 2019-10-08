@@ -195,7 +195,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                 , "CUSTOMER_REJECTED"
                 , " CUSTOMER_BLOCKED"
                 , "CUSTOMER_UNBLOCKED" -> {
-                showHomeScreen()
+                showHomeScreen(true)
                 return true
             }
             "FUTURE_SALE_REMINDER" -> {
@@ -229,7 +229,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
     }
 
-    open fun showHomeScreen() {
+    open fun showHomeScreen(forceUpdate: Boolean) {
         if (this !is Home) {
             showLoading(true)
             viewModel.compositeDisposable.add(

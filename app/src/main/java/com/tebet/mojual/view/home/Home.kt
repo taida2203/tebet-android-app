@@ -15,6 +15,7 @@ import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.request.SearchOrderRequest
+import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.databinding.ActivityHomeBinding
 import com.tebet.mojual.databinding.ItemHomeAvatarBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
@@ -136,7 +137,31 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         openFragmentSlideRight(SaleFragment(), R.id.contentHolder, SaleFragment::class.java.simpleName)
     }
 
-    override fun showHomeScreen() = openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
+    override fun showHomeScreen(forceUpdate: Boolean) {
+        if (forceUpdate) {
+            showLoading(true)
+            viewModel.compositeDisposable.add(
+                viewModel.dataManager.getProfile()
+                    .subscribeOn(viewModel.schedulerProvider.io())
+                    .observeOn(viewModel.schedulerProvider.ui())
+                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                        override fun onFailure(error: NetworkError) {
+                            showLoading(false)
+                            handleError(error)
+                        }
+
+                        override fun onSuccess(dataResponse: UserProfile) {
+                            showLoading(false)
+                            showHomeScreen()
+                        }
+                    })
+            )
+        } else {
+            openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
+        }
+    }
+
+    private fun showHomeScreen() = openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
 
     override fun showTipScreen() {
         startActivity(Intent(this, QualityHelp::class.java))

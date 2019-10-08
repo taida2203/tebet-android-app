@@ -14,7 +14,7 @@ interface HomeNavigator {
     fun showSellScreen()
     fun showOrderCompleteScreen(dataResponse: Order)
     fun showOrderDetailScreen(dataResponse: Order)
-    fun showHomeScreen()
+    fun showHomeScreen(forceUpdate: Boolean = false)
     fun showHistoryScreen(searchOrderRequest: SearchOrderRequest?)
     fun showAddContainerScreen(dataResponse: Order)
     fun showRejectReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
