@@ -12,6 +12,7 @@ import androidx.databinding.*
 import br.com.ilhasoft.support.validation.Validator
 import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
+import com.tebet.mojual.common.util.BindingUtils
 import com.tebet.mojual.data.models.Address
 import com.tebet.mojual.data.models.City
 import com.tebet.mojual.databinding.LayoutAddressInputBinding
@@ -32,6 +33,12 @@ class AddressInputView : LinearLayout {
     lateinit var validator: Validator
 
     var cityAdapter: ArrayAdapter<String>? = null
+
+    var onOkEditText: BindingUtils.OnOkInSoftKeyboardListener = object : BindingUtils.OnOkInSoftKeyboardListener() {
+        override fun onOkInSoftKeyboard() {
+            viewModel?.hideKeyboard()
+        }
+    }
 
     constructor(context: Context) : super(context) {
         init(context)

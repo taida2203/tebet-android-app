@@ -58,4 +58,8 @@ class SignUpInfoStep2Model(
             userProfile.get()?.domicileAddress?.expanded = !it.expanded
         }
     }
+
+    fun hideKeyboard() {
+        navigator.hideKeyboard()
+    }
 }

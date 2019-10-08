@@ -107,6 +107,7 @@
                 android:hint="@string/registration_step2_postal_code"
                 android:imeOptions="actionNext"
                 android:inputType="number"
+                app:onOkInSoftKeyboard="@{view.onOkEditText}"
                 android:text="@={view.data.postalCode}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
