@@ -69,13 +69,15 @@ class ContainerInputView : LinearLayout {
 
         orientation = LinearLayout.HORIZONTAL
     }
-
-    @BindingAdapter(value = ["container"], requireAll = false)
-    fun ContainerInputView.setContainer(container: ContainerWrapper?) {
-        this@ContainerInputView.data.set(container)
-        container?.weightList?.let {
-            this@ContainerInputView.itemWeights.clear()
-            this@ContainerInputView.itemWeights.addAll(it)
+    companion object {
+        @BindingAdapter(value = ["container"], requireAll = false)
+        @JvmStatic
+        fun ContainerInputView.setContainer(container: ContainerWrapper?) {
+            this.data.set(container)
+            container?.weightList?.let {
+                this.itemWeights.clear()
+                this.itemWeights.addAll(it)
+            }
         }
     }
 

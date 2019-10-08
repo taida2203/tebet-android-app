@@ -57,9 +57,12 @@ class QuestionInputView : LinearLayout {
         orientation = HORIZONTAL
     }
 
-    @BindingAdapter(value = ["data"], requireAll = false)
-    fun QuestionInputView.setQuestionData(question: Question?) {
-        this@QuestionInputView.data.set(question)
+    companion object {
+        @BindingAdapter(value = ["data"], requireAll = false)
+        @JvmStatic
+        fun QuestionInputView.setQuestionData(question: Question?) {
+            this.data.set(question)
+        }
     }
 
     fun validate(): Boolean {
