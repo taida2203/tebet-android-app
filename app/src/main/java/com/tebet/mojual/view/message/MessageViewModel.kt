@@ -41,17 +41,17 @@ class MessageViewModel(
                     compositeDisposable.add(
                         Observable.just(item)
                             .concatMap {
-                                dataManager.getUnreadCount()
-                                    .concatMap { count ->
-                                        count.data?.let { itemCount = it}
-                                        Observable.just(it) }
-                            }
-                            .concatMap {
                                 when {
-                                    it.read == false -> dataManager.markRead(item.notificationHistoryId!!)
+                                    it.read == false -> dataManager.markRead(item.notificationHistoryId!!).concatMap { markReadRespone ->
+                                        dataManager.getUnreadCount()
+                                            .concatMap { count ->
+                                                count.data?.let { unreadCount -> itemCount = unreadCount }
+                                                Observable.just(markReadRespone) }
+                                    }
                                     else -> Observable.just(AuthJson(status = "", message = "", data = it))
                                 }
-                            }.observeOn(schedulerProvider.ui())
+                            }
+                            .observeOn(schedulerProvider.ui())
                             .subscribeWith(object : CallbackWrapper<Message>() {
                                 override fun onSuccess(dataResponse: Message) {
                                     navigator.showUnreadCount(itemCount)
@@ -79,15 +79,6 @@ class MessageViewModel(
             items.clear()
         }
         loadData(0)
-        compositeDisposable.add(dataManager.getUnreadCount().subscribeWith(object :
-            CallbackWrapper<Long>() {
-            override fun onSuccess(dataResponse: Long) {
-                navigator.showUnreadCount(dataResponse)
-            }
-
-            override fun onFailure(error: NetworkError) {
-            }
-        }))
     }
 
     fun loadData(page: Int = 0) {

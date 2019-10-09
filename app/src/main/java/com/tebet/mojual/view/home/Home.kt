@@ -291,6 +291,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun refreshData(notification: Message) {
         super.refreshData(notification)
+        viewModel.updateUnReadCount()
         if (currentFragment() is OrderDetailFragment) {
             openFromNotification(notification.data)
         }
