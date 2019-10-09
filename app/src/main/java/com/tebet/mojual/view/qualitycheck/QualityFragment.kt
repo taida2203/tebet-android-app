@@ -2,6 +2,7 @@ package com.tebet.mojual.view.qualitycheck
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
@@ -13,6 +14,7 @@ import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.help.QualityHelp
 import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
+import kotlinx.android.synthetic.main.fragment_quality.*
 
 class QualityFragment : BaseFragment<FragmentQualityBinding, QualityViewModel>(), QualityNavigator {
     override val bindingVariable: Int
@@ -29,6 +31,8 @@ class QualityFragment : BaseFragment<FragmentQualityBinding, QualityViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.navigator = this
+        var textConcat = getString(R.string.check_quality_tip1) + " <font color='#49802D'>" + getString(R.string.check_quality_tip2) + "</font>"
+        tipText.text = Html.fromHtml(textConcat)
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
     }
