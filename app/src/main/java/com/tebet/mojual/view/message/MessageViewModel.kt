@@ -36,9 +36,16 @@ class MessageViewModel(
             itemBinding.set(BR.item, R.layout.item_message)
             itemBinding.bindExtra(BR.listener, object : OnListItemClick<Message> {
                 override fun onItemClick(item: Message) {
+                    var itemCount: Long = 0
                     navigator.showLoading(true)
                     compositeDisposable.add(
                         Observable.just(item)
+                            .concatMap {
+                                dataManager.getUnreadCount()
+                                    .concatMap { count ->
+                                        count.data?.let { itemCount = it}
+                                        Observable.just(it) }
+                            }
                             .concatMap {
                                 when {
                                     it.read == false -> dataManager.markRead(item.notificationHistoryId!!)
@@ -47,6 +54,7 @@ class MessageViewModel(
                             }.observeOn(schedulerProvider.ui())
                             .subscribeWith(object : CallbackWrapper<Message>() {
                                 override fun onSuccess(dataResponse: Message) {
+                                    navigator.showUnreadCount(itemCount)
                                     navigator.showLoading(false)
                                     if (!items.contains(dataResponse)) items.add(dataResponse) else items[items.indexOf(
                                         dataResponse
@@ -91,16 +99,13 @@ class MessageViewModel(
                 dataManager.getUserProfileDB()
                     .concatMap {
                         it.data?.profileId?.let { profileId ->
-                            dataManager.getUnreadCount()
-                                .concatMap {
-                                    dataManager.getMessages(
-                                        MessageRequest(
-                                            profileId = profileId,
-                                            offset = (page) * 10,
-                                            limit = 10
-                                        )
-                                    )
-                                }
+                            dataManager.getMessages(
+                                MessageRequest(
+                                    profileId = profileId,
+                                    offset = (page) * 10,
+                                    limit = 10
+                                )
+                            )
                         }
                     }
                     .observeOn(schedulerProvider.ui())

@@ -39,6 +39,15 @@ class HomeViewModel(
                     }
                 })
         )
+        compositeDisposable.add(dataManager.getUnreadCount().subscribeWith(object :
+            CallbackWrapper<Long>() {
+            override fun onSuccess(dataResponse: Long) {
+                showUnreadCount(dataResponse)
+            }
+
+            override fun onFailure(error: NetworkError) {
+            }
+        }))
     }
 
     fun onSellClick() {
