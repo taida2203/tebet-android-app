@@ -36,39 +36,11 @@ class MessageViewModel(
             itemBinding.set(BR.item, R.layout.item_message)
             itemBinding.bindExtra(BR.listener, object : OnListItemClick<Message> {
                 override fun onItemClick(item: Message) {
-                    var itemCount: Long = 0
-                    navigator.showLoading(true)
-                    compositeDisposable.add(
-                        Observable.just(item)
-                            .concatMap {
-                                when {
-                                    it.read == false -> dataManager.markRead(item.notificationHistoryId!!).concatMap { markReadRespone ->
-                                        dataManager.getUnreadCount()
-                                            .concatMap { count ->
-                                                count.data?.let { unreadCount -> itemCount = unreadCount }
-                                                Observable.just(markReadRespone) }
-                                    }
-                                    else -> Observable.just(AuthJson(status = "", message = "", data = it))
-                                }
-                            }
-                            .observeOn(schedulerProvider.ui())
-                            .subscribeWith(object : CallbackWrapper<Message>() {
-                                override fun onSuccess(dataResponse: Message) {
-                                    navigator.showUnreadCount(itemCount)
-                                    navigator.showLoading(false)
-                                    if (!items.contains(dataResponse)) items.add(dataResponse) else items[items.indexOf(
-                                        dataResponse
-                                    )] = dataResponse
-                                    navigator.openNotificationDetail(item)
-                                }
-
-                                override fun onFailure(error: NetworkError) {
-                                    navigator.showLoading(false)
-                                    handleError(error)
-                                    navigator.openNotificationDetail(item)
-                                }
-                            })
-                    )
+                    navigator.showLoading(false)
+                    if (!items.contains(item)) items.add(item) else items[items.indexOf(
+                        item
+                    )] = item
+                    navigator.openNotificationDetail(item)
                 }
             })
         }

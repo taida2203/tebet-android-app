@@ -27,6 +27,7 @@ import co.common.constant.AppConstant
 import co.common.util.LanguageUtil
 import co.common.util.PreferenceUtils
 import co.common.view.dialog.RoundedOkDialog
+import co.sdk.auth.core.models.AuthJson
 import co.sdk.auth.core.models.LoginException
 import com.tapadoo.alerter.Alerter
 import com.tebet.mojual.App
@@ -37,6 +38,7 @@ import com.tebet.mojual.data.models.Message
 import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.models.request.MessageRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.databinding.ActivityBaseBinding
 import com.tebet.mojual.view.help.QualityHelp
@@ -48,6 +50,7 @@ import com.tebet.mojual.view.signup.SignUpInfo
 import com.tebet.mojual.view.signup.step0.SignUpPassword
 import com.tebet.mojual.view.splash.Splash
 import dagger.android.AndroidInjection
+import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
 import kotlinx.android.synthetic.main.activity_base.*
 import timber.log.Timber
@@ -123,7 +126,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         setSupportActionBar(baseBinding.baseToolbar)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         (application as App).notificationHandlerData.observe(this, Observer { remoteMessage ->
-            remoteMessage?.let {message ->
+            remoteMessage?.let { message ->
                 val alert = Alerter.create(this)
                     .setIcon(R.drawable.logosmall)
                     .setBackgroundColorRes(R.color.green_dark) // or setBackgroundColorInt(Color.CYAN)
@@ -157,7 +160,9 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                 try {
                     val i = Intent(applicationContext, ScreenListenerService::class.java)
                     when {
-                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> applicationContext.startForegroundService(i) // https://www.fabric.io/masbro/android/apps/co.masbro.consumer/issues/5ac742c036c7b23527af337b?time=last-seven-days
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> applicationContext.startForegroundService(
+                            i
+                        ) // https://www.fabric.io/masbro/android/apps/co.masbro.consumer/issues/5ac742c036c7b23527af337b?time=last-seven-days
                         else -> applicationContext.startService(i)
                     }
                 } catch (e: Exception) {
@@ -186,6 +191,43 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     open fun showCheckQualityScreen() {}
 
     fun openFromNotification(extras: Map<String, String?>): Boolean {
+        viewModel.compositeDisposable.add(
+            viewModel.dataManager.getUserProfileDB()
+                .concatMap {
+                    it.data?.profileId?.let { profileId ->
+                        viewModel.dataManager.getMessages(
+                            MessageRequest(
+                                profileId = profileId,
+                                offset = 0,
+                                limit = 1,
+                                read = false
+                            )
+                        )
+                    }
+                }
+                .map { it.data?.data?.firstOrNull() }
+                .concatMap {
+                    when {
+                        extras["templateCode"] != null && extras["templateCode"] == it.data["templateCode"] -> it.notificationHistoryId?.let { it1 ->
+                            viewModel.dataManager.markRead(it1).concatMap { markReadResponse ->
+                                viewModel.dataManager.getUnreadCount()
+                                    .concatMap { Observable.just(markReadResponse) }
+                            }
+                        }
+                        else -> Observable.error(Throwable())
+                    }
+                }
+                .subscribeOn(viewModel.schedulerProvider.io())
+                .observeOn(viewModel.schedulerProvider.ui())
+                .subscribeWith(object : CallbackWrapper<Message>() {
+                    override fun onSuccess(dataResponse: Message) {
+                        refreshData(dataResponse)
+                    }
+
+                    override fun onFailure(error: NetworkError) {
+                    }
+                })
+        )
         when (extras["templateCode"]) {
             "WELCOME" -> {
                 showTipScreen()
@@ -348,26 +390,28 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     fun handleError(exception: NetworkError) {
         exception.errorMessage?.let { show(it) }
         if (exception.errorCode == 401) {
-            viewModel.compositeDisposable.add(ProfileViewModel.logoutStream(viewModel.dataManager).subscribeWith(object :
-                DisposableObserver<Any>() {
-                override fun onComplete() {
-                }
+            viewModel.compositeDisposable.add(ProfileViewModel.logoutStream(viewModel.dataManager).subscribeWith(
+                object :
+                    DisposableObserver<Any>() {
+                    override fun onComplete() {
+                    }
 
-                override fun onNext(t: Any) {
-                    forceLogin()
-                }
+                    override fun onNext(t: Any) {
+                        forceLogin()
+                    }
 
-                override fun onError(e: Throwable) {
-                    forceLogin()
-                }
-            }))
+                    override fun onError(e: Throwable) {
+                        forceLogin()
+                    }
+                }))
         }
     }
 
     fun forceLogin() {
         finish()
         val loginIntent = Intent(this@BaseActivity, Login::class.java)
-        loginIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        loginIntent.flags =
+            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(loginIntent)
     }
 
@@ -399,13 +443,23 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     @SuppressLint("CommitTransaction")
-    open fun openFragmentSlideRight(fragment: Fragment, placeHolder: Int, backStackTag : String? = null) {
+    open fun openFragmentSlideRight(
+        fragment: Fragment,
+        placeHolder: Int,
+        backStackTag: String? = null
+    ) {
         run {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && !isDestroyed || Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 val manager = supportFragmentManager
                 manager.beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-                    .replace(placeHolder, fragment, backStackTag).addToBackStack(backStackTag).commitAllowingStateLoss()
+                    .setCustomAnimations(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right
+                    )
+                    .replace(placeHolder, fragment, backStackTag).addToBackStack(backStackTag)
+                    .commitAllowingStateLoss()
             }
         }
     }
@@ -459,7 +513,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     override fun show(messageResId: Int) {
-        RoundedOkDialog(getString(messageResId)).show(supportFragmentManager, getString(messageResId))
+        RoundedOkDialog(getString(messageResId)).show(
+            supportFragmentManager,
+            getString(messageResId)
+        )
     }
 
     protected fun isPinSetted(): Boolean {
@@ -469,7 +526,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     protected fun startPinCodeScreen() {
         if (isPinSetted()) {
-            if (activity() !is PinCode) startActivityForResult(Intent(this, PinCode::class.java), REQUEST_CODE_PIN)
+            if (activity() !is PinCode) startActivityForResult(
+                Intent(this, PinCode::class.java),
+                REQUEST_CODE_PIN
+            )
         }
     }
 
