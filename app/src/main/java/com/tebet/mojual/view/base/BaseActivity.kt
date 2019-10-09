@@ -190,44 +190,44 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     open fun showCheckQualityScreen() {}
 
-    fun openFromNotification(extras: Map<String, String?>): Boolean {
-        viewModel.compositeDisposable.add(
-            viewModel.dataManager.getUserProfileDB()
-                .concatMap {
-                    it.data?.profileId?.let { profileId ->
-                        viewModel.dataManager.getMessages(
-                            MessageRequest(
-                                profileId = profileId,
-                                offset = 0,
-                                limit = 1,
-                                read = false
+    fun openFromNotification(extras: Map<String, String?>, isMarkRead: Boolean = false): Boolean {
+        if (isMarkRead) {
+            viewModel.compositeDisposable.add(
+                viewModel.dataManager.getUserProfileDB()
+                    .concatMap {
+                        it.data?.profileId?.let { profileId -> viewModel.dataManager.getMessages(
+                                MessageRequest(profileId = profileId, offset = 0, limit = 1, read = false)
                             )
-                        )
-                    }
-                }
-                .map { it.data?.data?.firstOrNull() }
-                .concatMap {
-                    when {
-                        extras["templateCode"] != null && extras["templateCode"] == it.data["templateCode"] -> it.notificationHistoryId?.let { it1 ->
-                            viewModel.dataManager.markRead(it1).concatMap { markReadResponse ->
-                                viewModel.dataManager.getUnreadCount()
-                                    .concatMap { Observable.just(markReadResponse) }
-                            }
                         }
-                        else -> Observable.error(Throwable())
                     }
-                }
-                .subscribeOn(viewModel.schedulerProvider.io())
-                .observeOn(viewModel.schedulerProvider.ui())
-                .subscribeWith(object : CallbackWrapper<Message>() {
-                    override fun onSuccess(dataResponse: Message) {
-                        refreshData(dataResponse)
+                    .map { it.data?.data?.firstOrNull() }
+                    .concatMap {
+                        when {
+                            extras["templateCode"] != null && extras["templateCode"] == it.data["templateCode"] -> it.notificationHistoryId?.let { it1 ->
+                                viewModel.dataManager.markRead(it1).concatMap { markReadResponse ->
+                                    viewModel.dataManager.getUnreadCount()
+                                        .concatMap { Observable.just(markReadResponse) }
+                                }
+                            }
+                            else -> Observable.error(Throwable())
+                        }
                     }
+                    .subscribeOn(viewModel.schedulerProvider.io())
+                    .observeOn(viewModel.schedulerProvider.ui())
+                    .subscribeWith(object : CallbackWrapper<Message>() {
+                        override fun onSuccess(dataResponse: Message) {
+                            refreshData(dataResponse)
+                        }
 
-                    override fun onFailure(error: NetworkError) {
-                    }
-                })
-        )
+                        override fun onFailure(error: NetworkError) {
+                        }
+                    })
+            )
+        }
+        return openFromNotification(extras)
+    }
+
+    fun openFromNotification(extras: Map<String, String?>): Boolean {
         when (extras["templateCode"]) {
             "WELCOME" -> {
                 showTipScreen()
