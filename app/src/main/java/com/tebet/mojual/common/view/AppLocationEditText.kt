@@ -19,7 +19,7 @@ open class AppLocationEditText : AppEditText {
         setSingleLine(false)
         maxLines = 2
 
-        val img = ContextCompat.getDrawable(context, R.drawable.signup_location)
+        val img = ContextCompat.getDrawable(context, R.drawable.icon_location)
         img?.setBounds(60, 60, 60, 60)
         setCompoundDrawablesWithIntrinsicBounds(null, null, img, null)
     }
