@@ -136,9 +136,11 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                     .enableSwipeToDismiss()
                 if (!message.data["orderId"].isNullOrBlank()) {
                     alert.addButton("View", R.style.AlertButton, View.OnClickListener {
-                        if (openFromNotification(message.data)) Alerter.hide()
+                        openFromNotification(message.data, true)
+                        Alerter.hide()
                     }).setOnClickListener(View.OnClickListener {
-                        if (openFromNotification(message.data)) Alerter.hide()
+                        openFromNotification(message.data, true)
+                        Alerter.hide()
                     })
                 }
                 alert.show()

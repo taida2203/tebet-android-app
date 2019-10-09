@@ -84,7 +84,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         showHomeScreen()
         intent.extras?.let {
             PreferenceUtils.saveBoolean(BaseActivity.EXTRA_FORCE_LOCK, true)
-            openFromNotification(bundleToMap(it))
+            openFromNotification(bundleToMap(it), true)
         }
         viewModel.loadData()
         topLeftViewBinding?.avatar?.setOnClickListener { showProfileScreen() }
@@ -293,7 +293,6 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         super.refreshData(notification)
         viewModel.updateUnReadCount()
         when {
-            currentFragment() is OrderDetailFragment -> openFromNotification(notification.data)
             currentFragment() is MessageFragment -> showInboxScreen()
         }
     }

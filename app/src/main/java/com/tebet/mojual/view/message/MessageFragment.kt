@@ -30,8 +30,4 @@ class MessageFragment : BaseFragment<FragmentMessageBinding, MessageViewModel>()
     override fun openNotificationDetail(item: Message) {
         baseActivity?.openFromNotification(item.data, item.read == false)
     }
-
-    override fun showUnreadCount(unreadCountResponse: Long) {
-        (activity as Home).viewModel.showUnreadCount(unreadCountResponse)
-    }
 }
