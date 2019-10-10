@@ -50,7 +50,7 @@ data class UserProfile(
     }
 
     enum class Status(val status: String) {
-        Init("INIT"), InitProfile("INIT_PROFILE"), New("NEW"), Verified("VERIFIED"), Rejected("REJECTED")
+        Init("INIT"), InitProfile("INIT_PROFILE"), New("NEW"), Verified("VERIFIED"), Rejected("REJECTED"), Blocked("BLOCKED")
     }
 
     @Ignore

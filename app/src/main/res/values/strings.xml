@@ -58,6 +58,8 @@
 
 
     <string name="home_verify_warning">Your account is in verify process. MOJUAL team will contact you soon</string>
+    <string name="home_verify_rejected">Your account is REJECTED. Please contact MOJUAL team for detail</string>
+    <string name="home_verify_blocked">Your account is DISABLE. Please contact MOJUAL team for detail</string>
     <string name="home_navigation_home">Home</string>
     <string name="home_navigation_inbox">Inbox</string>
     <string name="home_navigation_history">History</string>

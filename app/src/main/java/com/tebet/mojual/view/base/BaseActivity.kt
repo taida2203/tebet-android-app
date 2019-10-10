@@ -33,7 +33,6 @@ import com.tebet.mojual.common.services.ScreenListenerService
 import com.tebet.mojual.data.models.Message
 import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.Order
-import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.models.request.MessageRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.databinding.ActivityBaseBinding
@@ -104,6 +103,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     companion object {
         const val REQUEST_CODE_PIN = 1991
         const val EXTRA_FORCE_LOCK = "EXTRA_FORCE_LOCK"
+        const val EXTRA_FORCE_REFRESH = "EXTRA_FORCE_REFRESH"
     }
 
     override fun onFragmentAttached() {
@@ -135,12 +135,12 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                     .setTextAppearance(android.R.style.TextAppearance_Large_Inverse)
                     .setDuration(5000)
                     .enableSwipeToDismiss()
-                if (!message.data["orderId"].isNullOrBlank()) {
+                if (!message.data?.get("orderId").isNullOrBlank()) {
                     alert.addButton("View", R.style.AlertButton, View.OnClickListener {
-                        openFromNotification(message.data, true)
+                        message.data?.let { it1 -> openFromNotification(it1, true) }
                         Alerter.hide()
                     }).setOnClickListener(View.OnClickListener {
-                        openFromNotification(message.data, true)
+                        message.data?.let { it1 -> openFromNotification(it1, true) }
                         Alerter.hide()
                     })
                 }
@@ -219,7 +219,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                     .map { it.data?.data?.firstOrNull() }
                     .concatMap {
                         when {
-                            extras["templateCode"] != null && extras["templateCode"] == it.data["templateCode"] -> it.notificationHistoryId?.let { it1 ->
+                            extras["templateCode"] != null && extras["templateCode"] == it.data?.get("templateCode") -> it.notificationHistoryId?.let { it1 ->
                                 viewModel.dataManager.markRead(it1).concatMap { markReadResponse ->
                                     viewModel.dataManager.getUnreadCount()
                                         .concatMap { Observable.just(markReadResponse) }
@@ -251,7 +251,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             }
             "CUSTOMER_VERIFIED"
                 , "CUSTOMER_REJECTED"
-                , " CUSTOMER_BLOCKED"
+                , "CUSTOMER_BLOCKED"
                 , "CUSTOMER_UNBLOCKED" -> {
                 showHomeScreen(true)
                 return true
@@ -289,26 +289,11 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     open fun showHomeScreen(forceUpdate: Boolean) {
         if (this !is Home) {
-            showLoading(true)
-            viewModel.compositeDisposable.add(
-                viewModel.dataManager.getProfile()
-                    .subscribeOn(viewModel.schedulerProvider.io())
-                    .observeOn(viewModel.schedulerProvider.ui())
-                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                        override fun onFailure(error: NetworkError) {
-                            showLoading(false)
-                            handleError(error)
-                        }
-
-                        override fun onSuccess(dataResponse: UserProfile) {
-                            showLoading(false)
-                            val intent = Intent(activity(), Home::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            startActivity(intent)
-                            finish()
-                        }
-                    })
-            )
+            val intent = Intent(activity(), Home::class.java)
+            intent.putExtra(EXTRA_FORCE_REFRESH, true)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
         }
     }
 

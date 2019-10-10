@@ -9,6 +9,7 @@ import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.request.SearchOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import io.reactivex.Observable
 
 class HomeViewModel(
     dataManager: DataManager,
@@ -27,6 +28,7 @@ class HomeViewModel(
     override fun loadData(isForceLoad: Boolean?) {
         compositeDisposable.add(
             dataManager.getUserProfileDB()
+                .concatMap { if(isForceLoad == true) dataManager.getProfile() else Observable.just(it) }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {

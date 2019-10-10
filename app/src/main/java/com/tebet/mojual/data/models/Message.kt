@@ -13,7 +13,7 @@ data class Message(
     var message: String? = null,
     var createdDate: Long? = null,
     var read: Boolean? = true,
-    var data: Map<String, String> = emptyMap()
+    var data: Map<String, String?>? = emptyMap()
 ) : Serializable, BaseObservable() {
     override fun equals(other: Any?): Boolean {
         if (other is Message) {

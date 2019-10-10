@@ -97,12 +97,12 @@
             android:layout_marginBottom="@dimen/_8sdp"
             android:background="@drawable/border_edit_text"
             android:padding="@dimen/_8sdp"
-            android:visibility="@{viewModel.userProfile.statusEnum == Status.New ? View.VISIBLE : View.GONE}">
+            android:visibility="@{viewModel.userProfile.statusEnum != Status.New &amp;&amp; viewModel.userProfile.statusEnum != Status.Rejected &amp;&amp; viewModel.userProfile.statusEnum != Status.Blocked? View.GONE : View.VISIBLE}">
 
             <com.tebet.mojual.common.view.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_verify_warning"
+                android:text="@{viewModel.userProfile.statusEnum == Status.New? @string/home_verify_warning : viewModel.userProfile.statusEnum == Status.Rejected? @string/home_verify_rejected : @string/home_verify_blocked}"
                 android:textColor="@color/red_btn_dialog"
                 android:textStyle="bold" />
         </RelativeLayout>

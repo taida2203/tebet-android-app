@@ -86,7 +86,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             PreferenceUtils.saveBoolean(BaseActivity.EXTRA_FORCE_LOCK, true)
             openFromNotification(bundleToMap(it), true)
         }
-        viewModel.loadData()
+        viewModel.loadData(intent.hasExtra(EXTRA_FORCE_REFRESH))
         topLeftViewBinding?.avatar?.setOnClickListener { showProfileScreen() }
         viewModel.profileLiveData.observe(
             this,
@@ -137,29 +137,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         openFragmentSlideRight(SaleFragment(), R.id.contentHolder, SaleFragment::class.java.simpleName)
     }
 
-    override fun showHomeScreen(forceUpdate: Boolean) {
-        if (forceUpdate) {
-            showLoading(true)
-            viewModel.compositeDisposable.add(
-                viewModel.dataManager.getProfile()
-                    .subscribeOn(viewModel.schedulerProvider.io())
-                    .observeOn(viewModel.schedulerProvider.ui())
-                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                        override fun onFailure(error: NetworkError) {
-                            showLoading(false)
-                            handleError(error)
-                        }
-
-                        override fun onSuccess(dataResponse: UserProfile) {
-                            showLoading(false)
-                            showHomeScreen()
-                        }
-                    })
-            )
-        } else {
-            openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
-        }
-    }
+    override fun showHomeScreen(forceUpdate: Boolean) = openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
 
     private fun showHomeScreen() = openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
 
@@ -291,8 +269,17 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun refreshData(notification: Message) {
         super.refreshData(notification)
-        viewModel.updateUnReadCount()
+        when (notification.data?.get("templateCode")) {
+            "CUSTOMER_VERIFIED"
+                , "CUSTOMER_REJECTED"
+                , "CUSTOMER_BLOCKED"
+                , "CUSTOMER_UNBLOCKED" -> {
+                viewModel.loadData()
+            }
+            else -> viewModel.updateUnReadCount()
+        }
         when {
+            currentFragment() is HomeFragment -> showHomeScreen()
             currentFragment() is MessageFragment -> showInboxScreen()
         }
     }

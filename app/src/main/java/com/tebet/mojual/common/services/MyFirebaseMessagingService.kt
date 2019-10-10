@@ -50,9 +50,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 convertedMessage.data = extraData
             }
             when {
-                convertedMessage.data["templateCode"] == "WELCOME" -> Handler(Looper.getMainLooper()).postDelayed({
+                convertedMessage.data?.get("templateCode") == "WELCOME" -> Handler(Looper.getMainLooper()).postDelayed({
                     (application as App).notificationHandlerData.postValue(convertedMessage)
                 }, 1000)
+                convertedMessage.data?.get("templateCode") == "CUSTOMER_VERIFIED"
+                        || convertedMessage.data?.get("templateCode") == "CUSTOMER_BLOCKED"
+                        || convertedMessage.data?.get("templateCode") == "CUSTOMER_REJECTED"
+                        || convertedMessage.data?.get("templateCode") == "CUSTOMER_UNBLOCKED"
+                -> dataManager.getProfile().subscribe({
+                    (application as App).notificationHandlerData.postValue(convertedMessage)
+                }, { error ->
+                    Timber.e(error)
+                    (application as App).notificationHandlerData.postValue(convertedMessage)
+                })
                 else -> (application as App).notificationHandlerData.postValue(convertedMessage)
             }
         }
