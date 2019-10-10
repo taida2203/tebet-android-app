@@ -28,7 +28,7 @@ open class AppAutoCompleteEditText : AppCompatAutoCompleteTextView {
         this.setHintTextColor(ContextCompat.getColor(context, R.color.grey))
         setLines(1)
         setSingleLine(true)
-        val img = ContextCompat.getDrawable(context, R.drawable.signup_dropdown_btn)
+        val img = ContextCompat.getDrawable(context, R.drawable.signup_dropdown_layer)
         img?.setBounds( 60, 60, 60, 60 )
         setCompoundDrawablesWithIntrinsicBounds(null, null, img, null)
     }

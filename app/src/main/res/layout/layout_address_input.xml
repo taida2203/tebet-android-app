@@ -87,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/registration_step2_city"
                 android:imeOptions="actionNext"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:nextFocusDown="@+id/postal_code"
                 android:text="@={view.data.city}"
                 app:validateEmpty="@{true}"
