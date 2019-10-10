@@ -1,20 +1,17 @@
 package com.tebet.mojual.view.base
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.RelativeLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +24,6 @@ import co.common.constant.AppConstant
 import co.common.util.LanguageUtil
 import co.common.util.PreferenceUtils
 import co.common.view.dialog.RoundedOkDialog
-import co.sdk.auth.core.models.AuthJson
 import co.sdk.auth.core.models.LoginException
 import com.tapadoo.alerter.Alerter
 import com.tebet.mojual.App
@@ -46,13 +42,13 @@ import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.profile.ProfileViewModel
 import com.tebet.mojual.view.profilepin.PinCode
+import com.tebet.mojual.view.qualitydetail.OrderDetailActivity
 import com.tebet.mojual.view.signup.SignUpInfo
 import com.tebet.mojual.view.signup.step0.SignUpPassword
 import com.tebet.mojual.view.splash.Splash
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
-import kotlinx.android.synthetic.main.activity_base.*
 import timber.log.Timber
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
@@ -81,6 +77,12 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
      */
     abstract val viewModel: V
 
+    /**
+     * @return layout resource id
+     */
+    @get:LayoutRes
+    protected abstract val contentLayoutId: Int
+
     open var enableBackButton: Boolean = true
         set(isEnable) {
             field = isEnable
@@ -108,7 +110,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     override fun onFragmentDetached(tag: String) {
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -178,6 +179,19 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         onCreateBase(savedInstanceState, contentLayoutId)
     }
 
+    fun performDependencyInjection() {
+        AndroidInjection.inject(this)
+    }
+
+    private fun performDataBinding() {
+        viewDataBinding =
+            DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding.placeHolder, true)
+        viewDataBinding?.setVariable(bindingVariable, viewModel)
+        viewDataBinding?.executePendingBindings()
+    }
+
+    protected abstract fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int)
+
     private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
         val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         for (service in manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -229,7 +243,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         return openFromNotification(extras)
     }
 
-    fun openFromNotification(extras: Map<String, String?>): Boolean {
+    private fun openFromNotification(extras: Map<String, String?>): Boolean {
         when (extras["templateCode"]) {
             "WELCOME" -> {
                 showTipScreen()
@@ -300,13 +314,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     open fun showOrderDetailScreen(dataResponse: Order) {
         if (this !is Home) {
-            // TODO: add order detail activity page
+            val mIntent = Intent(this, OrderDetailActivity::class.java)
+            mIntent.putExtra("EXTRA_ORDER", dataResponse)
+            startActivity(mIntent)
         }
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    fun hasPermission(permission: String): Boolean {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
     }
 
     fun hideKeyboard() {
@@ -314,63 +325,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         if (view != null) {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-    }
-
-    //    public boolean isNetworkConnected() {
-    //        return NetworkUtils.isNetworkConnected(getApplicationContext());
-    //    }
-
-
-    fun performDependencyInjection() {
-        AndroidInjection.inject(this)
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    fun requestPermissionsSafely(permissions: Array<String>, requestCode: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, requestCode)
-        }
-    }
-
-    private fun performDataBinding() {
-        viewDataBinding =
-            DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding.placeHolder, true)
-        viewDataBinding?.setVariable(bindingVariable, viewModel)
-        viewDataBinding?.executePendingBindings()
-    }
-
-    /**
-     * @return layout resource id
-     */
-    @get:LayoutRes
-    protected abstract val contentLayoutId: Int
-
-    fun fullScreenChildHolder(isFullScreen: Boolean) {
-        if (isFullScreen) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).removeRule(
-                    RelativeLayout.BELOW
-                )
-            } else {
-                (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(
-                    RelativeLayout.BELOW,
-                    0
-                )
-            }
-        } else {
-            (baseBinding.placeHolder.layoutParams as RelativeLayout.LayoutParams).addRule(
-                RelativeLayout.BELOW,
-                R.id.baseToolbar
-            )
-        }
-    }
-
-    fun showNotification(isShow: Boolean) {
-        if (isShow) {
-            rlHomeNotificationContainer.visibility = View.VISIBLE
-        } else {
-            rlHomeNotificationContainer.visibility = View.GONE
         }
     }
 
@@ -409,6 +363,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
     }
 
+    fun handleError(error: String?) {
+        error?.let { show(it) }
+    }
+
     fun forceLogin() {
         finish()
         val loginIntent = Intent(this@BaseActivity, Login::class.java)
@@ -426,8 +384,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         super.setTitle("")
         baseBinding.tvBaseTitle.text = title
     }
-
-    protected abstract fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int)
 
     override fun onBackPressed() {
         showLoading(false)
@@ -466,15 +422,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
     }
 
-    open fun addFragment(fragment: Fragment, placeHolder: Int, tag: String = "") {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && !isDestroyed || Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            val manager = supportFragmentManager
-            val transaction = manager.beginTransaction()
-            transaction.replace(placeHolder, fragment, tag)
-                .commitAllowingStateLoss()
-        }
-    }
-
     protected fun setActionBarColor(@ColorInt color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window = window
@@ -483,31 +430,12 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
     }
 
-    fun isLowEndDevice(): Boolean {
-        val memInfo = ActivityManager.MemoryInfo()
-        val activityManager = getSystemService(Context.ACTIVITY_SERVICE)
-        if (activityManager is ActivityManager) {
-            activityManager.getMemoryInfo(memInfo)
-            val totalMemory = memInfo.totalMem / 0x100000L
-            return totalMemory < 1024 || Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP
-        }
-        return true
-    }
-
-    fun handleError(error: String?) {
-        error?.let { show(it) }
-    }
-
     override fun activity(): Activity {
         return this
     }
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
-
-    override fun finish() {
-        super.finish()
     }
 
     override fun show(message: String) {
