@@ -27,7 +27,7 @@ open class QualityHelp : BaseActivity<ActivityQualityHelpBinding, QualityHelpVie
         title = getString(R.string.quality_help_title)
         topRightViewBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
-        viewDataBinding?.webView?.loadUrl("https://lotus.vn")
+        viewDataBinding?.webView?.loadUrl("https://mo-jual.com/manual-setup.html")
     }
 
     override fun openHomeScreen() {
