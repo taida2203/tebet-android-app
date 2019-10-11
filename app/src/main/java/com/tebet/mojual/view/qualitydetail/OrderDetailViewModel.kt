@@ -1,7 +1,9 @@
 package com.tebet.mojual.view.qualitydetail
 
 import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableDouble
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableFloat
 import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
@@ -22,6 +24,7 @@ class OrderDetailViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<OrderDetailNavigator>(dataManager, schedulerProvider) {
+    var totalPrice: ObservableDouble = ObservableDouble()
     var order: ObservableField<OrderDetail> = ObservableField()
     var items: ObservableArrayList<OrderContainer> = ObservableArrayList()
     var itemBinding: ItemBinding<OrderContainer> =
@@ -33,9 +36,16 @@ class OrderDetailViewModel(
 
                 override fun onItemClick(item: OrderContainer) {
                     item.isSelected = !item.isSelected
+                    updateTotalPrice()
                     navigator.itemSelected(item)
                 }
             })
+
+    private fun updateTotalPrice() {
+        totalPrice.set(items.filter { it.isSelected }.sumByDouble {
+            it.priceTotalDisplay ?: 0.0
+        })
+    }
 
     override fun loadData(isForceLoad: Boolean?) {
         order.get()?.let {
@@ -50,6 +60,7 @@ class OrderDetailViewModel(
                                 if (!items.contains(container)) items.add(container)
                                 else items[items.indexOf(container)] = container
                             }
+                            updateTotalPrice()
                             navigator.showLoading(false)
                         }
 

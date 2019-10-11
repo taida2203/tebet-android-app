@@ -7,8 +7,8 @@ import com.tebet.mojual.data.models.enumeration.SortType
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
-fun Double.toDisplayMoney(): String {
-    if (this <= 0) {
+fun Double?.toDisplayMoney(): String {
+    if (this == null || this <= 0) {
         return "Rp 0"
     }
     val formatter = DecimalFormat("#,###")
@@ -16,16 +16,22 @@ fun Double.toDisplayMoney(): String {
     return "Rp. $formattedNumber"
 }
 
-fun Float.toDisplayMoney(): String {
-    return this.toDouble().toDisplayMoney()
+fun Float?.toDisplayMoney(): String {
+    return this?.toDouble().toDisplayMoney()
 }
 
-fun Double.toDisplayWeight(): String {
+fun Double?.toDisplayWeight(): String {
+    if (this == null || this <= 0) {
+        return "0Kg"
+    }
     val decimalFormat =  DecimalFormat("0.###")
     return decimalFormat.format(this) + "Kg"
 }
 
-fun Double.toDisplayPercent(): String {
+fun Double?.toDisplayPercent(): String {
+    if (this == null || this <= 0) {
+        return "0%"
+    }
     return ((this * 100).roundToInt() / 100f).toString().replace("\\.0+$", "") + "%"
 }
 
