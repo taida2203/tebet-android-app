@@ -87,13 +87,21 @@ class QualityAddContainer :
 //            .filter(ConnectivityPredicate.hasType(ConnectivityManager.TYPE_WIFI))
             .concatMap {
                 var nextOBS = Observable.just(true)
-                if(it.extraInfo() != previousConnectedWifi) {
-                    viewModel.sensorManager.get()?.refreshStatus()?.let { sensorRefreshObs ->
-                        nextOBS = sensorRefreshObs
+                if (it.state() == NetworkInfo.State.CONNECTED) {
+                    if (it.extraInfo() != previousConnectedWifi) {
+                        viewModel.sensorManager.get()?.refreshStatus()?.let { sensorRefreshObs ->
+                            nextOBS = sensorRefreshObs
+                        }
+                        Timber.e("DOLPHIN" + it.typeName())
                     }
-                    Timber.e("DOLPHIN" + it.typeName())
+                    previousConnectedWifi = it.extraInfo()
+                } else if (it.state() == NetworkInfo.State.DISCONNECTED) {
+                    if (previousConnectedWifi?.contains(Sensor.sensorSSID) == true) {
+                        viewModel.sensorManager.get()?.refreshStatus()?.let { sensorRefreshObs ->
+                            nextOBS = sensorRefreshObs
+                        }
+                    }
                 }
-                previousConnectedWifi = it.extraInfo()
                 nextOBS
             }
             .subscribeOn(Schedulers.io())

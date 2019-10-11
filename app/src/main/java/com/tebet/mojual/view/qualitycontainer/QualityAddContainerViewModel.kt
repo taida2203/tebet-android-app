@@ -196,6 +196,7 @@ class QualityAddContainerViewModel(
     }
 
     override fun loadData(isForceLoad: Boolean?) {
+        sensorManager.get()?.connectIOTCount = 0
         sensorManager.addOnPropertyChangedCallback(object : androidx.databinding.Observable.OnPropertyChangedCallback(){
             override fun onPropertyChanged(sender: androidx.databinding.Observable?, propertyId: Int) {
                 if (propertyId == BR.connected) {
