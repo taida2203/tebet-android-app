@@ -151,39 +151,6 @@ data class UserProfile(
             notifyPropertyChanged(BR.version)
         }
 
-    @Ignore
-    var pinCodeFirst: String = ""
-        @Bindable get
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.pinCodeFirst)
-        }
-
-    @Ignore
-    var pinCodeSecond: String = ""
-        @Bindable get
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.pinCodeSecond)
-        }
-
-    @Ignore
-    var pinCodeThird: String = ""
-        @Bindable get
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.pinCodeThird)
-        }
-
-    @Ignore
-    var pinCodeFourth: String = ""
-        @Bindable get
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.pinCodeFourth)
-        }
-
-
     fun isUserVerified(): Boolean {
         return statusEnum == Status.Verified
     }
