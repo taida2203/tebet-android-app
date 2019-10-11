@@ -18,6 +18,7 @@ import br.com.ilhasoft.support.validation.Validator
 import co.common.view.dialog.RoundedCancelOkDialog
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedOkDialog
+import co.sdk.auth.utils.Utility
 import com.github.pwittchen.reactivenetwork.library.rx2.ConnectivityPredicate
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.tebet.mojual.R
@@ -105,7 +106,7 @@ class QualityAddContainer :
 
     private fun buildAlertMessageNoGps() {
         if (gpsDialog == null) {
-            gpsDialog = RoundedCancelOkDialog("Your GPS seems to be disabled, do you want to enable it?").setRoundedDialogCallback(
+            gpsDialog = RoundedCancelOkDialog(getString(R.string.check_quality_add_container_gps_warning)).setRoundedDialogCallback(
                     object : RoundedDialog.RoundedDialogCallback {
                         override fun onFirstButtonClicked(selectedValue: Any?) {
                         }
@@ -168,7 +169,7 @@ class QualityAddContainer :
                 }
             } else {
                 // Do not have permissions, request them now
-                EasyPermissions.requestPermissions(this, "Require permission", RC_CAMERA_AND_LOCATION, *arrayOf(ACCESS_FINE_LOCATION, ACCESS_WIFI_STATE, ACCESS_NETWORK_STATE, CHANGE_WIFI_STATE))
+                EasyPermissions.requestPermissions(this, getString(R.string.check_quality_add_container_permission_warning), RC_CAMERA_AND_LOCATION, *arrayOf(ACCESS_FINE_LOCATION, ACCESS_WIFI_STATE, ACCESS_NETWORK_STATE, CHANGE_WIFI_STATE))
             }
         } else {
             viewModel.connectIOT()

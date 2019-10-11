@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/check_quality_iot"
+                    android:text="@string/check_quality_add_container_iot"
                     android:textSize="@dimen/_16ssp" />
 
                 <com.tebet.mojual.common.view.AppTextView

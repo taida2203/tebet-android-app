@@ -3,21 +3,18 @@ package com.tebet.mojual.common.util
 import android.content.Context
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiManager
-import android.os.Handler
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import androidx.databinding.library.baseAdapters.BR
 import com.isupatches.wisefy.WiseFy
-import com.isupatches.wisefy.callbacks.SearchForSSIDCallbacks
 import com.isupatches.wisefy.constants.MISSING_PARAMETER
 import com.isupatches.wisefy.constants.NETWORK_ALREADY_CONFIGURED
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.SensorData
 import io.reactivex.Observable
 import org.jsoup.Jsoup
-import timber.log.Timber
 import kotlin.collections.ArrayList
 
 fun String.toSensor(): SensorData {
@@ -196,10 +193,10 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
     val statusDisplay: String?
         @Bindable get (){
             return when (status) {
-                SensorStatus.CONNECTING -> Utility.getInstance().getString(R.string.check_quality_iot_connecting)
-                SensorStatus.OFF -> Utility.getInstance().getString(R.string.check_quality_iot_not_turn_off)
-                SensorStatus.ON -> Utility.getInstance().getString(R.string.check_quality_iot_not_connect)
-                SensorStatus.CONNECTED -> Utility.getInstance().getString(R.string.check_quality_iot_connected)
+                SensorStatus.CONNECTING -> Utility.getInstance().getString(R.string.check_quality_add_container_iot_connecting)
+                SensorStatus.OFF -> Utility.getInstance().getString(R.string.check_quality_add_container_iot_not_turn_off)
+                SensorStatus.ON -> Utility.getInstance().getString(R.string.check_quality_add_container_iot_not_connect)
+                SensorStatus.CONNECTED -> Utility.getInstance().getString(R.string.check_quality_add_container_iot_connected)
             }
         }
 }
