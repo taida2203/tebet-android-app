@@ -283,7 +283,9 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     open fun showTipScreen() {
         if (this !is Home) {
-            startActivity(Intent(this, QualityHelp::class.java))
+            var tipIntent = Intent(this, QualityHelp::class.java)
+            tipIntent.putExtra("EXTRA_URL", "https://mo-jual.com/tips")
+            startActivity(tipIntent)
         }
     }
 

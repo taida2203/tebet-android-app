@@ -25,9 +25,11 @@ open class QualityHelp : BaseActivity<ActivityQualityHelpBinding, QualityHelpVie
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         title = getString(R.string.quality_help_title)
+        var url = "https://mo-jual.com/manual-setup"
+        if (intent.hasExtra("EXTRA_ORDER")) url = intent.getStringExtra("EXTRA_ORDER")
         topRightViewBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
-        viewDataBinding?.webView?.loadUrl("https://mo-jual.com/manual-setup.html")
+        viewDataBinding?.webView?.loadUrl(url)
     }
 
     override fun openHomeScreen() {
