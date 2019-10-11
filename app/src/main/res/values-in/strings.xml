@@ -119,7 +119,7 @@
     <string name="order_detail_amount">Nilai pembayaran</string>
     <string name="order_detail_content">Kadar eugenol</string>
     <string name="order_detail_dialog_reject">Anda yakin akan membatalkan semua container?</string>
-    <string name="order_detail_dialog_confirm">Anda yakin akan menjual container yang dipilih ini?</string>
+    <string name="order_detail_dialog_confirm">Anda yakin akan menjual container yang dipilih ini %1$s?</string>
     <string name="order_detail_button_approve">Pesanan anda disetujui</string>
 
     <string name="order_reject_title">Beritahu kami</string>

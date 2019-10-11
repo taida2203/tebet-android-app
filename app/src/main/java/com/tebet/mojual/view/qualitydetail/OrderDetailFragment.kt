@@ -85,8 +85,8 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
     }
 
     override fun showConfirmDialog(selectedItems: List<OrderContainer>) {
-        activity?.supportFragmentManager?.let {
-            RoundedDialog(getString(R.string.order_detail_dialog_confirm))
+        activity?.supportFragmentManager?.let { context ->
+            RoundedDialog(String.format(getString(R.string.order_detail_dialog_confirm), selectedItems.map { it.assetCode }.joinToString()))
                 .addFirstButton(RoundedDialogButton(getString(R.string.general_btn_no), R.drawable.rounded_bg_button_trans))
                 .addSecondButton(RoundedDialogButton(getString(R.string.general_btn_yes)))
                 .setRoundedDialogCallback(
@@ -97,7 +97,7 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
                     override fun onSecondButtonClicked(selectedValue: Any?) {
                         viewModel.approveOrder(selectedItems)
                     }
-                }).show(it, "")
+                }).show(context, "")
         }
     }
 }

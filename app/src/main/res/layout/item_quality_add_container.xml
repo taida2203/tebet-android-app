@@ -43,7 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{@string/check_quality_add_container_title(item.customerData.combinedCode)}"
+                android:text="@{@string/check_quality_add_container_title(item.customerData.assetCode)}"
                 android:textColor="@color/green_dark"
                 android:textSize="@dimen/_16ssp"
                 android:textStyle="bold" />

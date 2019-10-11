@@ -138,7 +138,7 @@
     <string name="order_detail_amount">Amount</string>
     <string name="order_detail_content">Eugenol Content</string>
     <string name="order_detail_dialog_reject">Are you sure to reject all container?</string>
-    <string name="order_detail_dialog_confirm">Are you sure to sell your selected container?</string>
+    <string name="order_detail_dialog_confirm">Are you sure to sell container %1$s?</string>
     <string name="order_detail_button_approve">APPROVE</string>
     <string name="order_detail_status">Status</string>
     <string name="order_detail_message">Message</string>

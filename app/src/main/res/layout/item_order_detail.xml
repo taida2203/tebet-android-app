@@ -72,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="@{@string/check_quality_add_container_title(item.combinedCode)}"
+                    android:text="@{@string/check_quality_add_container_title(item.assetCode)}"
                     android:textColor="@color/green_dark"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold" />
