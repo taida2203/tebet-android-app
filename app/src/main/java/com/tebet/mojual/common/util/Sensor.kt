@@ -58,15 +58,22 @@ enum class SensorStatus {
 
 class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObservable() {
     private var currentInternetSSID: String? = null
+    var connectIOTCount: Int = 0
+        @Bindable get
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.connectIOTCount)
+        }
 
     companion object {
         const val sensorSSID = "iSpindel"
         const val delayWait = 5000
+        const val retryMax = 3
     }
 
     fun connectIOTWifi(): Observable<Boolean> {
         status = SensorStatus.CONNECTING
-        return refreshStatus().concatMap {
+        return refreshStatus().doOnNext { connectIOTCount++ }.concatMap {
             if (isEnabled && !isConnected) {
                 status = SensorStatus.CONNECTING
                 connectIOT().concatMap {

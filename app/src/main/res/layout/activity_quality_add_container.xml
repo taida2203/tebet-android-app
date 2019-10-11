@@ -8,6 +8,8 @@
 
         <import type="com.tebet.mojual.common.util.SensorStatus" />
 
+        <import type="com.tebet.mojual.common.util.Sensor"/>
+
         <variable
             name="viewModel"
             type="com.tebet.mojual.view.qualitycontainer.QualityAddContainerViewModel" />
@@ -55,7 +57,7 @@
 
                 <com.tebet.mojual.common.view.AppButtonRounded
                     android:layout_width="wrap_content"
-                    android:text="@{viewModel.sensorManager.status == SensorStatus.OFF ? @string/check_quality_add_button_retry : @string/check_quality_add_button_manual}"
+                    android:text="@{viewModel.sensorManager.connectIOTCount &lt; Sensor.retryMax ? @string/check_quality_add_container_button_retry : @string/check_quality_add_container_button_manual}"
                     android:visibility="@{viewModel.sensorManager.status != null &amp;&amp; viewModel.sensorManager.status != SensorStatus.CONNECTING &amp;&amp; viewModel.sensorManager.status != SensorStatus.CONNECTED ? View.VISIBLE : View.GONE}"
                     android:onClick="@{()-> viewModel.retryConnectIOT()}"
                     android:layout_height="wrap_content" />

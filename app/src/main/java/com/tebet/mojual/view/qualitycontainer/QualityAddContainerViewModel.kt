@@ -218,7 +218,7 @@ class QualityAddContainerViewModel(
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : DisposableObserver<Pair<List<Quality>, List<Asset>>>() {
                     override fun onComplete() {
-                        navigator.requestLocationAndConnectIOT()
+                        retryConnectIOT()
                     }
 
                     override fun onNext(response: Pair<List<Quality>, List<Asset>>) {
@@ -302,7 +302,7 @@ class QualityAddContainerViewModel(
     }
 
     fun retryConnectIOT() {
-        if (sensorManager.get()?.status == SensorStatus.ON) {
+        if (sensorManager.get()?.connectIOTCount ?: 0 >= Sensor.retryMax) {
             navigator.connectIOTManual()
         } else {
             navigator.requestLocationAndConnectIOT()
