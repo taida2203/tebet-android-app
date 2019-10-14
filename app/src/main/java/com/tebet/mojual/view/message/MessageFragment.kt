@@ -28,6 +28,11 @@ class MessageFragment : BaseFragment<FragmentMessageBinding, MessageViewModel>()
     }
 
     override fun openNotificationDetail(item: Message) {
-        item.data?.let { baseActivity?.openFromNotification(it, item.read == false) }
+        item.data?.let {
+            item.notificationHistoryId?.let { id ->
+                (it as MutableMap)["notificationHistoryId"] = id.toString()
+            }
+            baseActivity?.openFromNotification(it, item.read == false)
+        }
     }
 }

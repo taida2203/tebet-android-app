@@ -210,24 +210,32 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         if (isMarkRead) {
             viewModel.compositeDisposable.add(
                 viewModel.dataManager.getUserProfileDB()
-                    .concatMap {
-                        it.data?.profileId?.let { profileId -> viewModel.dataManager.getMessages(
-                                MessageRequest(profileId = profileId, offset = 0, limit = 1, read = false)
+                    .map { it.data?.profileId }
+                    .concatMap { profileId ->
+                        val responseObs: Observable<Long?>
+                        if (extras["notificationHistoryId"]?.isNotBlank() == true) {
+                            responseObs = Observable.just(extras["notificationHistoryId"]?.toLong())
+                        } else {
+                            responseObs = viewModel.dataManager.getMessages(
+                                MessageRequest(
+                                    profileId = profileId,
+                                    offset = 0,
+                                    limit = 1,
+                                    read = false
+                                )
                             )
+                                .map { it.data?.data?.firstOrNull() }
+                                .map {
+                                    if (extras["templateCode"] != null && extras["templateCode"] == it.data?.get(
+                                            "templateCode"
+                                        )
+                                    ) it.notificationHistoryId
+                                    else null
+                                }.concatMap { Observable.just(it) }
                         }
+                        responseObs
                     }
-                    .map { it.data?.data?.firstOrNull() }
-                    .concatMap {
-                        when {
-                            extras["templateCode"] != null && extras["templateCode"] == it.data?.get("templateCode") -> it.notificationHistoryId?.let { it1 ->
-                                viewModel.dataManager.markRead(it1).concatMap { markReadResponse ->
-                                    viewModel.dataManager.getUnreadCount()
-                                        .concatMap { Observable.just(markReadResponse) }
-                                }
-                            }
-                            else -> Observable.error(Throwable())
-                        }
-                    }
+                    .concatMap {  viewModel.dataManager.markRead(it) }
                     .subscribeOn(viewModel.schedulerProvider.io())
                     .observeOn(viewModel.schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Message>() {
