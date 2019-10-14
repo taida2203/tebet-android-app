@@ -53,6 +53,11 @@ data class OrderDetail(
             return containers?.firstOrNull { it.canAction } != null
         }
 
+    val containFirstFinalPrice: Boolean
+        get() {
+            return containers?.firstOrNull { it.status == ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name } != null
+        }
+
     @Ignore
     var price: Double? = null
 }

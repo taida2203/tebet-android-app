@@ -25,9 +25,9 @@
 
         <ScrollView
             android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:scrollbars="none"
-            android:layout_height="0dp">
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,12 +37,12 @@
                 <com.tebet.mojual.common.view.AppTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_3sdp"
                     android:text="@{viewModel.order.note}"
                     android:textColor="@color/red_btn_dialog"
-                    android:visibility="@{viewModel.order.note != null ? View.VISIBLE : View.GONE}"
-                    android:layout_marginBottom="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="@{viewModel.order.note != null ? View.VISIBLE : View.GONE}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -77,8 +77,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@{!viewModel.order.isRejected ? @color/dark_green : @color/red_btn_dialog}"
                         android:text="@{StringExtKt.fromStatusCodeToDisplayable(viewModel.order.status)}"
+                        android:textColor="@{!viewModel.order.isRejected ? @color/dark_green : @color/red_btn_dialog}"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -162,11 +162,11 @@
                 <com.tebet.mojual.common.view.AppTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.order.canAction ? View.VISIBLE : View.GONE}"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textStyle="bold"
                     android:text="@string/order_detail_hint"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:visibility="@{viewModel.order.canAction ? View.VISIBLE : View.GONE}" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -176,8 +176,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false"
                         android:layout_marginTop="@dimen/_8sdp"
+                        android:nestedScrollingEnabled="false"
                         app:itemBinding="@{viewModel.itemBinding}"
                         app:items="@{viewModel.items}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -190,19 +190,19 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
-            android:visibility="@{viewModel.order.canAction ? View.VISIBLE : View.GONE}">
+            android:visibility="@{(viewModel.order.canAction || viewModel.order.containFirstFinalPrice)? View.VISIBLE : View.GONE}">
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:gravity="center"
                 android:enabled="@{!viewModel.isLoading}"
+                android:gravity="center"
                 android:onClick="@{()-> viewModel.onRejectClick()}"
+                android:stateListAnimator="@null"
                 android:text="@string/order_detail_button_reject"
-                android:textColor="@color/red_btn_dialog"
-                android:stateListAnimator="@null"/>
+                android:textColor="@color/red_btn_dialog" />
 
             <View
                 android:layout_width="@dimen/_10sdp"
