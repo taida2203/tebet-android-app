@@ -125,7 +125,6 @@ data class OrderContainer(
         get() {
             when (status) {
                 ContainerOrderStatus.INITIAL_PRICE_OFFERED.name,
-                ContainerOrderStatus.FIRST_FINALIZED_PRICE_OFFERED.name,
                 ContainerOrderStatus.SECOND_FINALIZED_PRICE_OFFERED.name
                 -> return true
             }
