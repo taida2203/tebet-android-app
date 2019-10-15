@@ -212,19 +212,16 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                 viewModel.dataManager.getUserProfileDB()
                     .map { it.data?.profileId }
                     .concatMap { profileId ->
-                        val responseObs: Observable<Long?>
-                        if (extras["notificationHistoryId"]?.isNotBlank() == true) {
-                            responseObs = Observable.just(extras["notificationHistoryId"]?.toLong())
-                        } else {
-                            responseObs = viewModel.dataManager.getMessages(
+                        val responseObs: Observable<Long?> = when {
+                            extras["notificationHistoryId"]?.isNotBlank() == true -> Observable.just(extras["notificationHistoryId"]?.toLong())
+                            else -> viewModel.dataManager.getMessages(
                                 MessageRequest(
                                     profileId = profileId,
                                     offset = 0,
                                     limit = 1,
                                     read = false
                                 )
-                            )
-                                .map { it.data?.data?.firstOrNull() }
+                            ).map { it.data?.data?.firstOrNull() }
                                 .map {
                                     if (extras["templateCode"] != null && extras["templateCode"] == it.data?.get(
                                             "templateCode"
@@ -235,7 +232,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                         }
                         responseObs
                     }
-                    .concatMap {  viewModel.dataManager.markRead(it) }
+                    .concatMap { viewModel.dataManager.markRead(it) }
+                    .concatMap { read -> viewModel.dataManager.getUnreadCount().concatMap { Observable.just(read) } }
                     .subscribeOn(viewModel.schedulerProvider.io())
                     .observeOn(viewModel.schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Message>() {
@@ -291,7 +289,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     open fun showTipScreen() {
         if (this !is Home) {
-            var tipIntent = Intent(this, QualityHelp::class.java)
+            val tipIntent = Intent(this, QualityHelp::class.java)
             tipIntent.putExtra("EXTRA_URL", "https://mo-jual.com/tips")
             startActivity(tipIntent)
         }

@@ -49,23 +49,35 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             remoteMessage.data.let { extraData ->
                 convertedMessage.data = extraData
             }
-            when {
-                convertedMessage.data?.get("templateCode") == "WELCOME" -> Handler(Looper.getMainLooper()).postDelayed({
-                    (application as App).notificationHandlerData.postValue(convertedMessage)
-                }, 1000)
-                convertedMessage.data?.get("templateCode") == "CUSTOMER_VERIFIED"
-                        || convertedMessage.data?.get("templateCode") == "CUSTOMER_BLOCKED"
-                        || convertedMessage.data?.get("templateCode") == "CUSTOMER_REJECTED"
-                        || convertedMessage.data?.get("templateCode") == "CUSTOMER_UNBLOCKED"
-                -> dataManager.getProfile().subscribe({
-                    (application as App).notificationHandlerData.postValue(convertedMessage)
-                }, { error ->
-                    Timber.e(error)
-                    (application as App).notificationHandlerData.postValue(convertedMessage)
-                })
-                else -> (application as App).notificationHandlerData.postValue(convertedMessage)
+            getUnreadCount {
+                when {
+                    convertedMessage.data?.get("templateCode") == "WELCOME" -> Handler(Looper.getMainLooper()).postDelayed({
+                        (application as App).notificationHandlerData.postValue(convertedMessage)
+                    }, 1000)
+                    convertedMessage.data?.get("templateCode") == "CUSTOMER_VERIFIED"
+                            || convertedMessage.data?.get("templateCode") == "CUSTOMER_BLOCKED"
+                            || convertedMessage.data?.get("templateCode") == "CUSTOMER_REJECTED"
+                            || convertedMessage.data?.get("templateCode") == "CUSTOMER_UNBLOCKED"
+                    -> dataManager.getProfile().subscribe({
+                        (application as App).notificationHandlerData.postValue(convertedMessage)
+                    }, { error ->
+                        Timber.e(error)
+                        (application as App).notificationHandlerData.postValue(convertedMessage)
+                    })
+                    else -> (application as App).notificationHandlerData.postValue(convertedMessage)
+                }
             }
+
         }
+    }
+
+    private fun getUnreadCount(callback: () -> Any) {
+        val result = dataManager.getUnreadCount().subscribe({
+            callback()
+        }, { error ->
+            Timber.e(error)
+            callback()
+        })
     }
 
     /**

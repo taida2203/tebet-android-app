@@ -284,6 +284,11 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateUnReadCount()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {

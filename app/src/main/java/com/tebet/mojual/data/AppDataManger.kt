@@ -30,6 +30,11 @@ class AppDataManger @Inject constructor(
     private var room: DbHelper,
     private var preferences: PreferencesHelper
 ) : DataManager {
+    override var notificationCountPref: Long?
+        get() = preferences.notificationCountPref
+        set(value) {
+            preferences.notificationCountPref = value
+        }
     override var userProfilePref: UserProfile
         get() = preferences.userProfilePref
         set(value) {
@@ -245,5 +250,9 @@ class AppDataManger @Inject constructor(
     override fun markRead(notificationId: Long): Observable<AuthJson<Message>> = api.markRead(notificationId)
 
     override fun getUnreadCount(): Observable<AuthJson<Long>> = api.getUnreadCount()
+        .concatMap {
+            preferences.notificationCountPref = it.data
+            Observable.just(it)
+        }
 }
 

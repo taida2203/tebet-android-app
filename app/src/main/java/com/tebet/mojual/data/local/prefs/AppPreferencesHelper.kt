@@ -17,6 +17,7 @@ constructor(context: Context, @PreferenceInfo prefFileName: String) : Preference
         private const val PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN"
         private const val PREF_KEY_IS_MAP_TUTORIAL_SHOWED = "PREF_KEY_IS_MAP_TUTORIAL_SHOWED"
         private const val PREF_KEY_USER_PROFILE = "PREF_KEY_USER_PROFILE"
+        private const val PREF_KEY_NOTIFICATION_COUNT = "PREF_KEY_NOTIFICATION_COUNT"
     }
 
     override var accessToken: String?
@@ -28,6 +29,10 @@ constructor(context: Context, @PreferenceInfo prefFileName: String) : Preference
         set(value) = mPrefs.edit().putBoolean(PREF_KEY_IS_MAP_TUTORIAL_SHOWED, value).apply()
 
     override var userProfilePref: UserProfile
-        get() = Gson().fromJson(mPrefs.getString("PREF_KEY_USER_PROFILE", ""), UserProfile::class.java)
-        set(value) = mPrefs.edit().putString("PREF_KEY_USER_PROFILE", Gson().toJson(value)).apply()
+        get() = Gson().fromJson(mPrefs.getString(PREF_KEY_USER_PROFILE, ""), UserProfile::class.java)
+        set(value) = mPrefs.edit().putString(PREF_KEY_USER_PROFILE, Gson().toJson(value)).apply()
+
+    override var notificationCountPref: Long?
+        get() = mPrefs.getLong(PREF_KEY_NOTIFICATION_COUNT, 0)
+        set(value) = mPrefs.edit().putLong(PREF_KEY_NOTIFICATION_COUNT, value ?: 0).apply()
 }

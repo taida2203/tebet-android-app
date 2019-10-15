@@ -27,7 +27,8 @@ class HomeViewModel(
 
     override fun loadData(isForceLoad: Boolean?) {
         compositeDisposable.add(
-            dataManager.getUserProfileDB()
+            dataManager.getUnreadCount()
+                .concatMap { dataManager.getUserProfileDB() }
                 .concatMap { if(isForceLoad == true) dataManager.getProfile() else Observable.just(it) }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
@@ -38,10 +39,10 @@ class HomeViewModel(
 
                     override fun onSuccess(dataResponse: UserProfile) {
                         profileLiveData.value = dataResponse
+                        updateUnReadCount()
                     }
                 })
         )
-        updateUnReadCount()
     }
 
     fun onSellClick() {
@@ -108,14 +109,6 @@ class HomeViewModel(
     }
 
     fun updateUnReadCount() {
-        compositeDisposable.add(dataManager.getUnreadCount().subscribeWith(object :
-            CallbackWrapper<Long>() {
-            override fun onSuccess(dataResponse: Long) {
-                showUnreadCount(dataResponse)
-            }
-
-            override fun onFailure(error: NetworkError) {
-            }
-        }))
+        showUnreadCount(dataManager.notificationCountPref ?: 0)
     }
 }

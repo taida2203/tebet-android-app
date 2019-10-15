@@ -6,4 +6,5 @@ interface PreferencesHelper {
     var accessToken: String?
     var isShowTutorialShowed: Boolean
     var userProfilePref: UserProfile
+    var notificationCountPref: Long?
 }
