@@ -423,17 +423,11 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         }
     }
 
-    override fun activity(): Activity {
-        return this
-    }
+    override fun activity(): Activity = this
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
+    override fun attachBaseContext(newBase: Context) = super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
 
-    override fun show(message: String) {
-        RoundedOkDialog(message).show(supportFragmentManager, message)
-    }
+    override fun show(message: String) = RoundedOkDialog(message).show(supportFragmentManager, message)
 
     override fun show(messageResId: Int) {
         RoundedOkDialog(getString(messageResId)).show(
