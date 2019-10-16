@@ -83,14 +83,14 @@ class AuthAccountKitMethod : AuthMethod {
         callback?.onSuccess(200, null)
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_LOGIN_FB_ACCOUT_KIT) { // confirm that this response matches your request
-            val loginResult = data.getParcelableExtra<AccountKitLoginResult>(AccountKitLoginResult.RESULT_KEY)
-            if (loginResult.error != null) {
+            val loginResult = data?.getParcelableExtra<AccountKitLoginResult>(AccountKitLoginResult.RESULT_KEY)
+            if (loginResult?.error != null) {
                 if (callback != null) {
                     callback?.onFailed(LoginException(400, loginResult.error?.errorType?.message))
                 }
-            } else if (loginResult.wasCancelled()) {
+            } else if (loginResult?.wasCancelled() == true) {
                 if (callback != null) {
                     callback?.onFailed(LoginException(502, "Cancelled"))
                 }

@@ -32,10 +32,11 @@ class ProfileViewModel(
             return Observable.create<String> { emitter ->
                 FirebaseInstanceId.getInstance().instanceId
                     .addOnSuccessListener { emitter.onNext(it.token) }
-                    .addOnFailureListener { emitter.onError(it) }
-                    .addOnCanceledListener { emitter.onError(Throwable()) }
+                    .addOnFailureListener { emitter.onNext("") }
+                    .addOnCanceledListener { emitter.onNext("") }
             }
-                .concatMap { dataManager.unRegisterDevice(DeviceRegisterRequest(it)) }
+                .concatMap { if(it.isNotEmpty()) dataManager.unRegisterDevice(DeviceRegisterRequest(it)) else Observable.just(it) }
+                .concatMap { Observable.create<String> { FirebaseInstanceId.getInstance().deleteInstanceId() } }
                 .concatMap { AuthSdk.instance.logout(true) }
                 .doOnComplete { dataManager.clearAllTables().subscribe({}, {}) }
         }

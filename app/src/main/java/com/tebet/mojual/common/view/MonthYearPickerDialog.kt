@@ -196,10 +196,10 @@ class MonthYearPickerDialog : DialogFragment() {
                 monthPicker!!.value,
                 dayPicker!!.value
             )
-            this@MonthYearPickerDialog.dialog.dismiss()
+            this@MonthYearPickerDialog.dialog?.dismiss()
         }
 
-        cancel!!.setOnClickListener { this@MonthYearPickerDialog.dialog.cancel() }
+        cancel!!.setOnClickListener { this@MonthYearPickerDialog.dialog?.cancel() }
 
         builder.setView(dialog)// Add action buttons
         /*.setPositiveButton(R.string.select, new DialogInterface.OnClickListener() {

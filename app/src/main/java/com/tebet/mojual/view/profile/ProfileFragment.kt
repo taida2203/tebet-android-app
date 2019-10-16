@@ -43,15 +43,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     override fun openChangeLanguageDialog() {
-        LanguageChoiceDialog().setCallback(object :
-            SingleChoiceDialog.SingleChoiceDialogCallback<String> {
-            override fun onCancel() {
-            }
+        fragmentManager?.let {
+            LanguageChoiceDialog().setCallback(object :
+                SingleChoiceDialog.SingleChoiceDialogCallback<String> {
+                override fun onCancel() {
+                }
 
-            override fun onOk(selectedItem: String?) {
-                viewModel.doChangeLanguage(selectedItem)
-            }
-        }).show(fragmentManager, "")
+                override fun onOk(selectedItem: String?) {
+                    viewModel.doChangeLanguage(selectedItem)
+                }
+            }).show(it, "")
+        }
     }
 
     override fun openChangePasswordScreen() {

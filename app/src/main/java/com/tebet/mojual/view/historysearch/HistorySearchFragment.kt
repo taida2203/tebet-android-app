@@ -116,7 +116,7 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
                 }
             })
         }
-        statusChoiceDialog?.show(fragmentManager, "")
+        fragmentManager?.let { statusChoiceDialog?.show(it, "") }
     }
 
     override fun openOrderByPicker() {
@@ -137,7 +137,7 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
                 }
             })
         }
-        sortByDialog?.show(fragmentManager, "")
+        fragmentManager?.let { sortByDialog?.show(it, "") }
     }
 
     override fun openOrderTypePicker() {
@@ -158,6 +158,6 @@ class HistorySearchFragment : BaseFragment<FragmentHistorySearchBinding, History
                 }
             })
         }
-        sortTypeDialog?.show(fragmentManager, "")
+        fragmentManager?.let { sortTypeDialog?.show(it, "") }
     }
 }

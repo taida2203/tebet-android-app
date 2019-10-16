@@ -113,7 +113,7 @@ class AuthFacebookMethod : AuthMethod {
         callback?.onSuccess(200, null )
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (callbackManager != null) {
             callbackManager!!.onActivityResult(requestCode, resultCode, data)
         }

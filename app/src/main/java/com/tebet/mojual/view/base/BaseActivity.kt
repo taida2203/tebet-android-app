@@ -101,7 +101,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     protected var forceLock: Boolean = PreferenceUtils.getBoolean(EXTRA_FORCE_LOCK, false)
 
     companion object {
-        const val REQUEST_CODE_PIN = 1991
+        const val REQUEST_CODE_PIN = 1999
         const val EXTRA_FORCE_LOCK = "EXTRA_FORCE_LOCK"
         const val EXTRA_FORCE_REFRESH = "EXTRA_FORCE_REFRESH"
     }
@@ -337,22 +337,24 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     fun handleError(exception: NetworkError) {
-        exception.errorMessage?.let { show(it) }
-        if (exception.errorCode == 401) {
-            viewModel.compositeDisposable.add(ProfileViewModel.logoutStream(viewModel.dataManager).subscribeWith(
-                object :
-                    DisposableObserver<Any>() {
-                    override fun onComplete() {
-                    }
+        when {
+            exception.errorCode == 401 -> viewModel.compositeDisposable.add(
+                ProfileViewModel.logoutStream(viewModel.dataManager).subscribeWith(
+                    object :
+                        DisposableObserver<Any>() {
+                        override fun onComplete() = Unit
 
-                    override fun onNext(t: Any) {
-                        forceLogin()
-                    }
+                        override fun onNext(t: Any) = forceLogin()
 
-                    override fun onError(e: Throwable) {
-                        forceLogin()
-                    }
-                }))
+                        override fun onError(e: Throwable) = forceLogin()
+                    })
+            )
+            exception.errorCode == 502 -> Unit
+            else -> show(
+                if (exception.errorMessage?.isNotEmpty() == true) exception.errorMessage!! else getString(
+                    R.string.general_error
+                )
+            )
         }
     }
 

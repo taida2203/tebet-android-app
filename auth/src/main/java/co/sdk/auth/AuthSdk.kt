@@ -89,6 +89,10 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
                 if (response != null) {
                     val input = LoginInput()
                     when (authMethod) {
+                        is AuthGooglePhoneLoginMethod -> {
+                            input.grantType = "firebase"
+                            input.token = response.token
+                        }
                         is AuthFacebookMethod -> {
                             input.grantType = "facebook_token"
                             input.token = response.token
@@ -157,7 +161,10 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         return getObject<LoginConfiguration>(AUTH_BRAND_LOGIN_TOKEN, LoginConfiguration::class.java) as LoginConfiguration
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (getAuthMethod() is AuthGooglePhoneLoginMethod) {
+            (getAuthMethod() as AuthGooglePhoneLoginMethod).onActivityResult(requestCode, resultCode, data)
+        }
         if (getAuthMethod() is AuthFacebookMethod) {
             (getAuthMethod() as AuthFacebookMethod).onActivityResult(requestCode, resultCode, data)
         }

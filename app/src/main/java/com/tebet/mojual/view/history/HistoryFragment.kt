@@ -73,7 +73,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
                 }
             })
         }
-        statusChoiceDialog?.show(fragmentManager, "")
+        fragmentManager?.let { statusChoiceDialog?.show(it, "") }
     }
 
     override fun onResume() {

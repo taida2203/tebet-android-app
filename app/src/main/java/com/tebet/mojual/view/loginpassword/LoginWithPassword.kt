@@ -63,7 +63,7 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        data?.let { AuthSdk.instance.onActivityResult(requestCode, resultCode, it) }
+        AuthSdk.instance.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun openHomeScreen() {

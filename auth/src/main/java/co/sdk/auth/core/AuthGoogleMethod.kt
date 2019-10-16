@@ -168,7 +168,7 @@ class AuthGoogleMethod : AuthMethod, GoogleApiClient.OnConnectionFailedListener 
 
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_LOGIN_GOOGLE) {
             if (resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)

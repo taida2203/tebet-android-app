@@ -7,6 +7,7 @@ import co.sdk.auth.core.AuthAccountKitMethod
 import co.sdk.auth.core.AuthPasswordMethod
 import co.sdk.auth.core.models.LoginConfiguration
 import androidx.databinding.library.baseAdapters.BR
+import co.sdk.auth.core.AuthGooglePhoneLoginMethod
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.BindingUtils
 import com.tebet.mojual.common.util.rx.SchedulerProvider
@@ -15,6 +16,8 @@ import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import com.tebet.mojual.view.profile.ProfileViewModel
+import io.reactivex.observers.DisposableObserver
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 
 class LoginWithPasswordViewModel(
@@ -75,7 +78,7 @@ class LoginWithPasswordViewModel(
         configuration.password = userInputPassword.trim()
         navigator.activity()?.let {
             compositeDisposable.add(
-                AuthSdk.instance.login(it, AuthPasswordMethod(), configuration)
+                AuthSdk.instance.login(it, AuthGooglePhoneLoginMethod(), configuration)
                     .concatMap { dataManager.getProfile() }
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {
@@ -97,33 +100,56 @@ class LoginWithPasswordViewModel(
         }
     }
 
+    private fun forceLogout(function: () -> Unit) {
+        compositeDisposable.add(
+            ProfileViewModel.logoutStream(dataManager)
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : DisposableObserver<Any>() {
+                    override fun onComplete() {
+                    }
+
+                    override fun onNext(t: Any) {
+                        function()
+                    }
+
+                    override fun onError(e: Throwable) {
+                        function()
+                    }
+                })
+        )
+    }
+
     fun doForgotPassword() {
         navigator.showLoading(true)
         navigator.activity()?.let {
-            compositeDisposable.add(
-                AuthSdk.instance.logout(true).concatMap { _ ->
-                    AuthSdk.instance.login(it, AuthAccountKitMethod(), LoginConfiguration(true)).doOnError {
+            forceLogout {
+                compositeDisposable.add(
+                    AuthSdk.instance.login(
+                        it,
+                        AuthGooglePhoneLoginMethod(),
+                        LoginConfiguration(true)
+                    ).doOnError {
                         navigator.showLoading(false)
                     }
-                }
-                    .concatMap { dataManager.getProfile() }
-                    .observeOn(schedulerProvider.ui())
-                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                        override fun onSuccess(dataResponse: UserProfile) {
-                            navigator.showLoading(false)
-                            when (dataResponse.statusEnum) {
-                                UserProfile.Status.Init -> navigator.openRegistrationScreen()
-                                UserProfile.Status.InitProfile -> navigator.openSignUpInfoScreen()
-                                else -> navigator.openForgotPasswordScreen()
+                        .concatMap { dataManager.getProfile() }
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                            override fun onSuccess(dataResponse: UserProfile) {
+                                navigator.showLoading(false)
+                                when (dataResponse.statusEnum) {
+                                    UserProfile.Status.Init -> navigator.openRegistrationScreen()
+                                    UserProfile.Status.InitProfile -> navigator.openSignUpInfoScreen()
+                                    else -> navigator.openForgotPasswordScreen()
+                                }
                             }
-                        }
 
-                        override fun onFailure(error: NetworkError) {
-                            navigator.showLoading(false)
-                            handleError(error)
-                        }
-                    })
-            )
+                            override fun onFailure(error: NetworkError) {
+                                navigator.showLoading(false)
+                                handleError(error)
+                            }
+                        })
+                )
+            }
         }
     }
 }

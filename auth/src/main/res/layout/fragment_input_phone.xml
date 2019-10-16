@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:ccp_customMasterCountries="ID,VN"
+            app:ccp_defaultNameCode="ID"
+            app:ccp_hintExampleNumber="true"
+            app:ccp_rememberLastSelection="true"
+            app:ccp_showNameCode="false" />
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:lines="1"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnGetOTP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use this phone" />
+</LinearLayout>

@@ -1,7 +1,7 @@
 package com.tebet.mojual.view.login
 
 import co.sdk.auth.AuthSdk
-import co.sdk.auth.core.AuthAccountKitMethod
+import co.sdk.auth.core.AuthGooglePhoneLoginMethod
 import co.sdk.auth.core.models.LoginConfiguration
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
@@ -9,7 +9,9 @@ import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import com.tebet.mojual.view.profile.ProfileViewModel
 import io.reactivex.Observable
+import io.reactivex.observers.DisposableObserver
 import java.util.concurrent.TimeUnit
 
 class LoginViewModel(
@@ -25,34 +27,56 @@ class LoginViewModel(
     fun onRegistrationClick() {
         navigator.showLoading(true)
         navigator.activity()?.let { activity ->
-            compositeDisposable.add(
-                AuthSdk.instance.logout(true)
-                    .concatMap {
-                        AuthSdk.instance.login(activity, AuthAccountKitMethod(), LoginConfiguration(logoutWhileExpired = false))
-                            .doOnError {
+            forceLogout {
+                compositeDisposable.add(
+                    AuthSdk.instance.login(
+                        activity,
+                        AuthGooglePhoneLoginMethod(),
+                        LoginConfiguration(logoutWhileExpired = false)
+                    )
+                        .doOnError {
+                            navigator.showLoading(false)
+                            registerNewUser()
+                        }
+                        .concatMap { dataManager.getProfile() }
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeWith(object : CallbackWrapper<UserProfile>() {
+                            override fun onSuccess(dataResponse: UserProfile) {
                                 navigator.showLoading(false)
-                                registerNewUser()
+                                when (dataResponse.statusEnum) {
+                                    UserProfile.Status.Init -> navigator.openRegistrationScreen()
+                                    UserProfile.Status.InitProfile -> navigator.openSignUpInfoScreen()
+                                    else -> navigator.openHomeScreen()
+                                }
                             }
-                    }
-                    .concatMap { dataManager.getProfile() }
-                    .observeOn(schedulerProvider.ui())
-                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
-                        override fun onSuccess(dataResponse: UserProfile) {
-                            navigator.showLoading(false)
-                            when (dataResponse.statusEnum) {
-                                UserProfile.Status.Init -> navigator.openRegistrationScreen()
-                                UserProfile.Status.InitProfile -> navigator.openSignUpInfoScreen()
-                                else -> navigator.openHomeScreen()
-                            }
-                        }
 
-                        override fun onFailure(error: NetworkError) {
-                            navigator.showLoading(false)
-                            handleError(error)
-                        }
-                    })
-            )
+                            override fun onFailure(error: NetworkError) {
+                                navigator.showLoading(false)
+                                handleError(error)
+                            }
+                        })
+                )
+            }
         }
+    }
+
+    private fun forceLogout(function: () -> Unit) {
+        compositeDisposable.add(
+            ProfileViewModel.logoutStream(dataManager)
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : DisposableObserver<Any>() {
+                    override fun onComplete() {
+                    }
+
+                    override fun onNext(t: Any) {
+                        function()
+                    }
+
+                    override fun onError(e: Throwable) {
+                        function()
+                    }
+                })
+        )
     }
 
     private fun registerNewUser() {
@@ -71,7 +95,7 @@ class LoginViewModel(
                     }.concatMap { _ ->
                         AuthSdk.instance.login(
                             it,
-                            AuthAccountKitMethod(),
+                            AuthGooglePhoneLoginMethod(),
                             LoginConfiguration(logoutWhileExpired = false)
                         )
                     }.concatMap { dataManager.getProfile() }

@@ -32,10 +32,13 @@ android {
 dependencies {
     implementation AppDependencies.facebookSDK
     implementation AppDependencies.facebookAccountKitSDK
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation AppDependencies.retrofit
     implementation AppDependencies.retrofitAdapter
     implementation AppDependencies.retrofitConverter
     implementation AppDependencies.okHttpLogger
+
+    implementation 'com.hbb20:ccp:2.3.2'
 
     implementation AppDependencies.rxAndroid
     implementation AppDependencies.rxJava

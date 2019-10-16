@@ -6,4 +6,8 @@
 
     <string name="facebook_app_id" translatable="false">1230019173833488</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN" translatable="false">7a28dfdbb6b3b972e8cddceea5065a66</string>
+
+    <string name="pin_message_warn">You will be logout from Monjual after 5 attempts. Logout to reset PIN</string>
+    <string name="pin_enter">Enter pin code</string>
+    <string name="pin_exit">EXIT</string>
 </resources>

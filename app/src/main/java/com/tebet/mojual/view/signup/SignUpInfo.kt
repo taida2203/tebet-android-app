@@ -128,7 +128,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
         when (screenStep) {
             SCREEN_STEP.STEP_1 -> {
                 currentStepFragment = SignUpInfoStep1()
-                openFragment(currentStepFragment as SignUpInfoStep1, R.id.placeHolderChild)
+                openFragmentSlideRight(currentStepFragment as SignUpInfoStep1, R.id.placeHolderChild)
                 enableBackButton = false
                 viewDataBinding?.btnBack?.visibility = View.GONE
                 viewDataBinding?.tvTitleStep1?.setTypeface(null, Typeface.BOLD)
@@ -137,14 +137,14 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
 
             SCREEN_STEP.STEP_2 -> {
                 currentStepFragment = SignUpInfoStep2()
-                openFragment(currentStepFragment as SignUpInfoStep2, R.id.placeHolderChild)
+                openFragmentSlideRight(currentStepFragment as SignUpInfoStep2, R.id.placeHolderChild)
                 viewDataBinding?.tvTitleStep2?.setTypeface(null, Typeface.BOLD)
                 viewDataBinding?.tvTitleStep2?.setTextColor(ContextCompat.getColor(this, R.color.green_dark))
             }
 
             SCREEN_STEP.STEP_3 -> {
                 currentStepFragment = SignUpInfoStep3()
-                openFragment(currentStepFragment as SignUpInfoStep3, R.id.placeHolderChild)
+                openFragmentSlideRight(currentStepFragment as SignUpInfoStep3, R.id.placeHolderChild)
                 viewDataBinding?.tvTitleStep3?.setTypeface(null, Typeface.BOLD)
                 viewDataBinding?.tvTitleStep3?.setTextColor(ContextCompat.getColor(this, R.color.green_dark))
             }

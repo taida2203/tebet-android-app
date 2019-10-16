@@ -49,9 +49,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
      */
     abstract val viewModel: V
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is BaseActivity<*, *>) {
+                if (context is BaseActivity<*, *>) {
             val activity = context as BaseActivity<*, *>?
             this.baseActivity = activity
             activity?.onFragmentAttached()

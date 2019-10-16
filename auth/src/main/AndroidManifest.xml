@@ -27,6 +27,8 @@
                 android:value="false"/>
         <activity
                 android:name="com.facebook.accountkit.ui.AccountKitActivity"/>
+        <activity
+                android:name="co.sdk.auth.view.LoginOTPActivity"/>
     </application>
 
 </manifest>
