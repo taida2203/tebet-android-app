@@ -83,7 +83,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
             this.authMethod = authMethod
             saveObject(AUTH_LOGIN_METHOD, authMethod)
         }
-        authMethod!!.brandedLogin(context, config, object : ApiCallBack<LoginConfiguration>() {
+        authMethod?.brandedLogin(context, config, object : ApiCallBack<LoginConfiguration>() {
             override fun onSuccess(code: Int, response: LoginConfiguration?) {
                 saveObject(AUTH_BRAND_LOGIN_TOKEN, response)
                 if (response != null) {
@@ -135,7 +135,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
                             }
                         })
                     } else {
-                        callback!!.onFailed(LoginException(-1, "Auth method not initial correctly"))
+                        callback?.onFailed(LoginException(-1, "Auth method not initial correctly"))
                     }
                 } else {
                     callback?.onFailed(LoginException(-1, context.getString(R.string.general_message_error)))
@@ -145,7 +145,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
             override fun onFailed(exeption: LoginException) {
                 callback?.onFailed(exeption)
             }
-        })
+        }) ?: callback?.onFailed(LoginException(-1, "Auth method not initial correctly"))
     }
 
     fun setBaseUrl(baseUrl: String): AuthSdk {

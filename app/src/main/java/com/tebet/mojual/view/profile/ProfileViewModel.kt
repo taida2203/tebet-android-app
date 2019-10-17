@@ -36,7 +36,6 @@ class ProfileViewModel(
                     .addOnCanceledListener { emitter.onNext("") }
             }
                 .concatMap { if(it.isNotEmpty()) dataManager.unRegisterDevice(DeviceRegisterRequest(it)) else Observable.just(it) }
-                .concatMap { Observable.create<String> { FirebaseInstanceId.getInstance().deleteInstanceId() } }
                 .concatMap { AuthSdk.instance.logout(true) }
                 .doOnComplete { dataManager.clearAllTables().subscribe({}, {}) }
         }

@@ -78,7 +78,7 @@ class LoginWithPasswordViewModel(
         configuration.password = userInputPassword.trim()
         navigator.activity()?.let {
             compositeDisposable.add(
-                AuthSdk.instance.login(it, AuthGooglePhoneLoginMethod(), configuration)
+                AuthSdk.instance.login(it, AuthPasswordMethod(), configuration)
                     .concatMap { dataManager.getProfile() }
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<UserProfile>() {

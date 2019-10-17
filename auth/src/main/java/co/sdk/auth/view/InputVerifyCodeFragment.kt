@@ -38,7 +38,7 @@ class InputVerifyCodeFragment : Fragment(), IFragmentAction {
                 showSoftKeyboard(et_code)
             }
         }
-        et_code.afterTextChanged {
+        et_code?.afterTextChanged {
             for (i in it.indices) {
                 edtCodes[i].text = it.substring(i, i + 1)
             }
@@ -60,9 +60,13 @@ class InputVerifyCodeFragment : Fragment(), IFragmentAction {
     }
 
     internal fun resetInputPin() {
-        tv_error.text = ""
-        et_code.setText("")
+        tv_error?.text = ""
+        et_code?.setText("")
+    }
 
+    internal fun showError(err: String) {
+        tv_error?.text = ""
+        et_code?.setText(err)
     }
 
     fun hideKeyboard() {

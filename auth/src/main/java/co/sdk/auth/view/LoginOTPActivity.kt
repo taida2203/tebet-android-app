@@ -90,9 +90,9 @@ class LoginOTPActivity : AppCompatActivity() {
 
                 currentFragment = InputVerifyCodeFragment()
                 openFragment(currentFragment as InputVerifyCodeFragment, R.id.placeHolderChild)
-
             }
         }
+
         PhoneAuthProvider.getInstance().verifyPhoneNumber(phone, // Phone number to verify
             60, // Timeout duration
             TimeUnit.SECONDS, // Unit of timeout
@@ -102,6 +102,10 @@ class LoginOTPActivity : AppCompatActivity() {
     }
 
     private fun handleError(err: Exception) {
+        if (currentFragment is InputVerifyCodeFragment) {
+            err.message?.let { (currentFragment as InputVerifyCodeFragment).showError(it) }
+            return
+        }
         Toast.makeText(this@LoginOTPActivity, err.message, Toast.LENGTH_SHORT).show()
     }
 
