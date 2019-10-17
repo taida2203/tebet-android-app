@@ -139,11 +139,12 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                     alert.addButton("View", R.style.AlertButton, View.OnClickListener {
                         message.data?.let { it1 -> openFromNotification(it1, true) }
                         Alerter.hide()
-                    }).setOnClickListener(View.OnClickListener {
-                        message.data?.let { it1 -> openFromNotification(it1, true) }
-                        Alerter.hide()
                     })
                 }
+                alert.setOnClickListener(View.OnClickListener {
+                    message.data?.let { it1 -> openFromNotification(it1, true) }
+                    Alerter.hide()
+                })
                 alert.show()
                 refreshData(message)
                 (application as App).notificationHandlerData.postValue(null)
