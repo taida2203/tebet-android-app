@@ -60,13 +60,11 @@ class InputVerifyCodeFragment : Fragment(), IFragmentAction {
     }
 
     internal fun resetInputPin() {
-        tv_error?.text = ""
         et_code?.setText("")
     }
 
     internal fun showError(err: String) {
-        tv_error?.text = ""
-        et_code?.setText(err)
+        tv_error?.text = err
     }
 
     fun hideKeyboard() {

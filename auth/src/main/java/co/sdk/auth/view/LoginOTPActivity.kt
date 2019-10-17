@@ -113,10 +113,10 @@ class LoginOTPActivity : AppCompatActivity() {
         showLoading(true)
         FirebaseAuth.getInstance().signInWithCredential(credential)
             .continueWithTask { it.result?.user?.getIdToken(true) }
-            .addOnCompleteListener { task ->
+            .addOnSuccessListener { task ->
                 showLoading(false)
                 (currentFragment as InputVerifyCodeFragment).resetInputPin()
-                task.result?.token?.let {
+                task?.token?.let {
                     val intent = Intent()
                     intent.putExtra("EXTRA_ID_TOKEN", it)
                     setResult(Activity.RESULT_OK, intent)
