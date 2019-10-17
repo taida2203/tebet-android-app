@@ -5,7 +5,7 @@ class LoginConfiguration(var logoutWhileExpired: Boolean = true, var token: Stri
     var password: String? = null
     var username: String? = null
     var googleClientId: String? = null
-    val authenticationType = "ACCOUNT_KIT"
+    val authenticationType = "FIREBASE"
     val profileType = "CUSTOMER"
 
     companion object {
