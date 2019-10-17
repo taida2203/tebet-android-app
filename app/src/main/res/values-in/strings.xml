@@ -17,6 +17,9 @@
     <string name="login_password_phone">Telepon</string>
 
     <string name="registration_title">Daftar baru</string>
+    <string name="registration_demographic">Demografi</string>
+    <string name="registration_contact">Hubungi</string>
+    <string name="registration_payment">Pembayaran</string>
     <string name="registration_step1_selfie_tutorial">Ambil foto wajah anda</string>
     <string name="registration_step1_full_name">Nama lengkap</string>
     <string name="registration_step1_date_of_birth">Tanggal lahir</string>
@@ -33,11 +36,15 @@
     <string name="registration_step2_postal_code">Kode pos</string>
     <string name="registration_step2_google_map_title">Kirim lokasi anda saat ini</string>
     <string name="registration_step2_choose_on_map">Tandai di peta</string>
+    <string name="registration_step2_domicile_address">Alamat tempat tinggal</string>
+    <string name="registration_step2_pickup_address">Alamat penjemputan</string>
     <string name="registration_step3_bank_name">Nama bank</string>
     <string name="registration_step3_bank_account_number">Nomor rekening bank</string>
     <string name="registration_step3_bank_account_name">Nama sesuai rekening bank</string>
     <string name="registration_step3_bank_region">Kantor cabang</string>
     <string name="login_password_title">Masuk dengan nomor telepon anda</string>
+    <string name="login_password_forgot">Lupa password?</string>
+    <string name="login_password_login">Masuk</string>
 
     <string name="sign_up_password_title">Daftar baru</string>
     <string name="forgot_password_title">Masukan password baru</string>
@@ -50,6 +57,8 @@
 
 
     <string name="home_verify_warning">Akun anda sedang diverifikasi. Team Mo-Jual akan menghubungi anda secepatnya.</string>
+    <string name="home_verify_rejected">Akun anda ditolak. Silahkan hubungi Team Mo-Jual untuk lebih jelasnya.</string>
+    <string name="home_verify_blocked">Akun anda tidak tersedia. Silahkan hubungi Team Mo-Jual untuk lebih jelasnya.</string>
     <string name="home_navigation_home">Beranda</string>
     <string name="home_navigation_inbox">Inbox</string>
     <string name="home_navigation_history">Riwayat Transaksi</string>
@@ -60,7 +69,7 @@
     <string name="home_bonus">Bonus</string>
     <string name="home_rating">Performa Anda</string>
 
-    <string name="sale_button_submit">SUBMIT</string>
+    <string name="sale_button_submit">Kirim</string>
     <string name="sale_estimated_price">Harga estimasi</string>
     <string name="sale_quantity">Pilih jumlah</string>
     <string name="sale_selected_date">Pilih tanggal pengiriman</string>
@@ -100,6 +109,15 @@
     <string name="check_quality_add_container_turn_off_iot">Silahkan Matikan perangkat IoT terlebih dahulu untuk menghemat baterai</string>
     <string name="check_quality_tip1">Tidak mengerti untuk cek kualitas?</string>
     <string name="check_quality_tip2">Lihat tips</string>
+    <string name="check_quality_add_container_iot">status IOT</string>
+    <string name="check_quality_add_container_iot_connected">Telah terhubung</string>
+    <string name="check_quality_add_container_iot_not_connect">Tidak terhubung</string>
+    <string name="check_quality_add_container_iot_connecting">Sedang menghubungkan…</string>
+    <string name="check_quality_add_container_iot_not_turn_off">Matikan</string>
+    <string name="check_quality_add_container_button_retry">Coba lagi</string>
+    <string name="check_quality_add_container_button_manual">Manual</string>
+    <string name="check_quality_add_container_gps_warning">GPS anda tidak aktif. Aktifkan GPS anda!</string>
+    <string name="check_quality_add_container_permission_warning">Berikan izin akses yang diperlukan</string>
     <string name="check_quality_add_container_no_available_container">Anda tidak memiliki container yang akan dicek kualitas</string>
     <string name="check_quality_add_container_block_while_checking">Harap tunggu sampai cek kualitas selesai atau batalkan pengecekan sekarang</string>
     <string name="check_quality_add_container_item_id">Kode container</string>
@@ -119,8 +137,10 @@
     <string name="order_detail_amount">Nilai pembayaran</string>
     <string name="order_detail_content">Kadar eugenol</string>
     <string name="order_detail_dialog_reject">Anda yakin akan membatalkan semua container?</string>
-    <string name="order_detail_dialog_confirm">Anda yakin akan menjual container yang dipilih ini %1$s?</string>
+    <string name="order_detail_dialog_confirm">Anda yakin akan menjual container %1$s?</string>
     <string name="order_detail_button_approve">Pesanan anda disetujui</string>
+    <string name="order_detail_status">Status</string>
+    <string name="order_detail_message">Pesan</string>
 
     <string name="order_reject_title">Beritahu kami</string>
     <string name="order_reject_detail">Mengapa anda menolak untuk menjual kepada kami? Beritahu kami dengan menjawab pertanyaan di bawah ini</string>
@@ -130,6 +150,8 @@
 
     <string name="history_title">Riwayat transaksi</string>
     <string name="history_filter">Pilih berdasarkan</string>
+    <string name="history_container">%1$s Container</string>
+    <string name="history_containers">%1$s Containers</string>
 
     <string name="history_search_title">Pencarian lebih dalam</string>
 
@@ -161,12 +183,14 @@
     <string name="profile_bank_account">Nama Bank</string>
     <string name="profile_security">Pengamanan</string>
     <string name="profile_set_pin">Buat Pin</string>
+    <string name="profile_remove_pin">Hapus Pin</string>
     <string name="profile_change_password">Ubah password</string>
     <string name="profile_other">lainnya</string>
     <string name="profile_contact_mojual">Hubungi MOJUAL</string>
     <string name="profile_logout">Keluar</string>
     <string name="profile_version">Version</string>
     <string name="profile_language">Bahasa</string>
+    <string name="profile_bonus">Bonus</string>
 
     <string name="change_pass_title">Ubah password</string>
 
@@ -181,6 +205,23 @@
     <string name="history_advance_button_search">pencarian</string>
     <string name="history_advance_hint_date">15 Jul 2019</string>
     <string name="history_advance_status_all">Semua</string>
+    <string name="history_advance_status_open">Buka</string>
+    <string name="history_advance_status_closed">Tutup</string>
+    <string name="history_advance_status_rejected">Ditolak</string>
+    <string name="history_advance_status_order_id">Order Code</string>
+    <string name="history_advance_status_sale_date">Tanggal penjualan</string>
+    <string name="history_advance_status_status">Status</string>
+    <string name="history_advance_status_amount">Nilai pembayaran</string>
+    <string name="history_advance_status_desc">Urutkan dari nilai yang terbesar</string>
+    <string name="history_advance_status_asc">Urutkan dari nilai yang terkecil</string>
 
     <string name="quality_help_title">Bantuan</string>
+
+    <string name="pin_message_warn">Anda akan keluar dari Mojual setelah 5 kali salah memasukkan PIN. Keluar untuk atur ulang PIN</string>
+    <string name="pin_enter">Masukkan kode PIN</string>
+    <string name="pin_message_not_matched">PIN tidak sesuai</string>
+    <string name="pin_message_wrong">PIN salah</string>
+    <string name="pin_message_remove">Anda ingin menghapus kode PIN?</string>
+    <string name="pin_confirm">Konfirmasi kode PIN</string>
+    <string name="pin_exit">Keluar</string>
 </resources>
