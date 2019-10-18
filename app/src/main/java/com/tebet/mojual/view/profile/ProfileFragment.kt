@@ -7,11 +7,12 @@ import androidx.lifecycle.ViewModelProviders
 import co.common.constant.AppConstant
 import co.common.util.LanguageUtil
 import co.common.util.PreferenceUtils
-import co.common.view.dialog.LanguageChoiceDialog
+import com.tebet.mojual.common.view.LanguageChoiceDialog
 import co.common.view.dialog.RoundedCancelOkDialog
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.SingleChoiceDialog
 import com.tebet.mojual.R
+import com.tebet.mojual.data.models.Language
 import com.tebet.mojual.databinding.FragmentProfileBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.login.Login
@@ -44,12 +45,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun openChangeLanguageDialog() {
         fragmentManager?.let {
-            LanguageChoiceDialog().setCallback(object :
-                SingleChoiceDialog.SingleChoiceDialogCallback<String> {
+            LanguageChoiceDialog().setItems(
+                arrayListOf(
+                    Language(
+                        LanguageUtil.LANGUAGE_INDEX_ENGLISH,
+                        getString(R.string.support_language_english)
+                    ),
+                    Language(
+                        LanguageUtil.LANGUAGE_INDEX_BAHASA,
+                        getString(R.string.support_language_bahasa)
+                    )
+                )
+            ).setCallback(object :
+                SingleChoiceDialog.SingleChoiceDialogCallback<Language> {
                 override fun onCancel() {
                 }
 
-                override fun onOk(selectedItem: String?) {
+                override fun onOk(selectedItem: Language?) {
                     viewModel.doChangeLanguage(selectedItem)
                 }
             }).show(it, "")
@@ -60,17 +72,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         startActivity(Intent(activity, ChangePassword::class.java))
     }
 
-    override fun changeLanguage(selectedItem: String?) {
-        when (selectedItem) {
-            getString(R.string.support_language_english) -> {
+    override fun changeLanguage(selectedItem: Language?) {
+        when (selectedItem?.languageId) {
+            LanguageUtil.LANGUAGE_INDEX_ENGLISH -> {
                 activity?.applicationContext?.let {
-                    LanguageUtil.instance.changeEnglish(it)
+                    LanguageUtil.instance.changeEnglish(activity)
                     activity?.recreate()
                 }
             }
-            getString(R.string.support_language_bahasa) -> {
+            LanguageUtil.LANGUAGE_INDEX_BAHASA -> {
                 activity?.applicationContext?.let {
-                    LanguageUtil.instance.changeBahasa(it)
+                    LanguageUtil.instance.changeBahasa(activity)
                     activity?.recreate()
                 }
             }

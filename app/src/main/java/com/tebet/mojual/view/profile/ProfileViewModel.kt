@@ -6,10 +6,9 @@ import co.common.util.LanguageUtil
 import co.common.util.PreferenceUtils.getString
 import co.sdk.auth.AuthSdk
 import com.google.firebase.iid.FirebaseInstanceId
-import com.tebet.mojual.R
-import com.tebet.mojual.common.util.Utility
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
+import com.tebet.mojual.data.models.Language
 import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.models.request.DeviceRegisterRequest
@@ -116,14 +115,13 @@ class ProfileViewModel(
         navigator.openChangeLanguageDialog()
     }
 
-    fun doChangeLanguage(selectedItem: String?) {
-        when (selectedItem) {
-            Utility.getInstance().getString(R.string.support_language_english) -> {
-                if (LanguageUtil.instance.getLanguageIndex() == LanguageUtil.LANGUAGE_INDEX_ENGLISH) return
+    fun doChangeLanguage(selectedItem: Language?) {
+        if (LanguageUtil.instance.getLanguageIndex() == selectedItem?.languageId) return
+        when (selectedItem?.languageId) {
+            LanguageUtil.LANGUAGE_INDEX_ENGLISH -> {
                 userProfile.get()?.language = UserProfile.LANGUAGE_EN
             }
-            Utility.getInstance().getString(R.string.support_language_bahasa) -> {
-                if (LanguageUtil.instance.getLanguageIndex() == LanguageUtil.LANGUAGE_INDEX_BAHASA) return
+            LanguageUtil.LANGUAGE_INDEX_BAHASA -> {
                 userProfile.get()?.language = UserProfile.LANGUAGE_IN
             }
         }

@@ -8,10 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tebet.mojual.R
-import com.tebet.mojual.data.models.Order
-import com.tebet.mojual.data.models.OrderContainer
-import com.tebet.mojual.data.models.OrderDetail
-import com.tebet.mojual.data.models.UserProfile
+import com.tebet.mojual.data.models.*
 import com.tebet.mojual.databinding.ActivityOrderDetailBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
@@ -64,6 +61,11 @@ class OrderDetailActivity :
     override fun openPreviousScreen() {
         setResult(Activity.RESULT_OK)
         finish()
+    }
+
+    override fun refreshData(notification: Message) {
+        super.refreshData(notification)
+        currentFragment?.viewModel?.loadData(true)
     }
 
     override fun showOrderDetailScreen(dataResponse: Order) {

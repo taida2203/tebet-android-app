@@ -1,4 +1,4 @@
-package co.common.view.dialog
+package com.tebet.mojual.common.view
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -6,22 +6,17 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import co.common.util.LanguageUtil
-import com.tebet.mojual.common.R
+import co.common.view.dialog.SingleChoiceDialog
+import com.tebet.mojual.data.models.Language
 
-class LanguageChoiceDialog : SingleChoiceDialog<String>() {
-    private var listDialog: List<String>? = null
+class LanguageChoiceDialog : SingleChoiceDialog<Language>() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         setSelectedIndex(LanguageUtil.instance.getLanguageIndex())
-        listDialog = listOf(
-            getString(R.string.support_language_english),
-            getString(R.string.support_language_bahasa)
-        )
-        setItems(listDialog)
         return super.onCreateDialog(savedInstanceState)
     }
 
     override fun getListItemAsString(): List<String> {
-        return listDialog!!
+        return items.map { it.languageName }
     }
 
     override fun onStart() {
