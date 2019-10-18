@@ -37,6 +37,7 @@ data class OrderContainer(
     var createdDate: Long? = null,
     var modifiedBy: String? = null,
     var modifiedDate: Long? = null,
+    var totalVolumeBonus: Double? = null,
     var action: String? = AssetAction.APPROVE.name,
     var orderAnswers : List<Question> = arrayListOf()
 ) : BaseObservable(), Serializable {

@@ -115,7 +115,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@{StringExtKt.toDisplayMoney(viewModel.order.deliveryBonus)}"
+                        android:text="@{StringExtKt.toDisplayMoney(viewModel.totalDelivery)}"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -134,7 +134,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@{StringExtKt.toDisplayMoney(viewModel.order.bonus)}"
+                        android:text="@{StringExtKt.toDisplayMoney(viewModel.totalBonus)}"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                 </LinearLayout>

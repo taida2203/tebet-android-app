@@ -25,6 +25,8 @@ class OrderDetailViewModel(
 ) :
     BaseViewModel<OrderDetailNavigator>(dataManager, schedulerProvider) {
     var totalPrice: ObservableDouble = ObservableDouble()
+    var totalBonus: ObservableDouble = ObservableDouble()
+    var totalDelivery: ObservableDouble = ObservableDouble()
     var order: ObservableField<OrderDetail> = ObservableField()
     var items: ObservableArrayList<OrderContainer> = ObservableArrayList()
     var itemBinding: ItemBinding<OrderContainer> =
@@ -45,6 +47,11 @@ class OrderDetailViewModel(
         totalPrice.set(items.filter { it.isSelected }.sumByDouble {
             it.priceTotalDisplay ?: 0.0
         })
+        totalBonus.set(items.filter { it.isSelected }.sumByDouble {
+            it.totalVolumeBonus ?: 0.0
+        })
+        totalDelivery.set(if (items.firstOrNull { it.isSelected } != null) order.get()?.deliveryBonus
+            ?: 0.0 else 0.0)
     }
 
     override fun loadData(isForceLoad: Boolean?) {
