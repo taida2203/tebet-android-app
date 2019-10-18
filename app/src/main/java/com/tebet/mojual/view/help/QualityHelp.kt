@@ -28,7 +28,7 @@ open class QualityHelp : BaseActivity<ActivityQualityHelpBinding, QualityHelpVie
         var url = "https://mo-jual.com/manual-setup"
         if (intent.hasExtra("EXTRA_ORDER")) url = intent.getStringExtra("EXTRA_ORDER")
         topRightViewBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding?.topRightHolder, true)
         viewDataBinding?.webView?.loadUrl(url)
     }
 

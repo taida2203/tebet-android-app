@@ -72,13 +72,13 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         topLeftViewBinding = DataBindingUtil.inflate(
             layoutInflater,
             R.layout.item_home_avatar,
-            baseBinding.topLeftHolder,
+            baseBinding?.topLeftHolder,
             true
         )
         topRightViewBinding = DataBindingUtil.inflate(
             layoutInflater,
             R.layout.item_home_icon,
-            baseBinding.topRightHolder,
+            baseBinding?.topRightHolder,
             true
         )
         showHomeScreen()
@@ -120,13 +120,13 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
 
     override fun showBorrowScreen() {
         enableBackButton = true
-        baseBinding.viewModel?.enableTopLogo?.set(false)
+        baseBinding?.viewModel?.enableTopLogo?.set(false)
         title = getString(R.string.home_menu_borrow)
     }
 
     override fun showTipsScreen() {
         enableBackButton = true
-        baseBinding.viewModel?.enableTopLogo?.set(false)
+        baseBinding?.viewModel?.enableTopLogo?.set(false)
         title = getString(R.string.home_menu_tips)
     }
 
@@ -227,13 +227,13 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
     }
 
     private fun updateTitleAction(fragment: Fragment?, titleString: String? = null) {
-        baseBinding.viewModel?.enableTopLogo?.set(false)
+        baseBinding?.viewModel?.enableTopLogo?.set(false)
         enableBackButton = true
         topRightViewBinding?.search?.visibility = View.GONE
         when (fragment) {
             is HomeFragment -> {
                 enableBackButton = false
-                baseBinding.viewModel?.enableTopLogo?.set(true)
+                baseBinding?.viewModel?.enableTopLogo?.set(true)
                 viewModel.selectedTab.set(HomeViewModel.ScreenTab.Home)
             }
             is HistoryFragment -> {

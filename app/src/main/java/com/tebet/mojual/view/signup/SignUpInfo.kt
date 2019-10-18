@@ -70,7 +70,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         topRightViewBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding?.topRightHolder, true)
         title = getString(R.string.registration_title)
         refreshScreenStep()
         viewDataBinding?.btnNext?.setOnClickListener {

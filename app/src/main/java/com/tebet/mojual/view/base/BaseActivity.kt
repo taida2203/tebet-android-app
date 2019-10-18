@@ -57,7 +57,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     var viewDataBinding: T? = null
         private set
 
-    protected lateinit var baseBinding: ActivityBaseBinding
+    protected var baseBinding: ActivityBaseBinding? =null
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
@@ -87,12 +87,12 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             field = isEnable
             when {
                 isEnable -> {
-                    baseBinding.ivBack.visibility = View.VISIBLE
-                    baseBinding.topLeftHolder.visibility = View.GONE
+                    baseBinding?.ivBack?.visibility = View.VISIBLE
+                    baseBinding?.topLeftHolder?.visibility = View.GONE
                 }
                 else -> {
-                    baseBinding.ivBack.visibility = View.GONE
-                    baseBinding.topLeftHolder.visibility = View.VISIBLE
+                    baseBinding?.ivBack?.visibility = View.GONE
+                    baseBinding?.topLeftHolder?.visibility = View.VISIBLE
                 }
             }
         }
@@ -117,14 +117,14 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         performDependencyInjection()
         super.onCreate(savedInstanceState)
         baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base)
-        baseBinding.viewModel =
+        baseBinding?.viewModel =
             ViewModelProviders.of(this, factory).get(BaseActivityViewModel::class.java)
-        baseBinding.viewModel?.navigator = this
+        baseBinding?.viewModel?.navigator = this
         performDataBinding()
         viewModel.baseErrorHandlerData.observe(this, Observer<NetworkError> {
             handleError(it)
         })
-        setSupportActionBar(baseBinding.baseToolbar)
+        setSupportActionBar(baseBinding?.baseToolbar)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         (application as App).notificationHandlerData.observe(this, Observer { remoteMessage ->
             remoteMessage?.let { message ->
@@ -186,7 +186,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     private fun performDataBinding() {
         viewDataBinding =
-            DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding.placeHolder, true)
+            DataBindingUtil.inflate(layoutInflater, contentLayoutId, baseBinding?.placeHolder, true)
         viewDataBinding?.setVariable(bindingVariable, viewModel)
         viewDataBinding?.executePendingBindings()
     }
@@ -324,13 +324,13 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     override fun showLoading(isLoading: Boolean) {
         viewModel.setIsLoading(isLoading)
-        baseBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        baseBinding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
         showEmpty(false)
     }
 
     override fun showEmpty(isEmpty: Boolean) {
         viewModel.setIsEmpty(isEmpty)
-        baseBinding.emptyView.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        baseBinding?.emptyView?.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
 
     fun handleError(exception: LoginException?) {
@@ -373,12 +373,12 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     override fun setTitle(titleId: Int) {
         super.setTitle("")
-        baseBinding.tvBaseTitle.text = getString(titleId).toString().toUpperCase()
+        baseBinding?.tvBaseTitle?.text = getString(titleId).toString().toUpperCase()
     }
 
     override fun setTitle(title: CharSequence?) {
         super.setTitle("")
-        baseBinding.tvBaseTitle.text = title
+        baseBinding?.tvBaseTitle?.text = title
     }
 
     override fun onBackPressed() {

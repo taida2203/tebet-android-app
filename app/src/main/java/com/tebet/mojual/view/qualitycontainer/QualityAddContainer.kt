@@ -72,7 +72,7 @@ class QualityAddContainer :
             DataBindingUtil.inflate(
                 layoutInflater,
                 R.layout.item_home_icon,
-                baseBinding.topRightHolder,
+                baseBinding?.topRightHolder,
                 true
             )
         intent.getSerializableExtra("EXTRA_ORDER")?.let {

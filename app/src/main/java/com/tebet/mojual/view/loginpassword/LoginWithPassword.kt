@@ -39,7 +39,7 @@ class LoginWithPassword : BaseActivity<ActivityLoginPasswordBinding, LoginWithPa
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
         topRightViewBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding?.topRightHolder, true)
         title = getString(R.string.login_password_title)
         viewModel.loadData()
         viewDataBinding?.snCountryFlag?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

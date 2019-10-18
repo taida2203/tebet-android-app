@@ -33,7 +33,7 @@ open class ForgotPassword : BaseActivity<ActivitySignUpPasswordBinding, ForgotPa
         validator.enableFormValidationMode()
         title = getString(R.string.forgot_password_title)
         topRightViewBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding.topRightHolder, true)
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding?.topRightHolder, true)
     }
 
     override fun openHomeScreen() {

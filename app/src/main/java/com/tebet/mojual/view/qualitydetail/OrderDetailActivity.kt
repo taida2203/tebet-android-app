@@ -48,7 +48,7 @@ class OrderDetailActivity :
             DataBindingUtil.inflate(
                 layoutInflater,
                 R.layout.item_home_icon,
-                baseBinding.topRightHolder,
+                baseBinding?.topRightHolder,
                 true
             )
 
