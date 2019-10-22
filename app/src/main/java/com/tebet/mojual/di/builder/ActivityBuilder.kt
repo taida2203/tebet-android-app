@@ -13,6 +13,7 @@ import com.tebet.mojual.view.saledetail.SaleDetailFragmentProvider
 import com.tebet.mojual.view.selectfuturedate.SelectFutureDate
 import com.tebet.mojual.view.bankupdate.BankUpdate
 import com.tebet.mojual.view.help.QualityHelp
+import com.tebet.mojual.view.myasset.MyAsset
 import com.tebet.mojual.view.profilechangepass.ChangePassword
 import com.tebet.mojual.view.profilepin.PinCode
 import com.tebet.mojual.view.qualitydetail.OrderDetailActivity
@@ -74,4 +75,8 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [OrderDetailFragmentProvider::class])
     abstract fun orderDetailActivity(): OrderDetailActivity
+
+    @ContributesAndroidInjector
+    abstract fun myAssetActivity(): MyAsset
+
 }

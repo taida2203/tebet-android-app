@@ -17,6 +17,7 @@ import com.tebet.mojual.view.login.LoginViewModel
 import com.tebet.mojual.view.loginpassword.LoginWithPasswordViewModel
 import com.tebet.mojual.view.historysearch.HistorySearchViewModel
 import com.tebet.mojual.view.message.MessageViewModel
+import com.tebet.mojual.view.myasset.MyAssetViewModel
 import com.tebet.mojual.view.profile.ProfileViewModel
 import com.tebet.mojual.view.profilepin.PinCodeViewModel
 import com.tebet.mojual.view.qualitycheck.QualityViewModel
@@ -76,6 +77,7 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(QualityHelpViewModel::class.java) -> QualityHelpViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(PinCodeViewModel::class.java) -> PinCodeViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(OrderDetailActivityViewModel::class.java) -> OrderDetailActivityViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(MyAssetViewModel::class.java) -> MyAssetViewModel(dataManager, schedulerProvider) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
