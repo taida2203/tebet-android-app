@@ -19,7 +19,9 @@ import io.reactivex.observers.DisposableObserver
 import me.tatarka.bindingcollectionadapter2.collections.MergeObservableList
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 import timber.log.Timber
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 class QualityAddContainerViewModel(
@@ -45,8 +47,16 @@ class QualityAddContainerViewModel(
      * Items merged with a header on top
      */
     var headerFooterItems: MergeObservableList<Any> = MergeObservableList<Any>()
-        .insertItem(Utility.getInstance().getString(R.string.check_quality_add_container_add_new_container))
+        .insertItem(generateAddButtonContent())
         .insertList(items)
+
+    private fun generateAddButtonContent(): String? {
+        return String.format(
+            Utility.getInstance().getString(R.string.check_quality_add_container_add_new_container),
+            items.size + 1,
+            order.get()?.quantity ?: 0
+        )
+    }
 
     val onItemBind: OnItemBindClass<Any> = OnItemBindClass<Any>()
         .map(String::class.java) { itemBinding, _, _ ->
@@ -73,6 +83,7 @@ class QualityAddContainerViewModel(
                         val newItems = arrayListOf(newItem) + items
                         items.clear()
                         items.addAll(newItems)
+                        refreshCheckButtonState()
                     }
                 })
         }
@@ -104,6 +115,12 @@ class QualityAddContainerViewModel(
                             !item.expanded
                     }
                 })
+        }
+
+    val isReachMaxAtPlan: Boolean
+        get() {
+            order.get()?.quantity?.let { return items.size >= it }
+            return false
         }
 
     private fun saveUnFinishItem() {
@@ -180,11 +197,25 @@ class QualityAddContainerViewModel(
                                 it.assignedContainers.addAll(getAvailableContainer())
                                 it.selectedItem = 0
                             }
+                        refreshCheckButtonState()
                         true
                     }.subscribeOn(schedulerProvider.ui())
                 }
                 .observeOn(schedulerProvider.ui()).subscribe({}, {error-> Timber.e(error)})
         )
+    }
+
+    private fun refreshCheckButtonState(forceRefresh: Boolean = false) {
+        if (!isReachMaxAtPlan || forceRefresh) {
+            headerFooterItems.removeAll()
+            headerFooterItems = MergeObservableList<Any>()
+                .insertItem(generateAddButtonContent())
+                .insertList(items)
+        } else if (isReachMaxAtPlan && (headerFooterItems[0] is String || forceRefresh)) {
+            headerFooterItems.removeAll()
+            headerFooterItems = MergeObservableList<Any>()
+                .insertList(items)
+        }
     }
 
     private fun allCheckingComplete(): Boolean {
@@ -241,6 +272,7 @@ class QualityAddContainerViewModel(
                                 savedContainer
                             })
                         }
+                        refreshCheckButtonState(true)
                         navigator.showLoading(false)
                     }
 

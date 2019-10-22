@@ -106,7 +106,7 @@
     <string name="check_quality_add_container_order">Order %1$s</string>
     <string name="check_quality_add_container_btn_check">Start checking</string>
     <string name="check_quality_add_container_btn_cancel">Cancel checking</string>
-    <string name="check_quality_add_container_add_new_container">CHECK NEXT CONTAINER</string>
+    <string name="check_quality_add_container_add_new_container">ADD %1$s OF %2$s CONTAINER</string>
     <string name="check_quality_add_container_turn_off_iot">Please turn of IoT device first to save Device battery</string>
     <string name="check_quality_tip1">Dont know how to check?</string>
     <string name="check_quality_tip2">See Tips</string>

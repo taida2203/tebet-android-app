@@ -105,7 +105,7 @@
     <string name="check_quality_add_container_order">Order %1$s</string>
     <string name="check_quality_add_container_btn_check">Mulai cek kualitas</string>
     <string name="check_quality_add_container_btn_cancel">Batalkan cek kualitas</string>
-    <string name="check_quality_add_container_add_new_container">Cek kualitas untuk container berikutnya</string>
+    <string name="check_quality_add_container_add_new_container">ADD %1$s OF %2$s CONTAINER</string>
     <string name="check_quality_add_container_turn_off_iot">Silahkan Matikan perangkat IoT terlebih dahulu untuk menghemat baterai</string>
     <string name="check_quality_tip1">Tidak mengerti untuk cek kualitas?</string>
     <string name="check_quality_tip2">Lihat tips</string>
