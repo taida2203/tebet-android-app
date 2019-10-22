@@ -207,7 +207,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     open fun showCheckQualityScreen() {}
 
-    fun openFromNotification(extras: Map<String, String?>, isMarkRead: Boolean = false): Boolean {
+    fun openFromNotification(extras: Map<String, String?>, isMarkRead: Boolean = false) {
         if (isMarkRead) {
             viewModel.compositeDisposable.add(
                 viewModel.dataManager.getUserProfileDB()
@@ -239,15 +239,17 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                     .observeOn(viewModel.schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Message>() {
                         override fun onSuccess(dataResponse: Message) {
-                            refreshData(dataResponse)
+                            openFromNotification(extras)
                         }
 
                         override fun onFailure(error: NetworkError) {
+                            openFromNotification(extras)
                         }
                     })
             )
+        } else {
+            openFromNotification(extras)
         }
-        return openFromNotification(extras)
     }
 
     private fun openFromNotification(extras: Map<String, String?>): Boolean {
