@@ -44,14 +44,23 @@ class OrderDetailViewModel(
             })
 
     private fun updateTotalPrice() {
-        totalPrice.set(items.filter { it.isSelected }.sumByDouble {
-            it.priceTotalDisplay ?: 0.0
-        })
-        totalBonus.set(items.filter { it.isSelected }.sumByDouble {
-            it.totalVolumeBonus ?: 0.0
-        })
-        totalDelivery.set(if (items.firstOrNull { it.isSelected } != null) order.get()?.deliveryBonus
-            ?: 0.0 else 0.0)
+        when {
+            order.get()?.canAction == true -> {
+                totalPrice.set(items.filter { it.isSelected }.sumByDouble {
+                    it.priceTotalDisplay ?: 0.0
+                })
+                totalBonus.set(items.filter { it.isSelected }.sumByDouble {
+                    it.totalVolumeBonus ?: 0.0
+                })
+                totalDelivery.set(if (items.firstOrNull { it.isSelected } != null) order.get()?.deliveryBonus
+                    ?: 0.0 else 0.0)
+            }
+            else -> {
+                order.get()?.totalPrice?.let { totalPrice.set(it) }
+                order.get()?.bonus?.let { totalBonus.set(it) }
+                order.get()?.deliveryBonus?.let { totalDelivery.set(it) }
+            }
+        }
     }
 
     override fun loadData(isForceLoad: Boolean?) {
