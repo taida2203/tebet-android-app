@@ -237,6 +237,7 @@ class QualityAddContainerViewModel(
                 }
             }
         })
+        refreshCheckButtonState(true)
         navigator.showLoading(true)
         sensorManager.get()?.status = SensorStatus.CONNECTING
         compositeDisposable.add(
@@ -272,7 +273,6 @@ class QualityAddContainerViewModel(
                                 savedContainer
                             })
                         }
-                        refreshCheckButtonState(true)
                         navigator.showLoading(false)
                     }
 
