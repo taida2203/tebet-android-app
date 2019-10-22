@@ -10,4 +10,8 @@
     <string name="pin_message_warn">You will be logout from Monjual after 5 attempts. Logout to reset PIN</string>
     <string name="pin_enter">Enter pin code</string>
     <string name="pin_exit">EXIT</string>
+
+    <string name="login_otp_resend">Resend Code</string>
+    <string name="login_otp_verify_code_title">Complete verification by entering 6-digit code</string>
+    <string name="login_otp_verify_code">6-digit Code</string>
 </resources>

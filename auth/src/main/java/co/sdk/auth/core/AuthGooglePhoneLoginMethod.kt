@@ -20,6 +20,10 @@ class AuthGooglePhoneLoginMethod : AuthMethod {
             return FirebaseAuth.getInstance().currentUser != null
         }
 
+    companion object {
+        const val REQUEST_CODE_LOGIN_FIRE_BASE = 4953
+    }
+
     override fun brandedLogin(
         context: Activity,
         configuration: LoginConfiguration,
@@ -30,10 +34,14 @@ class AuthGooglePhoneLoginMethod : AuthMethod {
         if (isLoggedIn) {
             if (FirebaseAuth.getInstance().currentUser != null) {
                 configuration.phone = FirebaseAuth.getInstance().currentUser?.phoneNumber
-                FirebaseAuth.getInstance().currentUser!!.getIdToken(true)
-                    .addOnSuccessListener { task ->
-                        configuration.token = task.token
-                        configuration.let { callback.onSuccess(200, it) }
+                FirebaseAuth.getInstance().currentUser!!.getIdToken(false)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful && task.result?.token?.isNotEmpty() == true) {
+                            configuration.token = task.result?.token
+                            configuration.let { callback.onSuccess(200, it) }
+                        } else {
+                            configuration.let { callback.onFailed(LoginException(400, "")) }
+                        }
                     }.addOnFailureListener {
                         configuration.let { callback.onFailed(LoginException(400, "")) }
                     }
@@ -66,9 +74,4 @@ class AuthGooglePhoneLoginMethod : AuthMethod {
             }
         }
     }
-
-    companion object {
-        val REQUEST_CODE_LOGIN_FIRE_BASE = 4953
-    }
-
 }

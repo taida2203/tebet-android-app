@@ -28,9 +28,6 @@ internal class AuthenticationInterceptor : Interceptor {
         if (currentToken != null && !TextUtils.isEmpty(currentToken.accessToken) &&
                 !(chain.request().url().toString().contains("/login"))) {
             chainRequest.addHeader("Authorization", currentToken.appToken)
-        } else {
-            chainRequest.addHeader("Authorization",
-                    "Basic " + String(Base64.encode(String.format("%s:%s", AuthSdk.instance.consumerKey, AuthSdk.instance.consumerSecret).toByteArray(), Base64.NO_WRAP)))
         }
         chainRequest.addHeader("Device-Id", AuthSdk.instance.deviceId)
 

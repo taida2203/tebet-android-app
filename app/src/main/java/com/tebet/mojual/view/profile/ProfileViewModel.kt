@@ -28,14 +28,16 @@ class ProfileViewModel(
 
     companion object {
         fun logoutStream(dataManager: DataManager): Observable<Any> {
-            return Observable.create<String> { emitter ->
-                FirebaseInstanceId.getInstance().instanceId
-                    .addOnSuccessListener { emitter.onNext(it.token) }
-                    .addOnFailureListener { emitter.onNext("") }
-                    .addOnCanceledListener { emitter.onNext("") }
-            }
+            return AuthSdk.instance.logout(true)
+                .concatMap {
+                    Observable.create<String> { emitter ->
+                        FirebaseInstanceId.getInstance().instanceId
+                            .addOnCompleteListener { emitter.onNext(it.result?.token ?: "") }
+                            .addOnFailureListener { emitter.onNext("") }
+                            .addOnCanceledListener { emitter.onNext("") }
+                    }
+                }
                 .concatMap { if(it.isNotEmpty()) dataManager.unRegisterDevice(DeviceRegisterRequest(it)) else Observable.just(it) }
-                .concatMap { AuthSdk.instance.logout(true) }
                 .doOnComplete { dataManager.clearAllTables().subscribe({}, {}) }
         }
     }

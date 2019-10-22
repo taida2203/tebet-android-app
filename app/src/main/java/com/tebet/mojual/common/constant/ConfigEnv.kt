@@ -47,7 +47,7 @@ object ConfigEnv {
             "local" -> {
                 environment = Environment.LOCAL
 
-                apiRoot = "http://10.0.2.2:4000"
+                apiRoot = "http://192.168.1.50:4000"
                 isAnalyticEnabled = true
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"

@@ -183,9 +183,8 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
 
     @SuppressLint("MissingPermission")
     private fun getLastLocation() {
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            if (location != null)
-                lastLocation = location
+        fusedLocationClient.lastLocation.addOnCompleteListener { location ->
+            lastLocation = location.result
         }
     }
 

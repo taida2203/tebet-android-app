@@ -12,7 +12,7 @@ class NetworkError(e: Throwable?) : Throwable() {
     }
 
     init {
-        if (e is HttpException) this.errorCode = e.response().code()
+        if (e is HttpException) this.errorCode = e.response()?.code()
         this.errorMessage = e?.message
     }
 }

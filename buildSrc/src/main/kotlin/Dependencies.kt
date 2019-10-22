@@ -28,7 +28,7 @@ object Versions {
     const val kotlin = "1.3.50"
     const val leakCanary = "1.5.4"
     const val okHttp = "3.8.1"
-    const val retrofit = "2.5.0"
+    const val retrofit = "2.6.2"
     const val room = "1.0.0"
     const val rxAndroid = "2.1.0"
     const val rxJava = "2.2.0"
@@ -39,6 +39,10 @@ object Versions {
     const val lifecycle = "1.1.1"
     const val lifecycleCompiler = "1.1.1"
     const val gander = "2.0.3"
+    const val facebook = "[5,6)"
+    const val googlePlayServices = "17.0.0"
+    const val googleFireBase = "17.2.0"
+
     // Test Libraries
     const val androidSupportRules = "1.0.0"
     const val androidSupportRunner = "1.0.0"
@@ -50,9 +54,6 @@ object Versions {
     const val mockitoKotlin = "1.5.0"
     const val robolectric = "3.4.2"
     const val runner = "0.5"
-    const val facebook = "[5,6)"
-    const val googlePlayServices = "17.0.0"
-    const val googleFireBase = "17.2.0"
 }
 
 @Suppress("unused")

@@ -6,6 +6,8 @@
     <color name="navyblue">#006bad</color>
     <color name="turquoise">#00adc6</color>
     <color name="white">#ffffff</color>
+    <color name="red">#f75c75</color>
+    <color name="masbroLightText">#95a2b1</color>
 
     <color name="dialogColorOK">#10cee6</color>
     <color name="dialogColorCancel">#304155</color>

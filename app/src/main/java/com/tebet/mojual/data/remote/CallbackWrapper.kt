@@ -20,7 +20,7 @@ abstract class CallbackWrapper<T> : DisposableObserver<AuthJson<T>>() {
     final override fun onError(e: Throwable) {
         when (e) {
             is HttpException -> {
-                val responseBody: ResponseBody? = e.response().errorBody()
+                val responseBody: ResponseBody? = e.response()?.errorBody()
                 onFailure(NetworkError(errorCode = e.code(), message = responseBody?.let { getErrorMessage(it) } ?: ""))
             }
             is SocketTimeoutException -> onFailure(NetworkError(message = "Time out"))

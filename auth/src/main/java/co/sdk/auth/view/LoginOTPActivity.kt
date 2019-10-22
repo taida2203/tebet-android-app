@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -18,12 +19,12 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.tebet.mojual.sdk.auth.R
 import kotlinx.android.synthetic.main.activity_login_otp.*
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 class LoginOTPActivity : AppCompatActivity() {
     private var verificationId: String? = null
     private var currentFragment: Fragment? = null
+    private var phone: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +50,7 @@ class LoginOTPActivity : AppCompatActivity() {
     }
 
     fun requestCode(phone: String) {
+        this.phone = phone
         showLoading(true)
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
@@ -94,8 +96,8 @@ class LoginOTPActivity : AppCompatActivity() {
         }
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(phone, // Phone number to verify
-            60, // Timeout duration
-            TimeUnit.SECONDS, // Unit of timeout
+            InputVerifyCodeFragment.TIMEOUT, // Timeout duration
+            TimeUnit.MILLISECONDS, // Unit of timeout
             this, // Activity (for callback binding)
             callbacks
         ) // OnVerificationStateChangedCallbacks
@@ -112,31 +114,34 @@ class LoginOTPActivity : AppCompatActivity() {
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         showLoading(true)
         FirebaseAuth.getInstance().signInWithCredential(credential)
-            .continueWithTask { it.result?.user?.getIdToken(true) }
-            .addOnSuccessListener { task ->
+            .continueWithTask { FirebaseAuth.getInstance().currentUser?.getIdToken(true) }
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Handler().postDelayed({
+                        showLoading(false)
+                        (currentFragment as InputVerifyCodeFragment).resetInputPin()
+                        task.result?.token?.let {
+                            val intent = Intent()
+                            intent.putExtra("EXTRA_ID_TOKEN", it)
+                            setResult(Activity.RESULT_OK, intent)
+                            hideKeyboard()
+                            finish()
+                        }
+                    }, 15000)
+                    return@addOnCompleteListener
+                }
+                handleError(Exception("Something went wrong. Please try again"))
                 showLoading(false)
                 (currentFragment as InputVerifyCodeFragment).resetInputPin()
-                task?.token?.let {
-                    val intent = Intent()
-                    intent.putExtra("EXTRA_ID_TOKEN", it)
-                    setResult(Activity.RESULT_OK, intent)
-                    hideKeyboard()
-                    finish()
-                }
             }.addOnFailureListener {
-                handleError(it)
+                handleError(Exception("Invalid OTP"))
                 showLoading(false)
                 (currentFragment as InputVerifyCodeFragment).resetInputPin()
             }
     }
 
     override fun onBackPressed() {
-        if (currentFragment is InputVerifyCodeFragment) {
-            currentFragment = InputPhoneFragment()
-            openFragment(currentFragment as InputPhoneFragment, R.id.placeHolderChild)
-            return
-        }
-        super.onBackPressed()
+        if (progressBar?.visibility != View.VISIBLE) super.onBackPressed()
     }
 
     fun hideKeyboard() {
@@ -150,5 +155,9 @@ class LoginOTPActivity : AppCompatActivity() {
     fun showLoading(isLoading: Boolean) {
         progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
         if (currentFragment is IFragmentAction) (currentFragment as IFragmentAction).disableUI(isLoading)
+    }
+
+    fun requestCode() {
+        phone?.let { requestCode(it) }
     }
 }

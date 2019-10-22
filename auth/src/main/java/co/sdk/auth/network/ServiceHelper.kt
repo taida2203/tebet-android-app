@@ -24,6 +24,7 @@ object ServiceHelper {
                 .addConverterFactory(factory)
 
 
+        httpClient.connectTimeout(1, TimeUnit.MINUTES)
         httpClient.readTimeout(60, TimeUnit.SECONDS)
         httpClient.writeTimeout(60, TimeUnit.SECONDS)
 
