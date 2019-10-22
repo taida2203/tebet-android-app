@@ -10,7 +10,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.library.baseAdapters.BR
+import co.common.constant.AppConstant
 import co.common.util.PreferenceUtils
+import co.common.view.dialog.RoundedDialog
+import co.common.view.dialog.RoundedDialogButton
 import com.tebet.mojual.App
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.*
@@ -38,6 +41,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 import com.tebet.mojual.view.message.MessageFragment
+import com.tebet.mojual.view.profilepin.PinCode
 import com.tebet.mojual.view.qualitydetail.OrderDetailActivity
 
 
@@ -66,7 +70,11 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             field = isEnable
             super.enableBackButton = isEnable
         }
+    private var isFirstTimeLogin: Boolean = false
 
+    companion object {
+        const val EXTRA_IS_FIRST_TIME_LOGIN = "EXTRA_IS_FIRST_TIME_LOGIN"
+    }
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         topLeftViewBinding = DataBindingUtil.inflate(
@@ -83,6 +91,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         )
         showHomeScreen()
         intent.extras?.let {
+            isFirstTimeLogin = intent.getBooleanExtra(EXTRA_IS_FIRST_TIME_LOGIN, false)
             PreferenceUtils.saveBoolean(BaseActivity.EXTRA_FORCE_LOCK, true)
             openFromNotification(bundleToMap(it), true)
         }
@@ -97,12 +106,28 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
                 startPinCodeScreen()
             }
         } else {
-//            if (isFirstTimeLogin) {
-//                showSuggestedSetPin()
-//            } else {
-//                startPermissionActivity()
-//            }
+            if (isFirstTimeLogin) {
+                showSuggestedSetPin()
+            }
         }
+    }
+
+    private fun showSuggestedSetPin() {
+        if (!isPinSetted()) RoundedDialog(getString(R.string.pin_prompt))
+            .addFirstButton(RoundedDialogButton(getString(R.string.pin_later), R.drawable.rounded_bg_button_trans))
+        .addSecondButton(RoundedDialogButton(getString(R.string.pin_set)))
+            .setRoundedDialogCallback(
+            object : RoundedDialog.RoundedDialogCallback {
+                override fun onFirstButtonClicked(selectedValue: Any?) {
+
+                }
+
+                override fun onSecondButtonClicked(selectedValue: Any?) {
+                    val intent = Intent(this@Home, PinCode::class.java)
+                    intent.putExtra(AppConstant.PIN_TYPE_INPUT, PinCode.ADD_PIN)
+                    startActivityForResult(intent, REQUEST_CODE_PIN)
+                }
+            }).show(supportFragmentManager, "")
     }
 
     private fun bundleToMap(extras: Bundle?): Map<String, String?> {

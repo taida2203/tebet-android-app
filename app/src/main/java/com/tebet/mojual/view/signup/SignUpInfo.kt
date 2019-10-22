@@ -25,6 +25,7 @@ import com.tebet.mojual.databinding.ActivitySignUpInfoBinding
 import com.tebet.mojual.databinding.ItemHomeIconBinding
 import com.tebet.mojual.view.base.BaseActivity
 import com.tebet.mojual.view.home.Home
+import com.tebet.mojual.view.home.Home.Companion.EXTRA_IS_FIRST_TIME_LOGIN
 import com.tebet.mojual.view.signup.step.SignUpInfoStep
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1
 import com.tebet.mojual.view.signup.step1.SignUpInfoStep1Navigator
@@ -212,7 +213,9 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
 
     override fun openHomeScreen() {
         finish()
-        startActivity(Intent(this, Home::class.java))
+        val homeIntent = Intent(this, Home::class.java)
+        homeIntent.putExtra(EXTRA_IS_FIRST_TIME_LOGIN, true)
+        startActivity(homeIntent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

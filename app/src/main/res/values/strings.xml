@@ -225,4 +225,7 @@
     <string name="pin_message_remove">Do you want to remove PIN code ?</string>
     <string name="pin_confirm">Confirm PIN code</string>
     <string name="pin_exit">EXIT</string>
+    <string name="pin_prompt">Do you want to protect your data using PIN code ?</string>
+    <string name="pin_later">Later</string>
+    <string name="pin_set">Set PIN code</string>
 </resources>
