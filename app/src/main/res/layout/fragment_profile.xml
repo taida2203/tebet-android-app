@@ -1034,7 +1034,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:onClick="@{()->viewModel.onTermClick()}"
+                        android:onClick="@{()->viewModel.onContactClick()}"
                         android:layout_height="wrap_content">
 
                         <TextView
