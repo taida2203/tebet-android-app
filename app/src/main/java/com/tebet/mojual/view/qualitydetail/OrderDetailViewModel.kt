@@ -73,6 +73,7 @@ class OrderDetailViewModel(
                         override fun onSuccess(dataResponse: OrderDetail) {
                             order.set(dataResponse)
                             dataResponse.containers?.forEach { container ->
+                                if(container.isRejected) container.isSelected = false
                                 if (!items.contains(container)) items.add(container)
                                 else items[items.indexOf(container)] = container
                             }

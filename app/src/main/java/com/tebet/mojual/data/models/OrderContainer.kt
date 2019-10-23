@@ -142,11 +142,6 @@ data class OrderContainer(
             }
         }
 
-    val isAccepted: Boolean
-        get() {
-            return !canAction && !isRejected
-        }
-
     var isSelected: Boolean = true
         @Bindable get
         set(value) {
