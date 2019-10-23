@@ -223,6 +223,12 @@ class QualityAddContainerViewModel(
             navigator.show(R.string.check_quality_add_container_block_while_checking)
             return false
         }
+        order.get()?.quantity?.let {
+            if (items.size >= it) {
+                navigator.show(String.format(Utility.getInstance().getString(R.string.check_quality_add_container_max_order_not_allowed), it))
+                return false
+            }
+        }
         return true
     }
 

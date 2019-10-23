@@ -121,6 +121,7 @@
     <string name="check_quality_add_container_permission_warning">Please provide required permission</string>
     <string name="check_quality_add_container_no_available_container">You don\'t have any available containers !!</string>
     <string name="check_quality_add_container_block_while_checking">Please wait checking complete or cancel current checking to add more !!</string>
+    <string name="check_quality_add_container_max_order_not_allowed">Number of container cannot exceed %1$s. Please update and try again</string>
     <string name="check_quality_add_container_item_id">ID</string>
     <string name="check_quality_add_container_weight_title">Weight (KG)</string>
     <string name="check_quality_add_container_time_title">Timer (Seconds)</string>
