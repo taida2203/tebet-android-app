@@ -29,7 +29,7 @@ open class QualityHelp : BaseActivity<ActivityQualityHelpBinding, QualityHelpVie
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         title = getString(R.string.quality_help_title)
-        var url = "https://mo-jual.com/tip"
+        var url = "https://mo-jual.com/tips"
         if (intent.hasExtra(EXTRA_URL)) url = intent.getStringExtra(EXTRA_URL)
         topRightViewBinding =
             DataBindingUtil.inflate(

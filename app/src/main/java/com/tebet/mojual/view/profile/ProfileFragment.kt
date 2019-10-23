@@ -64,7 +64,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun openFAQ() {
         val intent = Intent(activity, QualityHelp::class.java)
-        intent.putExtra(QualityHelp.EXTRA_URL, "https://mo-jual.com/tip")
+        intent.putExtra(QualityHelp.EXTRA_URL, "https://mo-jual.com/tips")
         startActivity(intent)
     }
 
