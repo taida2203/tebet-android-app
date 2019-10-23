@@ -31,16 +31,18 @@ class MyAssetViewModel(
     override fun loadData(isForceLoad: Boolean?) {
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.getAssetDB()
+            dataManager.getUserProfileDB().concatMap { dataManager.getAsserts(it.data?.profileId.toString()) }
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<List<Asset>>() {
                     override fun onSuccess(dataResponse: List<Asset>) {
                         navigator.showLoading(false)
                         items.addAll(dataResponse)
+                        navigator.showEmpty(dataResponse.isNullOrEmpty())
                     }
 
                     override fun onFailure(error: NetworkError) {
                         navigator.showLoading(false)
+                        navigator.showEmpty(true)
                         handleError(error)
                     }
                 })

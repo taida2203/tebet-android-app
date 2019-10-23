@@ -17,6 +17,7 @@ import com.tebet.mojual.databinding.FragmentProfileBinding
 import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.help.QualityHelp
 import com.tebet.mojual.view.login.Login
+import com.tebet.mojual.view.myasset.MyAsset
 import com.tebet.mojual.view.profilechangepass.ChangePassword
 import com.tebet.mojual.view.profilepin.PinCode
 
@@ -88,6 +89,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun openChangePasswordScreen() {
         startActivity(Intent(activity, ChangePassword::class.java))
+    }
+
+    override fun openMyAssetScreen() {
+        startActivity(Intent(activity, MyAsset::class.java))
     }
 
     override fun changeLanguage(selectedItem: Language?) {

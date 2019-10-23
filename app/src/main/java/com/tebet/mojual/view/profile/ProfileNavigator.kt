@@ -7,6 +7,7 @@ interface ProfileNavigator : BaseActivityNavigator{
     fun openLoginScreen()
     fun openChangeLanguageDialog()
     fun openChangePasswordScreen()
+    fun openMyAssetScreen()
     fun changeLanguage(selectedItem: Language?)
     fun openPinCodeScreen()
     fun openTerm()

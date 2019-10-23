@@ -15,15 +15,6 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <com.tebet.mojual.common.view.AppTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_16sdp"
-            android:layout_marginBottom="@dimen/_16sdp"
-            android:text="@string/sale_select_quantity_title"
-            android:textSize="@dimen/_16ssp"
-            android:textStyle="bold" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

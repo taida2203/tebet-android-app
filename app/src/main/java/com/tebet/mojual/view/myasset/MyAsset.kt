@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.myasset
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders

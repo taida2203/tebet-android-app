@@ -1,5 +1,6 @@
 package com.tebet.mojual.view.profile
 
+import android.content.Intent
 import androidx.databinding.ObservableField
 import co.common.constant.AppConstant
 import co.common.util.LanguageUtil
@@ -14,6 +15,7 @@ import com.tebet.mojual.data.models.UserProfile
 import com.tebet.mojual.data.models.request.DeviceRegisterRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import com.tebet.mojual.view.myasset.MyAsset
 import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
 import java.util.concurrent.TimeUnit
@@ -88,6 +90,10 @@ class ProfileViewModel(
 
     fun onChangePassClick() {
         navigator.openChangePasswordScreen()
+    }
+
+    fun openMyAssetScreen() {
+        navigator.openMyAssetScreen()
     }
 
     fun onPinCodeClick() {
