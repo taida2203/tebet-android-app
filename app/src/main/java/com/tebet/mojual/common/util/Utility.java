@@ -44,7 +44,7 @@ public class Utility {
     public String getString(int string_id) {
         String message = context.getString(R.string.general_message_error);
         try {
-            message = getStringByLocal(context, string_id, LanguageUtil.Companion.getInstance().getLanguageIndex() == LanguageUtil.LANGUAGE_INDEX_ENGLISH ? "en_US": "in_ID");
+            message = getStringByLocal(context, string_id, LanguageUtil.Companion.getInstance().getLanguageIndex() == LanguageUtil.LANGUAGE_INDEX_ENGLISH ? "en": "in");
         } catch (Exception e) {
             Timber.e(e);
         }
