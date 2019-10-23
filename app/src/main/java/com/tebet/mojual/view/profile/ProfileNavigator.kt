@@ -13,4 +13,5 @@ interface ProfileNavigator : BaseActivityNavigator{
     fun openTerm()
     fun openPrivacy()
     fun openContact()
+    fun openFAQ()
 }

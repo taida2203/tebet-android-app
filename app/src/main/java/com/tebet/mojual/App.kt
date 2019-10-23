@@ -87,12 +87,6 @@ class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector, Appl
 
         val languageIndex = LanguageUtil.instance.getLanguageIndex()
         if (languageIndex < 0) {
-            //            String language = Locale.getDefault().toString();
-            //            if (!TextUtils.isEmpty(language) && !"in-ID".equalsIgnoreCase(language) && !"in_ID".equalsIgnoreCase(language)) {
-            //                LanguageUtil.Companion.getInstance().changeEnglish(this);
-            //            } else {
-            //                LanguageUtil.Companion.getInstance().changeBahasa(this);
-            //            }
             val deviceDefLang = Locale.getDefault().isO3Language.toLowerCase()
             Timber.d("Device Default Lang on init : %s", deviceDefLang)
             if (deviceDefLang == "ind") {

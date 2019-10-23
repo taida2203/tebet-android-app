@@ -46,19 +46,25 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun openTerm() {
         val intent = Intent(activity, QualityHelp::class.java)
-        intent.putExtra(QualityHelp.EXTRA_URL, "https://mo-jual.com/privacy-policy")
+        intent.putExtra(QualityHelp.EXTRA_URL, "https://mo-jual.com/terms-and-conditions")
         startActivity(intent)
     }
 
     override fun openPrivacy() {
         val intent = Intent(activity, QualityHelp::class.java)
-        intent.putExtra(QualityHelp.EXTRA_URL, "https://mo-jual.com/terms-and-conditions")
+        intent.putExtra(QualityHelp.EXTRA_URL, "https://mo-jual.com/privacy-policy")
         startActivity(intent)
     }
 
     override fun openContact() {
         val intent = Intent(activity, QualityHelp::class.java)
         intent.putExtra(QualityHelp.EXTRA_URL, "https://mo-jual.com/contact-us")
+        startActivity(intent)
+    }
+
+    override fun openFAQ() {
+        val intent = Intent(activity, QualityHelp::class.java)
+        intent.putExtra(QualityHelp.EXTRA_URL, "https://mo-jual.com/tip")
         startActivity(intent)
     }
 

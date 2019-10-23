@@ -127,6 +127,10 @@ class ProfileViewModel(
         navigator.openContact()
     }
 
+    fun onFaqClick() {
+        navigator.openFAQ()
+    }
+
     fun onTermClick() {
         navigator.openTerm()
     }
