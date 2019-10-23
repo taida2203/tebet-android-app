@@ -5,7 +5,9 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -125,6 +127,8 @@ class InputVerifyCodeFragment : Fragment(), IFragmentAction {
             showCountdown()
         }
         showCountdown()
+        tvTerm.movementMethod = LinkMovementMethod.getInstance()
+        tvTerm.text = Html.fromHtml(resources.getString(R.string.registration_term))
     }
 
     private fun showSoftKeyboard(view: View) {

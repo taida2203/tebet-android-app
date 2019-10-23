@@ -32,4 +32,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeContentViewModel>(), 
         (activity as Home).viewModel.onQualityCheckClick()
     }
 
+    override fun openTipsScreen() {
+        (activity as Home).showTipScreen()
+    }
+
 }

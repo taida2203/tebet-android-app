@@ -8,7 +8,6 @@ import com.tebet.mojual.data.models.request.SearchOrderRequest
 interface HomeNavigator {
     fun showCheckQualityScreen()
     fun showBorrowScreen()
-    fun showTipsScreen()
     fun onBackPressed()
     fun showProfileScreen()
     fun showSellScreen()

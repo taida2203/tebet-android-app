@@ -38,7 +38,7 @@ class HomeContentViewModel(
     }
 
     fun onTipsClick() {
-        navigator.show(R.string.general_error_feature_disabled)
+        navigator.openTipsScreen()
     }
 
     override fun loadData(isForceLoad: Boolean?) {

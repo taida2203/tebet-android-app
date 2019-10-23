@@ -149,12 +149,6 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         title = getString(R.string.home_menu_borrow)
     }
 
-    override fun showTipsScreen() {
-        enableBackButton = true
-        baseBinding?.viewModel?.enableTopLogo?.set(false)
-        title = getString(R.string.home_menu_tips)
-    }
-
     override fun showSellScreen() {
         if (currentFragment() is SaleDetailFragment) {
             supportFragmentManager.popBackStackImmediate()
