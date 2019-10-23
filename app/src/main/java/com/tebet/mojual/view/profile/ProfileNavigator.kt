@@ -9,4 +9,6 @@ interface ProfileNavigator : BaseActivityNavigator{
     fun openChangePasswordScreen()
     fun changeLanguage(selectedItem: Language?)
     fun openPinCodeScreen()
+    fun openTermClick()
+    fun openPrivacyClick()
 }

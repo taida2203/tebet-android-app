@@ -188,6 +188,8 @@
     <string name="profile_change_password">Change Password</string>
     <string name="profile_other">Other</string>
     <string name="profile_contact_mojual">Contact MOJUAL</string>
+    <string name="profile_terms">Terms &amp; Conditions</string>
+    <string name="profile_privacy_policy">Privacy Policy</string>
     <string name="profile_logout">Logout</string>
     <string name="profile_version">Version</string>
     <string name="profile_language">Language</string>

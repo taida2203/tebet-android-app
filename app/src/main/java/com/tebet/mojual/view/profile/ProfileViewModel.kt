@@ -117,6 +117,14 @@ class ProfileViewModel(
         navigator.openChangeLanguageDialog()
     }
 
+    fun onTermClick() {
+        navigator.openTermClick()
+    }
+
+    fun onPrivacyClick() {
+        navigator.openPrivacyClick()
+    }
+
     fun doChangeLanguage(selectedItem: Language?) {
         if (LanguageUtil.instance.getLanguageIndex() == selectedItem?.languageId) return
         when (selectedItem?.languageId) {

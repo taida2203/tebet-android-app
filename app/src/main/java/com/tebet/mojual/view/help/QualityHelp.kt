@@ -22,13 +22,22 @@ open class QualityHelp : BaseActivity<ActivityQualityHelpBinding, QualityHelpVie
 
     private var topRightViewBinding: ItemHomeIconBinding? = null
 
+    companion object {
+        var EXTRA_URL = "EXTRA_URL"
+    }
+
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         title = getString(R.string.quality_help_title)
         var url = "https://mo-jual.com/manual-setup"
-        if (intent.hasExtra("EXTRA_ORDER")) url = intent.getStringExtra("EXTRA_ORDER")
+        if (intent.hasExtra(EXTRA_URL)) url = intent.getStringExtra(EXTRA_URL)
         topRightViewBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_home_icon, baseBinding?.topRightHolder, true)
+            DataBindingUtil.inflate(
+                layoutInflater,
+                R.layout.item_home_icon,
+                baseBinding?.topRightHolder,
+                true
+            )
         viewDataBinding?.webView?.loadUrl(url)
     }
 

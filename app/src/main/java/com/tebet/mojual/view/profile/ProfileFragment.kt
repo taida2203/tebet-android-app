@@ -15,12 +15,12 @@ import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Language
 import com.tebet.mojual.databinding.FragmentProfileBinding
 import com.tebet.mojual.view.base.BaseFragment
+import com.tebet.mojual.view.help.QualityHelp
 import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.profilechangepass.ChangePassword
 import com.tebet.mojual.view.profilepin.PinCode
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(), ProfileNavigator {
-
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -40,6 +40,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         activity?.finish()
         val intent = Intent(activity, Login::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
+
+    override fun openTermClick() {
+        val intent = Intent(activity, QualityHelp::class.java)
+        intent.putExtra(QualityHelp.EXTRA_URL, "https://mo-jual.com/privacy-policy")
+        startActivity(intent)
+    }
+
+    override fun openPrivacyClick() {
+        val intent = Intent(activity, QualityHelp::class.java)
+        intent.putExtra(QualityHelp.EXTRA_URL, "https://mo-jual.com/terms-and-conditions")
         startActivity(intent)
     }
 
