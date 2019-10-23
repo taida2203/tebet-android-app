@@ -117,12 +117,16 @@ class ProfileViewModel(
         navigator.openChangeLanguageDialog()
     }
 
+    fun onContactClick() {
+        navigator.openContact()
+    }
+
     fun onTermClick() {
-        navigator.openTermClick()
+        navigator.openTerm()
     }
 
     fun onPrivacyClick() {
-        navigator.openPrivacyClick()
+        navigator.openPrivacy()
     }
 
     fun doChangeLanguage(selectedItem: Language?) {
