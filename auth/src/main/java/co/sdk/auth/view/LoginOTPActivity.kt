@@ -127,7 +127,7 @@ class LoginOTPActivity : AppCompatActivity() {
                             hideKeyboard()
                             finish()
                         }
-                    }, 15000)
+                    }, 20000)
                     return@addOnCompleteListener
                 }
                 handleError(Exception("Something went wrong. Please try again"))
