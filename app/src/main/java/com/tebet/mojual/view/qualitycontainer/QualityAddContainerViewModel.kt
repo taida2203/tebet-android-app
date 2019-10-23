@@ -272,6 +272,7 @@ class QualityAddContainerViewModel(
                                 savedContainer.checking = ContainerWrapper.CheckStatus.CheckStatusDone
                                 savedContainer
                             })
+                            refreshCheckButtonState()
                         }
                         navigator.showLoading(false)
                     }
