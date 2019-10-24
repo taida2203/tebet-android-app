@@ -142,9 +142,6 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
                 var selectedItem = listDeviceWifiSaved?.firstOrNull { wifi ->
                     wifi.SSID.contains(sensorSSID) && wifi.SSID.contains("\"")
                 }
-                if (selectedItem == null) {
-                    selectedItem = listDeviceWifiSaved?.firstOrNull()
-                }
                 if ((listDeviceWifiSaved != null && listDeviceWifiSaved.size > 1) || !it) {
                     selectedItem?.networkId?.let { it1 ->
                         wfMng.disconnect()
@@ -162,8 +159,25 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
     fun connectNetworkWifi(): Observable<Boolean> {
         return Observable.fromCallable<Boolean> {
             if (wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) == true) {
-                wifiManager.connectToNetwork(currentInternetSSID, delayWait)
+                wifiManager.removeNetwork(sensorSSID)
+                wifiManager.disconnectFromCurrentNetwork()
+                Thread.sleep(delayWait.toLong() / 2)
+                if (currentInternetSSID?.contains(sensorSSID) == false) {
+                    val result = wifiManager.connectToNetwork(currentInternetSSID, delayWait)
+                    Thread.sleep(delayWait.toLong() / 2)
+                    result
+                } else {
+                    true
+                }
             } else true
+        }
+    }
+
+    fun getIOTNetworkId(): Int? {
+        return if (wifiManager.getCurrentNetwork()?.ssid?.contains(sensorSSID) == true) {
+            wifiManager.getCurrentNetwork()?.networkId
+        } else {
+            -1
         }
     }
 

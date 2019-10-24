@@ -11,4 +11,6 @@ interface QualityAddContainerNavigator: BaseActivityNavigator {
     fun showTurnOffIOTDialog()
     fun openQualityHelpScreen()
     fun connectIOTManual()
+    fun routeNetworkRequestsThroughWifi(ssid: String): Observable<Boolean>
+    fun releaseNetworkRoute(): Observable<Boolean>
 }

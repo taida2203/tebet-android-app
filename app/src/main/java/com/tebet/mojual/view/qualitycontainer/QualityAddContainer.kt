@@ -6,8 +6,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.location.LocationManager
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
+import android.net.*
+import android.net.wifi.SupplicantState
+import android.net.wifi.WifiInfo
+import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -211,5 +213,96 @@ class QualityAddContainer :
 
     override fun openQualityHelpScreen() {
         startActivity(Intent(this, QualityHelp::class.java))
+    }
+
+    private var mConnectivityManager: ConnectivityManager? = null
+    private var mNetworkCallback: ConnectivityManager.NetworkCallback? = null
+    //...
+
+    // https://stackoverflow.com/questions/36653126/send-request-over-wifi-without-connection-even-if-mobile-data-is-on-with-conn/51469732#51469732
+    /**
+     * This method sets a network callback that is listening for network changes and once is
+     * connected to the desired WiFi network with the given SSID it will bind to that network.
+     *
+     * Note: requires android.permission.INTERNET and android.permission.CHANGE_NETWORK_STATE in
+     * the manifest.
+     *
+     * @param ssid The name of the WiFi network you want to route your requests
+     */
+    override fun routeNetworkRequestsThroughWifi(ssid: String): Observable<Boolean> {
+         return Observable.fromCallable<Boolean> {
+             mConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+             // ensure prior network callback is invalidated
+             unregisterNetworkCallback(mNetworkCallback)
+
+             // new NetworkRequest with WiFi transport type
+             val request = NetworkRequest.Builder()
+                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                 .build()
+
+             // network callback to listen for network changes
+             mNetworkCallback = object : ConnectivityManager.NetworkCallback() {
+
+                 // on new network ready to use
+                 override fun onAvailable(network: Network) {
+                     if (viewModel.sensorManager.get()?.getIOTNetworkId() ?: 0 > 0) {
+                         releaseNetworkRoute().subscribe(
+                             { createNetworkRoute(network) },
+                             { createNetworkRoute(network) })
+                     } else {
+                         releaseNetworkRoute().subscribe({}, {})
+                     }
+                 }
+             }
+             mConnectivityManager?.requestNetwork(request, mNetworkCallback)
+             true
+         }
+    }
+
+    private fun unregisterNetworkCallback(networkCallback: ConnectivityManager.NetworkCallback?) {
+        if (networkCallback != null) {
+            try {
+                mConnectivityManager?.unregisterNetworkCallback(networkCallback)
+
+            } catch (ignore: Exception) {
+            } finally {
+                mNetworkCallback = null
+            }
+        }
+    }
+
+    private fun createNetworkRoute(network: Network): Boolean? {
+        var processBoundToNetwork: Boolean? = false
+        when {
+            // 23 = Marshmallow
+            Build.VERSION.SDK_INT >= 23 -> {
+                processBoundToNetwork = mConnectivityManager?.bindProcessToNetwork(network)
+            }
+
+            // 21..22 = Lollipop
+            Build.VERSION.SDK_INT in 21..22 -> {
+                processBoundToNetwork = ConnectivityManager.setProcessDefaultNetwork(network)
+            }
+        }
+        return processBoundToNetwork
+    }
+
+    override fun releaseNetworkRoute(): Observable<Boolean> {
+        return Observable.fromCallable<Boolean> {
+            var processBoundToNetwork: Boolean? = false
+            when {
+                // 23 = Marshmallow
+                Build.VERSION.SDK_INT >= 23 -> {
+                    processBoundToNetwork = mConnectivityManager?.bindProcessToNetwork(null)
+                }
+
+                // 21..22 = Lollipop
+                Build.VERSION.SDK_INT in 21..22 -> {
+                    processBoundToNetwork = ConnectivityManager.setProcessDefaultNetwork(null)
+                }
+            }
+            processBoundToNetwork
+        }
     }
 }

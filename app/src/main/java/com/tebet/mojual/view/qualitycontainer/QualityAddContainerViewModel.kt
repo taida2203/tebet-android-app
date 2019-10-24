@@ -302,29 +302,31 @@ class QualityAddContainerViewModel(
             if (sensor.isEnabled) navigator.showTurnOffIOTDialog()
             navigator.showLoading(true)
             compositeDisposable.add(
-                sensor.connectNetworkWifi().concatMap {
-                    Observable.just(order.get()!!)
-                        .concatMap {
-                            when {
-                                it.orderId < 0 -> dataManager.createOrder(
-                                    CreateOrderRequest(
-                                        it.quantity,
-                                        it.planDate,
+                navigator.releaseNetworkRoute()
+                    .concatMap { sensor.connectNetworkWifi() }
+                    .concatMap {
+                        Observable.just(order.get()!!)
+                            .concatMap {
+                                when {
+                                    it.orderId < 0 -> dataManager.createOrder(
+                                        CreateOrderRequest(
+                                            it.quantity,
+                                            it.planDate,
+                                            items.map { item -> item.customerData })
+                                    )
+                                    else -> dataManager.updateOrderQuality(
+                                        it.orderId,
                                         items.map { item -> item.customerData })
-                                )
-                                else -> dataManager.updateOrderQuality(
-                                    it.orderId,
-                                    items.map { item -> item.customerData })
+                                }
                             }
-                        }
-                        .concatMap { apiResponse ->
-                            Observable.fromCallable {
-                                items.map { wrapper -> wrapper.customerData }
-                                    .forEach(this@QualityAddContainerViewModel::removeContainerDB)
-                                true
-                            }.concatMap { Observable.just(apiResponse) }
-                        }
-                }.subscribeOn(schedulerProvider.io())
+                            .concatMap { apiResponse ->
+                                Observable.fromCallable {
+                                    items.map { wrapper -> wrapper.customerData }
+                                        .forEach(this@QualityAddContainerViewModel::removeContainerDB)
+                                    true
+                                }.concatMap { Observable.just(apiResponse) }
+                            }
+                    }.subscribeOn(schedulerProvider.io())
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<Order>() {
                         override fun onSuccess(dataResponse: Order) {
@@ -352,6 +354,7 @@ class QualityAddContainerViewModel(
         sensorManager.get()?.let {
             compositeDisposable.add(
                 it.connectIOTWifi()
+                    .concatMap { navigator.routeNetworkRequestsThroughWifi(Sensor.sensorSSID) }
                     .subscribeOn(schedulerProvider.io())
                     .observeOn(schedulerProvider.ui())
                     .subscribe({}, {})
