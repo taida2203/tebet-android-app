@@ -162,7 +162,7 @@ class Sensor(var wifiManager: WiseFy, var applicationContext: Context) : BaseObs
                 wifiManager.removeNetwork(sensorSSID)
                 wifiManager.disconnectFromCurrentNetwork()
                 Thread.sleep(delayWait.toLong() / 2)
-                if (currentInternetSSID?.contains(sensorSSID) == false) {
+                if (currentInternetSSID?.isNotEmpty() == true && currentInternetSSID?.contains(sensorSSID) == false) {
                     val result = wifiManager.connectToNetwork(currentInternetSSID, delayWait)
                     Thread.sleep(delayWait.toLong() / 2)
                     result

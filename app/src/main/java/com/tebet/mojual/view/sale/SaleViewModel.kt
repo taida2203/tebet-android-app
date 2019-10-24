@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.R
+import com.tebet.mojual.common.util.Sensor
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Asset
@@ -22,6 +23,15 @@ class SaleViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<SaleNavigator>(dataManager, schedulerProvider) {
+    constructor(
+        dataManager: DataManager,
+        schedulerProvider: SchedulerProvider,
+        sensorManager: Sensor
+    ) : this(dataManager, schedulerProvider) {
+        this.sensorManager = sensorManager
+    }
+
+    private lateinit var sensorManager: Sensor
     private var assets: List<Asset>? = null
     var selectedQuantity: MutableLiveData<Int> = MutableLiveData()
     var selectedFutureDate: MutableLiveData<Price> = MutableLiveData()
@@ -82,7 +92,9 @@ class SaleViewModel(
     override fun loadData(isForceLoad: Boolean?) {
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.getUserProfileDB().concatMap { dataManager.getAsserts(it.data?.profileId.toString()) }
+            sensorManager.connectNetworkWifi()
+                .concatMap { dataManager.getUserProfileDB() }
+                .concatMap { dataManager.getAsserts(it.data?.profileId.toString()) }
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<List<Asset>>() {
                     override fun onSuccess(dataResponse: List<Asset>) {

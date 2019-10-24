@@ -4,6 +4,7 @@ import androidx.databinding.ObservableArrayList
 import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.adapter.OnListItemClick
+import com.tebet.mojual.common.util.Sensor
 import com.tebet.mojual.common.util.Utility
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
@@ -21,8 +22,16 @@ import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 class QualityViewModel(
     dataManager: DataManager,
     schedulerProvider: SchedulerProvider
-) :
-    BaseViewModel<QualityNavigator>(dataManager, schedulerProvider) {
+) : BaseViewModel<QualityNavigator>(dataManager, schedulerProvider) {
+    constructor(
+        dataManager: DataManager,
+        schedulerProvider: SchedulerProvider,
+        sensorManager: Sensor
+    ) : this(dataManager, schedulerProvider) {
+        this.sensorManager = sensorManager
+    }
+
+    private lateinit var sensorManager: Sensor
     var items: ObservableArrayList<Order> = ObservableArrayList()
 
     /**
@@ -61,7 +70,8 @@ class QualityViewModel(
         navigator.showLoading(true)
 //        headerFooterItems.insertItem(R.layout.item_quality_loading)
         compositeDisposable.add(
-            dataManager.getUserProfileDB()
+            sensorManager.connectNetworkWifi()
+                .concatMap { dataManager.getUserProfileDB() }
                 .concatMap {
                     it.data?.profileId?.let {profileId ->
                         dataManager.searchOrders(

@@ -273,11 +273,11 @@ class QualityAddContainer :
     }
 
     private fun createNetworkRoute(network: Network): Boolean? {
-        var processBoundToNetwork: Boolean? = false
+        var processBoundToNetwork = true
         when {
             // 23 = Marshmallow
             Build.VERSION.SDK_INT >= 23 -> {
-                processBoundToNetwork = mConnectivityManager?.bindProcessToNetwork(network)
+                processBoundToNetwork = mConnectivityManager?.bindProcessToNetwork(network) ?: false
             }
 
             // 21..22 = Lollipop
@@ -290,11 +290,11 @@ class QualityAddContainer :
 
     override fun releaseNetworkRoute(): Observable<Boolean> {
         return Observable.fromCallable<Boolean> {
-            var processBoundToNetwork: Boolean? = false
+            var processBoundToNetwork = true
             when {
                 // 23 = Marshmallow
                 Build.VERSION.SDK_INT >= 23 -> {
-                    processBoundToNetwork = mConnectivityManager?.bindProcessToNetwork(null)
+                    processBoundToNetwork = mConnectivityManager?.bindProcessToNetwork(null) ?: false
                 }
 
                 // 21..22 = Lollipop

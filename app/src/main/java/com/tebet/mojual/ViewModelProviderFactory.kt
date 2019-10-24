@@ -47,7 +47,7 @@ open class ViewModelProviderFactory
 ) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(SplashViewModel::class.java) -> SplashViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(SplashViewModel::class.java) -> SplashViewModel(dataManager, schedulerProvider, sensorManager) as T
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(LoginWithPasswordViewModel::class.java) -> LoginWithPasswordViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(BaseActivityViewModel::class.java) -> BaseActivityViewModel(dataManager, schedulerProvider) as T
@@ -59,12 +59,12 @@ open class ViewModelProviderFactory
             modelClass.isAssignableFrom(SignUpInfoStep1Model::class.java) -> SignUpInfoStep1Model(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SignUpInfoStep2Model::class.java) -> SignUpInfoStep2Model(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SignUpInfoStep3Model::class.java) -> SignUpInfoStep3Model(dataManager, schedulerProvider) as T
-            modelClass.isAssignableFrom(SaleViewModel::class.java) -> SaleViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(SaleViewModel::class.java) -> SaleViewModel(dataManager, schedulerProvider, sensorManager) as T
             modelClass.isAssignableFrom(SaleDetailViewModel::class.java) -> SaleDetailViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(GoogleMapViewModel::class.java) -> GoogleMapViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SelectQuantityViewModel::class.java) -> SelectQuantityViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(SelectFutureDateViewModel::class.java) -> SelectFutureDateViewModel(dataManager, schedulerProvider) as T
-            modelClass.isAssignableFrom(QualityViewModel::class.java) -> QualityViewModel(dataManager, schedulerProvider) as T
+            modelClass.isAssignableFrom(QualityViewModel::class.java) -> QualityViewModel(dataManager, schedulerProvider, sensorManager) as T
             modelClass.isAssignableFrom(HistoryViewModel::class.java) -> HistoryViewModel(dataManager, schedulerProvider) as T
             modelClass.isAssignableFrom(QualityAddContainerViewModel::class.java) -> QualityAddContainerViewModel(dataManager, schedulerProvider, sensorManager) as T
             modelClass.isAssignableFrom(OrderDetailViewModel::class.java) -> OrderDetailViewModel(dataManager, schedulerProvider) as T
