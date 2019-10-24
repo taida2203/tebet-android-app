@@ -234,4 +234,6 @@
     <string name="pin_set">Set PIN</string>
     <string name="profile_asset">Asset</string>
     <string name="profile_my_asset">My Asset</string>
+
+    <string name="error_message_empty_validation">This field can\'t be empty</string>
 </resources>

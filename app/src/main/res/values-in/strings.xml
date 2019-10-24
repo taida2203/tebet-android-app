@@ -188,7 +188,7 @@
     <string name="profile_other">lainnya</string>
     <string name="profile_contact_mojual">Hubungi MOJUAL</string>
     <string name="profile_logout">Keluar</string>
-    <string name="profile_version">Version</string>
+    <string name="profile_version">Versi</string>
     <string name="profile_language">Bahasa</string>
     <string name="profile_bonus">Bonus</string>
 
@@ -224,4 +224,6 @@
     <string name="pin_message_remove">Anda ingin menghapus kode PIN?</string>
     <string name="pin_confirm">Konfirmasi kode PIN</string>
     <string name="pin_exit">Keluar</string>
+
+    <string name="error_message_empty_validation">This field can\'t be bahasa</string>
 </resources>
