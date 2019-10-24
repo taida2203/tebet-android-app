@@ -17,11 +17,13 @@ import com.tebet.mojual.view.sale.SaleFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import java.io.Serializable
 import javax.inject.Inject
 
 class OrderDetailActivity :
     BaseActivity<ActivityOrderDetailBinding, OrderDetailActivityViewModel>(),
     OrderDetailActivityNavigator, HasSupportFragmentInjector {
+    private var order: Order? = null
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -50,6 +52,7 @@ class OrderDetailActivity :
             )
 
         intent?.getSerializableExtra("EXTRA_ORDER")?.let {
+            order = it as Order
             currentFragment = OrderDetailFragment.newInstance(it as Order)
             openFragment(currentFragment!!, R.id.placeHolderChild)
         }
@@ -69,7 +72,11 @@ class OrderDetailActivity :
     }
 
     override fun showOrderDetailScreen(dataResponse: Order) {
-        currentFragment?.viewModel?.loadData(true)
+        if (order?.orderId == dataResponse.orderId) {
+            currentFragment?.viewModel?.loadData(true)
+        } else {
+            super.showOrderDetailScreen(dataResponse)
+        }
     }
 
     override fun onBankConfirmClick(order: OrderDetail, selectedItems: List<OrderContainer>) {

@@ -156,7 +156,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         openFragmentSlideRight(SaleFragment(), R.id.contentHolder, SaleFragment::class.java.simpleName)
     }
 
-    override fun showHomeScreen(forceUpdate: Boolean) = openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
+    override fun showHomeScreen(forceUpdate: Boolean) {
+        viewModel.updateUnReadCount()
+        openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
+    }
 
     private fun showHomeScreen() = openFragmentSlideRight(HomeFragment(), R.id.contentHolder, HomeFragment::class.java.simpleName)
 
@@ -164,7 +167,10 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
         startActivity(Intent(this, QualityHelp::class.java))
     }
 
-    override fun showInboxScreen() = openFragmentSlideRight(MessageFragment(), R.id.contentHolder, MessageFragment::class.java.simpleName)
+    override fun showInboxScreen() {
+        viewModel.updateUnReadCount()
+        openFragmentSlideRight(MessageFragment(), R.id.contentHolder, MessageFragment::class.java.simpleName)
+    }
 
     override fun showProfileScreen() = openFragmentSlideRight(ProfileFragment(), R.id.contentHolder, ProfileFragment::class.java.simpleName)
 
@@ -196,6 +202,7 @@ class Home : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HasSupportFragm
             (currentFragment() as HistoryFragment).viewModel.searchRequest.set(searchOrderRequest)
             (currentFragment() as HistoryFragment).viewModel.items.clear()
         }
+        viewModel.updateUnReadCount()
         openFragmentSlideRight(HistoryFragment.newInstance(searchOrderRequest), R.id.contentHolder, HistoryFragment::class.java.simpleName)
     }
 
