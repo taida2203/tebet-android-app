@@ -105,7 +105,8 @@
     <string name="check_quality_add_container_order">Order %1$s</string>
     <string name="check_quality_add_container_btn_check">Mulai cek kualitas</string>
     <string name="check_quality_add_container_btn_cancel">Batalkan cek kualitas</string>
-    <string name="check_quality_add_container_add_new_container">ADD %1$s OF %2$s CONTAINER</string>
+    <string name="check_quality_add_container_add_new_container">TAMBAHKAN %1$s DARI %2$s CONTAINER</string>
+    <string name="check_quality_add_container_add_new_containers">TAMBAHKAN %1$s DARI %2$s CONTAINERS</string>
     <string name="check_quality_add_container_turn_off_iot">Silahkan Matikan perangkat IoT terlebih dahulu untuk menghemat baterai</string>
     <string name="check_quality_tip1">Tidak mengerti untuk cek kualitas?</string>
     <string name="check_quality_tip2">Lihat tips</string>
@@ -120,6 +121,7 @@
     <string name="check_quality_add_container_permission_warning">Berikan izin akses yang diperlukan</string>
     <string name="check_quality_add_container_no_available_container">Anda tidak memiliki container yang akan dicek kualitas</string>
     <string name="check_quality_add_container_block_while_checking">Harap tunggu sampai cek kualitas selesai atau batalkan pengecekan sekarang</string>
+    <string name="check_quality_add_container_max_order_not_allowed">Jumlah container tidak boleh melebihi %1$s. Silahkan perbaharui dan coba lagi</string>
     <string name="check_quality_add_container_item_id">Kode container</string>
     <string name="check_quality_add_container_weight_title">Berat container</string>
     <string name="check_quality_add_container_time_title">Waktu (detik)</string>
@@ -187,6 +189,9 @@
     <string name="profile_change_password">Ubah password</string>
     <string name="profile_other">lainnya</string>
     <string name="profile_contact_mojual">Hubungi MOJUAL</string>
+    <string name="profile_faq">Tips</string>
+    <string name="profile_terms">Syarat dan ketentuan</string>
+    <string name="profile_privacy_policy">Kebijakan Privasi</string>
     <string name="profile_logout">Keluar</string>
     <string name="profile_version">Versi</string>
     <string name="profile_language">Bahasa</string>
@@ -208,7 +213,7 @@
     <string name="history_advance_status_open">Buka</string>
     <string name="history_advance_status_closed">Tutup</string>
     <string name="history_advance_status_rejected">Ditolak</string>
-    <string name="history_advance_status_order_id">Order Code</string>
+    <string name="history_advance_status_order_id">kode pesanan</string>
     <string name="history_advance_status_sale_date">Tanggal penjualan</string>
     <string name="history_advance_status_status">Status</string>
     <string name="history_advance_status_amount">Nilai pembayaran</string>
@@ -224,17 +229,22 @@
     <string name="pin_message_remove">Anda ingin menghapus kode PIN?</string>
     <string name="pin_confirm">Konfirmasi kode PIN</string>
     <string name="pin_exit">Keluar</string>
+    <string name="pin_prompt">Apakah anda ingin melindungi data anda dengan menggunakan kode PIN?</string>
+    <string name="pin_later">Nanti</string>
+    <string name="pin_set">Buat PIN</string>
+    <string name="profile_asset">ASET</string>
+    <string name="profile_my_asset">Aset saya</string>
 
-    <string name="error_message_empty_validation">This field can\'t be bahasa</string>
+    <string name="error_message_empty_validation">Bagian ini tidak boleh kosong</string>
     <string name="order_status_open">Buka</string>
     <string name="order_status_closed">Ditutup</string>
     <string name="order_status_rejected">Ditolak</string>
-    <string name="container_status_paid">Paid</string>
+    <string name="container_status_paid">Dibayar</string>
     <string name="container_status_sale_confirmed">Penjualan dikonfirmasi</string>
-    <string name="container_status_final_price_offered">Final Price Offered</string>
-    <string name="container_status_returned">Returned</string>
+    <string name="container_status_final_price_offered">Harga akhir yang ditawarkan</string>
+    <string name="container_status_returned">Kembali</string>
     <string name="container_status_sale_rejected">Penjualan ditolak</string>
-    <string name="container_status_checking">Checking</string>
+    <string name="container_status_checking">Pengecekan</string>
     <string name="container_status_sale_requested">Permintaan penjualan</string>
     <string name="container_status_initial_price_rejected">Harga awal ditolak</string>
     <string name="container_status_quality_rejected">Kualitas ditolak</string>
