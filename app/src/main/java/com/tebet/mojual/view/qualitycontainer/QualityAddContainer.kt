@@ -7,9 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.location.LocationManager
 import android.net.*
-import android.net.wifi.SupplicantState
-import android.net.wifi.WifiInfo
-import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -20,8 +17,6 @@ import br.com.ilhasoft.support.validation.Validator
 import co.common.view.dialog.RoundedCancelOkDialog
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedOkDialog
-import co.sdk.auth.utils.Utility
-import com.github.pwittchen.reactivenetwork.library.rx2.ConnectivityPredicate
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.tebet.mojual.R
 import com.tebet.mojual.common.services.DigitalFootPrintServices
@@ -239,6 +234,7 @@ class QualityAddContainer :
              // new NetworkRequest with WiFi transport type
              val request = NetworkRequest.Builder()
                  .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                 .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                  .build()
 
              // network callback to listen for network changes
@@ -254,6 +250,10 @@ class QualityAddContainer :
                          releaseNetworkRoute().subscribe({}, {})
                      }
                  }
+             }
+             when {
+                 // https://stackoverflow.com/questions/54306682/connectivitymanager-networkcallback-not-working-as-expected
+                 Build.VERSION.SDK_INT < 24 -> mConnectivityManager?.registerNetworkCallback(request, mNetworkCallback)
              }
              mConnectivityManager?.requestNetwork(request, mNetworkCallback)
              true
@@ -273,34 +273,19 @@ class QualityAddContainer :
     }
 
     private fun createNetworkRoute(network: Network): Boolean? {
-        var processBoundToNetwork = true
-        when {
+        return when {
             // 23 = Marshmallow
-            Build.VERSION.SDK_INT >= 23 -> {
-                processBoundToNetwork = mConnectivityManager?.bindProcessToNetwork(network) ?: false
-            }
-
-            // 21..22 = Lollipop
-            Build.VERSION.SDK_INT in 21..22 -> {
-                processBoundToNetwork = ConnectivityManager.setProcessDefaultNetwork(network)
-            }
+            Build.VERSION.SDK_INT >= 23 -> mConnectivityManager?.bindProcessToNetwork(network) ?: false
+            else -> ConnectivityManager.setProcessDefaultNetwork(network)
         }
-        return processBoundToNetwork
     }
 
     override fun releaseNetworkRoute(): Observable<Boolean> {
         return Observable.fromCallable<Boolean> {
-            var processBoundToNetwork = true
-            when {
+            val processBoundToNetwork = when {
                 // 23 = Marshmallow
-                Build.VERSION.SDK_INT >= 23 -> {
-                    processBoundToNetwork = mConnectivityManager?.bindProcessToNetwork(null) ?: false
-                }
-
-                // 21..22 = Lollipop
-                Build.VERSION.SDK_INT in 21..22 -> {
-                    processBoundToNetwork = ConnectivityManager.setProcessDefaultNetwork(null)
-                }
+                Build.VERSION.SDK_INT >= 23 -> mConnectivityManager?.bindProcessToNetwork(null) ?: false
+                else -> ConnectivityManager.setProcessDefaultNetwork(null)
             }
             processBoundToNetwork
         }
