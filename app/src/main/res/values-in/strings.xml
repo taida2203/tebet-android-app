@@ -226,4 +226,17 @@
     <string name="pin_exit">Keluar</string>
 
     <string name="error_message_empty_validation">This field can\'t be bahasa</string>
+    <string name="order_status_open">Buka</string>
+    <string name="order_status_closed">Ditutup</string>
+    <string name="order_status_rejected">Ditolak</string>
+    <string name="container_status_paid">Paid</string>
+    <string name="container_status_sale_confirmed">Penjualan dikonfirmasi</string>
+    <string name="container_status_final_price_offered">Final Price Offered</string>
+    <string name="container_status_returned">Returned</string>
+    <string name="container_status_sale_rejected">Penjualan ditolak</string>
+    <string name="container_status_checking">Checking</string>
+    <string name="container_status_sale_requested">Permintaan penjualan</string>
+    <string name="container_status_initial_price_rejected">Harga awal ditolak</string>
+    <string name="container_status_quality_rejected">Kualitas ditolak</string>
+    <string name="container_status_initial_price_offered">Harga awal yang ditawarkan</string>
 </resources>
