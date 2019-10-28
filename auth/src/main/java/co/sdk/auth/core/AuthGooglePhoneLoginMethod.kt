@@ -34,7 +34,7 @@ class AuthGooglePhoneLoginMethod : AuthMethod {
         if (isLoggedIn) {
             if (FirebaseAuth.getInstance().currentUser != null) {
                 configuration.phone = FirebaseAuth.getInstance().currentUser?.phoneNumber
-                FirebaseAuth.getInstance().currentUser!!.getIdToken(false)
+                FirebaseAuth.getInstance().currentUser!!.getIdToken(true)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful && task.result?.token?.isNotEmpty() == true) {
                             configuration.token = task.result?.token
