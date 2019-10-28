@@ -218,7 +218,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         }
     }
 
-    fun login(context: Activity, authMethod: AuthMethod?, config: LoginConfiguration, isForceLogin: Boolean = true): Observable<Token> {
+    fun login(context: Activity, authMethod: AuthMethod?, config: LoginConfiguration, isForceLogin: Boolean = false): Observable<Token> {
         return Observable.create { emitter ->
             run {
                 login(context, authMethod, config, isForceLogin, object : ApiCallBack<Token>() {

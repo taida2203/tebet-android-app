@@ -120,7 +120,7 @@ class LoginOTPActivity : AppCompatActivity() {
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         showLoading(true)
         FirebaseAuth.getInstance().signInWithCredential(credential)
-            .continueWithTask { FirebaseAuth.getInstance().currentUser?.getIdToken(true) }
+            .continueWithTask { FirebaseAuth.getInstance().currentUser?.getIdToken(false) }
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Handler().postDelayed({
