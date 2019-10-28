@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="24dp">
+        android:gravity="center">
 
         <com.hbb20.CountryCodePicker
             android:id="@+id/ccp"
@@ -31,9 +32,22 @@
             android:singleLine="true" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnGetOTP"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use this phone" />
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/login_otp_phone_hint"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGetOTP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_green"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="@string/login_otp_phone_button_next"
+        android:textColor="@color/white" />
 </LinearLayout>

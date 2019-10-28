@@ -31,6 +31,9 @@ class LoginOTPActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login_otp)
         currentFragment = InputPhoneFragment()
         openFragment(currentFragment as InputPhoneFragment, R.id.placeHolderChild)
+        btn_back?.setOnClickListener {
+            finish()
+        }
     }
 
     fun verifyCode(text: String) {
@@ -41,6 +44,9 @@ class LoginOTPActivity : AppCompatActivity() {
     }
 
     private fun openFragment(fragment: Fragment, placeHolder: Int, tag: String = "") {
+        tv_title.text =
+            getString(if (fragment is InputPhoneFragment) R.string.login_otp_title_enter_phone else R.string.login_otp_title_enter_otp)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && !isDestroyed || Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             val manager = supportFragmentManager
             val transaction = manager.beginTransaction()
@@ -127,14 +133,14 @@ class LoginOTPActivity : AppCompatActivity() {
                             hideKeyboard()
                             finish()
                         }
-                    }, 25000)
+                    }, 0)
                     return@addOnCompleteListener
                 }
-                handleError(Exception("Something went wrong. Please try again"))
+                handleError(Exception(getString(R.string.general_message_error)))
                 showLoading(false)
                 (currentFragment as InputVerifyCodeFragment).resetInputPin()
             }.addOnFailureListener {
-                handleError(Exception("Invalid OTP"))
+                handleError(Exception(getString(R.string.login_otp_invalid_otp)))
                 showLoading(false)
                 (currentFragment as InputVerifyCodeFragment).resetInputPin()
             }

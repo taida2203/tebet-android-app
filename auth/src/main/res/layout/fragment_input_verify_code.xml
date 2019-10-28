@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingLeft="25dp"
-    android:paddingRight="25dp">
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingBottom="10dp">
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -44,10 +44,10 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            android:textStyle="bold"
             android:layout_toRightOf="@+id/title"
             android:gravity="right"
-            android:textColor="@color/red" />
+            android:textColor="@color/red"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <EditText
@@ -65,8 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/et_code_1"
@@ -158,12 +158,12 @@
         android:layout_below="@+id/text_input_container"
         android:layout_centerHorizontal="true"
         android:background="@color/red"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
         android:drawableLeft="@drawable/login_resend_colored"
         android:drawablePadding="5dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
         android:text="@string/login_otp_resend"
         android:textColor="@color/white"
         android:visibility="invisible" />
@@ -183,7 +183,20 @@
         android:id="@+id/tvTerm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:clickable="true"
-        android:layout_below="@id/progressBar"/>
+        android:layout_marginTop="24dp"
+        android:layout_below="@id/progressBar"
+        android:clickable="true" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGetOTP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTerm"
+        android:layout_marginTop="16dp"
+        android:background="@color/dark_green"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="6dp"
+        android:text="@string/login_otp_verify_buton_continue"
+        android:textColor="@color/white" />
 </RelativeLayout>

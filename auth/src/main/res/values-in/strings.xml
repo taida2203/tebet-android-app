@@ -3,4 +3,10 @@
     <string name="login">Masuk</string>
 
     <string name="general_message_error">Kami tidak dapat menghubungkan anda saat ini, silakan coba lagi nanti.</string>
+
+    <string name="login_otp_verify_code_title">Masukan Kode 6 digit untuk verifikasi</string>
+    <string name="login_otp_verify_code">Kode 6 digit</string>
+    <string name="login_otp_resend">Kirim Ulang</string>
+
+    <string name="login_otp_phone_button_next">Lanjut</string>
 </resources>
