@@ -52,7 +52,7 @@ class QualityAddContainerViewModel(
 
     private fun generateAddButtonContent(): String? {
         return String.format(
-            if ((items.size + 1) > 1) Utility.getInstance().getString(R.string.check_quality_add_container_add_new_containers)
+            if (order.get()?.quantity ?: 0 > 1) Utility.getInstance().getString(R.string.check_quality_add_container_add_new_containers)
             else Utility.getInstance().getString(R.string.check_quality_add_container_add_new_container),
             items.size + 1,
             order.get()?.quantity ?: 0
