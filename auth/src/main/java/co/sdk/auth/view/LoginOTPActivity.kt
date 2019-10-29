@@ -123,17 +123,15 @@ class LoginOTPActivity : AppCompatActivity() {
             .continueWithTask { FirebaseAuth.getInstance().currentUser?.getIdToken(true) }
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Handler().postDelayed({
-                        showLoading(false)
-                        (currentFragment as InputVerifyCodeFragment).resetInputPin()
-                        task.result?.token?.let {
-                            val intent = Intent()
-                            intent.putExtra("EXTRA_ID_TOKEN", it)
-                            setResult(Activity.RESULT_OK, intent)
-                            hideKeyboard()
-                            finish()
-                        }
-                    }, 0)
+                    showLoading(false)
+                    (currentFragment as InputVerifyCodeFragment).resetInputPin()
+                    task.result?.token?.let {
+                        val intent = Intent()
+                        intent.putExtra("EXTRA_ID_TOKEN", it)
+                        setResult(Activity.RESULT_OK, intent)
+                        hideKeyboard()
+                        finish()
+                    }
                     return@addOnCompleteListener
                 }
                 handleError(Exception(getString(R.string.general_message_error)))
