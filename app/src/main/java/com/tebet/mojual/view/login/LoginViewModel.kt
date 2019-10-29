@@ -32,8 +32,7 @@ class LoginViewModel(
                     AuthSdk.instance.login(
                         activity,
                         AuthGooglePhoneLoginMethod(),
-                        LoginConfiguration(logoutWhileExpired = false),
-                        true
+                        LoginConfiguration(logoutWhileExpired = false)
                     )
                         .doOnError {
                             navigator.showLoading(false)

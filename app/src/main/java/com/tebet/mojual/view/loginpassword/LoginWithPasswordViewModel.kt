@@ -127,8 +127,7 @@ class LoginWithPasswordViewModel(
                     AuthSdk.instance.login(
                         it,
                         AuthGooglePhoneLoginMethod(),
-                        LoginConfiguration(true),
-                        true
+                        LoginConfiguration(true)
                     ).doOnError {
                         navigator.showLoading(false)
                     }

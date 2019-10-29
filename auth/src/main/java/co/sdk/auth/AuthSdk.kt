@@ -3,7 +3,6 @@ package co.sdk.auth
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import co.common.util.PreferenceUtils.*
@@ -79,7 +78,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         ServiceHelper.createService(OTPApi::class.java).requestOTP(input).enqueue(callback)
     }
 
-    fun login(context: Activity, authMethod: AuthMethod?, config: LoginConfiguration, isForceLogin: Boolean = true, callback: ApiCallBack<Token>?) {
+    fun login(context: Activity, authMethod: AuthMethod?, config: LoginConfiguration, callback: ApiCallBack<Token>?) {
         if (authMethod !is AuthClientCredentialMethod) {
             this.authMethod = authMethod
             saveObject(AUTH_LOGIN_METHOD, authMethod)
@@ -121,39 +120,20 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
                     }
 
                     if (!TextUtils.isEmpty(input.grantType)) {
-                        if (isForceLogin) {
-                            retryValidation(if(isForceLogin) 0 else MAX_RETRY_LOGIN, input) {
-                                ServiceHelper.createService(ApiService::class.java).login(input).enqueue(object : AuthCallback<Token>() {
+                        ServiceHelper.createService(ApiService::class.java).login(input).enqueue(object : AuthCallback<Token>() {
 
-                                    override fun onSuccess(code: Int, response: Token?) {
-                                        saveObject(AUTH_LOGIN_TOKEN, response)
-                                        if (authMethod is AuthAccountKitMethod && config.logoutWhileExpired) {
-                                            authMethod.logout(context, true, null)
-                                        }
-                                        response?.let { callback?.onSuccess(code, it) }
-                                    }
-
-                                    override fun onFail(call: Call<AuthJson<Token>>, e: AuthException) {
-                                        callback?.onFailed(LoginException(e))
-                                    }
-                                })
+                            override fun onSuccess(code: Int, response: Token?) {
+                                saveObject(AUTH_LOGIN_TOKEN, response)
+                                if (authMethod is AuthAccountKitMethod && config.logoutWhileExpired) {
+                                    authMethod.logout(context, true, null)
+                                }
+                                response?.let { callback?.onSuccess(code, it) }
                             }
-                        } else {
-                            ServiceHelper.createService(ApiService::class.java).login(input).enqueue(object : AuthCallback<Token>() {
 
-                                override fun onSuccess(code: Int, response: Token?) {
-                                    saveObject(AUTH_LOGIN_TOKEN, response)
-                                    if (authMethod is AuthAccountKitMethod && config.logoutWhileExpired) {
-                                        authMethod.logout(context, true, null)
-                                    }
-                                    response?.let { callback?.onSuccess(code, it) }
-                                }
-
-                                override fun onFail(call: Call<AuthJson<Token>>, e: AuthException) {
-                                    callback?.onFailed(LoginException(e))
-                                }
-                            })
-                        }
+                            override fun onFail(call: Call<AuthJson<Token>>, e: AuthException) {
+                                callback?.onFailed(LoginException(e))
+                            }
+                        })
                     } else {
                         callback?.onFailed(LoginException(-1, "Auth method not initial correctly"))
                     }
@@ -171,28 +151,6 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
     fun setBaseUrl(baseUrl: String): AuthSdk {
         this.authBaseUrl = baseUrl
         return this
-    }
-
-    fun retryValidation(count: Int, input: LoginInput, function: () -> Unit) {
-        if (count > MAX_RETRY_LOGIN) {
-            function()
-            return
-        }
-        Timber.e("DOLPHIN try " + count)
-        Handler().postDelayed({
-            ServiceHelper.createService(ApiService::class.java).login(input)
-                .enqueue(object : AuthCallback<Token>() {
-
-                    override fun onSuccess(code: Int, response: Token?) {
-                        function()
-                    }
-
-                    override fun onFail(call: Call<AuthJson<Token>>, e: AuthException) {
-                        retryValidation(count + 1, input, function)
-                    }
-                })
-        }, 3000)
-
     }
 
     fun getAuthMethod(): AuthMethod? {
@@ -218,10 +176,10 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         }
     }
 
-    fun login(context: Activity, authMethod: AuthMethod?, config: LoginConfiguration, isForceLogin: Boolean = true): Observable<Token> {
+    fun login(context: Activity, authMethod: AuthMethod?, config: LoginConfiguration): Observable<Token> {
         return Observable.create { emitter ->
             run {
-                login(context, authMethod, config, isForceLogin, object : ApiCallBack<Token>() {
+                login(context, authMethod, config, object : ApiCallBack<Token>() {
                     override fun onSuccess(code: Int, response: Token?) {
                         response?.let { emitter.onNext(it) } ?: emitter.onNext(Token())
                     }
@@ -301,7 +259,6 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
         val AUTH_LOGIN_TOKEN = "AUTH_LOGIN_TOKEN"
         val AUTH_LOGIN_METHOD = "AUTH_LOGIN_METHOD"
         val AUTH_BRAND_LOGIN_TOKEN = "AUTH_BRAND_LOGIN_TOKEN"
-        const val MAX_RETRY_LOGIN = 15
 
         val instance: AuthSdk
             get() {
