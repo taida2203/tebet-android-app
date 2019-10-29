@@ -195,6 +195,7 @@
                         <ImageView
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="@dimen/_16sdp"
+                            android:visibility="@{viewModel.totalReleaseBonus > 0 ? View.VISIBLE : View.GONE}"
                             android:src="@{viewModel.totalExpaned ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}"
                             tools:ignore="ContentDescription" />
                     </LinearLayout>

@@ -112,6 +112,7 @@ class OrderDetailViewModel(
     }
 
     fun onTotalClick() {
+        if (totalReleaseBonus.get() <= 0) return
         totalExpaned.set(!totalExpaned.get())
     }
 
