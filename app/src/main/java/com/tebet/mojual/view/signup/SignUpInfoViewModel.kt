@@ -68,7 +68,7 @@ class SignUpInfoViewModel(
             .debounce(400, TimeUnit.MILLISECONDS)
     }
 
-    fun updateUserProfile() {
+    fun updateUserProfile(ignoreNavigation: Boolean = false) {
         navigator.showLoading(true)
         compositeDisposable.add(
             dataManager.updateProfile(userProfile)
@@ -78,7 +78,9 @@ class SignUpInfoViewModel(
                 .subscribeWith(object : CallbackWrapper<UserProfile>() {
                     override fun onSuccess(dataResponse: UserProfile) {
                         navigator.showLoading(false)
-                        navigator.openHomeScreen()
+                        if (!ignoreNavigation) {
+                            navigator.openHomeScreen()
+                        }
                     }
 
                     override fun onFailure(error: NetworkError) {

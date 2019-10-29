@@ -182,6 +182,8 @@ class AppDataManger @Inject constructor(
     }
 
     override fun updateProfile(updateProfileRequest: UserProfile): Observable<AuthJson<UserProfile>> {
+        updateProfileRequest.phone = null
+        updateProfileRequest.status = null
         return api.updateProfile(updateProfileRequest).concatMap { updateProfileDB(it) }
     }
 

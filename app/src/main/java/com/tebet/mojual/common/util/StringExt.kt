@@ -23,7 +23,7 @@ fun Float?.toDisplayMoney(): String {
 }
 
 fun Double?.toDisplayPoint(): String {
-    return Utility.getInstance().getString(R.string.order_detail_point) + " " + toDisplayMoney().replace("Rp. ", "")
+    return toDisplayMoney().replace("Rp. ", "") + " " + Utility.getInstance().getString(R.string.order_detail_point)
 }
 
 fun Float?.toDisplayPoint(): String {

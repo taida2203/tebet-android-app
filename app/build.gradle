@@ -114,6 +114,9 @@ dependencies {
     implementation 'com.iarcuschin:simpleratingbar:0.1.5'
     implementation 'com.isupatches:wisefy:4.0.0'
     implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.6'
+    implementation 'com.google.android.libraries.places:places:2.0.0'
+
+
 
     implementation AppDependencies.calligraphy
 

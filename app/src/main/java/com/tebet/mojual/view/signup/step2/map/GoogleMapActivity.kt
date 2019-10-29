@@ -3,30 +3,48 @@ package com.tebet.mojual.view.signup.step2.map
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.pm.PackageManager
-import android.location.Location
+import android.content.Context
+import android.content.Intent
+import android.location.Geocoder
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import androidx.core.app.ActivityCompat
+import android.widget.Toast
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
+import co.common.view.dialog.RoundedCancelOkDialog
+import co.common.view.dialog.RoundedDialog
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import androidx.databinding.library.baseAdapters.BR
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.Places.createClient
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity.RESULT_ERROR
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.tebet.mojual.R
+import com.tebet.mojual.common.constant.ConfigEnv
 import com.tebet.mojual.data.models.Address
 import com.tebet.mojual.databinding.ActivitySignUpGoogleMapBinding
 import com.tebet.mojual.view.base.BaseActivity
+import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
+import kotlinx.android.synthetic.main.activity_sign_up_google_map.*
+import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import pub.devrel.easypermissions.PermissionRequest
+import timber.log.Timber
 
 
-class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMapViewModel>(),
-    EasyPermissions.PermissionCallbacks {
+class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMapViewModel>(), GoogleMapNavigator {
+    private val INIT_PLACE = 0
+    private val MOVE_CAMERA = 1
+    private val CAMERA_IDLE = 2
+    private var cameraState = INIT_PLACE
+    private var AUTOCOMPLETE_REQUEST_CODE = 1000
+
     override val bindingVariable: Int
         get() = BR.viewModel
 
@@ -36,58 +54,56 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
     override val contentLayoutId: Int
         get() = R.layout.activity_sign_up_google_map
 
-    private lateinit var googleMap: GoogleMap
+    private var googleMap: GoogleMap? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var locationCallback: LocationCallback
 
     var address: Address = Address()
 //    private val defaultLocation = LatLng(21.035732, 105.8476363)
 
-    private val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
-    private var lastLocation: Location? = null
+    private val perms = arrayOf(
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    )
+    private var gpsDialog: RoundedDialog? = null
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
         title = getString(R.string.registration_step2_google_map_title)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                locationResult ?: return
-                for (location in locationResult.locations) {
-                    lastLocation = location
-                }
-                stopLocationUpdate()
-            }
-        }
+        initMap()
+        Places.initialize(applicationContext, ConfigEnv.googleApiKey)
         address = try {
             intent?.getSerializableExtra("LOCATION") as Address
         } catch (e: Exception) {
         } as Address
-        initPermission()
-        initMap()
-        viewModel.loadData()
-    }
 
-    private fun initPermission() {
-        EasyPermissions.requestPermissions(
-            PermissionRequest.Builder(this, 100, perms[0])
-                .setRationale(R.string.package_restrict_permission)
-                .setPositiveButtonText(R.string.general_button_ok)
-                .setNegativeButtonText(R.string.general_button_cancel)
-                .build()
-        )
-//        EasyPermissions.requestPermissions(
-//            PermissionRequest.Builder(this, 101, perms[1])
-//                .setRationale(R.string.package_restrict_permission)
-//                .setPositiveButtonText(R.string.general_button_ok)
-//                .setNegativeButtonText(R.string.general_button_cancel)
-//                .build()
-//        )
-
-        if (EasyPermissions.hasPermissions(this, perms[0])) {
-//            getUserLocation()
-            getLastLocation()
+        var addressString = ""
+        addressString += (if (!addressString.endsWith(" ")) " " else "") + (address.address ?: "")
+        addressString += (if (!addressString.endsWith(" ")) " " else "") + (address.city ?: "")
+        addressString += (if (!addressString.endsWith(" ")) " " else "") + (address.kecamatan ?: "")
+        addressString += (if (!addressString.endsWith(" ")) " " else "") + (address.kelurahan ?: "")
+        when {
+            addressString.isNotEmpty() -> {
+                val coder = Geocoder(this)
+                try {
+                    coder.getFromLocationName(addressString, 5).firstOrNull()?.let {
+                        viewModel.selectedLocation = LatLng(it.latitude, it.longitude)
+                        viewModel.getAddress(LatLng(it.latitude, it.longitude))
+                        requestLocationAndInitMap()
+                    }
+                } catch (ex: Exception) {
+                    Timber.e(ex.message)
+                }
+            }
+            else -> requestLocationAndInitMap()
         }
+        btnSelectLocation.setOnClickListener {
+            viewModel.selectedLocation = googleMap?.cameraPosition?.target
+            viewModel.getAddress(googleMap?.cameraPosition?.target) {
+                finish()
+            }
+        }
+        viewModel.loadData()
     }
 
     @SuppressLint("MissingPermission")
@@ -95,104 +111,70 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync { it ->
             googleMap = it
-            googleMap.setOnMapClickListener { selectedLocation ->
-                viewModel.selectedLocation = selectedLocation
-                viewModel.getAddress(selectedLocation)
+            viewModel.selectedLocation?.let { it1 -> moveMapTo(it1) }
+            it.setOnCameraMoveStartedListener {
+                Handler().postDelayed({ cameraState = MOVE_CAMERA }, 3000)
             }
-            Handler().postDelayed({
-                if (lastLocation != null) {
-                    val cu = CameraUpdateFactory.newLatLngZoom(
-                        LatLng(
-                            lastLocation?.latitude ?: 0.0,
-                            lastLocation?.longitude ?: 0.0
-                        )
-                        , 16f
-                    )
-                    val mark = googleMap.addMarker(
-                        MarkerOptions().position(
-                            LatLng(
-                                lastLocation?.latitude ?: 0.0,
-                                lastLocation?.longitude ?: 0.0
-                            )
-                        ).icon(BitmapDescriptorFactory.defaultMarker())
-                    )
-                    mark.showInfoWindow()
-                    googleMap.animateCamera(cu)
+            it.setOnCameraIdleListener {
+                if (cameraState == MOVE_CAMERA) {
+                    viewModel.selectedLocation = it.cameraPosition.target
+                    viewModel.getAddress(viewModel.selectedLocation)
+                    cameraState = CAMERA_IDLE
+                    Handler().removeCallbacksAndMessages(null)
                 }
-            }, 1000)
+            }
         }
     }
 
-
-    private fun stopLocationUpdate() {
-
-        fusedLocationClient.removeLocationUpdates(locationCallback)
+    private fun moveMapTo(location: LatLng) {
+        val cu = CameraUpdateFactory.newLatLngZoom(location, 16f)
+        googleMap?.animateCamera(cu)
     }
 
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            getLastLocation()
-        }
-    }
-
-    private fun getUserLocation() {
+    private fun getUserLocation(callback: (() -> Unit)? = null) {
+        if (!EasyPermissions.hasPermissions(this, *perms)) return
         val locationRequest = LocationRequest()
         locationRequest.interval = 5000
         locationRequest.fastestInterval = 1000
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
-        }
-
+        fusedLocationClient.requestLocationUpdates(locationRequest, object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                fusedLocationClient.removeLocationUpdates(this)
+                locationResult?.locations?.firstOrNull()?.let {
+                    if (viewModel.selectedLocation == null) {
+                        viewModel.selectedLocation = LatLng(it.latitude, it.longitude)
+                    }
+                }
+                callback?.let { it() }
+            }
+        }, null)
     }
 
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (!checkPermissions()) {
-            initPermission()
-        } else {
-//            getUserLocation()
-            getLastLocation()
-        }
-    }
-
-    private fun checkPermissions(): Boolean {
-        val permissionState = ActivityCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
-        return permissionState == PackageManager.PERMISSION_GRANTED
-    }
-
-    @SuppressLint("MissingPermission")
     private fun getLastLocation() {
         fusedLocationClient.lastLocation.addOnCompleteListener { location ->
-            lastLocation = location.result
+            getUserLocation {
+                if (viewModel.selectedLocation == null) location.result?.let {
+                    viewModel.selectedLocation = LatLng(it.latitude, it.longitude)
+                }
+                viewModel.selectedLocation?.let { moveMapTo(it) }
+            }
         }
     }
 
     override fun finish() {
         viewModel.selectedLocation?.let {
-            address.     latitude = it.latitude
+            address.latitude = it.latitude
             address.longitude = it.longitude
-            address.mapLocation = viewModel.selectedAddress
+            address.mapLocation = viewModel.selectedAddress.get()
             intent.putExtra(
                 "LOCATION",
                 address
@@ -201,5 +183,84 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
 
         }
         super.finish()
+    }
+
+    @SuppressLint("MissingPermission")
+    @AfterPermissionGranted(QualityAddContainer.RC_CAMERA_AND_LOCATION)
+    fun requestLocationAndInitMap() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (EasyPermissions.hasPermissions(this, *perms)) {
+                val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    buildAlertMessageNoGps()
+                } else {
+                    getLastLocation()
+                }
+            } else {
+                // Do not have permissions, request them now
+                EasyPermissions.requestPermissions(this, getString(R.string.check_quality_add_container_permission_warning),
+                    QualityAddContainer.RC_CAMERA_AND_LOCATION, *perms)
+            }
+        } else {
+            getLastLocation()
+        }
+    }
+
+    private fun buildAlertMessageNoGps() {
+        if (gpsDialog == null) {
+            gpsDialog = RoundedCancelOkDialog(getString(R.string.check_quality_add_container_gps_warning)).setRoundedDialogCallback(
+                object : RoundedDialog.RoundedDialogCallback {
+                    override fun onFirstButtonClicked(selectedValue: Any?) {
+                    }
+
+                    override fun onSecondButtonClicked(selectedValue: Any?) {
+                        startActivityForResult(
+                            Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),
+                            QualityAddContainer.GPS_ENABLE
+                        )
+                    }
+                })
+        }
+        gpsDialog?.show(supportFragmentManager, "")
+    }
+
+
+    override fun showAddressSearch() {
+        val fields =
+            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        // Start the autocomplete intent.
+        val intent = Autocomplete.IntentBuilder(
+            AutocompleteActivityMode.FULLSCREEN, fields
+        ).setCountry("NG") //NIGERIA
+            .build(this)
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+// Create a new Places client instance.
+//            val placesClient = createClient(this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            QualityAddContainer.GPS_ENABLE -> requestLocationAndInitMap()
+            AUTOCOMPLETE_REQUEST_CODE -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        val place = data?.let { Autocomplete.getPlaceFromIntent(it) }
+                        viewModel.selectedAddress.set(place?.address)
+                        viewModel.selectedLocation = place?.latLng
+                        // do query with address
+                        moveMapTo(LatLng(place?.latLng?.latitude ?: 0.0, place?.latLng?.longitude?: 0.0))
+                    }
+                    RESULT_ERROR -> {
+                        val status = data?.let { Autocomplete.getStatusFromIntent(it) }
+                        Toast.makeText(this, "Error: " + status?.statusMessage, Toast.LENGTH_LONG)
+                            .show()
+                    }
+                    RESULT_CANCELED -> {
+                        // The user canceled the operation.
+                    }
+                }
+            }
+        }
     }
 }

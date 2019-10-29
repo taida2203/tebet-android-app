@@ -59,6 +59,23 @@ class SignUpInfoStep2Model(
         }
     }
 
+    fun onCopyAddressClick() {
+        userProfile.get()?.pickupAddress?.let {
+            it.address = userProfile.get()?.domicileAddress?.address
+            it.city = userProfile.get()?.domicileAddress?.city
+            it.kecamatan = userProfile.get()?.domicileAddress?.kecamatan
+            it.kelurahan = userProfile.get()?.domicileAddress?.kelurahan
+            it.country = userProfile.get()?.domicileAddress?.country
+            it.postalCode = userProfile.get()?.domicileAddress?.postalCode
+            it.mapLocation = userProfile.get()?.domicileAddress?.mapLocation
+            it.rtrw = userProfile.get()?.domicileAddress?.rtrw
+            it.latitude = userProfile.get()?.domicileAddress?.latitude
+            it.longitude = userProfile.get()?.domicileAddress?.longitude
+        }
+        userProfile.get()?.pickupAddress?.notifyChange()
+//        userProfile.get()?.domicileAddress?.notifyChange()
+    }
+
     fun hideKeyboard() {
         navigator.hideKeyboard()
     }

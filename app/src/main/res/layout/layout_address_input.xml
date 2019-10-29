@@ -36,13 +36,18 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_12sdp">
 
-            <com.tebet.mojual.common.view.AppEditText
+            <com.tebet.mojual.common.view.AppAutoCompleteEditText
+                android:id="@+id/etCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/registration_step2_kelurahan"
-                android:text="@={view.data.kelurahan}"
+                android:hint="@string/registration_step2_city"
+                android:imeOptions="actionNext"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:nextFocusDown="@+id/postal_code"
+                android:text="@={view.data.city}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
+
         </com.tebet.mojual.common.view.AppEditTextLayout>
 
         <com.tebet.mojual.common.view.AppEditTextLayout
@@ -69,8 +74,8 @@
             <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/registration_step2_rt_rw"
-                android:text="@={view.data.rtrw}"
+                android:hint="@string/registration_step2_kelurahan"
+                android:text="@={view.data.kelurahan}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
         </com.tebet.mojual.common.view.AppEditTextLayout>
@@ -81,19 +86,16 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_12sdp">
 
-            <com.tebet.mojual.common.view.AppAutoCompleteEditText
-                android:id="@+id/etCity"
+            <com.tebet.mojual.common.view.AppEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/registration_step2_city"
-                android:imeOptions="actionNext"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:nextFocusDown="@+id/postal_code"
-                android:text="@={view.data.city}"
+                android:hint="@string/registration_step2_rt_rw"
+                android:text="@={view.data.rtrw}"
                 app:validateEmpty="@{true}"
                 app:validateTypeAutoDismiss="@{true}" />
-
         </com.tebet.mojual.common.view.AppEditTextLayout>
+
+
 
         <com.tebet.mojual.common.view.AppEditTextLayout
             style="@style/TextInputLayoutStyle"

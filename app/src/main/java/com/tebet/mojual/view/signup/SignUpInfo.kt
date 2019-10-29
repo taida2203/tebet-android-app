@@ -86,7 +86,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
             when (screenStep) {
                 SCREEN_STEP.STEP_1 -> {
                     screenStep = SCREEN_STEP.STEP_2
-                    viewModel.updateUserProfile()
+                    viewModel.updateUserProfile(true)
                 }
                 SCREEN_STEP.STEP_2 ->
                     screenStep = SCREEN_STEP.STEP_3

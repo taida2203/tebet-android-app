@@ -50,8 +50,8 @@ class QualityAddContainer :
     private var topRightViewBinding: ItemHomeIconBinding? = null
 
     companion object {
-        private const val RC_CAMERA_AND_LOCATION = 300
-        private const val GPS_ENABLE = 301
+        internal const val RC_CAMERA_AND_LOCATION = 300
+        internal const val GPS_ENABLE = 301
         private const val WIFI_MANUAL = 302
     }
 
