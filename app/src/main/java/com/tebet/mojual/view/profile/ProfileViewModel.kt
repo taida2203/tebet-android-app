@@ -25,6 +25,7 @@ class ProfileViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<ProfileNavigator>(dataManager, schedulerProvider) {
+    var version: ObservableField<String> = ObservableField("")
     var pin: ObservableField<String> = ObservableField("")
     var userProfile: ObservableField<UserProfile> = ObservableField()
 

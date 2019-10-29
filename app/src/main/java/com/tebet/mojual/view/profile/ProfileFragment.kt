@@ -1,17 +1,19 @@
 package com.tebet.mojual.view.profile
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
 import co.common.constant.AppConstant
 import co.common.util.LanguageUtil
 import co.common.util.PreferenceUtils
-import com.tebet.mojual.common.view.LanguageChoiceDialog
 import co.common.view.dialog.RoundedCancelOkDialog
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.SingleChoiceDialog
 import com.tebet.mojual.R
+import com.tebet.mojual.common.view.LanguageChoiceDialog
 import com.tebet.mojual.data.models.Language
 import com.tebet.mojual.databinding.FragmentProfileBinding
 import com.tebet.mojual.view.base.BaseFragment
@@ -20,6 +22,7 @@ import com.tebet.mojual.view.login.Login
 import com.tebet.mojual.view.myasset.MyAsset
 import com.tebet.mojual.view.profilechangepass.ChangePassword
 import com.tebet.mojual.view.profilepin.PinCode
+
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(), ProfileNavigator {
     override val bindingVariable: Int
@@ -118,6 +121,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        try {
+            val pInfo = context?.packageManager?.getPackageInfo(activity?.packageName, 0)
+            viewModel.version.set(pInfo?.versionName)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+    }
     override fun onResume() {
         super.onResume()
         viewModel.pin.set(PreferenceUtils.getString(AppConstant.PIN_CODE, ""))
