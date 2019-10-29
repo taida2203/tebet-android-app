@@ -38,6 +38,8 @@
     <string name="registration_step2_choose_on_map">Choose on Map</string>
     <string name="registration_step2_domicile_address">DOMICILE ADDRESS</string>
     <string name="registration_step2_pickup_address">PICKUP ADDRESS</string>
+    <string name="registration_step2_copy_domicle">Copy Domicile</string>
+    <string name="registration_step2_button_select_location">Select Location</string>
     <string name="registration_step3_bank_name">Bank Name</string>
     <string name="registration_step3_bank_account_number">Bank account number</string>
     <string name="registration_step3_bank_account_name">Bank account name</string>
@@ -132,12 +134,12 @@
     <string name="order_detail_button_submit">APPROVE</string>
     <string name="order_detail_button_reject">REJECT</string>
     <string name="order_detail_total_amount">Total Amount</string>
-    <string name="order_detail_delivery_bonus">Delivery Bonus</string>
+    <string name="order_detail_delivery_bonus">Award - Delivery</string>
     <string name="order_detail_product_amount">Product Amount</string>
     <string name="order_detail_release_bonus">Release Bonus</string>
     <string name="order_detail_additional_award">Additional Award</string>
     <string name="order_detail_point">Points</string>
-    <string name="order_detail_volume_bonus">Volume Bonus</string>
+    <string name="order_detail_volume_bonus">Award - Volume</string>
     <string name="order_detail_order_id">Order ID</string>
     <string name="order_detail_weight">Weight</string>
     <string name="order_detail_price">Price</string>

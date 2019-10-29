@@ -38,6 +38,8 @@
     <string name="registration_step2_choose_on_map">Tandai di peta</string>
     <string name="registration_step2_domicile_address">Alamat tempat tinggal</string>
     <string name="registration_step2_pickup_address">Alamat penjemputan</string>
+    <string name="registration_step2_copy_domicle">Salin domisili</string>
+    <string name="registration_step2_button_select_location">Pilih lokasi</string>
     <string name="registration_step3_bank_name">Nama bank</string>
     <string name="registration_step3_bank_account_number">Nomor rekening bank</string>
     <string name="registration_step3_bank_account_name">Nama sesuai rekening bank</string>
@@ -132,6 +134,10 @@
     <string name="order_detail_button_reject">Pesanan anda ditolak</string>
     <string name="order_detail_total_amount">Total nilai pembayaran</string>
     <string name="order_detail_delivery_bonus">Bonus pengiriman</string>
+    <string name="order_detail_product_amount">Jumlah nilai produk</string>
+    <string name="order_detail_release_bonus">Bonus yang didapatkan</string>
+    <string name="order_detail_additional_award">Penghargaan tambahan</string>
+    <string name="order_detail_point">Titik</string>
     <string name="order_detail_volume_bonus">Bonus volume</string>
     <string name="order_detail_order_id">Kode pesanan</string>
     <string name="order_detail_weight">Berat</string>

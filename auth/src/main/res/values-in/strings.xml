@@ -9,4 +9,10 @@
     <string name="login_otp_resend">Kirim Ulang</string>
 
     <string name="login_otp_phone_button_next">Lanjut</string>
+    <string name="registration_term">Dengan melanjutkan, berarti anda setuju dengan &lt;a href="https://mo-jual.com/privacy-policy">Kebijakan Privasi&lt;/a> dan &lt;a href="https://mo-jual.com/terms-and-conditions">Syarat dan Ketentuan dari kami&lt;/a></string>
+    <string name="login_otp_verify_buton_continue">CONTINUE</string>
+    <string name="login_otp_phone_hint">Ketuk Lanjut untuk mendapatkan SMS konfirmasi dari MoJual</string>
+    <string name="login_otp_title_enter_phone">Masukan nomor telpon anda</string>
+    <string name="login_otp_title_enter_otp">Masukan kode anda</string>
+    <string name="login_otp_invalid_otp">Kode OTP tidak valid</string>
 </resources>
