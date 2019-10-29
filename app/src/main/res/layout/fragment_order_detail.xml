@@ -205,7 +205,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{()-> viewModel.onTotalClick()}"
                     android:orientation="vertical"
-                    android:visibility="@{viewModel.totalAward > 0 &amp;&amp; viewModel.totalExpaned ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{viewModel.totalPriceToPay > 0 &amp;&amp; viewModel.totalExpaned ? View.VISIBLE : View.GONE}">
 
                     <LinearLayout
                         android:layout_width="match_parent"
