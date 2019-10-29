@@ -133,6 +133,10 @@
     <string name="order_detail_button_reject">REJECT</string>
     <string name="order_detail_total_amount">Total Amount</string>
     <string name="order_detail_delivery_bonus">Delivery Bonus</string>
+    <string name="order_detail_product_amount">Product Amount</string>
+    <string name="order_detail_release_bonus">Release Bonus</string>
+    <string name="order_detail_additional_award">Additional Award</string>
+    <string name="order_detail_point">Points</string>
     <string name="order_detail_volume_bonus">Volume Bonus</string>
     <string name="order_detail_order_id">Order ID</string>
     <string name="order_detail_weight">Weight</string>

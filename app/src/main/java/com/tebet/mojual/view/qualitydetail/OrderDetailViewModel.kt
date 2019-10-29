@@ -1,9 +1,6 @@
 package com.tebet.mojual.view.qualitydetail
 
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableDouble
-import androidx.databinding.ObservableField
-import androidx.databinding.ObservableFloat
+import androidx.databinding.*
 import androidx.databinding.library.baseAdapters.BR
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
@@ -24,9 +21,14 @@ class OrderDetailViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<OrderDetailNavigator>(dataManager, schedulerProvider) {
+    var awardExpaned: ObservableBoolean = ObservableBoolean(false)
+    var totalExpaned: ObservableBoolean = ObservableBoolean(false)
     var totalPrice: ObservableDouble = ObservableDouble()
+    var totalPriceToPay: ObservableDouble = ObservableDouble()
     var totalBonus: ObservableDouble = ObservableDouble()
+    var totalReleaseBonus: ObservableDouble = ObservableDouble()
     var totalDelivery: ObservableDouble = ObservableDouble()
+    var totalAward: ObservableDouble = ObservableDouble()
     var order: ObservableField<OrderDetail> = ObservableField()
     var items: ObservableArrayList<OrderContainer> = ObservableArrayList()
     var itemBinding: ItemBinding<OrderContainer> =
@@ -47,18 +49,24 @@ class OrderDetailViewModel(
         when {
             order.get()?.canAction == true -> {
                 totalPrice.set(items.filter { it.isSelected }.sumByDouble {
-                    it.priceTotalDisplay ?: 0.0
-                })
+                    it.priceTotalDisplay ?: 0.0})
+                totalReleaseBonus.set(if (items.firstOrNull { it.isSelected } != null) order.get()?.releaseBonus
+                    ?: 0.0 else 0.0)
+                totalPriceToPay.set(totalPrice.get() + totalReleaseBonus.get())
                 totalBonus.set(items.filter { it.isSelected }.sumByDouble {
                     it.totalVolumeBonus ?: 0.0
                 })
                 totalDelivery.set(if (items.firstOrNull { it.isSelected } != null) order.get()?.deliveryBonus
                     ?: 0.0 else 0.0)
+                totalAward.set(if (items.firstOrNull { it.isSelected } != null) (totalBonus.get() + totalDelivery.get()) else 0.0)
             }
             else -> {
-                order.get()?.totalPrice?.let { totalPrice.set(it) }
+                totalPrice.set(order.get()?.totalPrice ?: 0.0)
+                order.get()?.releaseBonus?.let { totalReleaseBonus.set(it) }
+                totalPriceToPay.set(order.get()?.amountToPay ?: 0.0)
                 order.get()?.bonus?.let { totalBonus.set(it) }
                 order.get()?.deliveryBonus?.let { totalDelivery.set(it) }
+                totalAward.set(totalDelivery.get() + totalBonus.get())
             }
         }
     }
@@ -97,6 +105,14 @@ class OrderDetailViewModel(
 
     fun onRejectClick() {
         navigator.showRejectConfirm()
+    }
+
+    fun onAwardClick() {
+        awardExpaned.set(!awardExpaned.get())
+    }
+
+    fun onTotalClick() {
+        totalExpaned.set(!totalExpaned.get())
     }
 
     fun rejectOrder() {

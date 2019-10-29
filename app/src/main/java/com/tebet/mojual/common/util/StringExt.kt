@@ -11,7 +11,7 @@ import kotlin.math.roundToInt
 
 fun Double?.toDisplayMoney(): String {
     if (this == null || this <= 0) {
-        return "Rp 0"
+        return "Rp. 0"
     }
     val formatter = DecimalFormat("#,###")
     val formattedNumber = formatter.format(this).replace(",", ".")
@@ -20,6 +20,14 @@ fun Double?.toDisplayMoney(): String {
 
 fun Float?.toDisplayMoney(): String {
     return this?.toDouble().toDisplayMoney()
+}
+
+fun Double?.toDisplayPoint(): String {
+    return toDisplayMoney().replace("Rp. ", "") + " " + Utility.getInstance().getString(R.string.order_detail_point)
+}
+
+fun Float?.toDisplayPoint(): String {
+    return this?.toDouble().toDisplayPoint()
 }
 
 fun Double?.toDisplayWeight(): String {

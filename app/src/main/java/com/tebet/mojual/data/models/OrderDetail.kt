@@ -21,6 +21,8 @@ data class OrderDetail(
     var profileCode: String? = null,
     var deliveryBonus: Double? = null,
     var bonus: Double? = null,
+    var releaseBonus: Double? = null,
+    var amountToPay: Double? = null,
     var initialPriceDate: Long? = null,
     var saleRequestDate: Long? = null,
     var pickupDate: Long? = null,
