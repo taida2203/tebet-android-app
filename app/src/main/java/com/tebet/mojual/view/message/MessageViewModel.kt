@@ -41,6 +41,7 @@ class MessageViewModel(
                         item
                     )] = item
                     navigator.openNotificationDetail(item)
+                    item.read = true
                 }
             })
         }
