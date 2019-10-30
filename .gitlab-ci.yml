@@ -18,7 +18,7 @@ stages:
   - build
   - deploy
 
-assembleDevRelease:
+assembleProductionRelease:
   stage: build
   tags:
     - dev
@@ -37,7 +37,7 @@ assembleDevRelease:
     - set +o pipefail
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
     - set -o pipefail
-    - ./gradlew assembleDevRelease
+    - ./gradlew assembleProductionRelease
   artifacts:
     paths:
     - app/build/outputs/
