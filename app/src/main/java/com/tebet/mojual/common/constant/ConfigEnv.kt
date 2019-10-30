@@ -20,10 +20,6 @@ object ConfigEnv {
 
     var isAnalyticEnabled = false
         private set
-    lateinit var consumerKey: String
-        private set
-    lateinit var consumerSecret: String
-        private set
     lateinit var googleApiKey: String
         private set
 
@@ -46,9 +42,8 @@ object ConfigEnv {
                 environment = Environment.LOCAL
 
                 apiRoot = "http://192.168.1.50:4000"
+
                 isAnalyticEnabled = true
-                consumerKey = "android_student_cakap"
-                consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
                 googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
             "production" -> {

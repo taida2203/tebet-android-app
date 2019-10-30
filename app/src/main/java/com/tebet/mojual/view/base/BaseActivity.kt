@@ -353,11 +353,13 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
                     })
             )
             exception.errorCode == 502 -> Unit
-            else -> show(
-                if (exception.errorMessage?.isNotEmpty() == true) exception.errorMessage!! else getString(
-                    R.string.general_error
-                )
-            )
+            else -> {
+                if (exception.errorMessage?.contains("LoginConfiguration") == true) return
+                show(if (exception.errorMessage?.isNotEmpty() == true) exception.errorMessage!! else getString(
+                        R.string.general_error
+                    ))
+            }
+
         }
     }
 

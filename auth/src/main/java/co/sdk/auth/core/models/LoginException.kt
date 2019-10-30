@@ -1,6 +1,6 @@
 package co.sdk.auth.core.models
 
-class LoginException {
+class LoginException : Throwable {
     var errorCode: Int = 0
     var errorMessage: String? = ""
 

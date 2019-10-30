@@ -80,7 +80,7 @@ class App : MultiDexApplication(), HasActivityInjector, HasServiceInjector, Appl
 
         AuthSdk.init(
             this, ConfigEnv.apiRoot,
-            ConfigEnv.consumerKey, ConfigEnv.consumerSecret, uuid!!
+            "", "", uuid!!
         )
 
         //        SquTypefaceHandler.INSTANCE.initialize(this);

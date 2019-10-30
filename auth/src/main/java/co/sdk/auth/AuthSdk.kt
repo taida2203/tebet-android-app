@@ -18,6 +18,7 @@ import com.tebet.mojual.sdk.auth.R
 import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
 
@@ -185,7 +186,7 @@ class AuthSdk(val context: Context, var authBaseUrl: String?, val consumerKey: S
                     }
 
                     override fun onFailed(exeption: LoginException) {
-                        emitter.onError(Throwable(exeption.errorMessage))
+                        emitter.onError(exeption)
                     }
                 })
             }

@@ -64,13 +64,9 @@ class AuthGooglePhoneLoginMethod : AuthMethod {
             when (resultCode) {
                 Activity.RESULT_OK -> {
                     configuration?.token = data?.getStringExtra("EXTRA_ID_TOKEN")
-                    if (callback != null) {
-                        configuration?.let { callback?.onSuccess(200, it) }
-                    }
+                    configuration?.let { callback?.onSuccess(200, it) }
                 }
-                else -> if (callback != null) {
-                    callback?.onFailed(LoginException(502, ""))
-                }
+                else -> callback?.onFailed(LoginException(502, ""))
             }
         }
     }
