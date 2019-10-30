@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.tebet.mojual.common.util.DateExtKt" />
+
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
+
+        <import type="com.tebet.mojual.data.models.enumeration.SortType" />
+
+        <import type="com.tebet.mojual.data.models.enumeration.SortBy" />
+
+        <import type="com.tebet.mojual.data.models.enumeration.OrderStatus" />
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.historysearch.HistorySearchViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:scrollbars="none"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:paddingRight="@dimen/_20sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:text="@string/history_advance_order" />
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:imeOptions="actionNext"
+                    android:onClick="@{() -> viewModel.selectOrderStatus()}"
+                    android:hint="@string/history_advance_hint_order"
+                    android:textColorHint="@color/black"
+                    android:text="@{viewModel.searchRequest.selectedStatus !=null ? StringExtKt.toDisplayStatus(viewModel.searchRequest.selectedStatus) : @string/history_advance_status_all}"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:text="@string/history_advance_from_date" />
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/history_advance_hint_date"
+                    android:text="@{DateExtKt.toDisplayDate(viewModel.searchRequest.fromPlanDate)}"
+                    android:textColorHint="@color/black"
+                    android:onClick="@{() -> viewModel.selectFromDate()}"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:imeOptions="actionNext"
+                    android:drawableRight="@drawable/date_select_icon"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    app:validateEmpty="@{true}" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:text="@string/history_advance_to_date" />
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{DateExtKt.toDisplayDate(viewModel.searchRequest.toPlanDate)}"
+                    android:hint="@string/history_advance_hint_date"
+                    android:onClick="@{() -> viewModel.selectToDate()}"
+                    android:textColorHint="@color/black"
+                    android:drawableRight="@drawable/date_select_icon"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:imeOptions="actionNext"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    app:validateEmpty="@{true}" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:text="@string/history_advance_id" />
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:text="@={viewModel.searchRequest.orderCode}"
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:text="@string/history_advance_sort" />
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:drawableRight="@drawable/signup_dropdown_layer"
+                    android:focusable="false"
+                    android:hint="@string/history_advance_hint_sort"
+                    android:text="@{StringExtKt.toDisplayStatus(viewModel.searchRequest.selectedSortBy)}"
+                    android:imeOptions="actionNext"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:onClick="@{() -> viewModel.selectOrderBy()}"
+                    android:textColorHint="@color/black"
+                    app:validateEmpty="@{true}" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:text="@string/history_advance_sort_type" />
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:drawableRight="@drawable/signup_dropdown_layer"
+                    android:focusable="false"
+                    android:hint="@string/history_advance_hint_sort"
+                    android:imeOptions="actionNext"
+                    android:text="@{StringExtKt.toDisplayStatus(viewModel.searchRequest.selectedSortType)}"
+                    android:onClick="@{() -> viewModel.selectOrderType()}"
+                    android:textColorHint="@color/black"
+                    app:validateEmpty="@{true}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </ScrollView>
+
+        <com.tebet.mojual.common.view.AppButtonRounded
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:onClick="@{() -> viewModel.submit()}"
+            android:text="@string/history_advance_button_search" />
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.bankconfirm.BankConfirmViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingRight="@dimen/_20sdp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_20sdp"
+                    android:text="@string/bank_confirm_notice"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+
+                    android:textSize="@dimen/_14ssp" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_name"
+                    android:imeOptions="actionNext"
+                    android:text="@string/bank_confirm_bank_name"
+                    android:textColor="@color/black" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:id="@+id/etBankName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:hint="@string/registration_step3_bank_name"
+                    android:imeOptions="actionNext"
+                    android:nextFocusDown="@+id/etBankAccountNumber"
+                    android:text="@{viewModel.userProfileLiveData.bankName}"
+                    android:textStyle="bold" />
+
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_name"
+                    android:imeOptions="actionNext"
+                    android:text="@string/bank_confirm_bank_acc_number"
+                    android:textColor="@color/black" />
+
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:id="@+id/etBankAccountNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:hint="@string/registration_step3_bank_account_number"
+                    android:text="@{viewModel.userProfileLiveData.bankAccountNumber}"
+                    android:textStyle="bold" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_name"
+                    android:imeOptions="actionNext"
+                    android:text="@string/bank_confirm_bank_acc_name"
+                    android:textColor="@color/black" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:id="@+id/etBankAccountName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:hint="@string/registration_step3_bank_account_name"
+                    android:text="@{viewModel.userProfileLiveData.bankAccountName}"
+                    android:textStyle="bold" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_name"
+                    android:imeOptions="actionNext"
+                    android:text="@string/bank_confirm_bank_region"
+                    android:textColor="@color/black" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:id="@+id/etRegionName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_region"
+                    android:text="@{viewModel.userProfileLiveData.bankRegionName}"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <com.tebet.mojual.common.view.AppButtonRounded
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:onClick="@{()-> viewModel.onUpdateClick()}"
+                android:text="@string/bank_update_button_update" />
+
+            <com.tebet.mojual.common.view.AppButtonRounded
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:onClick="@{()-> viewModel.onSubmitClick()}"
+                android:text="@string/bank_confirm_button_confirm" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

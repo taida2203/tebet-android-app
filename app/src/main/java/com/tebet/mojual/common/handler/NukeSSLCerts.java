@@ -4,10 +4,6 @@ import javax.net.ssl.*;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 
-/**
- * Created by hacked on 8/31/2017.
- */
-
 public class NukeSSLCerts {
     protected static final String TAG = "NukeSSLCerts";
 
@@ -35,14 +31,11 @@ public class NukeSSLCerts {
             HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession arg1) {
-                    return hostname.equalsIgnoreCase("cakap.com") ||
-                            hostname.equalsIgnoreCase("dev.api.cakap.com") ||
-                            hostname.equalsIgnoreCase("api.cakap.com") ||
-                            hostname.equalsIgnoreCase("staging.api.cakap.com") ||
+                    return hostname.equalsIgnoreCase("mo-jual.com") ||
+                            hostname.equalsIgnoreCase("dev.api.mo-jual.com") ||
                             hostname.equalsIgnoreCase("graph.facebook.com") ||
                             hostname.equalsIgnoreCase("s3-ap-southeast-1.amazonaws.com") ||
-                            hostname.equalsIgnoreCase("reports.crashlytics.com") ||
-                            hostname.equalsIgnoreCase("rtc.cakap.com");
+                            hostname.equalsIgnoreCase("reports.crashlytics.com");
                 }
             });
         } catch (Exception ignored) {

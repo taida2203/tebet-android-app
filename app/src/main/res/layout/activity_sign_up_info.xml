@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.signup.SignUpInfoViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:id="@+id/tvTitleStep1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="bold"
+                android:gravity="center"
+                android:text="@string/registration_demographic"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="bold"
+                android:text=">"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:id="@+id/tvTitleStep2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="bold"
+                android:gravity="center"
+                android:text="@string/registration_contact"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="bold"
+                android:text=">"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:id="@+id/tvTitleStep3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="bold"
+                android:gravity="center"
+                android:text="@string/registration_payment"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/placeHolderChild"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_above="@+id/bottom"
+            android:layout_below="@id/navigation"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <com.tebet.mojual.common.view.AppButton
+                android:id="@+id/btnBack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1"
+                android:enabled="@{!viewModel.isLoading}"
+                android:text="@string/general_btn_back" />
+
+            <com.tebet.mojual.common.view.AppButton
+                android:id="@+id/btnNext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1"
+                android:enabled="@{!viewModel.isLoading}"
+                android:text="@string/general_btn_next" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

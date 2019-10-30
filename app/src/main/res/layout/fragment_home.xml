@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.tebet.mojual.data.models.UserProfile.Status" />
+
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.home.content.HomeContentViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/_15sdp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.userProfile.statusEnum != Status.New &amp;&amp; viewModel.userProfile.statusEnum != Status.Rejected? View.VISIBLE : View.GONE}">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/home_bonus"
+                    android:textColor="@color/gray_text"
+                    android:textStyle="bold" />
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/home_rating"
+                    android:textColor="@color/gray_text"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:text="@{StringExtKt.toDisplayMoney(viewModel.userProfile.totalBonus)}"
+                    android:textStyle="bold" />
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+                    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rating="@{viewModel.userProfile.setting.rate}"
+                        app:srb_drawBorderEnabled="false"
+                        app:srb_fillColor="@color/star_active"
+                        app:srb_isIndicator="true"
+                        app:srb_starCornerRadius="7.5"
+                        app:srb_numberOfStars="5"
+                        app:srb_starBackgroundColor="@color/down_grey_color"
+                        app:srb_starSize="@dimen/_17sdp"
+                        app:srb_stepSize="0.5" />
+                </LinearLayout>
+
+            </TableRow>
+        </TableLayout>
+
+        <RelativeLayout
+            android:id="@+id/tvVerifiedWarning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/border_edit_text"
+            android:padding="@dimen/_8sdp"
+            android:visibility="@{viewModel.userProfile.statusEnum != Status.New &amp;&amp; viewModel.userProfile.statusEnum != Status.Rejected &amp;&amp; viewModel.userProfile.statusEnum != Status.Blocked? View.GONE : View.VISIBLE}">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.userProfile.statusEnum == Status.New? @string/home_verify_warning : viewModel.userProfile.statusEnum == Status.Rejected? @string/home_verify_rejected : @string/home_verify_blocked}"
+                android:textColor="@color/red_btn_dialog"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:gravity="bottom">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:paddingBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_edit_text"
+                    android:gravity="center"
+                    android:onClick="@{()-> viewModel.onSellClick()}"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_75sdp"
+                            android:layout_height="@dimen/_75sdp"
+                            android:src="@{viewModel.userProfile.isUserVerified ? @drawable/sell_icon : @drawable/sell_icon_disable}" />
+                    </LinearLayout>
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.2"
+                        android:text="@string/home_menu_sell_now"
+                        android:textColor="@{viewModel.userProfile.isUserVerified ? @color/green_dark : @color/gray_text}"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:paddingBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_edit_text"
+                    android:gravity="center"
+                    android:onClick="@{()-> viewModel.onCheckQualityClick()}"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_75sdp"
+                            android:layout_height="@dimen/_75sdp"
+                            android:src="@{viewModel.userProfile.isUserVerified ? @drawable/check_quality_icon : @drawable/check_quality_icon_disable}" />
+                    </LinearLayout>
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.2"
+                        android:text="@string/home_menu_check_quality"
+                        android:textColor="@{viewModel.userProfile.isUserVerified ? @color/green_dark : @color/gray_text}"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="top">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:paddingBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_edit_text"
+                    android:gravity="center"
+                    android:onClick="@{()-> viewModel.onBorrowClick()}"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_75sdp"
+                            android:layout_height="@dimen/_75sdp"
+                            android:src="@{viewModel.userProfile.isUserVerified ? @drawable/borrow_icon : @drawable/borrow_icon_disable}" />
+                    </LinearLayout>
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_menu_borrow"
+                        android:textColor="@{viewModel.userProfile.isUserVerified ? @color/green_dark : @color/gray_text}"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:paddingBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_edit_text"
+                    android:gravity="center"
+                    android:onClick="@{()-> viewModel.onTipsClick()}"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_75sdp"
+                            android:layout_height="@dimen/_75sdp"
+                            android:src="@drawable/tips_icon" />
+                    </LinearLayout>
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_menu_tips"
+                        android:textColor="@color/green_dark"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

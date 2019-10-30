@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.tebet.mojual.view.signup.step2.address.AddressInputView" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/registration_step2_address"
+                android:text="@={view.data.address}"
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <com.tebet.mojual.common.view.AppAutoCompleteEditText
+                android:id="@+id/etCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/registration_step2_city"
+                android:imeOptions="actionNext"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:nextFocusDown="@+id/postal_code"
+                android:text="@={view.data.city}"
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
+
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/registration_step2_kecamatan"
+                android:text="@={view.data.kecamatan}"
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/registration_step2_kelurahan"
+                android:text="@={view.data.kelurahan}"
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/registration_step2_rt_rw"
+                android:text="@={view.data.rtrw}"
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:id="@+id/postal_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/registration_step2_postal_code"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                app:onOkInSoftKeyboard="@{view.onOkEditText}"
+                android:text="@={view.data.postalCode}"
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
+
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.tebet.mojual.common.view.AppLocationEditText
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:hint="@string/registration_step2_choose_on_map"
+                android:imeOptions="actionNext"
+                android:onClick="@{()-> view.onChooseMapClick()}"
+                android:text="@={view.data.mapLocation}"
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}" />
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+    </LinearLayout>
+</layout>

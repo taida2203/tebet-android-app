@@ -6,6 +6,8 @@
     <color name="navyblue">#006bad</color>
     <color name="turquoise">#00adc6</color>
     <color name="white">#ffffff</color>
+    <color name="red">#f75c75</color>
+    <color name="masbroLightText">#95a2b1</color>
 
     <color name="dialogColorOK">#10cee6</color>
     <color name="dialogColorCancel">#304155</color>
@@ -19,5 +21,8 @@
     <color name="green_border_avatar">#73cd1f</color>
     <color name="down_linear_grey">#cbccce</color>
     <color name="dividerLighterGray">#e5e5e5</color>
+    <color name="dark_green">#49802D</color>
 
+    <color name="grey">#c7c7d5</color>
+    <color name="green_dark">#477045</color>
 </resources>

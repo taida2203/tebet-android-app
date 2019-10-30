@@ -7,7 +7,6 @@ import com.tebet.mojual.sdk.auth.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -22,16 +21,16 @@ object ServiceHelper {
 
         val builder = Retrofit.Builder()
                 .baseUrl(AuthSdk.instance.getBaseUrl()!!)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) // really need ?
                 .addConverterFactory(factory)
 
 
+        httpClient.connectTimeout(1, TimeUnit.MINUTES)
         httpClient.readTimeout(60, TimeUnit.SECONDS)
         httpClient.writeTimeout(60, TimeUnit.SECONDS)
 
         httpClient.addInterceptor(AuthenticationInterceptor())
 
-        if (BuildConfig.DEBUG) {
+        if (AuthSdk.instance.getBaseUrl()?.contains("dev.api.mo-jual.com") == true) {
             val logging = HttpLoggingInterceptor()
             logging.level = HttpLoggingInterceptor.Level.BODY
             httpClient.addInterceptor(logging)

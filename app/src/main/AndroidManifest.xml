@@ -1,69 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-          package="com.tebet.mojual">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <application
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <meta-data
-                android:name="com.facebook.sdk.ApplicationId"
-                android:value="@string/facebook_app_id" />
-        <meta-data
-                android:name="com.facebook.accountkit.ClientToken"
-                android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
-        <meta-data
-                android:name="com.facebook.accountkit.ApplicationName"
-                android:value="@string/app_name" />
-        <meta-data
-                android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
-                android:value="false" />
-        <meta-data
-                android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
-                android:value="false" />
-        <meta-data
-                android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"
-                android:value="false"/>
-        <activity android:name=".SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tebet.mojual">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".view.splash.Splash"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity">
         </activity>
 
         <activity
-                android:name="com.facebook.accountkit.ui.AccountKitActivity"/>
+            android:name=".view.home.Home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.login.Login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.signup.SignUpInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.signup.step2.map.GoogleMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.loginpassword.LoginWithPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.signup.step0.SignUpPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.forgotpassword.ForgotPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.selectquantity.SelectQuantity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.selectfuturedate.SelectFutureDate"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.qualitycontainer.QualityAddContainer"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.bankupdate.BankUpdate"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.profilechangepass.ChangePassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.help.QualityHelp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.profilepin.PinCode"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.qualitydetail.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.myasset.MyAsset"
+            android:screenOrientation="portrait" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.tebet.mojual.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <meta-data
-                android:name="com.google.firebase.messaging.default_notification_icon"
-                android:resource="@drawable/ic_notifications"/>
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification" />
         <meta-data
-                android:name="com.google.firebase.messaging.default_notification_color"
-                android:resource="@color/primary_dark"/>
-        <service android:name=".notification.MyFireBaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/black" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAbE4DCT93WIQ59-IF2EJnFnArGFlTmYEA" />
 
-        <service android:name=".feature.notification.MyFireBaseMessagingService">
+        <service android:name=".common.services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <receiver android:name=".notification.MyReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
+        <service
+            android:name=".common.services.DigitalFootPrintServices"
+            android:exported="false" />
+        <service android:name=".common.services.ScreenListenerService" />
     </application>
 
 </manifest>

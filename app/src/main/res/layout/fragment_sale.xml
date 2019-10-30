@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.tebet.mojual.common.util.DateExtKt" />
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.sale.SaleViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_20sdp"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingRight="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_5sdp">
+
+        <com.tebet.mojual.common.view.AppTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:text="@string/sale_select_title" />
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:textColorHint="@color/black"
+                android:drawableRight="@drawable/date_select_icon"
+                android:focusable="false"
+                android:hint="@string/sale_selected_date"
+                android:onClick="@{()->viewModel.openSelectDateScreen()}"
+                android:text="@{DateExtKt.toDisplayDate(viewModel.selectedFutureDate.date)}"
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}">
+
+            </com.tebet.mojual.common.view.AppEditText>
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:id="@+id/etPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:drawableRight="@drawable/signup_dropdown_layer"
+                android:textColorHint="@color/black"
+                android:focusable="false"
+                android:hint="@string/sale_quantity"
+                android:onClick="@{()->viewModel.openSelectQuantityScreen()}"
+                android:text="@{viewModel.selectedQuantity.toString()}"
+                app:validateEmpty="@{true}"
+                app:validateTypeAutoDismiss="@{true}">
+
+            </com.tebet.mojual.common.view.AppEditText>
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11ssp"
+                android:text="@string/sale_estimated_price" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/black"
+                android:text="@{StringExtKt.toDisplayMoney(viewModel.simulationPrice)}"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.tebet.mojual.common.view.AppButtonRounded
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="@{!viewModel.isLoading}"
+            android:onClick="@{()-> viewModel.onSubmitClick()}"
+            android:text="@string/sale_button_submit" />
+    </LinearLayout>
+</layout>

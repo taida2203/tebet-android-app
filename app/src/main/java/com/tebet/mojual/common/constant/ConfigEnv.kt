@@ -9,7 +9,7 @@ import com.tebet.mojual.BuildConfig
 
 object ConfigEnv {
 
-    enum class Environment { DEV, STAGING, PRODUCTION, STABLE, HOTFIX
+    enum class Environment { DEV, LOCAL, PRODUCTION
     }
 
     lateinit var environment: Environment
@@ -20,56 +20,47 @@ object ConfigEnv {
 
     var isAnalyticEnabled = false
         private set
-    lateinit var agoraAppId: String
-        private set
     lateinit var consumerKey: String
         private set
     lateinit var consumerSecret: String
         private set
+    lateinit var googleApiKey: String
+        private set
 
     val isProductionEnv: Boolean
-        get() = environment == ConfigEnv.Environment.PRODUCTION
+        get() = environment == Environment.PRODUCTION
 
     val needCrashLogging: Boolean
-        get() = environment != ConfigEnv.Environment.DEV && !BuildConfig.DEBUG
+        get() = !BuildConfig.DEBUG // environment != ConfigEnv.Environment.DEV
 
     init {
         when (BuildConfig.ENV_NAME) {
             "dev" -> {
-                environment = ConfigEnv.Environment.DEV
+                environment = Environment.DEV
 
-                apiRoot = "https://dev.api.cakap.com"
+                apiRoot = "https://dev.api.mo-jual.com"
                 isAnalyticEnabled = true
-                agoraAppId = "xxx"
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
+                googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
-            "staging" -> {
-                environment = ConfigEnv.Environment.STAGING
+            "local" -> {
+                environment = Environment.LOCAL
 
-                apiRoot = "https://staging.api.cakap.com"
+                apiRoot = "http://192.168.1.50:4000"
                 isAnalyticEnabled = true
-                agoraAppId = "yyy"
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
-            }
-            "hotfix" -> {
-                environment = ConfigEnv.Environment.HOTFIX
-
-                apiRoot = "https://hotfix.api.cakap.com"
-                isAnalyticEnabled = true
-                agoraAppId = "yyy"
-                consumerKey = "android_student_cakap"
-                consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
+                googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
             "production" -> {
-                environment = ConfigEnv.Environment.PRODUCTION
+                environment = Environment.PRODUCTION
 
-                apiRoot = "https://api.cakap.com"
+                apiRoot = "https://dev.api.mo-jual.com"
                 isAnalyticEnabled = true
-                agoraAppId = "zzz"
                 consumerKey = "android_student_cakap"
                 consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
+                googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
         }
     }

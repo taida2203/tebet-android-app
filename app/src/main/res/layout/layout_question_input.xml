@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.tebet.mojual.view.qualityreject.question.QuestionInputView" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.tebet.mojual.common.view.AppTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@{view.data.content}"
+            android:textColor="@color/black" />
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reject_hint_your_answer"
+                app:validateEmpty="@{true}"
+                android:text="@={view.data.answer}"
+                app:validateTypeAutoDismiss="@{true}" />
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+    </LinearLayout>
+</layout>

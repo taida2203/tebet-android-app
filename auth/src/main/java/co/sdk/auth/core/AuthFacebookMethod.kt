@@ -18,6 +18,7 @@ import com.facebook.login.LoginResult
 import java.util.Arrays
 
 import co.sdk.auth.core.models.ApiCallBack
+import co.sdk.auth.core.models.LoginConfiguration
 import co.sdk.auth.core.models.LoginException
 
 class AuthFacebookMethod : AuthMethod {
@@ -71,7 +72,7 @@ class AuthFacebookMethod : AuthMethod {
         }
         val request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken()
-        ) { `object`, response ->
+        ) { `object`, _ ->
             var email: String? = null
             try {
                 email = `object`.getString("email")
@@ -112,7 +113,7 @@ class AuthFacebookMethod : AuthMethod {
         callback?.onSuccess(200, null )
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (callbackManager != null) {
             callbackManager!!.onActivityResult(requestCode, resultCode, data)
         }

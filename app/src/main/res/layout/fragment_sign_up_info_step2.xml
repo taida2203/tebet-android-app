@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.signup.step2.SignUpInfoStep2Model" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <com.tebet.mojual.common.view.AppEditTextLayout
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp">
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step2_email_optional"
+                    android:text="@={viewModel.userProfile.email}"
+                    app:validateType='@{"email"}'
+                    app:validateTypeAutoDismiss="@{true}" />
+            </com.tebet.mojual.common.view.AppEditTextLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:onClick="@{()->viewModel.onDomicileClick()}"
+                android:orientation="horizontal">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/registration_step2_domicile_address"
+                    android:textSize="@dimen/_14ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@{viewModel.userProfile.domicileAddress.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}" />
+            </LinearLayout>
+
+            <com.tebet.mojual.view.signup.step2.address.AddressInputView
+                android:id="@+id/llDomicileAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.userProfile.domicileAddress.expanded ? View.VISIBLE : View.GONE}"
+                app:cities="@{viewModel.cityLiveData}"
+                app:data="@{viewModel.userProfile.domicileAddress}"
+                app:viewModel="@{viewModel}" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:onClick="@{()->viewModel.onPickupClick()}"
+                android:orientation="horizontal">
+
+                <com.tebet.mojual.common.view.AppTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/registration_step2_pickup_address"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/rounded_bg_button"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:layout_marginRight="@dimen/_4sdp"
+                    android:onClick="@{()-> viewModel.onCopyAddressClick()}"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:text="@string/registration_step2_copy_domicle" />
+
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@{viewModel.userProfile.pickupAddress.expanded ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}" />
+            </LinearLayout>
+
+            <com.tebet.mojual.view.signup.step2.address.AddressInputView
+                android:id="@+id/llPickupAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.userProfile.pickupAddress.expanded ? View.VISIBLE : View.GONE}"
+                app:cities="@{viewModel.cityLiveData}"
+                app:data="@{viewModel.userProfile.pickupAddress}"
+                app:viewModel="@{viewModel}" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

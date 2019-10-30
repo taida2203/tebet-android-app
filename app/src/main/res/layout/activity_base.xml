@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/activity_komentar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.base.BaseActivity">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.base.BaseActivityViewModel" />
+    </data>
 
     <RelativeLayout
+        android:id="@+id/activity_komentar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
             android:id="@+id/placeHolder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/base_toolbar"/>
+            android:layout_below="@+id/baseToolbar" />
 
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/base_toolbar"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/baseToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="@color/white"
             android:contentInsetStart="0dp"
             android:contentInsetLeft="0dp"
             android:contentInsetEnd="0dp"
@@ -26,87 +39,66 @@
             app:contentInsetRight="0dp"
             app:contentInsetStart="0dp">
 
-        <RelativeLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            <RelativeLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                <ImageButton
-                        android:id="@+id/iv_back"
-                        android:layout_width="wrap_content"
+
+                    <com.tebet.mojual.common.view.AppTextView
+                        android:id="@+id/tvBaseTitle"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="onBackChat"
-                        android:padding="@dimen/_6sdp"
-                        app:srcCompat="@drawable/ic_back"/>
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/_36sdp"
+                        android:layout_marginRight="@dimen/_36sdp"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:textColor="@color/green_dark"
+                        android:textSize="@dimen/_16ssp"
+                        android:visibility="@{!viewModel.enableTopLogo ? View.VISIBLE : View.GONE}"
+                        app:font_style="bold" />
 
-                <TextView
-                        android:id="@+id/tv_base_title"
+                    <ImageView
+                        android:id="@+id/topCenterHolder"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_22sdp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/mojual_logo"
+                        android:visibility="@{viewModel.enableTopLogo ? View.VISIBLE : View.GONE}" />
+
+                    <ImageView
+                        android:id="@+id/ivBack"
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/iv_back"
-                        android:lines="1"
-                        android:textColor="@color/white"
-                        app:font_style="bold"/>
+                        android:onClick="@{()-> viewModel.onBackPressed()}"
+                        android:padding="@dimen/_10sdp"
+                        android:src="@drawable/icon_back" />
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:id="@+id/rlHomeCakapCornerMenuContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:padding="@dimen/_5sdp"
-                    android:visibility="gone">
-
-                <ImageView
-                        android:id="@+id/iv_cakap_history"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
+                    <FrameLayout
+                        android:id="@+id/topLeftHolder"
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/_25sdp"
-                        android:padding="@dimen/_1sdp"
-                        android:layout_toLeftOf="@id/iv_cakap_filter"
-                />
+                        android:padding="@dimen/_4sdp" />
 
-                <ImageView
-                        android:id="@+id/iv_cakap_filter"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
+                    <FrameLayout
+                        android:id="@+id/topRightHolder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_36sdp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:padding="@dimen/_1sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                />
+                        android:padding="@dimen/_4sdp" />
+                </RelativeLayout>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:id="@+id/rlTalkMenuContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:padding="@dimen/_5sdp"
-                    android:visibility="gone">
-
-                <ImageView
-                        android:id="@+id/iv_cakap_chat_history"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:padding="@dimen/_1sdp"
-                />
-
-            </RelativeLayout>
-
-            <RelativeLayout
+                <RelativeLayout
                     android:id="@+id/rlHomeNotificationContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -114,37 +106,50 @@
                     android:padding="@dimen/_5sdp"
                     android:visibility="gone">
 
-                <ImageView
+                    <ImageView
                         android:id="@+id/iv_notification"
                         android:layout_width="@dimen/_24sdp"
                         android:layout_height="@dimen/_24sdp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/_3sdp"
-                        app:srcCompat="@drawable/ic_notifications"/>
+                        app:srcCompat="@drawable/ic_notifications" />
 
-                <TextView
-                        android:id="@+id/tvHomeNotificationCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/_6sdp"
-                        android:background="@drawable/notification_badage"
-                        android:padding="@dimen/_2sdp"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_8ssp"
-                        app:font_style="bold"
-                        android:visibility="gone"/>
+                </RelativeLayout>
+
             </RelativeLayout>
 
-        </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
 
-    </androidx.appcompat.widget.Toolbar>
-
-    <FrameLayout
-            android:id="@+id/full_screen_container"
+        <FrameLayout
+            android:id="@+id/layoutContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:visibility="gone" />
+
+
+        <LinearLayout
+            android:id="@+id/emptyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/_16ssp"
+                android:layout_height="wrap_content"
+                android:text="No data" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

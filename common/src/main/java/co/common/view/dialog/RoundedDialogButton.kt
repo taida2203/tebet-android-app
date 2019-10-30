@@ -9,7 +9,7 @@ import com.tebet.mojual.common.R
 
 class RoundedDialogButton {
     var buttonText: String
-    var color = R.color.dialogColorOK
+    var color = R.drawable.rounded_bg_button
 
     constructor(buttonText: String) {
         this.buttonText = buttonText

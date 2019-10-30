@@ -4,17 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
-
-import com.facebook.accountkit.Account
-import com.facebook.accountkit.AccountKit
-import com.facebook.accountkit.AccountKitCallback
-import com.facebook.accountkit.AccountKitError
-import com.facebook.accountkit.AccountKitLoginResult
-import com.facebook.accountkit.PhoneNumber
-import com.facebook.accountkit.ui.AccountKitActivity
-
 import co.sdk.auth.core.models.ApiCallBack
+import co.sdk.auth.core.models.LoginConfiguration
 import co.sdk.auth.core.models.LoginException
+import com.facebook.accountkit.*
+import com.facebook.accountkit.ui.AccountKitActivity
 import timber.log.Timber
 
 class AuthAccountKitMethod : AuthMethod {
@@ -33,9 +27,28 @@ class AuthAccountKitMethod : AuthMethod {
         if (isLoggedIn) {
             // Handle Returning User
             if (AccountKit.getCurrentAccessToken() != null) {
-                configuration!!.token = AccountKit.getCurrentAccessToken()!!.token
+                configuration.token = AccountKit.getCurrentAccessToken()?.token
             }
-            configuration?.let { callback?.onSuccess(200, it) }
+            AccountKit.getCurrentAccount(object : AccountKitCallback<Account> {
+                override fun onSuccess(account: Account) {
+                    val phoneNumber = account.phoneNumber
+                    val phoneNumberString = phoneNumber.toString()
+                    try {
+                        configuration.phone = phoneNumberString.replace("\\+".toRegex(), "")
+                            .replace(" ".toRegex(), "")
+                            .trim { it <= ' ' }
+                    } catch (ignored: Exception) {
+                        Timber.e(ignored)
+                    }
+
+                    configuration.token = AccountKit.getCurrentAccessToken()?.token
+                    configuration.let { callback.onSuccess(200, it) }
+                }
+
+                override fun onError(error: AccountKitError) {
+                    callback.onFailed(LoginException(400, error.userFacingMessage))
+                }
+            })
         } else {
             val intent = Intent(context, AccountKitActivity::class.java)
 
@@ -53,13 +66,13 @@ class AuthAccountKitMethod : AuthMethod {
                     AccountKitActivity.ResponseType.TOKEN)
                     .setDefaultCountryCode(countryCode)
                     .setFacebookNotificationsEnabled(true)
-            if (configuration != null && !TextUtils.isEmpty(configuration.phone)) {
-                val phone = PhoneNumber(null!!, configuration.phone!!, null)
+            if (!TextUtils.isEmpty(configuration.phone)) {
+                val phone = configuration.phone?.let { PhoneNumber(null!!, it, null) }
                 configurationBuilder.setInitialPhoneNumber(phone)
             }
             // ... perform additional configuration ...
             intent.putExtra(
-                    com.facebook.accountkit.ui.AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
+                    AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
                     configurationBuilder.build())
             context.startActivityForResult(intent, REQUEST_CODE_LOGIN_FB_ACCOUT_KIT)
         }
@@ -70,16 +83,16 @@ class AuthAccountKitMethod : AuthMethod {
         callback?.onSuccess(200, null)
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        if (requestCode == AuthAccountKitMethod.REQUEST_CODE_LOGIN_FB_ACCOUT_KIT) { // confirm that this response matches your request
-            val loginResult = data.getParcelableExtra<AccountKitLoginResult>(AccountKitLoginResult.RESULT_KEY)
-            if (loginResult.error != null) {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_LOGIN_FB_ACCOUT_KIT) { // confirm that this response matches your request
+            val loginResult = data?.getParcelableExtra<AccountKitLoginResult>(AccountKitLoginResult.RESULT_KEY)
+            if (loginResult?.error != null) {
                 if (callback != null) {
-                    callback!!.onFailed(LoginException(400, loginResult.error!!.errorType.message))
+                    callback?.onFailed(LoginException(400, loginResult.error?.errorType?.message))
                 }
-            } else if (loginResult.wasCancelled()) {
+            } else if (loginResult?.wasCancelled() == true) {
                 if (callback != null) {
-                    callback!!.onFailed(LoginException(502, "Cancelled"))
+                    callback?.onFailed(LoginException(502, "Cancelled"))
                 }
             } else {
                 AccountKit.getCurrentAccount(object : AccountKitCallback<Account> {
@@ -87,21 +100,21 @@ class AuthAccountKitMethod : AuthMethod {
                         val phoneNumber = account.phoneNumber
                         val phoneNumberString = phoneNumber.toString()
                         try {
-                            configuration!!.phone = phoneNumberString.replace("\\+".toRegex(), "")
+                            configuration?.phone = phoneNumberString.replace("\\+".toRegex(), "")
                                     .replace(" ".toRegex(), "")
                                     .trim { it <= ' ' }
                         } catch (ignored: Exception) {
                             Timber.e(ignored)
                         }
 
-                        configuration!!.token = AccountKit.getCurrentAccessToken()!!.token
+                        configuration?.token = AccountKit.getCurrentAccessToken()?.token
                         if (callback != null) {
-                            configuration?.let { callback!!.onSuccess(200, it) }
+                            configuration?.let { callback?.onSuccess(200, it) }
                         }
                     }
 
                     override fun onError(error: AccountKitError) {
-                        callback!!.onFailed(LoginException(400, error.userFacingMessage))
+                        callback?.onFailed(LoginException(400, error.userFacingMessage))
                     }
                 })
 

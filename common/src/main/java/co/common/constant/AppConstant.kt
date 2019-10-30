@@ -2,6 +2,8 @@ package co.common.constant
 
 class AppConstant {
     companion object {
+        val PIN_TYPE_INPUT ="PIN_TYPE_INPUT"
+        val PIN_CODE = "PIN_CODE"
         //SHARED PREFERENNCE
         val PREF_NAME = "mojual"
         val TOKEN = "TOKEN"

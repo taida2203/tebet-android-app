@@ -1,151 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="dark_black">#CC262626</color>
     <color name="agora_blue">#FF00A0EB</color>
-    <color name="colorPrimary">#0277b7</color>
-    <color name="colorPrimaryLight">#00adc6</color>
-    <color name="colorPrimaryDark">#0277B7</color>
+    <color name="colorPrimary">#4a3325</color>
+    <color name="colorPrimaryLight">#523829</color>
+    <color name="colorPrimaryDark">#38261C</color>
     <color name="colorAccent">#00acbd</color>
 
     <color name="bgcolor">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
-    <color name="greenbottombar">#03ACBE</color>
-    <color name="greycolor">#788f9b</color>
-    <color name="down_grey_color">#56656c</color>
-    <color name="green_color">#96CD7A</color>
-    <color name="up_linear_grey">#EEF2F5</color>
+    <color name="green_dark">#477045</color>
 
-    <color name="inputnolight">#333333</color>
-    <color name="edittext_color">#333333</color>
-
-    <color name="color_title_slide">#0276B6</color>
-    <color name="color_desc_slide">#898A8D</color>
-
-    <color name="bg_blue">#03ACBE</color>
-    <color name="bg_blue_down">#029cac</color>
-    <color name="red_google">#DF4A3C</color>
-    <color name="down_red_google">#c74033</color>
-    <color name="blue_facebook">#2A5697</color>
-    <color name="down_blue_facebook">#27508c</color>
-    <color name="dark_blue">#00578f</color>
-
-    <color name="timestamp">#a0a3a7</color>
-    <color name="back_clock">#D1D2D4</color>
-    <color name="bg_class">#D0D9DE</color>
-    <color name="bg_searchview">#ECEEF0</color>
-    <color name="back_spinner">#eceef0</color>
-    <color name="down_back_spinner">#ced7db</color>
-    <color name="tab_indicator_color">#84C462</color>
-
-
-    <color name="green_intensive">#12AE4E</color>
-    <color name="active_color">#84C462</color>
-    <color name="expired_color">#788f9b</color>
-    <color name="innactive_color">#F7951F</color>
-
-    <color name="red_voucher">#BF202F</color>
-
-    <color name="back_child">#D9E2ED</color>
-    <color name="back_text_child">#EEF2F5</color>
-
-    <color name="green_checkbox">#179A8C</color>
-    <!-- dots inactive colors -->
-    <color name="dot_active">#3B3B3D</color>
-    <color name="dot_inactive">#828387</color>
-
-    <array name="array_dot_active">
-        <item>@color/dot_active</item>
-        <item>@color/dot_active</item>
-        <item>@color/dot_active</item>
-        <item>@color/dot_active</item>
-        <item>@color/dot_active</item>
-    </array>
-
-    <array name="array_dot_inactive">
-        <item>@color/dot_inactive</item>
-        <item>@color/dot_inactive</item>
-        <item>@color/dot_inactive</item>
-        <item>@color/dot_inactive</item>
-        <item>@color/dot_inactive</item>
-    </array>
-
-
-    <color name="divider">#BDBDBD</color>
-    <color name="dusk_yellow">#FF9800</color>
-    <color name="light_blue">#005e96</color>
-    <color name="darker_blue">#003d69</color>
-    <color name="darker_blue_notify">#0075b5</color>
-    <color name="blue_grey">#c4cfdd</color>
-    <color name="white_grey">#d4d4d4</color>
-    <color name="grey_text">#a2a1a9</color>
-    <color name="grey_text_notify">#d5d5df</color>
-    <color name="grey">#c7c7d5</color>
-    <color name="red_color">#d22d41</color>
-    <color name="text_count">#7e959d</color>
-    <color name="number_count">#567380</color>
-    <color name="grey_gender">#f2f2fd</color>
-    <color name="green_gender">#00a2b5</color>
-    <color name="red_gender">#e65b6b</color>
-    <color name="grey_color_gender">#a6a6a8</color>
-    <color name="hint_color">#d6d6e5</color>
-    <color name="red_color_error">#c40019</color>
-    <color name="active_text_color">#076dad</color>
-    <color name="darker_grey_text_color">#737478</color>
-    <color name="grey_line">#b9b8bf</color>
-    <color name="et_grey">#595a63</color>
-    <color name="dark_text_notify">#444443</color>
-
-    <color name="forgot_password_continue_button_bg">#84c661</color>
-    <color name="forgot_password_guide_text">#8f8e98</color>
-
-    <!--phone number verification-->
-    <color name="otp_continue_button_bg">#00acbd</color>
-    <color name="text_otp_input">#65666F</color>
-    <color name="text_phone_otp">#0277B7</color>
-
-    <!--upcoming class-->
-    <color name="upcoming_class_teacher_name">#84c661</color>
-    <color name="upcoming_class_button_enter_class">#84c661</color>
-
-    <color name="my_class_normal_text">#65666f</color>
-    <color name="my_class_bold_text">#3a3a3f</color>
-    <color name="my_class_empty_text">#c7c7d5</color>
-
-    <color name="white_title">#f8d7d7d7</color>
-
-    <color name="text_setting_left">#65666f</color>
-    <color name="text_setting_right">#c0bfbf</color>
-
-    <!--book class-->
-    <color name="book_class_tab_indicator">#84c661</color>
-    <color name="book_class_date_indicator">#84c661</color>
-    <color name="book_class_date_holiday">#d0021b</color>
-    <color name="book_class_date_text_normal">#8f8e98</color>
-    <color name="book_class_button_filter_active_bg">#FFF</color>
-    <color name="book_class_button_filter_inactive_bg">#F4F4FD</color>
-    <color name="book_class_button_filter_active_text">#65666F</color>
-    <color name="book_class_button_filter_inactive_text">#C7C7D5</color>
-    <color name="book_class_time_slot_available_indicator">#84c661</color>
-    <color name="book_class_time_slot_unavailable_indicator">#c7c7d5</color>
-    <color name="book_class_time_slot_full_indicator">#d0021b</color>
-    <color name="book_class_time_slot_label_booked_normal">#84c661</color>
-    <color name="book_class_time_slot_label_booked_past">#c7c7d5</color>
-    <color name="book_class_time_slot_label_full">#d0021b</color>
-    <color name="book_class_time_slot_text_normal">#65656f</color>
-    <color name="book_class_time_slot_text_inactive">#c7c7d5</color>
-    <color name="book_class_button_bg">#0076b6</color>
-    <color name="book_class_button_bg_booked">#84c661</color>
-    <color name="book_class_button_text_attended">#84c661</color>
-    <color name="book_class_button_text_missed">#d0021b</color>
-    <color name="book_class_empty_bg">#f4f4fd</color>
-    <color name="book_class_empty_list_text">#ddddea</color>
-    <color name="book_class_confirmation_card_booking_bg">#0076b6</color>
-    <color name="book_class_confirmation_button_booking">#0076b6</color>
-    <color name="book_class_confirmation_card_cancel_bg">#d0021b</color>
-    <color name="book_class_confirmation_button_cancel">#d0021b</color>
-    <color name="book_class_confirmation_button_negative">#8f8e98</color>
-    <color name="booking_congrats_button">#84c661</color>
+    <color name="grey_hint">#8a8989</color>
 
     <!--notification-->
     <color name="statusDanger">#f75c75</color>
@@ -166,75 +33,26 @@
     <color name="green_change_course">#79be56</color>
     <color name="grey_dialog_text">#74757d</color>
 
-    <!--detail class-->
-    <color name="detail_class_top_cover_bg">#0076b6</color>
-    <color name="detail_class_teacher_name_text">#0076b6</color>
-    <color name="detail_class_level_text">#84c661</color>
-    <color name="detail_class_material_text">#00acbd</color>
-    <color name="detail_class_enter_class_active_button">#84c661</color>
-    <color name="detail_class_enter_class_inactive_button">#0076b6</color>
-    <color name="detail_class_cancel_class_button">#0076b6</color>
-    <color name="detail_class_text_normal">#65666f</color>
-    <color name="detail_class_text_content_tnc">#8f8e98</color>
-    <color name="detail_class_bullet">#84c661</color>
-    <color name="detail_class_separator_view">#ddddea</color>
-
-    <color name="dialog_background">#8056656C</color>
-
-    <!--dialog class start soon-->
-    <color name="class_start_soon_title">#0076b6</color>
-    <color name="class_start_soon_button">#0076b6</color>
-    <color name="class_start_soon_countdown">#c7c7d5</color>
-
-    <!--dialog redeem code-->
-    <color name="dialog_redeem_code_button">#65D460</color>
-    <color name="dialog_redeem_code_error">#d0021b</color>
-    <color name="dialog_redeem_code_text_normal">#c7c7d5</color>
-
-    <!--calendar teacher-->
-    <color name="calendar_teacher_searchview_background">#f4f4fd</color>
-    <color name="calendar_teacher_searchview_hint_text">#c7c7d5</color>
-    <color name="calendar_teacher_searchview_normal_text">#65666f</color>
-    <color name="calendar_teacher_list_button_book">#0076b6</color>
-    <color name="calendar_teacher_list_button_detail">#84c661</color>
-    <color name="calendar_teacher_list_title_bottom_sheet_background">#f4f4fd</color>
-    <color name="calendar_teacher_list_bottom_sheet_title">#0076b6</color>
-    <color name="calendar_teacher_list_bottom_sheet_text_empty_schedule">#ddddea</color>
-
-    <!--chat history-->
-    <color name="chat_history_teacher_name_text">#00adc6</color>
-    <color name="chat_history_filter_active_separator_background">#ddddea</color>
-    <color name="chat_history_filter_active_clear_text">#d0021b</color>
-    <color name="chat_history_filter_active_change_text">#00acbd</color>
-
-    <!--chat filter-->
-    <color name="chat_filter_button_submit_background">#84c661</color>
-    <color name="chat_filter_element_border">#ddddea</color>
-    <color name="chat_filter_element_border_error">#d0021b</color>
-
-    <!--dialog booking per day limit reached-->
-    <color name="dialog_booking_per_day_limit_title">#0069b1</color>
-    <color name="dialog_booking_per_day_limit_teacher_name">#00adc6</color>
-    <color name="dialog_booking_per_day_limit_button">#00adc6</color>
-
-    <!--cakap chat-->
-    <color name="cakap_chat_student_name">#0277B7</color>
-    <color name="cakap_chat_badge_free_trial">#00adc6</color>
-    <color name="cakap_chat_badge_premium_expired">#9f0404</color>
-    <color name="cakap_chat_badge_get_premium_button_background">#f3ac49</color>
-    <color name="cakap_chat_now_button_background">#00adc6</color>
-    <color name="cakap_chat_now_button_background_disabled">#b9b9cb</color>
-    <color name="cakap_chat_package_status_description_available">#00adc6</color>
-    <color name="cakap_chat_package_status_description_unavailable">#8f8e98</color>
-    <color name="cakap_chat_package_expiration">#8f8e98</color>
-    <color name="cakap_chat_teacher_state_online">#98c93c</color>
-    <color name="cakap_chat_teacher_state_busy">#9f0404</color>
-    <color name="cakap_chat_teacher_state_offline">#ddddea</color>
-    <color name="cakap_chat_badge_counter">#9f0404</color>
-    <color name="cakap_chat_history_see_all">#00adc6</color>
-    <color name="cakap_chat_history_match_now_button_background">#98c93c</color>
-    <color name="cakap_chat_session_run_out_countdown_background">#f5f4f8</color>
-    <color name="cakap_chat_session_run_out_countdown_text">#00adc6</color>
-    <color name="cakap_chat_session_run_out_match_again_text">#343439</color>
-
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#2C2C2C</color>
+    <color name="gray_text">#AFAFAF</color>
+    <color name="star_active">#ffd700</color>
+    <color name="green_ic">#476f45</color>
+    <color name="gray_signup">#BCD3DB</color>
+    <color name="greycolor">#788f9b</color>
+    <color name="back_spinner">#eceef0</color>
+    <color name="bg_blue_down">#029cac</color>
+    <color name="down_grey_color">#56656c</color>
+    <color name="bg_blue">#03ACBE</color>
+    <color name="grey">#c7c7d5</color>
+    <color name="grey_trans">#68C7C7D5</color>
+    <color name="darker_blue_notify">#0075b5</color>
+    <color name="grey_text_notify">#d5d5df</color>
+    <color name="buttonGreen">#49802D</color>
+    <color name="home_line">#DDE8E9</color>
+    <color name="grey_mess">#8A949D</color>
+    <color name="un_read_mess">#E0FFE0</color>
+    <color name="read_mess">#ffffff</color>
+    <color name="grey_press">#E2E9F1</color>
+    <color name="green_sale">#33774b</color>
+    <color name="sale_line">#c8d7df</color>
 </resources>

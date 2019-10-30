@@ -1,0 +1,258 @@
+<resources>
+    <string name="app_name">MoJual</string>
+
+    <string name="general_btn_next">Lanjut</string>
+    <string name="general_btn_back">Kembali</string>
+    <string name="general_btn_no">Tidak</string>
+    <string name="general_btn_yes">Ya</string>
+    <string name="general_error">Ada kesalahan, silahkan coba kembali</string>
+    <string name="general_error_feature_disabled">Fitur in belum tersedia</string>
+    <string name="general_error_feature_permission">Fitur in belum tersedia untuk anda</string>
+    <string name="general_error_validation_fill_all_field">Isi pertanyaan yang masih kosong</string>
+
+    <!--Month year Picker-->
+    <string name="login_btn_login">Masukan nomor telepon anda</string>
+    <string name="login_btn_register">Daftar</string>
+    <string name="login_btn_forgot_password">Lupa password</string>
+    <string name="login_password_phone">Telepon</string>
+
+    <string name="registration_title">Daftar baru</string>
+    <string name="registration_demographic">Demografi</string>
+    <string name="registration_contact">Hubungi</string>
+    <string name="registration_payment">Pembayaran</string>
+    <string name="registration_step1_selfie_tutorial">Ambil foto wajah anda</string>
+    <string name="registration_step1_full_name">Nama lengkap</string>
+    <string name="registration_step1_date_of_birth">Tanggal lahir</string>
+    <string name="registration_step1_ktp_number">Nomor KTP</string>
+    <string name="registration_step1_upload_ktp_photo">Ambil foto KTP anda</string>
+    <string name="registration_step1_error_name">Dilarang memakai karakter khusus</string>
+    <string name="registration_step2_email">Email</string>
+    <string name="registration_step2_email_optional">Email (pilihan)</string>
+    <string name="registration_step2_address">Alamat</string>
+    <string name="registration_step2_kelurahan">Kelurahan</string>
+    <string name="registration_step2_kecamatan">Kecamatan</string>
+    <string name="registration_step2_rt_rw">RT/RW</string>
+    <string name="registration_step2_city">Kota/Kabupaten</string>
+    <string name="registration_step2_postal_code">Kode pos</string>
+    <string name="registration_step2_google_map_title">Kirim lokasi anda saat ini</string>
+    <string name="registration_step2_choose_on_map">Tandai di peta</string>
+    <string name="registration_step2_domicile_address">Alamat tempat tinggal</string>
+    <string name="registration_step2_pickup_address">Alamat penjemputan</string>
+    <string name="registration_step2_copy_domicle">Salin domisili</string>
+    <string name="registration_step2_button_select_location">Pilih lokasi</string>
+    <string name="registration_step3_bank_name">Nama bank</string>
+    <string name="registration_step3_bank_account_number">Nomor rekening bank</string>
+    <string name="registration_step3_bank_account_name">Nama sesuai rekening bank</string>
+    <string name="registration_step3_bank_region">Kantor cabang</string>
+    <string name="login_password_title">Masuk dengan nomor telepon anda</string>
+    <string name="login_password_forgot">Lupa password?</string>
+    <string name="login_password_login">Masuk</string>
+
+    <string name="sign_up_password_title">Daftar baru</string>
+    <string name="forgot_password_title">Masukan password baru</string>
+    <string name="forgot_password_hint">Password</string>
+    <string name="forgot_password_input_password_hint">Masukan password</string>
+    <string name="forgot_password_re_password_hint">Ketik ulang password</string>
+
+    <string name="forgot_password_error_length">Password minimal 6 karakter (huruf dan angka)</string>
+    <string name="forgot_password_error_not_match">Password tidak sama</string>
+
+
+    <string name="home_verify_warning">Akun anda sedang diverifikasi. Team Mo-Jual akan menghubungi anda secepatnya.</string>
+    <string name="home_verify_rejected">Akun anda ditolak. Silahkan hubungi Team Mo-Jual untuk lebih jelasnya.</string>
+    <string name="home_verify_blocked">Akun anda tidak tersedia. Silahkan hubungi Team Mo-Jual untuk lebih jelasnya.</string>
+    <string name="home_navigation_home">Beranda</string>
+    <string name="home_navigation_inbox">Inbox</string>
+    <string name="home_navigation_history">Riwayat Transaksi</string>
+    <string name="home_menu_sell_now">Jual sekarang</string>
+    <string name="home_menu_check_quality">Cek kualitas</string>
+    <string name="home_menu_borrow">Pinjam</string>
+    <string name="home_menu_tips">Tips</string>
+    <string name="home_bonus">Bonus</string>
+    <string name="home_rating">Performa Anda</string>
+
+    <string name="sale_button_submit">Kirim</string>
+    <string name="sale_estimated_price">Harga estimasi</string>
+    <string name="sale_quantity">Pilih jumlah</string>
+    <string name="sale_selected_date">Pilih tanggal pengiriman</string>
+    <string name="sale_select_title">Pilih jumlah barang dan tanggal pengiriman</string>
+    <string name="sale_select_quantity_title">Pilih Quantity</string>
+    <string name="sale_select_future_date_title">Pilih Tanggal Jual</string>
+    <string name="sale_select_future_date_date">Tanggal</string>
+    <string name="sale_select_future_date_price">Harga</string>
+    <string name="sale_select_future_date_price_kg">%1$s / Kg</string>
+    <string name="sale_select_future_date_today">Hari ini</string>
+    <string name="sale_asset_empty">Tidak ada yang dijual, silahkan coba lagi</string>
+
+    <string name="sale_detail_title_id">Kode</string>
+    <string name="sale_detail_title_date">Tanggal</string>
+    <string name="sale_detail_title_price">Harga</string>
+    <string name="sale_detail_title_quantity">Jumlah</string>
+    <string name="sale_detail_title_total_price">Total harga</string>
+    <string name="sale_detail_submit">Buat pesanan baru</string>
+    <string name="sale_detail_container">%1$s Container</string>
+    <string name="sale_detail_containers">%1$s Containers</string>
+
+
+    <string name="month_year_picker_date">Tanggal</string>
+    <string name="month_year_picker_month">Bulan</string>
+    <string name="month_year_picker_year">Tahun</string>
+    <string name="month_year_picker_select_btn">Pilih</string>
+    <string name="quality_check_error_select_order">Anda telah memilih lebih dari 1 pesanan</string>
+    <string name="quality_add_container_title">Cek kualitas</string>
+
+    <string name="check_quality_add_new_order">Buat pesanan lainnya</string>
+
+    <string name="check_quality_add_container_title">#%1$s</string>
+    <string name="check_quality_add_container_order">Order %1$s</string>
+    <string name="check_quality_add_container_btn_check">Mulai cek kualitas</string>
+    <string name="check_quality_add_container_btn_cancel">Batalkan cek kualitas</string>
+    <string name="check_quality_add_container_add_new_container">TAMBAHKAN %1$s DARI %2$s CONTAINER</string>
+    <string name="check_quality_add_container_add_new_containers">TAMBAHKAN %1$s DARI %2$s CONTAINERS</string>
+    <string name="check_quality_add_container_turn_off_iot">Silahkan Matikan perangkat IoT terlebih dahulu untuk menghemat baterai</string>
+    <string name="check_quality_tip1">Tidak mengerti untuk cek kualitas?</string>
+    <string name="check_quality_tip2">Lihat tips</string>
+    <string name="check_quality_add_container_iot">status IOT</string>
+    <string name="check_quality_add_container_iot_connected">Telah terhubung</string>
+    <string name="check_quality_add_container_iot_not_connect">Tidak terhubung</string>
+    <string name="check_quality_add_container_iot_connecting">Sedang menghubungkan…</string>
+    <string name="check_quality_add_container_iot_not_turn_off">Matikan</string>
+    <string name="check_quality_add_container_button_retry">Coba lagi</string>
+    <string name="check_quality_add_container_button_manual">Manual</string>
+    <string name="check_quality_add_container_gps_warning">GPS anda tidak aktif. Aktifkan GPS anda!</string>
+    <string name="check_quality_add_container_permission_warning">Berikan izin akses yang diperlukan</string>
+    <string name="check_quality_add_container_no_available_container">Anda tidak memiliki container yang akan dicek kualitas</string>
+    <string name="check_quality_add_container_block_while_checking">Harap tunggu sampai cek kualitas selesai atau batalkan pengecekan sekarang</string>
+    <string name="check_quality_add_container_max_order_not_allowed">Jumlah container tidak boleh melebihi %1$s. Silahkan perbaharui dan coba lagi</string>
+    <string name="check_quality_add_container_item_id">Kode container</string>
+    <string name="check_quality_add_container_weight_title">Berat container</string>
+    <string name="check_quality_add_container_time_title">Waktu (detik)</string>
+
+    <string name="order_detail_title">Penegasan ulang</string>
+    <string name="order_detail_hint">Pesanan anda sudah diperiksa. Pilih container yang akan dijual</string>
+    <string name="order_detail_button_submit">Pesanan anda disetujui</string>
+    <string name="order_detail_button_reject">Pesanan anda ditolak</string>
+    <string name="order_detail_total_amount">Total nilai pembayaran</string>
+    <string name="order_detail_delivery_bonus">Bonus pengiriman</string>
+    <string name="order_detail_product_amount">Jumlah nilai produk</string>
+    <string name="order_detail_release_bonus">Bonus yang didapatkan</string>
+    <string name="order_detail_additional_award">Penghargaan tambahan</string>
+    <string name="order_detail_point">Titik</string>
+    <string name="order_detail_volume_bonus">Bonus volume</string>
+    <string name="order_detail_order_id">Kode pesanan</string>
+    <string name="order_detail_weight">Berat</string>
+    <string name="order_detail_price">Harga</string>
+    <string name="order_detail_amount">Nilai pembayaran</string>
+    <string name="order_detail_content">Kadar eugenol</string>
+    <string name="order_detail_dialog_reject">Anda yakin akan membatalkan semua container?</string>
+    <string name="order_detail_dialog_confirm">Anda yakin akan menjual container %1$s?</string>
+    <string name="order_detail_button_approve">Pesanan anda disetujui</string>
+    <string name="order_detail_status">Status</string>
+    <string name="order_detail_message">Pesan</string>
+
+    <string name="order_reject_title">Beritahu kami</string>
+    <string name="order_reject_detail">Mengapa anda menolak untuk menjual kepada kami? Beritahu kami dengan menjawab pertanyaan di bawah ini</string>
+    <string name="order_reject_quest_1">Berapa harga daun per kg yang anda beli?</string>
+    <string name="order_reject_quest_2">Berapa persen (%) rendemannya?</string>
+    <string name="order_reject_buttom_confirm">Penegasan ulang bahwa anda tidak jadi menjual kepada kami</string>
+
+    <string name="history_title">Riwayat transaksi</string>
+    <string name="history_filter">Pilih berdasarkan</string>
+    <string name="history_container">%1$s Container</string>
+    <string name="history_containers">%1$s Containers</string>
+
+    <string name="history_search_title">Pencarian lebih dalam</string>
+
+    <string name="message_title">Pemberitahuan</string>
+    <string name="message_today">Hari ini</string>
+    <string name="message_yesterday">Kemarin</string>
+
+    <string name="bank_update_title">Pembaharuan Akun Bank</string>
+
+    <string name="profile_button_logout">Keluar</string>
+
+    <string name="reject_hint_your_answer">Jawaban anda</string>
+    <string name="bank_update_button_update">Perubahan</string>
+    <string name="bank_update_notice">Pembayaran akan ditransfer ke rekening bank anda. Harap masukkan informasi akun bank anda</string>
+
+    <string name="bank_confirm_title">Penegasan Ulang Rekening Bank</string>
+    <string name="bank_confirm_notice">Pembayaran akan ditransfer ke rekening bank anda. Tolong pastikan kembali akun bank anda</string>
+    <string name="bank_confirm_button_confirm">Penegasan Ulang</string>
+    <string name="bank_confirm_button_update">Perubahan</string>
+    <string name="bank_confirm_bank_name">Nama Bank</string>
+    <string name="bank_confirm_bank_acc_number">Nomor Rekening Bank</string>
+    <string name="bank_confirm_bank_acc_name">Nama Pemilik Rekening Bank</string>
+    <string name="bank_confirm_bank_region">Cabang</string>
+
+    <string name="profile_telephone">Telepon</string>
+    <string name="profile_domicle_address">Alamat tempat tinggal</string>
+    <string name="profile_basic_information">Informasi utama</string>
+    <string name="profile_pickup_address">Alamat penjemputan</string>
+    <string name="profile_bank_account">Nama Bank</string>
+    <string name="profile_security">Pengamanan</string>
+    <string name="profile_set_pin">Buat Pin</string>
+    <string name="profile_remove_pin">Hapus Pin</string>
+    <string name="profile_change_password">Ubah password</string>
+    <string name="profile_other">lainnya</string>
+    <string name="profile_contact_mojual">Hubungi MOJUAL</string>
+    <string name="profile_faq">Tips</string>
+    <string name="profile_terms">Syarat dan ketentuan</string>
+    <string name="profile_privacy_policy">Kebijakan Privasi</string>
+    <string name="profile_logout">Keluar</string>
+    <string name="profile_version">Versi</string>
+    <string name="profile_language">Bahasa</string>
+    <string name="profile_bonus">Bonus</string>
+
+    <string name="change_pass_title">Ubah password</string>
+
+    <string name="history_advance_order">Status pesanan</string>
+    <string name="history_advance_hint_order">Dalam proses</string>
+    <string name="history_advance_from_date">dari tanggal</string>
+    <string name="history_advance_to_date">sampai tanggal</string>
+    <string name="history_advance_id">kode pesanan</string>
+    <string name="history_advance_sort">Urutkan berdasarkan</string>
+    <string name="history_advance_sort_type">Urutkan tipe</string>
+    <string name="history_advance_hint_sort">Status</string>
+    <string name="history_advance_button_search">pencarian</string>
+    <string name="history_advance_hint_date">15 Juli 2019</string>
+    <string name="history_advance_status_all">Semua</string>
+    <string name="history_advance_status_open">Buka</string>
+    <string name="history_advance_status_closed">Tutup</string>
+    <string name="history_advance_status_rejected">Ditolak</string>
+    <string name="history_advance_status_order_id">kode pesanan</string>
+    <string name="history_advance_status_sale_date">Tanggal penjualan</string>
+    <string name="history_advance_status_status">Status</string>
+    <string name="history_advance_status_amount">Nilai pembayaran</string>
+    <string name="history_advance_status_desc">Urutkan dari nilai yang terbesar</string>
+    <string name="history_advance_status_asc">Urutkan dari nilai yang terkecil</string>
+
+    <string name="quality_help_title">Bantuan</string>
+
+    <string name="pin_message_warn">Anda akan keluar dari Mojual setelah 5 kali salah memasukkan PIN. Keluar untuk atur ulang PIN</string>
+    <string name="pin_enter">Masukkan kode PIN</string>
+    <string name="pin_message_not_matched">PIN tidak sesuai</string>
+    <string name="pin_message_wrong">PIN salah</string>
+    <string name="pin_message_remove">Anda ingin menghapus kode PIN?</string>
+    <string name="pin_confirm">Konfirmasi kode PIN</string>
+    <string name="pin_exit">Keluar</string>
+    <string name="pin_prompt">Apakah anda ingin melindungi data anda dengan menggunakan kode PIN?</string>
+    <string name="pin_later">Nanti</string>
+    <string name="pin_set">Buat PIN</string>
+    <string name="profile_asset">ASET</string>
+    <string name="profile_my_asset">Aset saya</string>
+
+    <string name="error_message_empty_validation">Bagian ini tidak boleh kosong</string>
+    <string name="order_status_open">Buka</string>
+    <string name="order_status_closed">Ditutup</string>
+    <string name="order_status_rejected">Ditolak</string>
+    <string name="container_status_paid">Dibayar</string>
+    <string name="container_status_sale_confirmed">Penjualan dikonfirmasi</string>
+    <string name="container_status_final_price_offered">Harga akhir yang ditawarkan</string>
+    <string name="container_status_returned">Kembali</string>
+    <string name="container_status_sale_rejected">Penjualan ditolak</string>
+    <string name="container_status_checking">Pengecekan</string>
+    <string name="container_status_sale_requested">Permintaan penjualan</string>
+    <string name="container_status_initial_price_rejected">Harga awal ditolak</string>
+    <string name="container_status_quality_rejected">Kualitas ditolak</string>
+    <string name="container_status_initial_price_offered">Harga awal yang ditawarkan</string>
+</resources>

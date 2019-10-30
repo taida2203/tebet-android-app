@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.tebet.mojual.R" />
+
+        <import type="android.view.View" />
+
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
+
+        <import type="com.tebet.mojual.data.models.ContainerWrapper.CheckStatus" />
+
+        <variable
+            name="view"
+            type="com.tebet.mojual.view.qualitycontainer.container.ContainerInputView" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/check_quality_add_container_item_id" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:visibility="@{view.data.checking == CheckStatus.CheckStatusCheck ? View.VISIBLE : View.GONE}">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/transparent"
+                    android:gravity="right"
+                    android:selectedItemPosition="@={view.data.selectedItem}"
+                    app:itemBinding="@{view.itemBinding}"
+                    app:itemDropDownLayout="@{R.layout.item_container_dropdown}"
+                    app:items="@{view.data.assignedContainers}" />
+
+                <ImageView
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:src="@drawable/signup_dropdown_btn" />
+            </LinearLayout>
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="@dimen/_4sdp"
+                android:text="@{view.data.customerData.assetCode}"
+                android:textSize="@dimen/_14ssp"
+                android:visibility="@{view.data.checking != CheckStatus.CheckStatusCheck ? View.VISIBLE : View.GONE}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/check_quality_add_container_weight_title" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:visibility="@{view.data.checking == CheckStatus.CheckStatusCheck ? View.VISIBLE : View.GONE}">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/transparent"
+                    android:gravity="right"
+                    android:selectedItemPosition="@={view.data.selectedWeight}"
+                    app:itemBinding="@{view.itemWeightBinding}"
+                    app:itemDropDownLayout="@{R.layout.item_container_weight_dropdown}"
+                    app:items="@{view.itemWeights}" />
+
+                <ImageView
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:src="@drawable/signup_dropdown_btn" />
+            </LinearLayout>
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="@dimen/_4sdp"
+                android:text="@{StringExtKt.toDisplayWeight(view.data.customerData.weight)}"
+                android:textSize="@dimen/_14ssp"
+                android:visibility="@{view.data.checking != CheckStatus.CheckStatusCheck ? View.VISIBLE : View.GONE}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:visibility="@{view.data.checking != CheckStatus.CheckStatusDone ? View.VISIBLE : View.GONE}"
+            android:orientation="horizontal">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/check_quality_add_container_time_title" />
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:padding="@dimen/_4sdp"
+                android:text="@{view.data.timeCountDown == null ? String.valueOf(view.data.time) : String.valueOf(view.data.timeCountDown)}"
+                android:textSize="@dimen/_14ssp" />
+
+            <ImageView
+                android:layout_width="@dimen/_8sdp"
+                android:layout_height="@dimen/_8sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:src="@drawable/signup_dropdown_btn"
+                android:visibility="@{view.data.checking == CheckStatus.CheckStatusCheck ? View.INVISIBLE : View.GONE}" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</layout>

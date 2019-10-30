@@ -1,32 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">Common</string>
-    <string name="general_button_ok" translatable="false">OK</string>
-    <string name="general_button_cancel" translatable="false">Cancel</string>
+    <string name="general_button_ok">OK</string>
+    <string name="general_button_cancel">Cancel</string>
 
-    <string name="dialog_cant_cancel_tit" translatable="false"><b>You can\'t cancel the class now</b></string>
     <string name="general_dialog_default_message" translatable="false">Are you sure?</string>
-
-    <string name="layout_cam_mic_allow" translatable="false">ALLOW CAM / MIC</string>
-    <string name="layout_cam_mic_go_settings" translatable="false">GO TO MY SETTINGS</string>
-    <string name="layout_package_allow_claim" translatable="false">Go to Settings, choose Permissions and enable cam / mic to join the classroom.</string>
-    <string name="layout_package_cam_mic_guide" translatable="false">You can turn off your cam / mic anytime inside the classroom.</string>
-    <string name="layout_package_cam_mic_block" translatable="false">Your Cam / Mic is blocked</string>
-    <string name="package_layout_cam_mic_turn_on" translatable="false">Please turn on your cam / mic to feel the better learning experiences.</string>
-    <string name="package_layout_btn_allow" translatable="false">allow cam / mic</string>
     <string name="package_restrict_permission" translatable="false">Please enable required permissions access so app can work properly.</string>
-    <string name="layout_allow_cam_mic_not_active" translatable="false">cam / mic is not active</string>
-    <string name="layout_cam_mic_not_active" translatable="false">cam / mic is not active</string>
 
-    <!-- Permission text for Corner -->
-    <string name="layout_mic_allow" translatable="false">ALLOW MIC</string>
-    <string name="layout_package_allow_claim_no_cam" translatable="false">Go to Settings, choose Permissions and enable mic to join the classroom.</string>
-    <string name="layout_package_mic_guide" translatable="false">You can turn off your mic anytime inside the classroom.</string>
-    <string name="layout_package_mic_block" translatable="false">Your Mic is blocked</string>
-    <string name="package_layout_mic_turn_on" translatable="false">Please turn on your mic to feel the better learning experiences.</string>
-    <string name="package_layout_btn_allow_no_cam" translatable="false">allow mic</string>
-    <string name="layout_allow_mic_not_active" translatable="false">Mic is not active</string>
-    <string name="layout_mic_not_active" translatable="false">Mic is not active</string>
-
-    <string name="cakap_chat_okay">OKAY</string>
-    <string name="cakap_chat_upgrade_to_premium">UPGRADE TO PREMIUM</string>
+    <string name="support_language_english">English</string>
+    <string name="support_language_bahasa">Bahasa Indonesia</string>
 </resources>

@@ -61,7 +61,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_toRightOf="@+id/title"
                     android:gravity="right"
-                    android:textColor="@color/md_red_50"
+                    android:textColor="@color/red_btn_dialog"
                     android:textStyle="bold"/>
         </RelativeLayout>
 

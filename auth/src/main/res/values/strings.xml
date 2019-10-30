@@ -4,4 +4,18 @@
 
     <string name="general_message_error">We are unable to connect right now, please try again later.</string>
 
+    <string name="facebook_app_id" translatable="false">1230019173833488</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN" translatable="false">7a28dfdbb6b3b972e8cddceea5z065a66</string>
+
+    <string name="login_otp_resend">Resend Code</string>
+    <string name="login_otp_verify_code_title">Complete verification by entering 6-digit code</string>
+    <string name="login_otp_verify_code">6-digit Code</string>
+
+    <string name="registration_term">By continue, you are agreeing to our &lt;a href="https://mo-jual.com/privacy-policy">Privacy Policy&lt;/a> and &lt;a href="https://mo-jual.com/terms-and-conditions">Term &amp; Condition&lt;/a></string>
+    <string name="login_otp_verify_buton_continue">CONTINUE</string>
+    <string name="login_otp_phone_hint">Tap Next to get an SMS confirmation from MoJual</string>
+    <string name="login_otp_phone_button_next">NEXT</string>
+    <string name="login_otp_title_enter_phone">Enter your phone number</string>
+    <string name="login_otp_title_enter_otp">Enter your code</string>
+    <string name="login_otp_invalid_otp">Invalid OTP</string>
 </resources>

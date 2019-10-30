@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit
 
 import co.sdk.auth.core.models.ApiCallBack
 import co.sdk.auth.core.models.GoogleTokenAuthResponse
+import co.sdk.auth.core.models.LoginConfiguration
 import co.sdk.auth.core.models.LoginException
 import co.sdk.auth.network.api.ApiService
 import co.sdk.auth.utils.Utility
@@ -137,7 +138,7 @@ class AuthGoogleMethod : AuthMethod, GoogleApiClient.OnConnectionFailedListener 
                                     } else {
                                         context?.let { it3 ->
                                             logout(it3, true, object : ApiCallBack<Any>() {
-                                                override fun onSuccess(responeCode: Int, response: Any?) {
+                                                override fun onSuccess(code: Int, response: Any?) {
                                                     if (callback != null) {
                                                         callback!!.onFailed(LoginException(502, Utility.instance.getString(
                                                             R.string.general_message_error)))
@@ -167,7 +168,7 @@ class AuthGoogleMethod : AuthMethod, GoogleApiClient.OnConnectionFailedListener 
 
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_LOGIN_GOOGLE) {
             if (resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)

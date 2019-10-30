@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.signup.step3.SignUpInfoStep3Model" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <com.tebet.mojual.common.view.AppEditTextLayout
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp">
+
+                <com.tebet.mojual.common.view.AppAutoCompleteEditText
+                    android:id="@+id/etBankName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_name"
+                    android:imeOptions="actionNext"
+                    android:nextFocusDown="@+id/etBankAccountNumber"
+                    android:text="@={viewModel.userProfile.bankName}"
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
+            </com.tebet.mojual.common.view.AppEditTextLayout>
+
+            <com.tebet.mojual.common.view.AppEditTextLayout
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp">
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:id="@+id/etBankAccountNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_account_number"
+                    android:text="@={viewModel.userProfile.bankAccountNumber}"
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
+            </com.tebet.mojual.common.view.AppEditTextLayout>
+
+            <com.tebet.mojual.common.view.AppEditTextLayout
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp">
+
+                <com.tebet.mojual.common.view.AppEditText
+                    android:id="@+id/etBankAccountName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_account_name"
+                    android:text="@={viewModel.userProfile.bankAccountName}"
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
+            </com.tebet.mojual.common.view.AppEditTextLayout>
+
+            <com.tebet.mojual.common.view.AppEditTextLayout
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp">
+
+                <com.tebet.mojual.common.view.AppAutoCompleteEditText
+                    android:id="@+id/etRegionName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/registration_step3_bank_region"
+                    android:text="@={viewModel.userProfile.bankRegionName}"
+                    app:onOkInSoftKeyboard="@{viewModel.onOkEditText}"
+                    app:validateEmpty="@{true}"
+                    app:validateTypeAutoDismiss="@{true}" />
+
+            </com.tebet.mojual.common.view.AppEditTextLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>

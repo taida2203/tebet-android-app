@@ -17,18 +17,18 @@ interface ApiService {
     Retrofit get annotation with our URL
     And our method that will return us the List of ContactList
     */
-    @POST("v2/auth/login")
+    @POST("authentication/login")
     fun login(@Body loginInput: LoginInput): Call<AuthJson<Token>>
 
     @POST("oauth2/v4/token")
     @FormUrlEncoded
-    fun convertGoogleToken(@Field("grant_type") grantType: String,
+    fun convertGoogleToken(@Field("grantType") grantType: String,
                            @Field("client_id") client_id: String,
                            @Field("client_secret") client_secret: String,
                            @Field("redirect_uri") redirect_uri: String?,
                            @Field("code") code: String,
                            @Field("id_token") id_token: String): Call<GoogleTokenAuthResponse>
 
-    @POST("v1/mobile/logout")
+    @POST("authentication/v2/logout")
     fun logout(@Body logoutInput: LogoutInput): Call<AuthJson<Any>>
 }

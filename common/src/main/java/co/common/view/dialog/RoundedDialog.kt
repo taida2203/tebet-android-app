@@ -25,7 +25,6 @@ open class RoundedDialog : DialogFragment, View.OnClickListener {
     private var btnMultipleLeft: View? = null
     private var btnMultipleRight: View? = null
     protected var btnMultipleSingle: View? = null
-    protected var btnClose: View? = null
     private var btnMultipleContainer: View? = null
     private var tvMultipleRight: TextView? = null
     private var tvMultipleLeft: TextView? = null
@@ -102,8 +101,6 @@ open class RoundedDialog : DialogFragment, View.OnClickListener {
         btnMultipleLeft?.setOnClickListener(this)
         btnMultipleRight = v?.findViewById(R.id.btn_multiple_right)
         btnMultipleRight?.setOnClickListener(this)
-        btnClose = v?.findViewById(R.id.dialogTopClose)
-        btnClose?.setOnClickListener(this)
 //        dialogTopClose?.setOnClickListener(this)
 
         btnMultipleContainer = v?.findViewById(R.id.btn_multiple_container)
@@ -147,13 +144,6 @@ open class RoundedDialog : DialogFragment, View.OnClickListener {
     override fun onClick(view: View) {
         val viewId = view.id
         when (viewId) {
-            R.id.dialogTopClose -> {
-                try {
-                    dismiss()
-                } catch (ignored: Exception) {
-                }
-            }
-
             R.id.btn_single -> {
                 try {
                     dismiss()
@@ -310,18 +300,4 @@ open class RoundedDialog : DialogFragment, View.OnClickListener {
         outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE")
         //        super.onSaveInstanceState(outState);
     }
-
-    fun hideOkButton() {
-        btn_single_container?.visibility = View.GONE
-    }
-    fun hideCloseButton() {
-        btnClose?.visibility = View.GONE
-    }
-    fun hideFirstButton() {
-        btn_multiple_left?.visibility = View.GONE
-    }
-    fun hideSecondButton() {
-        btn_multiple_right?.visibility = View.GONE
-    }
-
 }

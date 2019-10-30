@@ -1,0 +1,79 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.tebet.mojual.view.signup.step2.map.GoogleMapViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <ImageView
+            android:id="@+id/marker"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_mark"
+            android:visibility="@{viewModel.isShowTutorial ? View.GONE : View.VISIBLE}" />
+
+
+        <com.tebet.mojual.common.view.AppButton
+            android:id="@+id/btnSelectLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:text="@string/registration_step2_button_select_location" />
+
+        <com.tebet.mojual.common.view.AppEditTextLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp">
+
+            <com.tebet.mojual.common.view.AppEditText
+                android:id="@+id/edtSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:singleLine="false"
+                android:text="@{viewModel.selectedAddress}"
+                android:cursorVisible="false"
+                android:onClick="@{()->viewModel.onAddressSearchClick()}"
+                android:focusable="false" />
+        </com.tebet.mojual.common.view.AppEditTextLayout>
+
+        <LinearLayout
+            android:id="@+id/tutorial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_trans"
+            android:gravity="center"
+            android:onClick="@{()->viewModel.hideTutorial()}"
+            android:visibility="@{viewModel.isShowTutorial ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_80sdp"
+                android:layout_marginRight="@dimen/_80sdp"
+                android:src="@drawable/tap_to_select_btn" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

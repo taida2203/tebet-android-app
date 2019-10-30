@@ -1,11 +1,259 @@
 <resources>
-    <string name="app_name">MoJualApp</string>
-    <string name="notification_title_older">Older</string>
-    <string name="activity_noti_title">Notifications</string>
+    <string name="app_name">MoJual</string>
+
+    <string name="general_btn_next">Next</string>
+    <string name="general_btn_back">Back</string>
+    <string name="general_btn_no">NO</string>
+    <string name="general_btn_yes">YES</string>
+    <string name="general_error">Something went wrong, please restart and try again !!</string>
+    <string name="general_error_feature_disabled">this feature will coming soon !</string>
+    <string name="general_error_feature_permission">you don\'t have permission to access this feature yet</string>
+    <string name="general_error_validation_fill_all_field">Fill all required field !!</string>
+
     <!--Month year Picker-->
+    <string name="login_btn_login">Sign In with Phone Number</string>
+    <string name="login_btn_register">Register</string>
+    <string name="login_btn_forgot_password">Forgot password</string>
+    <string name="login_password_phone">Phone</string>
+
+    <string name="registration_title">Sign Up</string>
+    <string name="registration_demographic">Demographic</string>
+    <string name="registration_contact">Contact</string>
+    <string name="registration_payment">Payment</string>
+    <string name="registration_step1_selfie_tutorial">Your selfie photo, please capture front of your face.</string>
+    <string name="registration_step1_full_name">Full Name</string>
+    <string name="registration_step1_date_of_birth">Date of Birth</string>
+    <string name="registration_step1_ktp_number">KTP Number</string>
+    <string name="registration_step1_upload_ktp_photo">Upload KTP Photo</string>
+    <string name="registration_step1_error_name">Invalid name</string>
+    <string name="registration_step2_email">Email</string>
+    <string name="registration_step2_email_optional">Email (Optional)</string>
+    <string name="registration_step2_address">Address</string>
+    <string name="registration_step2_kelurahan">Kelurahan</string>
+    <string name="registration_step2_kecamatan">Kecamatan</string>
+    <string name="registration_step2_rt_rw">RT/RW</string>
+    <string name="registration_step2_city">City</string>
+    <string name="registration_step2_postal_code">Postal Code</string>
+    <string name="registration_step2_google_map_title">Select location on Map</string>
+    <string name="registration_step2_choose_on_map">Choose on Map</string>
+    <string name="registration_step2_domicile_address">DOMICILE ADDRESS</string>
+    <string name="registration_step2_pickup_address">PICKUP ADDRESS</string>
+    <string name="registration_step2_copy_domicle">Copy Domicile</string>
+    <string name="registration_step2_button_select_location">Select Location</string>
+    <string name="registration_step3_bank_name">Bank Name</string>
+    <string name="registration_step3_bank_account_number">Bank account number</string>
+    <string name="registration_step3_bank_account_name">Bank account name</string>
+    <string name="registration_step3_bank_region">Bank region</string>
+
+    <string name="login_password_title">Login with phone number</string>
+    <string name="login_password_forgot">Forgot password?</string>
+    <string name="login_password_login">Login</string>
+
+    <string name="sign_up_password_title">Sign Up</string>
+    <string name="forgot_password_title">Input new password</string>
+    <string name="forgot_password_hint">Password</string>
+    <string name="forgot_password_input_password_hint">Input your password</string>
+    <string name="forgot_password_re_password_hint">Retype Password</string>
+
+    <string name="forgot_password_error_length">Password must at least 6 char</string>
+    <string name="forgot_password_error_not_match">Confirm password not match</string>
+
+
+    <string name="home_verify_warning">Your account is in verify process. MOJUAL team will contact you soon</string>
+    <string name="home_verify_rejected">Your account is REJECTED. Please contact MOJUAL team for detail</string>
+    <string name="home_verify_blocked">Your account is DISABLE. Please contact MOJUAL team for detail</string>
+    <string name="home_navigation_home">Home</string>
+    <string name="home_navigation_inbox">Inbox</string>
+    <string name="home_navigation_history">History</string>
+    <string name="home_menu_sell_now">Sell</string>
+    <string name="home_menu_check_quality">Check Quality</string>
+    <string name="home_menu_borrow">Borrow</string>
+    <string name="home_menu_tips">Tips</string>
+    <string name="home_bonus">BONUS</string>
+    <string name="home_rating">YOUR RATING</string>
+
+    <string name="sale_button_submit">SUBMIT</string>
+    <string name="sale_estimated_price">Estimate Order Amount</string>
+    <string name="sale_quantity">Select Quantity</string>
+    <string name="sale_selected_date">Select Date</string>
+    <string name="sale_select_title">Select date to sell and the quantity</string>
+    <string name="sale_select_quantity_title">Tab to select quantity</string>
+    <string name="sale_select_future_date_title">Tab to select date to sell</string>
+    <string name="sale_select_future_date_date">DATE</string>
+    <string name="sale_select_future_date_price">PRICE</string>
+    <string name="sale_select_future_date_price_kg">%1$s / Kg</string>
+    <string name="sale_select_future_date_today">Now</string>
+    <string name="sale_asset_empty">Can\'t find list asset!!, try later</string>
+
+    <string name="sale_detail_title_id">ID</string>
+    <string name="sale_detail_title_date">Date</string>
+    <string name="sale_detail_title_price">Price</string>
+    <string name="sale_detail_title_quantity">Quantity</string>
+    <string name="sale_detail_title_total_price">Total Price</string>
+    <string name="sale_detail_submit">CREATE NEW ORDER</string>
+    <string name="sale_detail_container">%1$s Container</string>
+    <string name="sale_detail_containers">%1$s Containers</string>
+
+
     <string name="month_year_picker_date">Date</string>
     <string name="month_year_picker_month">Month</string>
     <string name="month_year_picker_year">Year</string>
     <string name="month_year_picker_select_btn">SELECT</string>
-    <string name="loading">Loading</string>
+    <string name="quality_check_error_select_order">You have selected at least 1 order !!</string>
+    <string name="quality_add_container_title">Check Quality</string>
+
+    <string name="check_quality_add_new_order">CREATE MORE ORDER</string>
+
+    <string name="check_quality_add_container_title">#%1$s</string>
+    <string name="check_quality_add_container_order">Order %1$s</string>
+    <string name="check_quality_add_container_btn_check">Start checking</string>
+    <string name="check_quality_add_container_btn_cancel">Cancel checking</string>
+    <string name="check_quality_add_container_add_new_container">ADD %1$s OF %2$s CONTAINER</string>
+    <string name="check_quality_add_container_add_new_containers">ADD %1$s OF %2$s CONTAINERS</string>
+    <string name="check_quality_add_container_turn_off_iot">Please turn of IoT device first to save Device battery</string>
+    <string name="check_quality_tip1">Dont know how to check?</string>
+    <string name="check_quality_tip2">See Tips</string>
+    <string name="check_quality_add_container_iot">IOT status:</string>
+    <string name="check_quality_add_container_iot_connected">Connected</string>
+    <string name="check_quality_add_container_iot_not_connect">Not connect</string>
+    <string name="check_quality_add_container_iot_connecting">Connecting...</string>
+    <string name="check_quality_add_container_iot_not_turn_off">Turn off</string>
+    <string name="check_quality_add_container_button_retry">RETRY</string>
+    <string name="check_quality_add_container_button_manual">MANUAL</string>
+    <string name="check_quality_add_container_gps_warning">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="check_quality_add_container_permission_warning">Please provide required permission</string>
+    <string name="check_quality_add_container_no_available_container">You don\'t have any available containers !!</string>
+    <string name="check_quality_add_container_block_while_checking">Please wait checking complete or cancel current checking to add more !!</string>
+    <string name="check_quality_add_container_max_order_not_allowed">Number of container cannot exceed %1$s. Please update and try again</string>
+    <string name="check_quality_add_container_item_id">ID</string>
+    <string name="check_quality_add_container_weight_title">Weight (KG)</string>
+    <string name="check_quality_add_container_time_title">Timer (Seconds)</string>
+
+    <string name="order_detail_title">Confirmation</string>
+    <string name="order_detail_hint">Your order are checked. Please choose what container to sell.</string>
+    <string name="order_detail_button_submit">APPROVE</string>
+    <string name="order_detail_button_reject">REJECT</string>
+    <string name="order_detail_total_amount">Total Amount</string>
+    <string name="order_detail_delivery_bonus">Award - Delivery</string>
+    <string name="order_detail_product_amount">Product Amount</string>
+    <string name="order_detail_release_bonus">Release Bonus</string>
+    <string name="order_detail_additional_award">Additional Award</string>
+    <string name="order_detail_point">Points</string>
+    <string name="order_detail_volume_bonus">Award - Volume</string>
+    <string name="order_detail_order_id">Order ID</string>
+    <string name="order_detail_weight">Weight</string>
+    <string name="order_detail_price">Price</string>
+    <string name="order_detail_amount">Amount</string>
+    <string name="order_detail_content">Eugenol Content</string>
+    <string name="order_detail_dialog_reject">Are you sure to reject all container?</string>
+    <string name="order_detail_dialog_confirm">Are you sure to sell container %1$s?</string>
+    <string name="order_detail_button_approve">APPROVE</string>
+    <string name="order_detail_status">Status</string>
+    <string name="order_detail_message">Message</string>
+
+    <string name="order_reject_title">Let Us Know</string>
+    <string name="order_reject_detail">Why do you reject? let us know by answer some questions below</string>
+    <string name="order_reject_quest_1">Price of raw material (leafs)?</string>
+    <string name="order_reject_quest_2">How much is your production yield?</string>
+    <string name="order_reject_buttom_confirm">CONFIRM TO REJECT</string>
+
+    <string name="history_title">History</string>
+    <string name="history_filter">FILTER BY</string>
+    <string name="history_container">%1$s Container</string>
+    <string name="history_containers">%1$s Containers</string>
+
+    <string name="history_search_title">Advanced Search</string>
+
+    <string name="message_title">Notification</string>
+    <string name="message_today">Today</string>
+    <string name="message_yesterday">Yesterday</string>
+
+    <string name="bank_update_title">Update Bank</string>
+
+    <string name="profile_button_logout">LOG OUT</string>
+
+    <string name="reject_hint_your_answer">Your answer</string>
+    <string name="bank_update_button_update">UPDATE</string>
+    <string name="bank_update_notice">Money will be transfered to your account. Please input your bank account information.</string>
+
+    <string name="bank_confirm_title">Bank confirm</string>
+    <string name="bank_confirm_notice">Money will be transfered to your account. Please confirm your bank account information.</string>
+    <string name="bank_confirm_button_confirm">CONFIRM</string>
+    <string name="bank_confirm_button_update">UPDATE</string>
+    <string name="bank_confirm_bank_name">Bank name:</string>
+    <string name="bank_confirm_bank_acc_number">Bank account number:</string>
+    <string name="bank_confirm_bank_acc_name">Bank account name:</string>
+    <string name="bank_confirm_bank_region">Bank region:</string>
+
+    <string name="profile_telephone">Telephone</string>
+    <string name="profile_domicle_address">Domicle Address</string>
+    <string name="profile_basic_information">Basic information</string>
+    <string name="profile_pickup_address">Pickup Address</string>
+    <string name="profile_bank_account">Bank Account</string>
+    <string name="profile_security">Security</string>
+    <string name="profile_set_pin">Set Pin</string>
+    <string name="profile_remove_pin">Remove Pin</string>
+    <string name="profile_change_password">Change Password</string>
+    <string name="profile_other">Other</string>
+    <string name="profile_contact_mojual">Contact MOJUAL</string>
+    <string name="profile_terms">Terms &amp; Conditions</string>
+    <string name="profile_privacy_policy">Privacy Policy</string>
+    <string name="profile_faq">Faq / Tips</string>
+    <string name="profile_logout">Logout</string>
+    <string name="profile_version">Version</string>
+    <string name="profile_language">Language</string>
+    <string name="profile_bonus">Bonus</string>
+
+    <string name="change_pass_title">Change password</string>
+
+    <string name="history_advance_order">ORDER STATUS</string>
+    <string name="history_advance_hint_order">In Progress</string>
+    <string name="history_advance_from_date">FROM DATE</string>
+    <string name="history_advance_to_date">TO DATE</string>
+    <string name="history_advance_id">ORDER ID</string>
+    <string name="history_advance_sort">SORT BY</string>
+    <string name="history_advance_sort_type">SORT TYPE</string>
+    <string name="history_advance_hint_sort">Status</string>
+    <string name="history_advance_button_search">SEARCH</string>
+    <string name="history_advance_hint_date">15 Jul 2019</string>
+    <string name="history_advance_status_all">All</string>
+    <string name="history_advance_status_open">Open</string>
+    <string name="history_advance_status_closed">Closed</string>
+    <string name="history_advance_status_rejected">Rejected</string>
+    <string name="history_advance_status_order_id">Order Code</string>
+    <string name="history_advance_status_sale_date">Sale Date</string>
+    <string name="history_advance_status_status">Status</string>
+    <string name="history_advance_status_amount">Amount</string>
+    <string name="history_advance_status_desc">DESC</string>
+    <string name="history_advance_status_asc">ASC</string>
+
+    <string name="quality_help_title">Help</string>
+
+    <string name="pin_message_warn">You will be logout from Monjual after 5 attempts. Logout to reset PIN</string>
+    <string name="pin_enter">Enter pin code</string>
+    <string name="pin_message_not_matched">PIN not matched</string>
+    <string name="pin_message_wrong">Wrong PIN</string>
+    <string name="pin_message_remove">Do you want to remove PIN code ?</string>
+    <string name="pin_confirm">Confirm PIN code</string>
+    <string name="pin_exit">EXIT</string>
+    <string name="pin_prompt">Do you want to protect your data using PIN code ?</string>
+    <string name="pin_later">Later</string>
+    <string name="pin_set">Set PIN</string>
+    <string name="profile_asset">Asset</string>
+    <string name="profile_my_asset">My Asset</string>
+
+    <string name="error_message_empty_validation">This field can\'t be empty</string>
+    <string name="order_status_open">Open</string>
+    <string name="order_status_closed">Closed</string>
+    <string name="order_status_rejected">Rejected</string>
+    <string name="container_status_paid">Paid</string>
+    <string name="container_status_sale_confirmed">Sale Confirmed</string>
+    <string name="container_status_final_price_offered">Final Price Offered</string>
+    <string name="container_status_returned">Returned</string>
+    <string name="container_status_sale_rejected">Sale Rejected</string>
+    <string name="container_status_checking">Checking</string>
+    <string name="container_status_sale_requested">Sale Requested</string>
+    <string name="container_status_initial_price_rejected">Initial Price Rejected</string>
+    <string name="container_status_quality_rejected">Quality Rejected</string>
+    <string name="container_status_initial_price_offered">Initial Price Offered</string>
 </resources>
