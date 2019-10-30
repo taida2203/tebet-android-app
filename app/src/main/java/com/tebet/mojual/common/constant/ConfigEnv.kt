@@ -40,8 +40,6 @@ object ConfigEnv {
 
                 apiRoot = "https://dev.api.mo-jual.com"
                 isAnalyticEnabled = true
-                consumerKey = "android_student_cakap"
-                consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
                 googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
             "local" -> {
@@ -56,10 +54,8 @@ object ConfigEnv {
             "production" -> {
                 environment = Environment.PRODUCTION
 
-                apiRoot = "https://dev.api.mo-jual.com"
+                apiRoot = "https://api.mo-jual.com"
                 isAnalyticEnabled = true
-                consumerKey = "android_student_cakap"
-                consumerSecret = "e10adc3949ba59abbe56e057f20f883e"
                 googleApiKey = "AIzaSyDAZpY0LoxIVYsg3b1YQ5-cEJW8EgYfB98"
             }
         }

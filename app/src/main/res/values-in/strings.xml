@@ -156,7 +156,7 @@
     <string name="order_reject_quest_2">Berapa persen (%) rendemannya?</string>
     <string name="order_reject_buttom_confirm">Penegasan ulang bahwa anda tidak jadi menjual kepada kami</string>
 
-    <string name="history_title">Riwayat transaksi</string>
+    <string name="history_title">Transaksi</string>
     <string name="history_filter">Pilih berdasarkan</string>
     <string name="history_container">%1$s Container</string>
     <string name="history_containers">%1$s Containers</string>

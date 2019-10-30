@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -161,7 +162,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
     }
 
     override fun captureAvatar() {
-        dispatchTakePictureIntent(REQUEST_TAKE_AVATAR)
+        dispatchTakePictureIntent(REQUEST_TAKE_AVATAR, true)
     }
 
     override fun captureEKTP() {
@@ -188,9 +189,19 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
     private val REQUEST_TAKE_AVATAR = 1
     private val REQUEST_TAKE_EKTP = 2
 
-    private fun dispatchTakePictureIntent(requestCode: Int) {
+    private fun dispatchTakePictureIntent(requestCode: Int, isFront: Boolean = false) {
         currentPhotoPath = ""
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+        val mIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (isFront) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                intent.putExtra("android.intent.extras.CAMERA_FACING", android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT)
+                intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
+                intent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
+            } else {
+                intent.putExtra("android.intent.extras.CAMERA_FACING", 1)
+            }
+        }
+        mIntent.also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(packageManager)?.also {
                 // Create the File where the photo should go

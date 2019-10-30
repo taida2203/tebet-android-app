@@ -10,6 +10,7 @@ import android.net.*
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.text.Html
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
@@ -29,6 +30,7 @@ import com.tebet.mojual.view.help.QualityHelp
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_quality.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
@@ -76,6 +78,8 @@ class QualityAddContainer :
             viewModel.order.set(it as Order)
             if (!viewModel.order.get()?.orderCode.isNullOrBlank()) title = String.format(getString(R.string.check_quality_add_container_order), viewModel.order.get()?.orderCode)
         }
+        val textConcat = getString(R.string.check_quality_tip1) + " <font color='#49802D'>" + getString(R.string.check_quality_tip2) + "</font>"
+        tipText.text = Html.fromHtml(textConcat)
         viewModel.loadData()
 
         val react = ReactiveNetwork
