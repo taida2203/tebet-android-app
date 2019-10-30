@@ -31,7 +31,7 @@ class QualityFragment : BaseFragment<FragmentQualityBinding, QualityViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.navigator = this
-        var textConcat = getString(R.string.check_quality_tip1) + " <font color='#49802D'>" + getString(R.string.check_quality_tip2) + "</font>"
+        val textConcat = getString(R.string.check_quality_tip1) + " <font color='#49802D'>" + getString(R.string.check_quality_tip2) + "</font>"
         tipText.text = Html.fromHtml(textConcat)
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()

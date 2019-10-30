@@ -49,20 +49,10 @@
                 android:id="@+id/tipText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/check_quality_tip1"
                 android:onClick="@{()-> viewModel.onTipsClick()}"
+                android:text="@string/check_quality_tip1"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
-
-<!--            <com.tebet.mojual.common.view.AppTextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="@dimen/_4sdp"-->
-<!--                android:onClick="@{()-> viewModel.onTipsClick()}"-->
-<!--                android:text="@string/check_quality_tip2"-->
-<!--                android:textColor="@color/dark_green"-->
-<!--                android:textSize="@dimen/_14ssp"-->
-<!--                android:textStyle="bold" />-->
         </LinearLayout>
     </LinearLayout>
 
