@@ -137,6 +137,7 @@ data class OrderContainer(
             return when (state) {
                 ContainerOrderState.QUALITY_REJECTED,
                 ContainerOrderState.INITIAL_PRICE_REJECTED,
+                ContainerOrderState.RETURNED,
                 ContainerOrderState.SALE_REJECTED -> true
                 else -> false
             }
