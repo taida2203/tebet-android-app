@@ -18,7 +18,7 @@ stages:
   - build
   - deploy
 
-assembleProductionRelease:
+assembleDevRelease:
   stage: build
   tags:
     - dev
@@ -37,14 +37,10 @@ assembleProductionRelease:
     - set +o pipefail
     - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
     - set -o pipefail
-    - ./gradlew assembleProductionRelease
+    - ./gradlew assembleDevRelease
   artifacts:
     paths:
-    - app/build/outputs/
-  when: manual
-  allow_failure: false
-  only:
-    - tags
+      - app/build/outputs/
 
 deploy:
   stage: deploy
@@ -57,7 +53,5 @@ deploy:
     - chmod 700 ~/.ssh
     - ssh-keyscan -H dev.api.mo-jual.com >> ~/.ssh/known_hosts
     - chmod 600 tebet-devops
-    - ssh -i tebet-devops docker@dev.api.mo-jual.com "rm -rf cd /var/www/tebet/android/prod/*"
-    - scp -i tebet-devops app/build/outputs/apk/dev/release/app-dev-release.apk docker@dev.api.mo-jual.com:/var/www/tebet/android/prod
-  only:
-    - tags
+    - ssh -i tebet-devops docker@dev.api.mo-jual.com "rm -rf cd /var/www/tebet/android/dev/*"
+    - scp -i tebet-devops app/build/outputs/apk/dev/release/app-dev-release.apk docker@dev.api.mo-jual.com:/var/www/tebet/android/dev
