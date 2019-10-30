@@ -63,7 +63,7 @@
     <string name="home_verify_blocked">Akun anda tidak tersedia. Silahkan hubungi Team Mo-Jual untuk lebih jelasnya.</string>
     <string name="home_navigation_home">Beranda</string>
     <string name="home_navigation_inbox">Inbox</string>
-    <string name="home_navigation_history">Riwayat Transaksi</string>
+    <string name="home_navigation_history">Transaksi</string>
     <string name="home_menu_sell_now">Jual sekarang</string>
     <string name="home_menu_check_quality">Cek kualitas</string>
     <string name="home_menu_borrow">Pinjam</string>
