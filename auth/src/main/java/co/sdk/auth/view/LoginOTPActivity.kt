@@ -100,7 +100,7 @@ class LoginOTPActivity : AppCompatActivity() {
                 openFragment(currentFragment as InputVerifyCodeFragment, R.id.placeHolderChild)
             }
         }
-
+        FirebaseAuth.getInstance().useAppLanguage()
         PhoneAuthProvider.getInstance().verifyPhoneNumber(phone, // Phone number to verify
             InputVerifyCodeFragment.TIMEOUT, // Timeout duration
             TimeUnit.MILLISECONDS, // Unit of timeout

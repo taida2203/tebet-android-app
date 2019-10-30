@@ -47,7 +47,10 @@ abstract class BaseViewModel<N>(
         this.isEmpty.set(isEmpty)
     }
 
-    protected fun handleError(error: NetworkError) {
+    protected fun handleError(error: NetworkError, ignoreForceLogout : Boolean = false) {
+        if (ignoreForceLogout) {
+            error.errorCode = 403
+        }
         baseErrorHandlerData.postValue(error)
     }
 

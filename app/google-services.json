@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "517402143202-75p4r3lhc7k2fs1csg8sqgl7cbt3jnqn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tebet.mojual",
+            "certificate_hash": "2770927100cb8acdb2f248fb23fb82b83226b370"
+          }
+        },
+        {
+          "client_id": "517402143202-9p6jkppm7u9gkn9i6u68um6dqd0jh1gl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tebet.mojual",
+            "certificate_hash": "55d4e0d8e9ee2fd87676fe188322724c46801186"
+          }
+        },
+        {
           "client_id": "517402143202-g586729bdeapr01676sovn01g968njd5.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,6 +1,7 @@
 package com.tebet.mojual.data.remote
 
 import co.sdk.auth.core.models.AuthJson
+import co.sdk.auth.core.models.LoginException
 import com.tebet.mojual.data.models.NetworkError
 import io.reactivex.observers.DisposableObserver
 import okhttp3.ResponseBody
@@ -25,6 +26,7 @@ abstract class CallbackWrapper<T> : DisposableObserver<AuthJson<T>>() {
             }
             is SocketTimeoutException -> onFailure(NetworkError(message = "Time out"))
             is IOException -> onFailure(NetworkError(message = "Network error"))
+            is LoginException -> onFailure(NetworkError(e.errorCode, e.errorMessage))
             else -> onFailure(NetworkError(message = e.message))
         }
     }

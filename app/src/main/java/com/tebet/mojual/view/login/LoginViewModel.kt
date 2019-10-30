@@ -52,7 +52,7 @@ class LoginViewModel(
 
                             override fun onFailure(error: NetworkError) {
                                 navigator.showLoading(false)
-                                if (error.errorCode != 500 && error.errorCode != 401) handleError(error)
+                                if (error.errorCode != 502) handleError(error)
                             }
                         })
                 )
@@ -112,7 +112,7 @@ class LoginViewModel(
 
                         override fun onFailure(error: NetworkError) {
                             navigator.showLoading(false)
-                            handleError(error)
+                            if (error.errorCode != 502) handleError(error, true)
                         }
                     })
             )

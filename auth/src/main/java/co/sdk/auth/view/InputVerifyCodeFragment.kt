@@ -119,7 +119,6 @@ class InputVerifyCodeFragment : Fragment(), IFragmentAction {
             }
             if (it.length >= 6) {
                 hideKeyboard()
-                handler.removeCallbacks(runnable)
                 (activity as LoginOTPActivity).verifyCode(et_code.text.toString())
             }
         }

@@ -93,7 +93,7 @@ class LoginWithPasswordViewModel(
 
                         override fun onFailure(error: NetworkError) {
                             navigator.showLoading(false)
-                            handleError(error)
+                            handleError(error, true)
                         }
                     })
             )
@@ -145,7 +145,7 @@ class LoginWithPasswordViewModel(
 
                             override fun onFailure(error: NetworkError) {
                                 navigator.showLoading(false)
-                                handleError(error)
+                                handleError(error, true)
                             }
                         })
                 )
