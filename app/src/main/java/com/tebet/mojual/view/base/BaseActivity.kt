@@ -354,7 +354,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             )
             exception.errorCode == 502 -> Unit
             else -> {
-                if (exception.errorMessage?.contains("LoginConfiguration") == true) return
+                if (exception.errorMessage?.contains("cannot be cast to") == true) return
                 show(if (exception.errorMessage?.isNotEmpty() == true) exception.errorMessage!! else getString(
                         R.string.general_error
                     ))

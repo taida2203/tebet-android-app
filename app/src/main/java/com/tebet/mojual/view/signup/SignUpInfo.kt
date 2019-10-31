@@ -110,6 +110,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
     }
 
     override fun onBackPressed() {
+        val previousStep = screenStep
         when (screenStep) {
             SCREEN_STEP.STEP_2 ->
                 screenStep = SCREEN_STEP.STEP_1
@@ -117,7 +118,7 @@ class SignUpInfo : BaseActivity<ActivitySignUpInfoBinding, SignUpInfoViewModel>(
                 screenStep = SCREEN_STEP.STEP_2
             else -> SCREEN_STEP.STEP_1
         }
-        refreshScreenStep()
+        if (screenStep != previousStep) refreshScreenStep()
     }
 
     private fun refreshScreenStep() {
