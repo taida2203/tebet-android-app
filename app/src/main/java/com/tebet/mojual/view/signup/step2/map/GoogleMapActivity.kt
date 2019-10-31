@@ -231,8 +231,7 @@ class GoogleMapActivity : BaseActivity<ActivitySignUpGoogleMapBinding, GoogleMap
         // Start the autocomplete intent.
         val intent = Autocomplete.IntentBuilder(
             AutocompleteActivityMode.FULLSCREEN, fields
-        ).setCountry("NG") //NIGERIA
-            .build(this)
+        ).build(this)
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
 // Create a new Places client instance.
 //            val placesClient = createClient(this)
