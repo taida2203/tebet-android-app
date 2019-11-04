@@ -36,6 +36,7 @@ class Login : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigat
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        hideKeyboard()
         AuthSdk.instance.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             LOGIN_PASSWORD -> if (resultCode == Activity.RESULT_OK) finish()

@@ -33,9 +33,8 @@ class LoginViewModel(
                         activity,
                         AuthGooglePhoneLoginMethod(),
                         LoginConfiguration(logoutWhileExpired = false)
-                    )
+                    ).observeOn(schedulerProvider.ui())
                         .doOnError {
-                            navigator.showLoading(false)
                             registerNewUser()
                         }
                         .concatMap { dataManager.getProfile() }
@@ -51,8 +50,8 @@ class LoginViewModel(
                             }
 
                             override fun onFailure(error: NetworkError) {
-                                navigator.showLoading(false)
-                                if (error.errorCode != 500 && error.errorCode != 401) handleError(error, true)
+//                                navigator.showLoading(false)
+                                if (error.errorCode != 502 && error.errorCode != 401) handleError(error, true)
                             }
                         })
                 )
@@ -83,7 +82,7 @@ class LoginViewModel(
         navigator.activity()?.let {
             navigator.showLoading(true)
             compositeDisposable.add(
-                Observable.just(true).delay(50, TimeUnit.MILLISECONDS)
+                Observable.just(true)
                     .concatMap {
                         dataManager.register(
                             LoginConfiguration(
@@ -99,8 +98,8 @@ class LoginViewModel(
                             LoginConfiguration(logoutWhileExpired = false)
                         )
                     }.concatMap { dataManager.getProfile() }
-                    .subscribeWith(object :
-                        CallbackWrapper<UserProfile>() {
+                    .observeOn(schedulerProvider.ui())
+                    .subscribeWith(object : CallbackWrapper<UserProfile>() {
                         override fun onSuccess(dataResponse: UserProfile) {
                             navigator.showLoading(false)
                             when (dataResponse.statusEnum) {
