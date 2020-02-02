@@ -7,6 +7,9 @@ import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import androidx.databinding.library.baseAdapters.BR
+import co.common.view.dialog.RoundedDialog
+import co.common.view.dialog.RoundedDialogButton
+import co.common.view.dialog.RoundedOkDialog
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Price
@@ -54,6 +57,14 @@ open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), Sa
 
     override fun validate(): Boolean {
         return validator.validate()
+    }
+
+    override fun showEmptyAsset() {
+        activity?.supportFragmentManager?.let {
+            RoundedDialog(getString(R.string.sale_asset_empty))
+                .addFirstButton(RoundedDialogButton(getString(R.string.sale_asset_empty_button)))
+                .show(it, getString(R.string.sale_asset_empty))
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

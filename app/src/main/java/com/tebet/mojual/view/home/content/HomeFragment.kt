@@ -3,6 +3,8 @@ package com.tebet.mojual.view.home.content
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.library.baseAdapters.BR
+import co.common.view.dialog.RoundedDialog
+import co.common.view.dialog.RoundedDialogButton
 import com.tebet.mojual.R
 import com.tebet.mojual.databinding.FragmentHomeBinding
 import com.tebet.mojual.view.base.BaseFragment
@@ -34,6 +36,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeContentViewModel>(), 
 
     override fun openTipsScreen() {
         (activity as Home).showTipScreen()
+    }
+
+    override fun showFeatureDisabled() {
+        activity?.supportFragmentManager?.let {
+            RoundedDialog(getString(R.string.general_error_feature_disabled))
+                .addFirstButton(RoundedDialogButton(getString(R.string.sale_asset_empty_button)))
+                .show(it, getString(R.string.general_error_feature_disabled))
+        }
     }
 
 }

@@ -81,7 +81,7 @@
                         app:srb_isIndicator="true"
                         app:srb_starCornerRadius="7.5"
                         app:srb_numberOfStars="5"
-                        app:srb_starBackgroundColor="@color/down_grey_color"
+                        app:srb_starBackgroundColor="@color/grey"
                         app:srb_starSize="@dimen/_17sdp"
                         app:srb_stepSize="0.5" />
                 </LinearLayout>

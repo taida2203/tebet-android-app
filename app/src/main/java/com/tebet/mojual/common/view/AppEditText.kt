@@ -2,7 +2,6 @@ package com.tebet.mojual.common.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.tebet.mojual.R

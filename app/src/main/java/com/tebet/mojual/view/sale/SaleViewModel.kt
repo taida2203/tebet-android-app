@@ -112,7 +112,7 @@ class SaleViewModel(
 
     fun openSelectQuantityScreen() {
         if (assets.isNullOrEmpty()) {
-            navigator.show(R.string.sale_asset_empty)
+            navigator.showEmptyAsset()
             loadData()
             return
         }

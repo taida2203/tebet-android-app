@@ -34,7 +34,7 @@ class HomeContentViewModel(
     }
 
     fun onBorrowClick() {
-        navigator.show(R.string.general_error_feature_disabled)
+        navigator.showFeatureDisabled()
     }
 
     fun onTipsClick() {

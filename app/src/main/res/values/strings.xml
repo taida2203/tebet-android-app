@@ -69,8 +69,8 @@
     <string name="home_menu_check_quality">Check Quality</string>
     <string name="home_menu_borrow">Borrow</string>
     <string name="home_menu_tips">Tips</string>
-    <string name="home_bonus">BONUS</string>
-    <string name="home_rating">YOUR RATING</string>
+    <string name="home_bonus">Bonus</string>
+    <string name="home_rating">Rating</string>
 
     <string name="sale_button_submit">SUBMIT</string>
     <string name="sale_estimated_price">Estimate Order Amount</string>
@@ -79,11 +79,12 @@
     <string name="sale_select_title">Select date to sell and the quantity</string>
     <string name="sale_select_quantity_title">Tab to select quantity</string>
     <string name="sale_select_future_date_title">Tab to select date to sell</string>
-    <string name="sale_select_future_date_date">DATE</string>
-    <string name="sale_select_future_date_price">PRICE</string>
-    <string name="sale_select_future_date_price_kg">%1$s / Kg</string>
+    <string name="sale_select_future_date_date">Date</string>
+    <string name="sale_select_future_date_price">Price per kg</string>
+    <string name="sale_select_future_date_price_kg">%1$s</string>
     <string name="sale_select_future_date_today">Now</string>
     <string name="sale_asset_empty">Can\'t find list asset!!, try later</string>
+    <string name="sale_asset_empty_button">Kembali ke beranda</string>
 
     <string name="sale_detail_title_id">ID</string>
     <string name="sale_detail_title_date">Date</string>

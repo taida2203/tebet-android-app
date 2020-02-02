@@ -6,4 +6,5 @@ interface HomeContentNavigator : BaseActivityNavigator {
     fun openSellScreen()
     fun openQualityCheckScreen()
     fun openTipsScreen()
+    fun showFeatureDisabled()
 }

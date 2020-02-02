@@ -11,11 +11,11 @@ import kotlin.math.roundToInt
 
 fun Double?.toDisplayMoney(): String {
     if (this == null || this <= 0) {
-        return "Rp. 0"
+        return "Rp 0"
     }
     val formatter = DecimalFormat("#,###")
     val formattedNumber = formatter.format(this).replace(",", ".")
-    return "Rp. $formattedNumber"
+    return "Rp $formattedNumber"
 }
 
 fun Float?.toDisplayMoney(): String {
@@ -23,7 +23,7 @@ fun Float?.toDisplayMoney(): String {
 }
 
 fun Double?.toDisplayPoint(): String {
-    return toDisplayMoney().replace("Rp. ", "") + " " + Utility.getInstance().getString(R.string.order_detail_point)
+    return toDisplayMoney().replace("Rp ", "") + " " + Utility.getInstance().getString(R.string.order_detail_point)
 }
 
 fun Float?.toDisplayPoint(): String {

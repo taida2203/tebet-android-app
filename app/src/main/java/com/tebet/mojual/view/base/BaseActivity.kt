@@ -57,7 +57,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     var viewDataBinding: T? = null
         private set
 
-    protected var baseBinding: ActivityBaseBinding? =null
+    protected var baseBinding: ActivityBaseBinding? = null
 
     @Inject
     lateinit var factory: ViewModelProviderFactory
