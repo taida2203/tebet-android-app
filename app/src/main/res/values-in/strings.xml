@@ -74,6 +74,9 @@
     <string name="sale_button_submit">Kirim</string>
     <string name="sale_estimated_price">Perkiraan harga</string>
     <string name="sale_quantity">Pilih jumlah</string>
+    <string name="sale_container_type">Pilih kemasan</string>
+    <string name="container_type_can">Jeriken</string>
+    <string name="container_type_drum">Drum</string>
     <string name="sale_selected_date">Pilih tanggal</string>
     <string name="sale_select_title">Pilih jumlah barang dan tanggal penjualan</string>
     <string name="sale_select_quantity_title">Pilih Quantity</string>

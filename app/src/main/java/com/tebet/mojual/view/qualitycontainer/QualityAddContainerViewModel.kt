@@ -10,6 +10,7 @@ import com.tebet.mojual.common.util.*
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.*
+import com.tebet.mojual.data.models.enumeration.ContainerOrderType
 import com.tebet.mojual.data.models.request.CreateOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
@@ -74,12 +75,17 @@ class QualityAddContainerViewModel(
                             customerData = Quality(
                                 orderId = order.get()!!.orderId,
                                 orderCode = order.get()!!.orderCode
-                            )
+                            ),
+                            containerType = order.get()!!.containerType
                         )
                         newItem.assignedContainers.clear()
                         newItem.assignedContainers.addAll(containersLeft.toList())
                         newItem.selectedItem = 0
-                        newItem.selectedWeight = 0
+                        newItem.selectedWeight = when (newItem.containerType) {
+                            ContainerOrderType.JERRYCAN.toString() -> newItem.weightList.indexOf(20)
+                            ContainerOrderType.DRUM.toString() -> newItem.weightList.indexOf(200)
+                            else -> 0
+                        }
 //                        newItem.sensorConnected = sensorManager.isConnected
                         val newItems = arrayListOf(newItem) + items
                         items.clear()

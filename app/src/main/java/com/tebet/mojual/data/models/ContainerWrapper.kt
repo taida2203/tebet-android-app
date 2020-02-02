@@ -3,13 +3,14 @@ package com.tebet.mojual.data.models
 import androidx.databinding.*
 import androidx.room.Ignore
 import androidx.databinding.library.baseAdapters.BR
+import com.tebet.mojual.data.models.enumeration.ContainerOrderType
 import java.io.Serializable
 
 data class ContainerWrapper(
-    var weight: Double = 20.0,
     var time: Long = 30,
     var customerData: Quality = Quality(),
-    var sensorConnected: Boolean = true
+    var sensorConnected: Boolean = true,
+    var containerType: String = ContainerOrderType.JERRYCAN.toString()
 ) : Serializable, BaseObservable() {
     enum class CheckStatus {
         CheckStatusDone,
@@ -17,7 +18,20 @@ data class ContainerWrapper(
         CheckStatusCheck
     }
 
-    var weightList: List<Int> = (20..30).toList()
+    var weight: Double = when (containerType) {
+        ContainerOrderType.JERRYCAN.toString() -> 20.0
+        ContainerOrderType.DRUM.toString() -> 200.0
+        else -> 20.0
+    }
+
+    val weightList: List<Int>
+        @Bindable get() {
+            return when (containerType) {
+                ContainerOrderType.JERRYCAN.toString() -> (20..30).toList()
+                ContainerOrderType.DRUM.toString() -> (195..205).toList()
+                else -> (20..30).toList()
+            }
+        }
 
     var assignedContainers: ObservableList<Asset> = ObservableArrayList()
 
@@ -30,7 +44,9 @@ data class ContainerWrapper(
             customerData.assetCode = selectedContainer.code
             customerData.combinedCode = selectedContainer.combinedCode
             customerData.tableId = customerData.orderId + selectedContainer.assetId
+            containerType = selectedContainer.containerType ?: ContainerOrderType.JERRYCAN.toString()
             notifyPropertyChanged(BR.selectedItem)
+            notifyPropertyChanged(BR.weightList)
         }
 
     var selectedWeight: Int = -1

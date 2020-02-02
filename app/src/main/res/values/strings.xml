@@ -75,6 +75,7 @@
     <string name="sale_button_submit">SUBMIT</string>
     <string name="sale_estimated_price">Estimate Order Amount</string>
     <string name="sale_quantity">Select Quantity</string>
+    <string name="sale_container_type">Select container type</string>
     <string name="sale_selected_date">Select Date</string>
     <string name="sale_select_title">Select date to sell and the quantity</string>
     <string name="sale_select_quantity_title">Tab to select quantity</string>
@@ -257,4 +258,6 @@
     <string name="container_status_initial_price_rejected">Initial Price Rejected</string>
     <string name="container_status_quality_rejected">Quality Rejected</string>
     <string name="container_status_initial_price_offered">Initial Price Offered</string>
+    <string name="container_type_can">Jerrycan</string>
+    <string name="container_type_drum">Drum</string>
 </resources>

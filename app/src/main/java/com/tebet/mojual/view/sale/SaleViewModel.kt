@@ -1,5 +1,7 @@
 package com.tebet.mojual.view.sale
 
+import androidx.databinding.*
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -12,10 +14,14 @@ import com.tebet.mojual.data.models.Asset
 import com.tebet.mojual.data.models.NetworkError
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Price
+import com.tebet.mojual.data.models.enumeration.ContainerOrderType
 import com.tebet.mojual.data.models.request.CreateOrderRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
+import me.tatarka.bindingcollectionadapter2.ItemBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SaleViewModel(
@@ -41,6 +47,10 @@ class SaleViewModel(
         addSource(selectedFutureDate, calculatePrice)
     }
 
+    var itemTypeBinding: ItemBinding<Int> = ItemBinding.of(BR.item, R.layout.item_container_type_dropdown)
+    var itemTypes: ObservableList<String> = ObservableArrayList()
+    var selectedItemType: ObservableInt = ObservableInt(0)
+
     private inner class CalculatePrice : Observer<Any> {
         override fun onChanged(ignored: Any?) {
             simulationPrice.value = selectedFutureDate.value?.pricePerContainer?.let {
@@ -61,13 +71,20 @@ class SaleViewModel(
                         AuthJson(
                             null,
                             "",
-                            Order(-2, "", selectedQuantity.value, selectedFutureDate.value?.date)
+                            Order(
+                                -2,
+                                "",
+                                quantity = selectedQuantity.value,
+                                planDate = selectedFutureDate.value?.date,
+                                containerType = itemTypes[selectedItemType.get()]
+                            )
                         )
                     )
                     else -> dataManager.createOrder(
                         CreateOrderRequest(
-                            selectedQuantity.value,
-                            selectedFutureDate.value?.date
+                            quantity = selectedQuantity.value,
+                            planDate = selectedFutureDate.value?.date,
+                            containerType = itemTypes[selectedItemType.get()]
                         )
                     )
                 }
@@ -108,9 +125,26 @@ class SaleViewModel(
                     }
                 })
         )
+        if (itemTypes.size <= 0) {
+            itemTypes.addAll(
+                arrayListOf(
+                    ContainerOrderType.JERRYCAN.toString(),
+                    ContainerOrderType.DRUM.toString()
+                )
+            )
+        }
     }
 
     fun openSelectQuantityScreen() {
+        if (assets.isNullOrEmpty()) {
+            navigator.showEmptyAsset()
+            loadData()
+            return
+        }
+        navigator.showQuantityScreen()
+    }
+
+    fun openSelectContainerScreen() {
         if (assets.isNullOrEmpty()) {
             navigator.showEmptyAsset()
             loadData()

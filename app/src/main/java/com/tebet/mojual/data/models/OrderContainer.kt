@@ -7,6 +7,7 @@ import androidx.room.Ignore
 import com.tebet.mojual.data.models.enumeration.AssetAction
 import com.tebet.mojual.data.models.enumeration.ContainerOrderState
 import com.tebet.mojual.data.models.enumeration.ContainerOrderStatus
+import com.tebet.mojual.data.models.enumeration.ContainerOrderType
 import java.io.Serializable
 
 data class OrderContainer(
@@ -33,6 +34,7 @@ data class OrderContainer(
     var eugenolIot: Double? = null,
     var pricePerKg: Double? = null,
     var status: String? = null,
+    var containerType: String? = null,
     var createdBy: String? = null,
     var createdDate: Long? = null,
     var modifiedBy: String? = null,

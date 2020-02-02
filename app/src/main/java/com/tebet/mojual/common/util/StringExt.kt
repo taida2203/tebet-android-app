@@ -1,11 +1,7 @@
 package com.tebet.mojual.common.util
 
 import com.tebet.mojual.R
-import com.tebet.mojual.data.models.enumeration.ContainerOrderState
-import com.tebet.mojual.data.models.enumeration.OrderStatus
-import com.tebet.mojual.data.models.enumeration.SortBy
-import com.tebet.mojual.data.models.enumeration.SortType
-import org.jsoup.helper.StringUtil
+import com.tebet.mojual.data.models.enumeration.*
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
@@ -20,6 +16,17 @@ fun Double?.toDisplayMoney(): String {
 
 fun Float?.toDisplayMoney(): String {
     return this?.toDouble().toDisplayMoney()
+}
+
+fun String?.toDisplayType(): String {
+    if (this == null) {
+        return "N/A"
+    }
+    return when (this) {
+        ContainerOrderType.JERRYCAN.name -> Utility.getInstance().getString(R.string.container_type_can)
+        ContainerOrderType.DRUM.name -> Utility.getInstance().getString(R.string.container_type_drum)
+        else -> this?.replace("_", " ")?.toLowerCase()?.capitalize()
+    }
 }
 
 fun Double?.toDisplayPoint(): String {

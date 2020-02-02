@@ -9,6 +9,7 @@ import java.io.Serializable
 data class OrderDetail(
     override var orderId: Long,
     override var orderCode: String,
+    override var containerType: String,
     var quantity: Int? = null,
     var planDate: Long? = null,
     var totalPrice: Double? = null,
@@ -34,12 +35,13 @@ data class OrderDetail(
     var containers: List<OrderContainer>? = null,
     var rejectionQuestions: List<Question>? = null
 ) : Serializable, IOrder {
-    constructor(order: IOrder) : this(order.orderId, order.orderCode) {
+    constructor(order: IOrder) : this(order.orderId, order.orderCode, order.containerType) {
         if (order is Order) {
             price = order.price
             quantity = order.quantity
             planDate = order.planDate
             totalPrice = order.totalPrice
+            containerType = order.containerType
         }
     }
     val isRejected: Boolean

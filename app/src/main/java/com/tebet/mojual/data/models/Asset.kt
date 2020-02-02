@@ -27,7 +27,7 @@ class Asset(
     var createdDate: Long? = null,
     var modifiedBy: String? = null,
     var modifiedDate: Long? = null,
-
+    var containerType: String? = null,
     @Ignore
     var holder: UserProfile? = null,
     @Ignore
