@@ -139,8 +139,8 @@ class QualityAddContainerViewModel(
     }
 
     private fun getAvailableContainer(): List<Asset> {
-        return assignedContainers.filterNot { exeptItem ->
-            items.filter { it.checking == ContainerWrapper.CheckStatus.CheckStatusDone }
+        return assignedContainers.filter { order.get()?.containerType.equals(it.containerType) }
+            .filterNot { exeptItem -> items.filter { it.checking == ContainerWrapper.CheckStatus.CheckStatusDone }
                 .map { it.customerData }.firstOrNull { it.assetCode == exeptItem.code } != null
         }
     }
