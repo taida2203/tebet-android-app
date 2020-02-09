@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.tebet.mojual.common.util.DateExtKt" />
+
+        <import type="com.tebet.mojual.common.util.StringExtKt" />
+
+        <import type="com.tebet.mojual.data.models.enumeration.DocumentType" />
+
+        <variable
+            name="item"
+            type="com.tebet.mojual.data.models.OrderDocument" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="@drawable/border_history"
+        android:paddingTop="@dimen/_8sdp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_4sdp"
+        android:paddingRight="@dimen/_4sdp"
+        android:paddingBottom="@dimen/_8sdp">
+
+        <ImageView
+            android:id="@+id/ktp"
+            android:layout_width="@dimen/_64sdp"
+            android:layout_height="@dimen/_64sdp"
+            app:imageUrl="@{item.filePath}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{DateExtKt.toDisplayDate(item.createdDate)}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{StringExtKt.toDisplayStatus(DocumentType.getByName(item.type))}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{item.description}" />
+    </LinearLayout>
+</layout>

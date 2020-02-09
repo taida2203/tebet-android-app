@@ -15,7 +15,7 @@ abstract class CallbackWrapper<T> : DisposableObserver<AuthJson<T>>() {
     protected abstract fun onFailure(error: NetworkError)
 
     final override fun onNext(t: AuthJson<T>) {
-        t.data?.let { onSuccess(it) }
+        t.data?.let { onSuccess(it) } ?: onFailure(NetworkError(message = "Response null"))
     }
 
     final override fun onError(e: Throwable) {

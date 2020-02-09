@@ -79,6 +79,14 @@ fun SortType?.toDisplayStatus(): String {
     }
 }
 
+fun DocumentType?.toDisplayStatus(): String {
+    return when (this) {
+        DocumentType.LOGISTIC_RECEIPT -> Utility.getInstance().getString(R.string.document_type_logistic_receipt)
+        DocumentType.OTHER -> Utility.getInstance().getString(R.string.document_type_other)
+        else -> Utility.getInstance().getString(R.string.document_type_other)
+    }
+}
+
 fun String?.fromStatusCodeToDisplayable(): String? {
     return when (this) {
         OrderStatus.OPEN.name -> Utility.getInstance().getString(R.string.order_status_open)

@@ -134,6 +134,15 @@ data class OrderContainer(
             return false
         }
 
+    val canUploadDocument: Boolean
+        get() {
+            when (status) {
+                ContainerOrderStatus.PAID_TO_CUSTOMER.name
+                -> return true
+            }
+            return false
+        }
+
     val isRejected: Boolean
         get() {
             return when (state) {

@@ -20,6 +20,7 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
+import retrofit2.http.Body
 import javax.inject.Inject
 
 
@@ -55,7 +56,7 @@ class AppDataManger @Inject constructor(
         return api.searchOrders(searchOrderRequest)
     }
 
-    override fun getOrderDetail(orderId: Long, loadCustomer: Boolean?, loadContainers: Boolean?): Observable<AuthJson<OrderDetail>> = api.getOrderDetail(orderId, loadCustomer, loadContainers)
+    override fun getOrderDetail(orderId: Long, loadCustomer: Boolean?, loadContainers: Boolean?, loadDocuments: Boolean?): Observable<AuthJson<OrderDetail>> = api.getOrderDetail(orderId, loadCustomer, loadContainers, loadDocuments)
 
     override fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>> = api.getNext7DaysPrice()
 
@@ -235,9 +236,11 @@ class AppDataManger @Inject constructor(
 
     override fun createOrder(createOrderRequest: CreateOrderRequest): Observable<AuthJson<Order>> = api.createOrder(createOrderRequest)
 
+    override fun createOrderDocument(createOrderDocumentRequests: List<CreateOrderDocumentRequest>): Observable<AuthJson<EmptyResponse>> = api.createOrderDocument(createOrderDocumentRequests)
+
     override fun confirmOrder(orderId: Long, qualityList: List<OrderContainer>) = api.confirmOrder(orderId, qualityList)
 
-    override fun updateOrderQuality(  orderId: Long, qualityList: List<Quality>): Observable<AuthJson<Order>> = api.updateOrderQuality(orderId, qualityList)
+    override fun updateOrderQuality(orderId: Long, qualityList: List<Quality>): Observable<AuthJson<Order>> = api.updateOrderQuality(orderId, qualityList)
 
     override fun deleteContainerCheck(quality: Quality): Observable<Boolean> = room.deleteContainerCheck(quality)
 

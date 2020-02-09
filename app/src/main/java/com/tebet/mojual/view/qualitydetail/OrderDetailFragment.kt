@@ -1,20 +1,32 @@
 package com.tebet.mojual.view.qualitydetail
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.text.TextUtils
 import android.view.View
-import androidx.fragment.app.Fragment
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedDialogButton
 import androidx.databinding.library.baseAdapters.BR
+import co.common.view.dialog.SingleChoiceDialog
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
+import com.tebet.mojual.data.models.enumeration.DocumentType
 import com.tebet.mojual.databinding.FragmentOrderDetailBinding
 import com.tebet.mojual.view.base.BaseFragment
-import com.tebet.mojual.view.home.Home
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetailViewModel>(),
     OrderDetailNavigator {
@@ -30,8 +42,11 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
     private lateinit var validator: Validator
 
     var order: Order? = null
+    var documentTypeDialog: SingleChoiceDialog<DocumentType>? = null
+    var documentDescriptionDialog: InputTextDialog? = null
 
     companion object {
+        const val REQUEST_TAKE_DOCUMENT = 999
         fun newInstance(dataResponse: Order): OrderDetailFragment {
             val fragment = OrderDetailFragment()
             fragment.order = dataResponse
@@ -103,6 +118,98 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
                         viewModel.approveOrder(selectedItems)
                     }
                 }).show(context, "")
+        }
+    }
+
+    private lateinit var currentPhotoPath: String
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_TAKE_DOCUMENT -> {
+                if (!TextUtils.isEmpty(currentPhotoPath) && resultCode == Activity.RESULT_OK) {
+                    documentDescriptionDialog =
+                        InputTextDialog().setCallback(object : InputTextDialog.DialogCallback {
+                            override fun onCancel() {
+                                hideKeyboard()
+                            }
+
+                            override fun onOk(text: String?) {
+                                hideKeyboard()
+                                viewModel.selectedDocument?.description = text
+                                viewModel.uploadDocument(currentPhotoPath)
+                            }
+                        })
+                    fragmentManager?.let { documentDescriptionDialog?.show(it, "") }
+                }
+            }
+        }
+    }
+
+    override fun uploadDocument() {
+        documentTypeDialog = DocumentTypeDialog().setCallback(object :
+            SingleChoiceDialog.SingleChoiceDialogCallback<DocumentType> {
+            override fun onCancel() {
+            }
+
+            override fun onOk(selectedItem: DocumentType?) {
+                if (selectedItem != null) {
+                    viewModel.selectedDocument?.type = selectedItem.name
+                    dispatchTakePictureIntent(REQUEST_TAKE_DOCUMENT)
+                }
+            }
+        })
+        fragmentManager?.let { documentTypeDialog?.show(it, "") }
+    }
+
+    private fun dispatchTakePictureIntent(requestCode: Int, isFront: Boolean = false) {
+        currentPhotoPath = ""
+        val mIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (isFront) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                activity!!.intent.putExtra("android.intent.extras.CAMERA_FACING", android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT)
+                activity!!.intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
+                activity!!.intent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
+            } else {
+                activity!!.intent.putExtra("android.intent.extras.CAMERA_FACING", 1)
+            }
+        }
+        mIntent.also { takePictureIntent ->
+            // Ensure that there's a camera activity to handle the intent
+            takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
+                // Create the File where the photo should go
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    // Error occurred while creating the File
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        activity!!,
+                        "com.tebet.mojual.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    startActivityForResult(takePictureIntent, requestCode)
+                }
+            }
         }
     }
 }

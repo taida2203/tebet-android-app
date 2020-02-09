@@ -1,7 +1,6 @@
 package com.tebet.mojual.data.models
 
 import androidx.room.Ignore
-import com.tebet.mojual.data.models.enumeration.ContainerOrderState
 import com.tebet.mojual.data.models.enumeration.ContainerOrderStatus
 import com.tebet.mojual.data.models.enumeration.OrderStatus
 import java.io.Serializable
@@ -33,7 +32,9 @@ data class OrderDetail(
     var containersReturnedDate: Long? = null,
     var basePrice: Double? = null,
     var containers: List<OrderContainer>? = null,
-    var rejectionQuestions: List<Question>? = null
+    var rejectionQuestions: List<Question>? = null,
+    var orderDocuments: List<OrderDocument>? = null
+
 ) : Serializable, IOrder {
     constructor(order: IOrder) : this(order.orderId, order.orderCode, order.containerType) {
         if (order is Order) {
@@ -55,6 +56,11 @@ data class OrderDetail(
     val canAction: Boolean
         get() {
             return containers?.firstOrNull { it.canAction } != null
+        }
+
+    val canUploadDocument: Boolean
+        get() {
+            return containers?.firstOrNull { it.canUploadDocument } != null
         }
 
     val containFirstFinalPrice: Boolean

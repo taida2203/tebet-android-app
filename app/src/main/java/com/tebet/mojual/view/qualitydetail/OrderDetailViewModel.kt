@@ -1,19 +1,27 @@
 package com.tebet.mojual.view.qualitydetail
 
+import com.tebet.mojual.data.models.OrderDocument
 import androidx.databinding.*
 import androidx.databinding.library.baseAdapters.BR
+import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
-import com.tebet.mojual.data.models.NetworkError
-import com.tebet.mojual.data.models.Order
-import com.tebet.mojual.data.models.OrderContainer
-import com.tebet.mojual.data.models.OrderDetail
+import com.tebet.mojual.data.models.*
 import com.tebet.mojual.data.models.enumeration.AssetAction
 import com.tebet.mojual.data.models.enumeration.ContainerOrderStatus
+import com.tebet.mojual.data.models.enumeration.DocumentType
+import com.tebet.mojual.data.models.request.CreateOrderDocumentRequest
 import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
+import io.reactivex.Observable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class OrderDetailViewModel(
@@ -44,6 +52,12 @@ class OrderDetailViewModel(
                     navigator.itemSelected(item)
                 }
             })
+    var documents: ObservableArrayList<OrderDocument> = ObservableArrayList()
+    var documentsBinding: ItemBinding<OrderDocument> =
+        ItemBinding.of<OrderDocument>(BR.item, R.layout.item_order_detail_document)
+    var selectedDocumentType: DocumentType = DocumentType.OTHER
+    var selectedDocumentDescription: String = ""
+    var selectedDocument: CreateOrderDocumentRequest? = null
 
     private fun updateTotalPrice() {
         when {
@@ -75,7 +89,7 @@ class OrderDetailViewModel(
         order.get()?.let {
             navigator.showLoading(true)
             compositeDisposable.add(
-                dataManager.getOrderDetail(it.orderId, loadContainers = true, loadCustomer = true)
+                dataManager.getOrderDetail(it.orderId, loadContainers = true, loadCustomer = true, loadDocuments = true)
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(object : CallbackWrapper<OrderDetail>() {
                         override fun onSuccess(dataResponse: OrderDetail) {
@@ -85,6 +99,8 @@ class OrderDetailViewModel(
                                 if (!items.contains(container)) items.add(container)
                                 else items[items.indexOf(container)] = container
                             }
+                            documents.clear()
+                            dataResponse.orderDocuments?.let { it1 -> documents.addAll(it1) }
                             updateTotalPrice()
                             navigator.showLoading(false)
                         }
@@ -139,6 +155,13 @@ class OrderDetailViewModel(
         navigator.showConfirmDialog(items)
     }
 
+    fun onUploadDocumentClick() {
+        order.get()?.let { order ->
+            selectedDocument = CreateOrderDocumentRequest(order.orderId, "", DocumentType.OTHER.name, "")
+            navigator.uploadDocument()
+        }
+    }
+
     private fun submitOrder(selectedItems: List<OrderContainer>) {
         order.get()?.let { order ->
             navigator.showLoading(true)
@@ -173,5 +196,44 @@ class OrderDetailViewModel(
         } else {
             submitOrder(selectedItems)
         }
+    }
+
+    fun uploadDocument(currentPhotoPath: String) {
+        navigator.showLoading(true)
+        compositeDisposable.add(uploadImage(currentPhotoPath, "document")
+            .concatMap {
+                selectedDocument?.filePath = it.data!!
+                dataManager.createOrderDocument(listOf(selectedDocument!!))
+            }
+            .observeOn(schedulerProvider.ui())
+            .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
+                override fun onSuccess(dataResponse: EmptyResponse) {
+                    navigator.showLoading(false)
+                    loadData(true)
+                }
+
+                override fun onFailure(error: NetworkError) {
+                    navigator.showLoading(false)
+                    if (error.errorCode == 500) {
+                        loadData(true)
+                        return
+                    }
+                    handleError(error)
+                }
+            })
+        )
+    }
+
+    private fun uploadImage(imagePath: String?, folderName: String): Observable<AuthJson<String>> {
+        val uploadText = MultipartBody.Part.createFormData("folder", folderName)
+        val file = File(imagePath)
+        val uploadData = MultipartBody.Part.createFormData(
+            "file",
+            file.name,
+            RequestBody.create(MediaType.parse("image/png"), file)
+        )
+        return dataManager.uploadImage(uploadText, uploadData).subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
+            .debounce(400, TimeUnit.MILLISECONDS)
     }
 }

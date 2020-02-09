@@ -168,15 +168,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:onClick="@{()-> viewModel.onTotalClick()}"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()-> viewModel.onTotalClick()}">
 
                     <com.tebet.mojual.common.view.AppTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textStyle="bold"
-                        android:text="@string/order_detail_total_amount" />
+                        android:text="@string/order_detail_total_amount"
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -195,8 +195,8 @@
                         <ImageView
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="@dimen/_16sdp"
-                            android:visibility="@{viewModel.totalReleaseBonus > 0 ? View.VISIBLE : View.GONE}"
                             android:src="@{viewModel.totalExpaned ? @drawable/signup_collapse_btn : @drawable/signup_expand_btn}"
+                            android:visibility="@{viewModel.totalReleaseBonus > 0 ? View.VISIBLE : View.GONE}"
                             tools:ignore="ContentDescription" />
                     </LinearLayout>
                 </LinearLayout>
@@ -294,6 +294,24 @@
                         app:items="@{viewModel.items}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:descendantFocusability="blocksDescendants"
+                    android:visibility="@{viewModel.documents.size() > 0? View.VISIBLE : View.GONE}">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:nestedScrollingEnabled="false"
+                        app:itemBinding="@{viewModel.documentsBinding}"
+                        app:items="@{viewModel.documents}"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                </RelativeLayout>
+
             </LinearLayout>
         </ScrollView>
 
@@ -327,6 +345,22 @@
                 android:enabled="@{!viewModel.isLoading &amp;&amp; viewModel.items.size() > 0}"
                 android:onClick="@{()-> viewModel.onSubmitClick()}"
                 android:text="@string/order_detail_button_approve" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.order.canUploadDocument? View.VISIBLE : View.GONE}">
+
+            <com.tebet.mojual.common.view.AppButtonRounded
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="@{!viewModel.isLoading}"
+                android:onClick="@{()-> viewModel.onUploadDocumentClick()}"
+                android:text="@string/order_detail_button_upload" />
         </LinearLayout>
     </LinearLayout>
 </layout>

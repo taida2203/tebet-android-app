@@ -75,8 +75,6 @@
     <string name="sale_estimated_price">Perkiraan harga</string>
     <string name="sale_quantity">Pilih jumlah</string>
     <string name="sale_container_type">Pilih kemasan</string>
-    <string name="container_type_can">Jeriken</string>
-    <string name="container_type_drum">Drum</string>
     <string name="sale_selected_date">Pilih tanggal</string>
     <string name="sale_select_title">Pilih jumlah barang dan tanggal penjualan</string>
     <string name="sale_select_quantity_title">Pilih Quantity</string>
@@ -151,6 +149,7 @@
     <string name="order_detail_dialog_reject">Anda yakin akan membatalkan semua container?</string>
     <string name="order_detail_dialog_confirm">Anda setuju untuk menjual minyak dalam kemasan dengan kode %1$s?</string>
     <string name="order_detail_button_approve">Pesanan anda disetujui</string>
+    <string name="order_detail_button_upload">Upload Document</string>
     <string name="order_detail_status">Status</string>
     <string name="order_detail_message">Pesan</string>
 
@@ -259,4 +258,8 @@
     <string name="container_status_initial_price_rejected">Harga awal ditolak</string>
     <string name="container_status_quality_rejected">Kualitas ditolak</string>
     <string name="container_status_initial_price_offered">Harga penawaran</string>
+    <string name="container_type_can">Jeriken</string>
+    <string name="container_type_drum">Drum</string>
+    <string name="document_type_logistic_receipt">Logistic Receipt</string>
+    <string name="document_type_other">Other</string>
 </resources>

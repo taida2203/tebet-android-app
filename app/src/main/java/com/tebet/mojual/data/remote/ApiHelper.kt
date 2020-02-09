@@ -41,6 +41,9 @@ interface ApiHelper {
     @POST("order/order")
     fun createOrder(@Body createOrderRequest: CreateOrderRequest): Observable<AuthJson<Order>>
 
+    @POST("order/order/document")
+    fun createOrderDocument(@Body createOrderDocumentRequests: List<CreateOrderDocumentRequest>): Observable<AuthJson<EmptyResponse>>
+
     @PUT("order/confirm/{orderId}")
     fun confirmOrder(@Path(value = "orderId") orderId: Long, @Body qualityList: List<OrderContainer>): Observable<AuthJson<Order>>
 
@@ -58,7 +61,7 @@ interface ApiHelper {
     fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>>
 
     @GET("order/order")
-    fun getOrderDetail(@Query(value = "orderId") orderId: Long, @Query(value = "loadCustomer") loadCustomer: Boolean? = null, @Query(value = "loadContainers") loadContainers: Boolean? = null): Observable<AuthJson<OrderDetail>>
+    fun getOrderDetail(@Query(value = "orderId") orderId: Long, @Query(value = "loadCustomer") loadCustomer: Boolean? = null, @Query(value = "loadContainers") loadContainers: Boolean? = null, @Query(value = "loadDocuments") loadDocuments: Boolean? = null): Observable<AuthJson<OrderDetail>>
 
     @POST("order/search")
     fun searchOrders(@Body searchOrderRequest: SearchOrderRequest): Observable<AuthJson<Paging<Order>>>

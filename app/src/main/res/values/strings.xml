@@ -150,6 +150,7 @@
     <string name="order_detail_dialog_reject">Are you sure to reject all container?</string>
     <string name="order_detail_dialog_confirm">Are you sure to sell container %1$s?</string>
     <string name="order_detail_button_approve">APPROVE</string>
+    <string name="order_detail_button_upload">UPLOAD DOCUMENT</string>
     <string name="order_detail_status">Status</string>
     <string name="order_detail_message">Message</string>
 
@@ -260,4 +261,6 @@
     <string name="container_status_initial_price_offered">Initial Price Offered</string>
     <string name="container_type_can">Jerrycan</string>
     <string name="container_type_drum">Drum</string>
+    <string name="document_type_logistic_receipt">Logistic Receipt</string>
+    <string name="document_type_other">Other</string>
 </resources>
