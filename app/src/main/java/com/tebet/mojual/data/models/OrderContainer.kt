@@ -138,8 +138,7 @@ data class OrderContainer(
         get() {
             when (status) {
                 ContainerOrderStatus.PICKED_TO_FACTORY.name,
-                ContainerOrderStatus.ARRIVED_IN_FACTORY.name,
-                ContainerOrderStatus.PAID_TO_CUSTOMER.name
+                ContainerOrderStatus.ARRIVED_IN_FACTORY.name
                 -> return true
             }
             return false

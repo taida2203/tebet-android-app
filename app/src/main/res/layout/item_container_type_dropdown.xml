@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_4sdp"
+            android:textColor="@color/black"
             android:paddingBottom="@dimen/_4sdp"
             android:text="@{StringExtKt.toDisplayType(item)}"
             android:textSize="@dimen/_14ssp"
