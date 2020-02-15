@@ -22,32 +22,52 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_6sdp"
         android:background="@drawable/border_history"
-        android:paddingTop="@dimen/_8sdp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingLeft="@dimen/_4sdp"
+        android:paddingTop="@dimen/_4sdp"
         android:paddingRight="@dimen/_4sdp"
         android:paddingBottom="@dimen/_8sdp">
 
+        <com.tebet.mojual.common.view.AppTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:text="@{StringExtKt.toDisplayStatus(DocumentType.getByName(item.type))}"
+            android:textColor="@color/dark_green"
+            android:textSize="@dimen/_9ssp" />
+
         <ImageView
             android:id="@+id/ktp"
-            android:layout_width="@dimen/_64sdp"
-            android:layout_height="@dimen/_64sdp"
+            android:layout_width="@dimen/_72sdp"
+            android:layout_height="@dimen/_72sdp"
             app:imageUrl="@{item.filePath}" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{DateExtKt.toDisplayDate(item.createdDate)}" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{StringExtKt.toDisplayStatus(DocumentType.getByName(item.type))}" />
-
-        <TextView
+        <com.tebet.mojual.common.view.AppTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{item.description}" />
+            android:ellipsize="end"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:lines="3"
+            android:text="@{item.description}"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="@{DateExtKt.toDisplayDate(item.createdDate)}"
+                android:textSize="@dimen/_9ssp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </layout>
