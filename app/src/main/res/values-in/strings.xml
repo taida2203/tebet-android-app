@@ -148,10 +148,11 @@
     <string name="order_detail_content">Kadar eugenol</string>
     <string name="order_detail_dialog_reject">Anda yakin akan membatalkan semua container?</string>
     <string name="order_detail_dialog_confirm">Anda setuju untuk menjual minyak dalam kemasan dengan kode %1$s?</string>
-    <string name="order_detail_button_approve">Pesanan anda disetujui</string>
+    <string name="order_detail_button_approve">Setuju</string>
     <string name="order_detail_button_upload">Upload Document</string>
     <string name="order_detail_status">Status</string>
     <string name="order_detail_message">Pesan</string>
+    <string name="order_detail_description">Deskripsi</string>
 
     <string name="order_reject_title">Beritahu kami</string>
     <string name="order_reject_detail">Mengapa anda menolak untuk menjual kepada kami? Beritahu kami dengan menjawab pertanyaan di bawah ini</string>
@@ -219,8 +220,8 @@
     <string name="history_advance_button_search">pencarian</string>
     <string name="history_advance_hint_date">15 Juli 2019</string>
     <string name="history_advance_status_all">Semua</string>
-    <string name="history_advance_status_open">Buka</string>
-    <string name="history_advance_status_closed">Tutup</string>
+    <string name="history_advance_status_open">Sedang diproses</string>
+    <string name="history_advance_status_closed">Selesai</string>
     <string name="history_advance_status_rejected">Ditolak</string>
     <string name="history_advance_status_order_id">kode pesanan</string>
     <string name="history_advance_status_sale_date">Tanggal penjualan</string>

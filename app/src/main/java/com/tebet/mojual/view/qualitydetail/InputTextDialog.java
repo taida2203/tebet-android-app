@@ -47,6 +47,11 @@ public class InputTextDialog extends DialogFragment {
                 dialogCallback.onOk(editText.getText().toString().trim());
             }
         });
+        builder.setNegativeButton(R.string.general_button_cancel, (dialog, id) -> {
+            if (dialogCallback != null) {
+                dialogCallback.onCancel();
+            }
+        });
 
         return builder.create();
     }
@@ -62,13 +67,13 @@ public class InputTextDialog extends DialogFragment {
         }
 
         if (pButton != null) {
-            pButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
-            pButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryLight));
+            pButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green_dark));
+            pButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
         }
 
         if (nButton != null) {
-            nButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
-            nButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryLight));
+            nButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            nButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
         }
     }
 
