@@ -1,11 +1,16 @@
 package com.tebet.mojual.view.qualitydetail
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.View
@@ -20,9 +25,14 @@ import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
+import com.tebet.mojual.data.models.OrderDocument
 import com.tebet.mojual.data.models.enumeration.DocumentType
 import com.tebet.mojual.databinding.FragmentOrderDetailBinding
 import com.tebet.mojual.view.base.BaseFragment
+import com.tebet.mojual.view.qualitycontainer.QualityAddContainer
+import io.reactivex.schedulers.Schedulers
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -44,9 +54,13 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
     var order: Order? = null
     var documentTypeDialog: SingleChoiceDialog<DocumentType>? = null
     var documentDescriptionDialog: InputTextDialog? = null
+    var documentDialog: DocumentDialog? = null
+
+    private val perms = arrayOf(Manifest.permission.CAMERA)
 
     companion object {
         const val REQUEST_TAKE_DOCUMENT = 999
+        internal const val RC_CAMERA = 300
         fun newInstance(dataResponse: Order): OrderDetailFragment {
             val fragment = OrderDetailFragment()
             fragment.order = dataResponse
@@ -81,7 +95,12 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
     override fun showRejectConfirm() {
         activity?.supportFragmentManager?.let {
             RoundedDialog(getString(R.string.order_detail_dialog_reject))
-                .addFirstButton(RoundedDialogButton(getString(R.string.general_btn_no), R.drawable.rounded_bg_button_trans))
+                .addFirstButton(
+                    RoundedDialogButton(
+                        getString(R.string.general_btn_no),
+                        R.drawable.rounded_bg_button_trans
+                    )
+                )
                 .addSecondButton(RoundedDialogButton(getString(R.string.general_btn_yes)))
                 .setRoundedDialogCallback(
                     object : RoundedDialog.RoundedDialogCallback {
@@ -107,17 +126,22 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
                     selectedItems.filter { it.isSelected }.map { it.assetCode }.joinToString()
                 )
             )
-                .addFirstButton(RoundedDialogButton(getString(R.string.general_btn_no), R.drawable.rounded_bg_button_trans))
+                .addFirstButton(
+                    RoundedDialogButton(
+                        getString(R.string.general_btn_no),
+                        R.drawable.rounded_bg_button_trans
+                    )
+                )
                 .addSecondButton(RoundedDialogButton(getString(R.string.general_btn_yes)))
                 .setRoundedDialogCallback(
-                object : RoundedDialog.RoundedDialogCallback {
-                    override fun onFirstButtonClicked(selectedValue: Any?) {
-                    }
+                    object : RoundedDialog.RoundedDialogCallback {
+                        override fun onFirstButtonClicked(selectedValue: Any?) {
+                        }
 
-                    override fun onSecondButtonClicked(selectedValue: Any?) {
-                        viewModel.approveOrder(selectedItems)
-                    }
-                }).show(context, "")
+                        override fun onSecondButtonClicked(selectedValue: Any?) {
+                            viewModel.approveOrder(selectedItems)
+                        }
+                    }).show(context, "")
         }
     }
 
@@ -143,19 +167,20 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
         when (requestCode) {
             REQUEST_TAKE_DOCUMENT -> {
                 if (!TextUtils.isEmpty(currentPhotoPath) && resultCode == Activity.RESULT_OK) {
-                    documentDescriptionDialog =
-                        InputTextDialog().setCallback(object : InputTextDialog.DialogCallback {
-                            override fun onCancel() {
-                                hideKeyboard()
-                            }
+                        documentDescriptionDialog =
+                            InputTextDialog().setCallback(object : InputTextDialog.DialogCallback {
+                                override fun onCancel() {
+                                    hideKeyboard()
 
-                            override fun onOk(text: String?) {
-                                hideKeyboard()
-                                viewModel.selectedDocument?.description = text
-                                viewModel.uploadDocument(currentPhotoPath)
-                            }
-                        })
-                    fragmentManager?.let { documentDescriptionDialog?.show(it, "") }
+                                }
+
+                                override fun onOk(text: String?) {
+                                    hideKeyboard()
+                                    viewModel.selectedDocument?.description = text
+                                    viewModel.uploadDocument(currentPhotoPath)
+                                }
+                            })
+                        fragmentManager?.let { documentDescriptionDialog?.show(it, "") }
                 }
             }
         }
@@ -177,39 +202,61 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
         fragmentManager?.let { documentTypeDialog?.show(it, "") }
     }
 
+    override fun documentSelected(item: OrderDocument) {
+        documentDialog =
+            DocumentDialog(item).setCallback(object : DocumentDialog.DialogCallback {
+                override fun onOk() {
+                }
+            })
+        fragmentManager?.let { documentDialog?.show(it, "") }
+    }
+
+    @SuppressLint("MissingPermission")
+    @AfterPermissionGranted(RC_CAMERA)
     private fun dispatchTakePictureIntent(requestCode: Int, isFront: Boolean = false) {
-        currentPhotoPath = ""
-        val mIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (isFront) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                activity!!.intent.putExtra("android.intent.extras.CAMERA_FACING", android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT)
-                activity!!.intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
-                activity!!.intent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
-            } else {
-                activity!!.intent.putExtra("android.intent.extras.CAMERA_FACING", 1)
-            }
-        }
-        mIntent.also { takePictureIntent ->
-            // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
-                // Create the File where the photo should go
-                val photoFile: File? = try {
-                    createImageFile()
-                } catch (ex: IOException) {
-                    // Error occurred while creating the File
-                    null
-                }
-                // Continue only if the File was successfully created
-                photoFile?.also {
-                    val photoURI: Uri = FileProvider.getUriForFile(
-                        activity!!,
-                        "com.tebet.mojual.fileprovider",
-                        it
+        if (EasyPermissions.hasPermissions(context!!, *perms)) {
+            currentPhotoPath = ""
+            val mIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            if (isFront) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    activity!!.intent.putExtra(
+                        "android.intent.extras.CAMERA_FACING",
+                        android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT
                     )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, requestCode)
+                    activity!!.intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
+                    activity!!.intent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
+                } else {
+                    activity!!.intent.putExtra("android.intent.extras.CAMERA_FACING", 1)
                 }
             }
+            mIntent.also { takePictureIntent ->
+                // Ensure that there's a camera activity to handle the intent
+                takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
+                    // Create the File where the photo should go
+                    val photoFile: File? = try {
+                        createImageFile()
+                    } catch (ex: IOException) {
+                        // Error occurred while creating the File
+                        null
+                    }
+                    // Continue only if the File was successfully created
+                    photoFile?.also {
+                        val photoURI: Uri = FileProvider.getUriForFile(
+                            activity!!,
+                            "com.tebet.mojual.fileprovider",
+                            it
+                        )
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                        startActivityForResult(takePictureIntent, requestCode)
+                    }
+                }
+            }
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(
+                this, getString(R.string.check_quality_add_container_permission_warning),
+                RC_CAMERA, *perms
+            )
         }
     }
 }

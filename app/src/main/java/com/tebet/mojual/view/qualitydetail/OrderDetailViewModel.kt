@@ -5,6 +5,7 @@ import androidx.databinding.*
 import androidx.databinding.library.baseAdapters.BR
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.R
+import com.tebet.mojual.common.adapter.OnListItemClick
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.*
@@ -55,6 +56,12 @@ class OrderDetailViewModel(
     var documents: ObservableArrayList<OrderDocument> = ObservableArrayList()
     var documentsBinding: ItemBinding<OrderDocument> =
         ItemBinding.of<OrderDocument>(BR.item, R.layout.item_order_detail_document)
+            .bindExtra(BR.listener,
+                object : OnListItemClick<OrderDocument> {
+                    override fun onItemClick(item: OrderDocument) {
+                        navigator.documentSelected(item)
+                    }
+                })
     var selectedDocumentType: DocumentType = DocumentType.OTHER
     var selectedDocumentDescription: String = ""
     var selectedDocument: CreateOrderDocumentRequest? = null

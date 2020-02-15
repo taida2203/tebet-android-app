@@ -13,6 +13,10 @@
         <import type="com.tebet.mojual.data.models.enumeration.DocumentType" />
 
         <variable
+            name="listener"
+            type="com.tebet.mojual.common.adapter.OnListItemClick" />
+
+        <variable
             name="item"
             type="com.tebet.mojual.data.models.OrderDocument" />
     </data>
@@ -23,6 +27,7 @@
         android:layout_marginBottom="@dimen/_6sdp"
         android:background="@drawable/border_history"
         android:gravity="center_horizontal"
+        android:onClick="@{() -> listener.onItemClick(item)}"
         android:orientation="vertical"
         android:paddingLeft="@dimen/_4sdp"
         android:paddingTop="@dimen/_4sdp"
@@ -48,8 +53,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:inputType="textMultiLine"
-            android:maxLines="3"
             android:lines="3"
+            android:maxLines="3"
             android:text="@{item.description}"
             android:textStyle="bold" />
 
