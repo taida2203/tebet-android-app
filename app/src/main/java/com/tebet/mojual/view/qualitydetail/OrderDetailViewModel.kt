@@ -1,7 +1,9 @@
 package com.tebet.mojual.view.qualitydetail
 
-import com.tebet.mojual.data.models.OrderDocument
-import androidx.databinding.*
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableDouble
+import androidx.databinding.ObservableField
 import androidx.databinding.library.baseAdapters.BR
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.R
@@ -21,7 +23,6 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -163,10 +164,8 @@ class OrderDetailViewModel(
     }
 
     fun onUploadDocumentClick() {
-        order.get()?.let { order ->
-            selectedDocument = CreateOrderDocumentRequest(order.orderId, "", DocumentType.OTHER.name, "")
-            navigator.uploadDocument()
-        }
+        selectedDocument = CreateOrderDocumentRequest("", DocumentType.OTHER.name, "")
+        navigator.uploadDocument()
     }
 
     private fun submitOrder(selectedItems: List<OrderContainer>) {
@@ -210,7 +209,7 @@ class OrderDetailViewModel(
         compositeDisposable.add(uploadImage(currentPhotoPath, "document")
             .concatMap {
                 selectedDocument?.filePath = it.data!!
-                dataManager.createOrderDocument(listOf(selectedDocument!!))
+                order.get()?.orderId?.let { it1 -> dataManager.createOrderDocument(it1, listOf(selectedDocument!!)) }
             }
             .observeOn(schedulerProvider.ui())
             .subscribeWith(object : CallbackWrapper<EmptyResponse>() {

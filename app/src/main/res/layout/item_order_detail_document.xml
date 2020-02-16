@@ -31,6 +31,7 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/_4sdp"
         android:paddingTop="@dimen/_4sdp"
+        android:layout_marginRight="@dimen/_4sdp"
         android:paddingRight="@dimen/_4sdp"
         android:paddingBottom="@dimen/_8sdp">
 
