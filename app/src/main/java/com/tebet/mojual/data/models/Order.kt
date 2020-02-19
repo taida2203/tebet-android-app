@@ -11,7 +11,7 @@ import java.io.Serializable
 data class Order(
     override var orderId: Long = -1,
     override var orderCode: String = "",
-    override var containerType: String = ContainerOrderType.JERRYCAN.toString(),
+    override var containerType: String? = ContainerOrderType.JERRYCAN.toString(),
     var quantity: Int? = null,
     var planDate: Long? = null,
     var totalPrice: Double? = null,

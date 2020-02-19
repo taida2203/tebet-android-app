@@ -10,7 +10,7 @@ data class ContainerWrapper(
     var time: Long = 30,
     var customerData: Quality = Quality(),
     var sensorConnected: Boolean = true,
-    var containerType: String = ContainerOrderType.JERRYCAN.toString()
+    var containerType: String? = ContainerOrderType.JERRYCAN.toString()
 ) : Serializable, BaseObservable() {
     enum class CheckStatus {
         CheckStatusDone,

@@ -8,7 +8,7 @@ import java.io.Serializable
 data class OrderDetail(
     override var orderId: Long,
     override var orderCode: String,
-    override var containerType: String,
+    override var containerType: String?,
     var quantity: Int? = null,
     var planDate: Long? = null,
     var totalPrice: Double? = null,
