@@ -1,5 +1,7 @@
 package com.tebet.mojual.data.models
 
+import java.io.Serializable
+
 data class OrderDocument(
     val orderDocumentId: Long,
     val orderId: Long,
@@ -8,4 +10,4 @@ data class OrderDocument(
     val type: String,
     val description: String,
     val createdDate: Long
-)
+) : Serializable
