@@ -154,6 +154,7 @@
     <string name="order_detail_message">Pesan</string>
     <string name="order_detail_description">Deskripsi</string>
     <string name="order_detail_dialog_delete">Are you sure to delete document?</string>
+    <string name="order_detail_select_container_type">Please select container type before select quantity</string>
 
     <string name="order_reject_title">Beritahu kami</string>
     <string name="order_reject_detail">Mengapa anda menolak untuk menjual kepada kami? Beritahu kami dengan menjawab pertanyaan di bawah ini</string>
@@ -250,16 +251,18 @@
     <string name="order_status_open">Sedang diproses</string>
     <string name="order_status_closed">Selesai</string>
     <string name="order_status_rejected">Ditolak</string>
-    <string name="container_status_paid">Dibayar</string>
-    <string name="container_status_sale_confirmed">Penjualan dikonfirmasi</string>
-    <string name="container_status_final_price_offered">Harga akhir yang ditawarkan</string>
+    <string name="container_status_paid">Telah dibayar</string>
+    <string name="container_status_sale_confirmed">Pembayaran sedang diproses</string>
+    <string name="container_status_final_price_offered">Harga akhir</string>
     <string name="container_status_returned">Kembali</string>
     <string name="container_status_sale_rejected">Penjualan ditolak</string>
+    <string name="container_status_wait_pickup">Menunggu penjemputan</string>
     <string name="container_status_checking">Pengecekan</string>
     <string name="container_status_sale_requested">Penjualan sedang diproses</string>
     <string name="container_status_initial_price_rejected">Harga awal ditolak</string>
     <string name="container_status_quality_rejected">Kualitas ditolak</string>
     <string name="container_status_initial_price_offered">Harga penawaran</string>
+    <string name="container_status_confirm_pickup">Menunggu konfirmasi tanggal penjemputan</string>
     <string name="container_type_can">Jeriken</string>
     <string name="container_type_drum">Drum</string>
     <string name="document_type_logistic_receipt">Logistic Receipt</string>
