@@ -22,10 +22,17 @@ fun String?.toDisplayType(): String {
     if (this == null) {
         return "N/A"
     }
+    return this?.replace("_", " ")?.toLowerCase()?.capitalize()
+}
+
+fun ContainerOrderType?.toDisplayType(): String {
+    if (this == null) {
+        return "N/A"
+    }
     return when (this) {
-        ContainerOrderType.JERRYCAN.name -> Utility.getInstance().getString(R.string.container_type_can)
-        ContainerOrderType.DRUM.name -> Utility.getInstance().getString(R.string.container_type_drum)
-        else -> this?.replace("_", " ")?.toLowerCase()?.capitalize()
+        ContainerOrderType.OTHER -> Utility.getInstance().getString(R.string.sale_container_type)
+        ContainerOrderType.JERRYCAN -> Utility.getInstance().getString(R.string.container_type_can)
+        ContainerOrderType.DRUM -> Utility.getInstance().getString(R.string.container_type_drum)
     }
 }
 

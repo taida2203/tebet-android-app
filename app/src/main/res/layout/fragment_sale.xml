@@ -73,32 +73,29 @@
             android:layout_marginBottom="@dimen/_20sdp">
 
 
-            <com.tebet.mojual.common.view.AppEditTextLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/containerTypeValidate"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_edit_text"
+                android:paddingLeft="@dimen/_20sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingRight="@dimen/_20sdp"
+                android:paddingBottom="@dimen/_5sdp">
 
-                <LinearLayout
+                <com.tebet.mojual.common.view.AppSpinner
+                    android:id="@+id/snContainerType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/_20sdp"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingRight="@dimen/_20sdp"
-                    android:paddingBottom="@dimen/_2sdp">
-
-                    <com.tebet.mojual.common.view.AppSpinner
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:selectedItemPosition="@={viewModel.selectedItemType}"
-                        app:itemBinding="@{viewModel.itemTypeBinding}"
-                        app:itemDropDownLayout="@{R.layout.item_container_type_dropdown}"
-                        app:items="@{viewModel.itemTypes}" />
-                </LinearLayout>
-            </com.tebet.mojual.common.view.AppEditTextLayout>
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:selectedItemPosition="@={viewModel.selectedItemType}"
+                    app:itemBinding="@{viewModel.itemTypeBinding}"
+                    app:itemDropDownLayout="@{R.layout.item_container_type_dropdown}"
+                    app:items="@{viewModel.itemTypes}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
                 android:layout_width="wrap_content"

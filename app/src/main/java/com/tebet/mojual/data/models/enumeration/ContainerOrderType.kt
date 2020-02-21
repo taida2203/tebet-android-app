@@ -5,8 +5,10 @@ package com.tebet.mojual.data.models.enumeration
  * Created by TaiDA
  */
 enum class ContainerOrderType {
+    OTHER,
     JERRYCAN,
     DRUM;
+
 
     companion object {
         @JvmStatic

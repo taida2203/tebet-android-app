@@ -63,6 +63,12 @@ class OrderDetailViewModel(
                         navigator.documentSelected(item)
                     }
                 })
+            .bindExtra(BR.listenerDelete,
+                object : OnListItemClick<OrderDocument> {
+                    override fun onItemClick(item: OrderDocument) {
+                        navigator.documentDeleteConfirm(item)
+                    }
+                })
     var selectedDocumentType: DocumentType = DocumentType.OTHER
     var selectedDocumentDescription: String = ""
     var selectedDocument: CreateOrderDocumentRequest? = null
@@ -241,5 +247,27 @@ class OrderDetailViewModel(
         return dataManager.uploadImage(uploadText, uploadData).subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .debounce(400, TimeUnit.MILLISECONDS)
+    }
+
+    fun deleteOrder(item: OrderDocument) {
+        navigator.showLoading(true)
+        compositeDisposable.add(dataManager.deleteOrderDocument(listOf(item.orderDocumentId))
+            .observeOn(schedulerProvider.ui())
+            .subscribeWith(object : CallbackWrapper<EmptyResponse>() {
+                override fun onSuccess(dataResponse: EmptyResponse) {
+                    navigator.showLoading(false)
+                    loadData(true)
+                }
+
+                override fun onFailure(error: NetworkError) {
+                    navigator.showLoading(false)
+                    if (error.errorCode == 500) {
+                        loadData(true)
+                        return
+                    }
+                    handleError(error)
+                }
+            })
+        )
     }
 }

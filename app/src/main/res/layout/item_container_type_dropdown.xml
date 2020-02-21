@@ -4,10 +4,11 @@
     <data>
 
         <import type="com.tebet.mojual.common.util.StringExtKt" />
+        <import type="com.tebet.mojual.data.models.enumeration.ContainerOrderType" />
 
         <variable
             name="item"
-            type="String" />
+            type="com.tebet.mojual.data.models.enumeration.ContainerOrderType" />
     </data>
 
     <LinearLayout
@@ -25,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_4sdp"
-            android:textColor="@color/black"
+            android:textColor="@{item != ContainerOrderType.OTHER ? @color/black : @color/grey_hint}"
             android:paddingBottom="@dimen/_4sdp"
             android:text="@{StringExtKt.toDisplayType(item)}"
             android:textSize="@dimen/_14ssp"

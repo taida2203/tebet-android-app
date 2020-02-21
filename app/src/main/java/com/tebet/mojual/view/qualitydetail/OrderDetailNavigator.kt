@@ -15,4 +15,5 @@ interface OrderDetailNavigator : BaseActivityNavigator {
     fun openReasonScreen(order: OrderDetail, selectedItems: List<OrderContainer>)
     fun uploadDocument()
     fun documentSelected(item: OrderDocument)
+    fun documentDeleteConfirm(item: OrderDocument)
 }

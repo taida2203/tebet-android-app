@@ -154,6 +154,7 @@
     <string name="order_detail_status">Status</string>
     <string name="order_detail_message">Message</string>
     <string name="order_detail_description">Description</string>
+    <string name="order_detail_dialog_delete">Are you sure to delete document?</string>
 
     <string name="order_reject_title">Let Us Know</string>
     <string name="order_reject_detail">Why do you reject? let us know by answer some questions below</string>

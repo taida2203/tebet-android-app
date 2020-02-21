@@ -9,4 +9,5 @@ interface SaleNavigator : BaseActivityNavigator {
     fun showDateScreen()
     fun validate(): Boolean
     fun showEmptyAsset()
+    fun showContainerTypeError()
 }

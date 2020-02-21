@@ -153,6 +153,7 @@
     <string name="order_detail_status">Status</string>
     <string name="order_detail_message">Pesan</string>
     <string name="order_detail_description">Deskripsi</string>
+    <string name="order_detail_dialog_delete">Are you sure to delete document?</string>
 
     <string name="order_reject_title">Beritahu kami</string>
     <string name="order_reject_detail">Mengapa anda menolak untuk menjual kepada kami? Beritahu kami dengan menjawab pertanyaan di bawah ini</string>

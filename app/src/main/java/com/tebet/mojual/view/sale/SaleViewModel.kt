@@ -1,6 +1,8 @@
 package com.tebet.mojual.view.sale
 
-import androidx.databinding.*
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableInt
+import androidx.databinding.ObservableList
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,8 +22,6 @@ import com.tebet.mojual.data.remote.CallbackWrapper
 import com.tebet.mojual.view.base.BaseViewModel
 import io.reactivex.Observable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class SaleViewModel(
@@ -48,7 +48,7 @@ class SaleViewModel(
     }
 
     var itemTypeBinding: ItemBinding<Int> = ItemBinding.of(BR.item, R.layout.item_container_type_dropdown)
-    var itemTypes: ObservableList<String> = ObservableArrayList()
+    var itemTypes: ObservableList<ContainerOrderType> = ObservableArrayList()
     var selectedItemType: ObservableInt = ObservableInt(0)
 
     private inner class CalculatePrice : Observer<Any> {
@@ -63,6 +63,7 @@ class SaleViewModel(
         if (!navigator.validate()) {
             return
         }
+
         navigator.showLoading(true)
         compositeDisposable.add(
             Observable.just(Object()).concatMap {
@@ -76,7 +77,7 @@ class SaleViewModel(
                                 "",
                                 quantity = selectedQuantity.value,
                                 planDate = selectedFutureDate.value?.date,
-                                containerType = itemTypes[selectedItemType.get()]
+                                containerType = getSelectedContainerType()?.name
                             )
                         )
                     )
@@ -84,7 +85,7 @@ class SaleViewModel(
                         CreateOrderRequest(
                             quantity = selectedQuantity.value,
                             planDate = selectedFutureDate.value?.date,
-                            containerType = itemTypes[selectedItemType.get()]
+                            containerType = getSelectedContainerType()?.name
                         )
                     )
                 }
@@ -104,6 +105,18 @@ class SaleViewModel(
                     }
                 })
         )
+    }
+
+    fun getSelectedContainerType(): ContainerOrderType? {
+        val selectedContainerType = try {
+            itemTypes[selectedItemType.get()]
+        } catch (e: Exception) {
+            ContainerOrderType.OTHER
+        }
+        if (selectedContainerType != ContainerOrderType.OTHER) {
+            return selectedContainerType
+        }
+        return null
     }
 
     override fun loadData(isForceLoad: Boolean?) {
@@ -128,8 +141,9 @@ class SaleViewModel(
         if (itemTypes.size <= 0) {
             itemTypes.addAll(
                 arrayListOf(
-                    ContainerOrderType.JERRYCAN.toString(),
-                    ContainerOrderType.DRUM.toString()
+                    ContainerOrderType.OTHER,
+                    ContainerOrderType.JERRYCAN,
+                    ContainerOrderType.DRUM
                 )
             )
         }

@@ -4,12 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
-import androidx.databinding.library.baseAdapters.BR
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedDialogButton
-import co.common.view.dialog.RoundedOkDialog
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.Price
@@ -18,6 +19,7 @@ import com.tebet.mojual.view.base.BaseFragment
 import com.tebet.mojual.view.home.Home
 import com.tebet.mojual.view.selectfuturedate.SelectFutureDate
 import com.tebet.mojual.view.selectquantity.SelectQuantity
+import kotlinx.android.synthetic.main.fragment_sale.*
 
 open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), SaleNavigator {
     override val bindingVariable: Int
@@ -34,6 +36,19 @@ open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), Sa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.navigator = this
+        snContainerType.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                clearContainerTypeError()
+            }
+        }
         validator = Validator(viewDataBinding)
         validator.enableFormValidationMode()
         viewModel.loadData()
@@ -56,7 +71,12 @@ open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), Sa
     }
 
     override fun validate(): Boolean {
-        return validator.validate()
+        val validateContainerType = viewModel.getSelectedContainerType() != null
+        when {
+            validateContainerType -> clearContainerTypeError()
+            else -> showContainerTypeError()
+        }
+        return validator.validate() && validateContainerType
     }
 
     override fun showEmptyAsset() {
@@ -67,12 +87,22 @@ open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), Sa
         }
     }
 
+    override fun showContainerTypeError() {
+        containerTypeValidate.error = getString(R.string.error_message_empty_validation)
+    }
+
+    fun clearContainerTypeError() {
+        containerTypeValidate.error = null
+        containerTypeValidate.invalidate()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 500 -> viewModel.selectedQuantity.value = data?.getStringExtra("QUANTITY")?.toInt()
-                600 -> viewModel.selectedFutureDate.value = data?.getSerializableExtra("FUTURE_DATE") as Price
+                600 -> viewModel.selectedFutureDate.value =
+                    data?.getSerializableExtra("FUTURE_DATE") as Price
             }
         }
     }

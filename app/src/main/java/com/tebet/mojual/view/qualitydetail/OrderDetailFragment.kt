@@ -15,6 +15,7 @@ import br.com.ilhasoft.support.validation.Validator
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedDialogButton
 import androidx.databinding.library.baseAdapters.BR
+import co.common.view.dialog.RoundedCancelOkDialog
 import co.common.view.dialog.SingleChoiceDialog
 import com.tebet.mojual.R
 import com.tebet.mojual.data.models.Order
@@ -180,6 +181,23 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
 
     override fun documentSelected(item: OrderDocument) {
         fragmentManager?.let { DocumentDialog(item).show(it, "") }
+    }
+
+    override fun documentDeleteConfirm(item: OrderDocument) {
+        activity?.supportFragmentManager?.let { context ->
+            RoundedDialog(String.format(getString(R.string.order_detail_dialog_delete)))
+                .addFirstButton(RoundedDialogButton(getString(R.string.general_btn_no), R.drawable.rounded_bg_button_trans))
+                .addSecondButton(RoundedDialogButton(getString(R.string.general_btn_yes)))
+                .setRoundedDialogCallback(
+                    object : RoundedDialog.RoundedDialogCallback {
+                        override fun onFirstButtonClicked(selectedValue: Any?) {
+                        }
+
+                        override fun onSecondButtonClicked(selectedValue: Any?) {
+                            viewModel.deleteOrder(item)
+                        }
+                    }).show(context, "")
+        }
     }
 
     private fun dispatchTakePictureIntent(requestCode: Int, isFront: Boolean = false) {

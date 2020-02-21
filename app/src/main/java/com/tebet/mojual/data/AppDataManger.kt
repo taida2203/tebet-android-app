@@ -238,6 +238,8 @@ class AppDataManger @Inject constructor(
 
     override fun createOrderDocument(orderId: Long, createOrderDocumentRequests: List<CreateOrderDocumentRequest>): Observable<AuthJson<EmptyResponse>> = api.createOrderDocument(orderId, createOrderDocumentRequests)
 
+    override fun deleteOrderDocument(documentIds: List<Long>): Observable<AuthJson<EmptyResponse>> = api.deleteOrderDocument(documentIds)
+
     override fun confirmOrder(orderId: Long, qualityList: List<OrderContainer>) = api.confirmOrder(orderId, qualityList)
 
     override fun updateOrderQuality(orderId: Long, qualityList: List<Quality>): Observable<AuthJson<Order>> = api.updateOrderQuality(orderId, qualityList)

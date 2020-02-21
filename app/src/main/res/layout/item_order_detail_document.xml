@@ -17,6 +17,10 @@
             type="com.tebet.mojual.common.adapter.OnListItemClick" />
 
         <variable
+            name="listenerDelete"
+            type="com.tebet.mojual.common.adapter.OnListItemClick" />
+
+        <variable
             name="item"
             type="com.tebet.mojual.data.models.OrderDocument" />
     </data>
@@ -24,6 +28,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_4sdp"
         android:layout_marginBottom="@dimen/_6sdp"
         android:background="@drawable/border_history"
         android:gravity="center_horizontal"
@@ -31,22 +36,41 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/_4sdp"
         android:paddingTop="@dimen/_4sdp"
-        android:layout_marginRight="@dimen/_4sdp"
         android:paddingRight="@dimen/_4sdp"
         android:paddingBottom="@dimen/_8sdp">
 
-        <com.tebet.mojual.common.view.AppTextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:layout_marginBottom="@dimen/_4sdp"
-            android:text="@{StringExtKt.toDisplayStatus(DocumentType.getByName(item.type))}"
-            android:textColor="@color/dark_green"
-            android:textSize="@dimen/_9ssp" />
+            android:orientation="horizontal">
+
+            <com.tebet.mojual.common.view.AppTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{StringExtKt.toDisplayStatus(DocumentType.getByName(item.type))}"
+                android:textColor="@color/dark_green"
+                android:textSize="@dimen/_9ssp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> listenerDelete.onItemClick(item)}"
+                android:padding="@dimen/_3sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:src="@drawable/ic_delete" />
+            </RelativeLayout>
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/ktp"
-            android:layout_width="@dimen/_72sdp"
-            android:layout_height="@dimen/_72sdp"
+            android:layout_width="@dimen/_86sdp"
+            android:layout_height="@dimen/_86sdp"
             app:imageUrl="@{item.filePath}" />
 
         <com.tebet.mojual.common.view.AppTextView

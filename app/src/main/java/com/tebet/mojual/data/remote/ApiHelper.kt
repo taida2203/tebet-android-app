@@ -44,6 +44,9 @@ interface ApiHelper {
     @POST("order/order/{orderId}/document")
     fun createOrderDocument(@Path(value = "orderId") orderId: Long, @Body createOrderDocumentRequests: List<CreateOrderDocumentRequest>): Observable<AuthJson<EmptyResponse>>
 
+    @DELETE("order/order/document")
+    fun deleteOrderDocument(@Query(value = "documentIds") documentIds: List<Long>): Observable<AuthJson<EmptyResponse>>
+
     @PUT("order/confirm/{orderId}")
     fun confirmOrder(@Path(value = "orderId") orderId: Long, @Body qualityList: List<OrderContainer>): Observable<AuthJson<Order>>
 
