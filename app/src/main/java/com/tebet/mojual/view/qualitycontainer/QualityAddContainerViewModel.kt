@@ -73,13 +73,14 @@ class QualityAddContainerViewModel(
                         val newItem = ContainerWrapper(
                             customerData = Quality(
                                 orderId = order.get()!!.orderId,
-                                orderCode = order.get()!!.orderCode
-                            ),
-                            containerType = order.get()!!.containerType
+                                orderCode = order.get()!!.orderCode,
+                                containerType = order.get()!!.containerType
+                            )
                         )
                         newItem.assignedContainers.clear()
                         newItem.assignedContainers.addAll(containersLeft.toList())
                         newItem.selectedItem = 0
+                        newItem.containerType = order.get()!!.containerType
                         newItem.selectedWeight = when (newItem.containerType) {
                             ContainerOrderType.JERRYCAN.toString() -> newItem.weightList.indexOf(20)
                             ContainerOrderType.DRUM.toString() -> newItem.weightList.indexOf(200)
@@ -267,10 +268,10 @@ class QualityAddContainerViewModel(
                     }
 
                     override fun onNext(response: Pair<List<Quality>, List<Asset>>) {
-                        assignedContainers.addAll(response.second)
+                        assignedContainers.addAll(response.second.filter { order.get()?.containerType.equals(it.containerType) })
                         order.get()?.let { order ->
                             val cachedItemByOrder =
-                                response.first.filter { it.orderCode == order.orderCode }
+                                response.first.filter { it.orderCode == order.orderCode && it.containerType.equals(order.containerType) }
                             val unAvailableCachedItem =
                                 cachedItemByOrder.filter { cachedContainer ->
                                     assignedContainers.firstOrNull { cachedContainer.assetCode == it.code } == null

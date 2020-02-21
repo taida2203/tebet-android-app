@@ -47,6 +47,8 @@ open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), Sa
                 id: Long
             ) {
                 clearContainerTypeError()
+                viewModel.selectedQuantity.value = null
+                viewModel.selectedItemType.set(position)
             }
         }
         validator = Validator(viewDataBinding)
@@ -63,7 +65,11 @@ open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), Sa
     }
 
     override fun showQuantityScreen() {
-        startActivityForResult(Intent(context, SelectQuantity::class.java), 500)
+        viewModel.getSelectedContainerType()?.let {
+            var intent = Intent(context, SelectQuantity::class.java)
+            intent.putExtra("CONTAINER_TYPE", it.name)
+            startActivityForResult(intent, 500)
+        }
     }
 
     override fun showDateScreen() {

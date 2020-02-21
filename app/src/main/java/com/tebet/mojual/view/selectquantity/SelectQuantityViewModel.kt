@@ -17,6 +17,7 @@ class SelectQuantityViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<SelectQuantityNavigator>(dataManager, schedulerProvider) {
+    var containerType: String? = null
     var items: ObservableList<String> = ObservableArrayList()
     var itemBinding: ItemBinding<String> = ItemBinding.of<String>(BR.item, R.layout.item_select_quantity)
         .bindExtra(BR.listener, object : OnQuantityClick {
@@ -33,7 +34,12 @@ class SelectQuantityViewModel(
                 .subscribeWith(object : CallbackWrapper<List<Asset>>() {
                     override fun onSuccess(dataResponse: List<Asset>) {
                         navigator.showLoading(false)
-                        for (i in 1..dataResponse.size) {
+                        var filterData = dataResponse
+                        containerType?.let {
+                            filterData = dataResponse.filter { it.containerType == containerType }
+                        }
+
+                        for (i in 1..filterData.size) {
                             items.add(i.toString())
                         }
                     }

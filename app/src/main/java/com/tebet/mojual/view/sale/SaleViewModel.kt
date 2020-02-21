@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import co.sdk.auth.core.models.AuthJson
 import com.tebet.mojual.R
 import com.tebet.mojual.common.util.Sensor
+import com.tebet.mojual.common.util.Utility
 import com.tebet.mojual.common.util.rx.SchedulerProvider
 import com.tebet.mojual.data.DataManager
 import com.tebet.mojual.data.models.Asset
@@ -38,7 +39,7 @@ class SaleViewModel(
     }
 
     private lateinit var sensorManager: Sensor
-    private var assets: List<Asset>? = null
+    private var assets: List<Asset> = listOf()
     var selectedQuantity: MutableLiveData<Int> = MutableLiveData()
     var selectedFutureDate: MutableLiveData<Price> = MutableLiveData()
     var simulationPrice: MutableLiveData<Double> = MediatorLiveData<Double>().apply {
@@ -150,16 +151,11 @@ class SaleViewModel(
     }
 
     fun openSelectQuantityScreen() {
-        if (assets.isNullOrEmpty()) {
-            navigator.showEmptyAsset()
-            loadData()
+        if (getSelectedContainerType() == null) {
+            navigator.show(Utility.getInstance().getString(R.string.order_detail_select_container_type))
             return
         }
-        navigator.showQuantityScreen()
-    }
-
-    fun openSelectContainerScreen() {
-        if (assets.isNullOrEmpty()) {
+        if (assets.filter { it.containerType == getSelectedContainerType()!!.name }.isNullOrEmpty()) {
             navigator.showEmptyAsset()
             loadData()
             return

@@ -22,6 +22,7 @@ class SelectQuantity : BaseActivity<ActivitySelectQuantityBinding, SelectQuantit
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
+        viewModel.containerType = intent?.getStringExtra("CONTAINER_TYPE")
         viewModel.loadData()
     }
 

@@ -9,14 +9,19 @@ import java.io.Serializable
 data class ContainerWrapper(
     var time: Long = 30,
     var customerData: Quality = Quality(),
-    var sensorConnected: Boolean = true,
-    var containerType: String? = ContainerOrderType.JERRYCAN.toString()
+    var sensorConnected: Boolean = true
 ) : Serializable, BaseObservable() {
     enum class CheckStatus {
         CheckStatusDone,
         CheckStatusChecking,
         CheckStatusCheck
     }
+
+    var containerType: String? = ContainerOrderType.JERRYCAN.toString()
+        set(value) {
+            field = value
+            customerData.containerType = value
+        }
 
     var weight: Double = when (containerType) {
         ContainerOrderType.JERRYCAN.toString() -> 20.0
