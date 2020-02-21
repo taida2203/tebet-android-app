@@ -73,7 +73,11 @@ open class SaleFragment : BaseFragment<FragmentSaleBinding, SaleViewModel>(), Sa
     }
 
     override fun showDateScreen() {
-        startActivityForResult(Intent(context, SelectFutureDate::class.java), 600)
+        viewModel.getSelectedContainerType()?.let {
+            var intent = Intent(context, SelectFutureDate::class.java)
+            intent.putExtra("CONTAINER_TYPE", it.name)
+            startActivityForResult(intent, 600)
+        }
     }
 
     override fun validate(): Boolean {

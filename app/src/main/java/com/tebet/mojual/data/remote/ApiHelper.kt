@@ -61,7 +61,7 @@ interface ApiHelper {
     ): Observable<AuthJson<List<Asset>>>
 
     @GET("order/price")
-    fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>>
+    fun getNext7DaysPrice(@Query(value = "containerType") containerType: String? = null): Observable<AuthJson<List<Price>>>
 
     @GET("order/order")
     fun getOrderDetail(@Query(value = "orderId") orderId: Long, @Query(value = "loadCustomer") loadCustomer: Boolean? = null, @Query(value = "loadContainers") loadContainers: Boolean? = null, @Query(value = "loadDocuments") loadDocuments: Boolean? = null): Observable<AuthJson<OrderDetail>>

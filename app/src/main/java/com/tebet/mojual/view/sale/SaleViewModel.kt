@@ -151,19 +151,27 @@ class SaleViewModel(
     }
 
     fun openSelectQuantityScreen() {
+        if (isContainerTypeValid()) {
+            navigator.showQuantityScreen()
+        }
+    }
+
+    private fun isContainerTypeValid(): Boolean {
         if (getSelectedContainerType() == null) {
             navigator.show(Utility.getInstance().getString(R.string.order_detail_select_container_type))
-            return
+            return false
         }
         if (assets.filter { it.containerType == getSelectedContainerType()!!.name }.isNullOrEmpty()) {
             navigator.showEmptyAsset()
             loadData()
-            return
+            return false
         }
-        navigator.showQuantityScreen()
+        return true
     }
 
     fun openSelectDateScreen() {
-        navigator.showDateScreen()
+        if (isContainerTypeValid()) {
+            navigator.showDateScreen()
+        }
     }
 }

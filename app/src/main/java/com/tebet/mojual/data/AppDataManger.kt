@@ -58,7 +58,7 @@ class AppDataManger @Inject constructor(
 
     override fun getOrderDetail(orderId: Long, loadCustomer: Boolean?, loadContainers: Boolean?, loadDocuments: Boolean?): Observable<AuthJson<OrderDetail>> = api.getOrderDetail(orderId, loadCustomer, loadContainers, loadDocuments)
 
-    override fun getNext7DaysPrice(): Observable<AuthJson<List<Price>>> = api.getNext7DaysPrice()
+    override fun getNext7DaysPrice(containerType: String?): Observable<AuthJson<List<Price>>> = api.getNext7DaysPrice(containerType)
 
     override fun getAssetDB(): Observable<AuthJson<List<Asset>>> = room.asset.concatMap { bankDao ->
         bankDao.queryAsset().subscribeOn(Schedulers.newThread())

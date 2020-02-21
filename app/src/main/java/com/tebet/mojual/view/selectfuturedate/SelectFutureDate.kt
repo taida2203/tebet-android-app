@@ -22,6 +22,7 @@ class SelectFutureDate : BaseActivity<ActivitySelectFutureDateBinding, SelectFut
 
     override fun onCreateBase(savedInstanceState: Bundle?, layoutId: Int) {
         viewModel.navigator = this
+        viewModel.containerType = intent?.getStringExtra("CONTAINER_TYPE")
         viewModel.loadData()
     }
 

@@ -16,6 +16,7 @@ class SelectFutureDateViewModel(
     schedulerProvider: SchedulerProvider
 ) :
     BaseViewModel<SelectFutureDateNavigator>(dataManager, schedulerProvider) {
+    var containerType: String? = null
     var items: ObservableArrayList<Price> = ObservableArrayList()
     var itemBinding: ItemBinding<Price> =
         ItemBinding.of<Price>(BR.item, R.layout.item_select_future_date)
@@ -28,7 +29,7 @@ class SelectFutureDateViewModel(
     override fun loadData(isForceLoad: Boolean?) {
         navigator.showLoading(true)
         compositeDisposable.add(
-            dataManager.getNext7DaysPrice()
+            dataManager.getNext7DaysPrice(containerType)
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(object : CallbackWrapper<List<Price>>() {
                     override fun onSuccess(dataResponse: List<Price>) {
