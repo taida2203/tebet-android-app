@@ -112,7 +112,8 @@ class OrderDetailViewModel(
                                 else items[items.indexOf(container)] = container
                             }
                             documents.clear()
-                            dataResponse.orderDocuments?.let { it1 -> documents.addAll(it1) }
+                            dataResponse.orderDocuments?.sortedByDescending { doc -> doc.orderDocumentId }
+                                ?.let { it1 -> documents.addAll(it1) }
                             updateTotalPrice()
                             navigator.showLoading(false)
                         }

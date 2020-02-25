@@ -2,6 +2,7 @@ package com.tebet.mojual.view.qualitydetail
 
 import android.app.Activity
 import android.content.Intent
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -10,14 +11,14 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.View
 import androidx.core.content.FileProvider
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import co.common.view.dialog.RoundedDialog
 import co.common.view.dialog.RoundedDialogButton
-import androidx.databinding.library.baseAdapters.BR
-import co.common.view.dialog.RoundedCancelOkDialog
 import co.common.view.dialog.SingleChoiceDialog
 import com.tebet.mojual.R
+import com.tebet.mojual.common.util.PhotoRotate
 import com.tebet.mojual.data.models.Order
 import com.tebet.mojual.data.models.OrderContainer
 import com.tebet.mojual.data.models.OrderDetail
@@ -154,7 +155,23 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding, OrderDetail
                             override fun onOk(text: String?) {
                                 hideKeyboard()
                                 viewModel.selectedDocument?.description = text
-                                viewModel.uploadDocument(currentPhotoPath)
+                                val ei = ExifInterface(currentPhotoPath)
+                                val orientation: Int = ei.getAttributeInt(
+                                    ExifInterface.TAG_ORIENTATION,
+                                    ExifInterface.ORIENTATION_NORMAL
+                                )
+
+                                var angle = 0f
+                                when (orientation) {
+                                    ExifInterface.ORIENTATION_ROTATE_90 -> angle = 90f
+                                    ExifInterface.ORIENTATION_ROTATE_180 -> angle = 180f
+                                    ExifInterface.ORIENTATION_ROTATE_270 -> angle = 270f
+                                    else -> {
+                                    }
+                                }
+                                PhotoRotate.rotatePhoto(File(currentPhotoPath), angle, false) {
+                                    viewModel.uploadDocument(it.absolutePath)
+                                }
                             }
                         })
                     fragmentManager?.let { documentDescriptionDialog?.show(it, "") }

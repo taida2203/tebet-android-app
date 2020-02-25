@@ -149,12 +149,12 @@
     <string name="order_detail_dialog_reject">Anda yakin akan membatalkan semua container?</string>
     <string name="order_detail_dialog_confirm">Anda setuju untuk menjual minyak dalam kemasan dengan kode %1$s?</string>
     <string name="order_detail_button_approve">Setuju</string>
-    <string name="order_detail_button_upload">Upload Document</string>
+    <string name="order_detail_button_upload">Unggah Dokumen</string>
     <string name="order_detail_status">Status</string>
     <string name="order_detail_message">Pesan</string>
     <string name="order_detail_description">Deskripsi</string>
-    <string name="order_detail_dialog_delete">Are you sure to delete document?</string>
-    <string name="order_detail_select_container_type">Please select container type first</string>
+    <string name="order_detail_dialog_delete">Yakin ingin hapus dokumen?</string>
+    <string name="order_detail_select_container_type">Tolong pilih kemasan</string>
 
     <string name="order_reject_title">Beritahu kami</string>
     <string name="order_reject_detail">Mengapa anda menolak untuk menjual kepada kami? Beritahu kami dengan menjawab pertanyaan di bawah ini</string>
