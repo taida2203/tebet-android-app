@@ -69,8 +69,8 @@
 
         <ImageView
             android:id="@+id/ktp"
-            android:layout_width="@dimen/_86sdp"
-            android:layout_height="@dimen/_86sdp"
+            android:layout_width="@dimen/_92sdp"
+            android:layout_height="@dimen/_92sdp"
             app:imageUrl="@{item.filePath}" />
 
         <com.tebet.mojual.common.view.AppTextView

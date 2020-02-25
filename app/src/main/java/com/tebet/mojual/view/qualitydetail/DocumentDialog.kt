@@ -53,7 +53,6 @@ class DocumentDialog(private val document: OrderDocument) : DialogFragment() {
                     com.tebet.mojual.R.drawable.signup_avatar_blank
                 )
             )
-            .centerCrop()
             .into(imageView)
         return builder.create()
     }

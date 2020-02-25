@@ -33,7 +33,7 @@ data class ContainerWrapper(
         @Bindable get() {
             return when (containerType) {
                 ContainerOrderType.JERRYCAN.toString() -> (20..30).toList()
-                ContainerOrderType.DRUM.toString() -> (195..205).toList()
+                ContainerOrderType.DRUM.toString() -> listOf(200) + (195..199).toList() + (201..205).toList()
                 else -> (20..30).toList()
             }
         }

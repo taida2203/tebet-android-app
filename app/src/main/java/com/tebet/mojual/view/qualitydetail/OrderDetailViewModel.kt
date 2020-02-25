@@ -69,8 +69,6 @@ class OrderDetailViewModel(
                         navigator.documentDeleteConfirm(item)
                     }
                 })
-    var selectedDocumentType: DocumentType = DocumentType.OTHER
-    var selectedDocumentDescription: String = ""
     var selectedDocument: CreateOrderDocumentRequest? = null
 
     private fun updateTotalPrice() {
